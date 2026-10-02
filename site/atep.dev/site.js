@@ -1,15 +1,14 @@
-// Theme toggle. The page works without it (CSS follows prefers-color-scheme).
+// Theme toggle. Dark is the default; a stored choice (theme-boot.js applies it before paint) wins.
 (function () {
   var btn = document.getElementById("theme");
   if (!btn) return;
   var root = document.documentElement;
-  function current() {
-    var t = root.getAttribute("data-theme");
-    if (t) return t;
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  function current() { return root.getAttribute("data-theme") === "light" ? "light" : "dark"; }
+  function label() {
+    var light = current() === "light";
+    btn.textContent = light ? "Use dark theme" : "Use light theme";
+    btn.setAttribute("aria-pressed", light ? "true" : "false");
   }
-  function label() { btn.textContent = current() === "dark" ? "Use light theme" : "Use dark theme"; }
-  try { var saved = localStorage.getItem("theme"); if (saved) root.setAttribute("data-theme", saved); } catch (e) {}
   label();
   btn.addEventListener("click", function () {
     var next = current() === "dark" ? "light" : "dark";

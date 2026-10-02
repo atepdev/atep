@@ -1,3 +1,5 @@
+<p align="center"><img src="site/atep.dev/assets/atep-wordmark.jpg" alt="ATEP" width="420"></p>
+
 # ATEP: Autonomy Trust Envelope Protocol
 
 ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a finalized NIST post-quantum standard (Ed25519 with ML-DSA-65, X25519 with ML-KEM-768), and both halves must hold. A robot or agent can identify and verify another offline, with no internet connection, registry or central server, because an identity is a hash of public keys and everything else is checked against cached keys, revocation lists and log checkpoints.
@@ -141,5 +143,7 @@ Much of the specification text and the code in this repository was written with 
 ## License
 
 Code: Apache-2.0 ([`LICENSE`](LICENSE)). Specification text and CDDL: CC BY 4.0 ([`LICENSE-SPEC.md`](LICENSE-SPEC.md)). Third-party software linked into the builds: [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md). Copyright AIRAD LABS, which stewards the project.
+
+The ATEP name and logo are not covered by the Apache-2.0 or CC BY 4.0 licenses; use them to refer to the protocol and do not suggest endorsement.
 
 MCP, A2A, ROS, SPIFFE, C2PA, COSE and other names are trademarks or names of their respective owners, used only to identify what ATEP works with; no affiliation or endorsement is implied.

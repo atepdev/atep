@@ -48,6 +48,11 @@ function checkHtml(file, siteRoot) {
   if (!/<main[ >]/.test(html)) err(`${rel}: missing main landmark`);
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((x) => x[1]);
   if (new Set(ids).size !== ids.length) err(`${rel}: duplicate ids`);
+  if (siteRoot === sites["atep.dev"]) {
+    for (const needle of [/<link rel="icon" href="assets\/favicon\.svg"/, /<link rel="apple-touch-icon" href="assets\/apple-touch-icon\.png"/, /<meta name="theme-color" content="#[0-9a-f]{6}"/, /<meta property="og:title" content="[^"]+"/, /<meta property="og:description" content="[^"]+"/, /<meta property="og:image" content="https:\/\/atep\.dev\/assets\/[^"]+"/, /<meta name="twitter:card" content="summary_large_image"/, /<meta name="twitter:image" content="https:\/\/atep\.dev\/assets\//]) {
+      if (!needle.test(html)) err(`${rel}: missing meta tag ${needle}`);
+    }
+  }
   for (const img of html.matchAll(/<img\b[^>]*>/g)) if (!/\salt=/.test(img[0])) err(`${rel}: img without alt`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     nLd++;
@@ -87,6 +92,14 @@ for (const [host, dir] of Object.entries(sites)) {
     if (!exists(finalFile(t))) err(`${host}/llms.txt: broken link ${m[1]}`);
   }
 }
+
+// Brand assets must exist and stay small.
+for (const [f, max] of [["atep-wordmark.jpg", 60000], ["og-card.jpg", 120000], ["favicon.svg", 5000], ["favicon-32.png", 5000], ["apple-touch-icon.png", 20000], ["README.md", 1e6], ["build-assets.mjs", 1e6]]) {
+  const p = path.join(sites["atep.dev"], "assets", f);
+  if (!exists(p)) err(`atep.dev/assets/${f} missing`);
+  else if (fs.statSync(p).size > max) err(`atep.dev/assets/${f} larger than ${max} bytes`);
+}
+for (const f of ["theme-boot.js", "site.js", "style.css"]) if (!exists(path.join(sites["atep.dev"], f))) err(`atep.dev/${f} missing`);
 
 // llms-full.txt must match the spec it claims to contain.
 const full = path.join(sites["atep.dev"], "llms-full.txt");

@@ -6,6 +6,24 @@
 <title>ATEP Overview</title>
 <meta name="description" content="ATEP is an open, transport-agnostic trust layer: signed, encrypted, post-quantum envelopes that let robots and AI agents prove who sent data, that it is unaltered, and what certifications the sender holds.">
 <link rel="stylesheet" href="style.css">
+<script src="theme-boot.js"></script>
+<meta name="theme-color" content="#0c0d0f">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ATEP">
+<meta property="og:title" content="ATEP Overview">
+<meta property="og:description" content="ATEP is an open, transport-agnostic trust layer: signed, encrypted, post-quantum envelopes that let robots and AI agents prove who sent data, that it is unaltered, and what certifications the sender holds.">
+<meta property="og:url" content="https://atep.dev/">
+<meta property="og:image" content="https://atep.dev/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ATEP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ATEP Overview">
+<meta name="twitter:description" content="ATEP is an open, transport-agnostic trust layer: signed, encrypted, post-quantum envelopes that let robots and AI agents prove who sent data, that it is unaltered, and what certifications the sender holds.">
+<meta name="twitter:image" content="https://atep.dev/assets/og-card.jpg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -24,6 +42,7 @@
     "@type": "Organization",
     "name": "AIRAD LABS"
   },
+  "image": "https://atep.dev/assets/og-card.jpg",
   "about": "Autonomy Trust Envelope Protocol (ATEP)"
 }
 </script>
@@ -31,7 +50,7 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site">
-  <a class="brand" href="index.html">ATEP</a>
+  <a class="brand" href="index.html"><img src="assets/atep-wordmark.jpg" alt="ATEP" width="970" height="340"></a>
   <nav aria-label="Main">
       <a href="index.html" aria-current="page">Overview</a>
       <a href="specification.html">Specification</a>
@@ -46,7 +65,22 @@
 </header>
 <main id="main">
 
-<h1>ATEP: Autonomy Trust Envelope Protocol</h1>
+<section class="hero" aria-labelledby="hero-title">
+<img class="hero-logo" src="assets/atep-wordmark.jpg" alt="ATEP" width="970" height="340">
+<h1 id="hero-title">ATEP: Autonomy Trust Envelope Protocol</h1>
+<div class="claims">
+<div class="claim"><h2>Quantum-safe</h2><p>Every signature and key exchange pairs a classical algorithm with a NIST post-quantum standard: Ed25519 with ML-DSA-65 (FIPS 204) and X25519 with ML-KEM-768 (FIPS 203). Both halves must hold.</p></div>
+<div class="claim"><h2>Offline identification and verification</h2><p>A robot or agent can identify and verify another with no internet connection, registry or central server, in milliseconds on a desktop CPU.</p></div>
+</div>
+<p class="fine">Quantum-safe here means finalized NIST standards in a hybrid construction. The reference code has not had an independent security audit.</p>
+<p class="cta"><a class="btn primary" href="specification.html">Specification</a> <a class="btn" href="quickstart.html">Quick start</a> <a class="btn" href="vectors.html">Test vectors</a> <a class="btn" href="https://github.com/atepdev/atep">Source on GitHub</a></p>
+<dl class="facts" aria-label="Status">
+<div><dt>Draft</dt><dd>07</dd></div>
+<div><dt>Rust passes</dt><dd>436 of 436 vectors</dd></div>
+<div><dt>JavaScript and Python pass</dt><dd>431 of 436 vectors</dd></div>
+<div><dt>Independent audit</dt><dd>none yet</dd></div>
+</dl>
+</section>
 <p class="lead">ATEP is an open, quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a NIST post-quantum standard (Ed25519 with ML-DSA-65 from FIPS 204, X25519 with ML-KEM-768 from FIPS 203) and both halves must hold, so protection is designed to hold against future quantum computers and against a flaw in either half. A signed and encrypted envelope lets one robot or AI agent prove to another who produced a piece of data, that it was not altered, and which third-party certifications the producer holds. It also works offline: a robot or agent can identify and verify another with no internet connection, registry or central server, because an identity is a hash of the sender's public keys and the receiver checks everything against keys, revocation lists and log checkpoints it has already cached, in milliseconds on a desktop CPU. It rides on any carrier (MCP, A2A, MQTT, ROS 2, HTTP, files) and replaces none of them. Quantum-safe here means finalized NIST standards in a hybrid construction; the reference code has not had an independent security audit.</p>
 <div class="note"><p><strong>Status.</strong> Working draft (Draft 07, the first public draft, 2 October 2026). It is not an Internet-Draft, not a standard, and its media types and some labels are provisional. Reference implementations exist: Rust passes all 436 shared test vectors, JavaScript and Python pass the 431 they can run (five need a log or a monitor); no functional package has been published to a package registry (placeholder names with no code are reserved on crates.io, npm and PyPI) and there has been no external security audit.</p></div>
 <div class="grid">
