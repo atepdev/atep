@@ -35,7 +35,6 @@ body {
 .brand { display: flex; gap: 14px; align-items: center; }
 .logo { width: 38px; height: 38px; flex: none; border: 3px solid var(--accent); transform: rotate(45deg) scale(.78); border-radius: 4px; box-shadow: 0 0 18px #4cc9f044; }
 h1 { margin: 0; font-size: 1.6rem; letter-spacing: .06em; }
-h1 .by { font-size: .8rem; letter-spacing: .22em; color: var(--accent); margin-left: 8px; white-space: nowrap; }
 .sub { margin: 0; color: var(--muted); }
 .crypto { margin: 0; max-width: 75ch; color: var(--muted); font-size: .85rem; border-left: 3px solid var(--accent); padding-left: 10px; }
 

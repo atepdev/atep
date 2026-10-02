@@ -111,7 +111,9 @@ const NAV = [
 ];
 
 function page({ title, description, canonical, jsonld, body, current, alternate }) {
-  const nav = NAV.map(([h, t]) => `      <a href="${h}"${h === "/claims/" ? ` aria-current="${current}"` : ""}>${t}</a>`).join("\n");
+  const nav = NAV.map(([h, t]) => h === "/demo/"
+    ? `      <a href="${h}" target="_blank" rel="noopener">${t}<span class="sr-only"> (opens in a new tab)</span></a>`
+    : `      <a href="${h}"${h === "/claims/" ? ` aria-current="${current}"` : ""}>${t}</a>`).join("\n");
   return `<!doctype html>
 <html lang="en">
 <head>

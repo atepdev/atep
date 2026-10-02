@@ -57,7 +57,7 @@
       <a href="in-practice.html" aria-current="page">In practice</a>
       <a href="specification.html">Specification</a>
       <a href="claims/">Claims</a>
-      <a href="demo/">Live simulator</a>
+      <a href="demo/" target="_blank" rel="noopener">Live simulator<span class="sr-only"> (opens in a new tab)</span></a>
       <a href="quickstart.html">Quick start</a>
       <a href="vectors.html">Test vectors</a>
       <a href="governance.html">Governance</a>
@@ -113,7 +113,7 @@
 <p class="fine"><strong>Illustrations of how the protocol behaves, not case studies: no deployment is described.</strong> Each has a link to the section of the specification that defines the behavior.</p>
 <div class="grid scenarios">
 <section class="card"><h3>A warehouse with the network down</h3>
-<p>Robots from three vendors share a floor. <strong>Without ATEP</strong>, a check that depends on a cloud service stops working when the network does, and the robots either stall or trust more than they should. <strong>With ATEP</strong>, they verify each other from keys and certificates saved earlier and keep coordinating, even while the fleet controller is unreachable (the <a href="demo/">demo</a> shows two robots doing exactly that). A motion command from a device the fleet holds no certificate for is refused. This holds while their revocation lists are fresh; once a list is past its update time, motion commands are refused until a new one arrives.</p>
+<p>Robots from three vendors share a floor. <strong>Without ATEP</strong>, a check that depends on a cloud service stops working when the network does, and the robots either stall or trust more than they should. <strong>With ATEP</strong>, they verify each other from keys and certificates saved earlier and keep coordinating, even while the fleet controller is unreachable (the <a href="demo/" target="_blank" rel="noopener">demo<span class="sr-only"> (opens in a new tab)</span></a> shows two robots doing exactly that). A motion command from a device the fleet holds no certificate for is refused. This holds while their revocation lists are fresh; once a list is past its update time, motion commands are refused until a new one arrives.</p>
 <p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#10-verification-algorithm">Spec: sections 3, 10 and 17</a></p></section>
 <section class="card"><h3>A hospital robot is offered an update</h3>
 <p>A delivery robot receives a software update from a sender it has never seen. <strong>Without ATEP</strong>, whether it accepts depends on how well that vendor's own update channel is guarded. <strong>With ATEP</strong>, an update is a maintenance command, and that class needs a sender certified as a maintenance authority by a certifier the robot trusts. This sender holds no such certificate, so the robot declines the update and carries on with its last safe behavior.</p>
@@ -217,14 +217,14 @@
 
 <h2 id="who">Who it is for</h2>
 <ul class="who">
-<li><strong>Fleet operators</strong> choose which certifiers to trust, issue fleet and authority certificates, and publish revocation lists. Start with the <a href="demo/">live simulator</a>, where one of four units is revoked and refused on screen, and where certified members keep verifying each other with the controller offline.</li>
+<li><strong>Fleet operators</strong> choose which certifiers to trust, issue fleet and authority certificates, and publish revocation lists. Start with the <a href="demo/" target="_blank" rel="noopener">live simulator<span class="sr-only"> (opens in a new tab)</span></a>, where one of four units is revoked and refused on screen, and where certified members keep verifying each other with the controller offline.</li>
 <li><strong>Robot and software makers</strong> add verification to the software they already ship, over whatever carrier it uses. Start with the <a href="quickstart.html">quick start</a>.</li>
 <li><strong>Safety certifiers and insurers</strong> can issue certificates that are checked on the machine and can be withdrawn, with a public log of issuance defined to keep certifiers accountable. Start with the <a href="claims/">claim types</a> and section 17 of the <a href="specification.html">specification</a>.</li>
 <li><strong>Agent developers</strong> can verify which agent produced a result and that it was not altered before acting on it. Start with the <a href="quickstart.html">quick start</a>; the repository also has carrier examples for MCP and A2A.</li>
 <li><strong>Funders and journalists</strong> can read the status on the <a href="index.html">overview</a> and the commitments on the <a href="governance.html">governance</a> page.</li>
 </ul>
 
-<p class="closing">Try it in your browser in the <a href="https://atep.dev/demo/">live simulator</a>, read the <a href="specification.html">specification</a>, or follow the work on <a href="https://github.com/atepdev/atep">GitHub</a>.</p>
+<p class="closing">Try it in your browser in the <a href="https://atep.dev/demo/" target="_blank" rel="noopener">live simulator<span class="sr-only"> (opens in a new tab)</span></a>, read the <a href="specification.html">specification</a>, or follow the work on <a href="https://github.com/atepdev/atep">GitHub</a>.</p>
 
 </main>
 <footer class="site">

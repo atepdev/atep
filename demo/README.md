@@ -1,4 +1,4 @@
-# ATEP-R reference demo (AIRAD LABS)
+# ATEP-R live simulator
 
 A hosted copy runs in the browser at https://atep.dev/demo/ (generated from this folder by `node site/build-demo.mjs`; this folder stays the source of truth). Four simulated units on a map exchange real ATEP-R envelopes. Unit 1 is the fleet controller, Unit 2 and Unit 4 are certified members, Unit 3 is a member whose identity is revoked mid-run. The viewer sees ciphertext in flight, Unit 3's motion command rejected with the failing step and error code named, the fleet carrying on, and certified members verifying each other and coordinating directly while the controller is unreachable. Its purpose is to make the robotics profile (ATEP-R, spec section 17) visible: what a receiver checks, what it refuses, and why, using the real verifier. It is an illustration, not a product: the map, movement, clock and the "certified" status of Units 2 and 4 are simulated and no real certification is implied.
 
