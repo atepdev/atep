@@ -37,6 +37,7 @@ export const UNITS = [
   { id: "u1", n: 1, name: "Unit 1", role: "Fleet controller", shape: "diamond", color: "#4cc9f0" },
   { id: "u2", n: 2, name: "Unit 2", role: "Certified member", shape: "circle", color: "#8ae234" },
   { id: "u3", n: 3, name: "Unit 3", role: "Member (to be revoked)", shape: "triangle", color: "#ffb454" },
+  { id: "u4", n: 4, name: "Unit 4", role: "Certified member", shape: "hexagon", color: "#ff7fbf" },
 ];
 export const ATTACKER = { id: "x", n: 0, name: "Intruder", role: "Unattested identity", shape: "square", color: "#c792ea" };
 
@@ -51,20 +52,27 @@ const b64u = (s) => {
 
 // Scripted run. Each tick lists actions. After the last tick the engine idles
 // with a repeating pattern (see idleActions).
-export const SCRIPT_LENGTH = 13;
+export const SCRIPT_LENGTH = 21;
 const SCRIPT = {
   0: [{ op: "note", text: "Setup complete: root issued attestations, certifier issued safety-certified, SRL v1 distributed." }],
   1: [
     { op: "send", from: "u2", to: "u1", cls: "telemetry" },
     { op: "send", from: "u3", to: "u1", cls: "telemetry" },
+    { op: "send", from: "u4", to: "u1", cls: "telemetry" },
   ],
   2: [
     { op: "send", from: "u1", to: "u2", cls: "motion", payload: { command: "waypoint", x: 62, y: 44, speed: 3 } },
     { op: "send", from: "u1", to: "u3", cls: "motion", payload: { command: "waypoint", x: 84, y: 30, speed: 3 } },
   ],
   3: [{ op: "send", from: "u2", to: "u1", cls: "sensor", payload: { command: "detection", kind: "obstacle", x: 58, y: 40 } }],
-  4: [{ op: "send", from: "u3", to: "u2", cls: "motion", payload: { command: "waypoint", x: 36, y: 22, speed: 2, reason: "yield lane" } }],
-  5: [{ op: "send", from: "u2", to: "u1", cls: "coordination", payload: { command: "claim-task", task: "T-12" } }],
+  4: [
+    { op: "send", from: "u3", to: "u2", cls: "motion", payload: { command: "waypoint", x: 36, y: 22, speed: 2, reason: "yield lane" } },
+    { op: "send", from: "u3", to: "u4", cls: "motion", tag: "receiver not named", payload: { command: "waypoint", x: 70, y: 50, speed: 2, reason: "yield lane" } },
+  ],
+  5: [
+    { op: "send", from: "u2", to: "u1", cls: "coordination", payload: { command: "claim-task", task: "T-12" } },
+    { op: "send", from: "u2", to: "u4", cls: "coordination", payload: { command: "reserve-path", path: "aisle-3" } },
+  ],
   6: [{ op: "send", from: "u1", to: "u2", cls: "actuation", payload: { command: "release-payload", bay: 2 } }],
   7: [{ op: "send", from: "u3", to: "u1", cls: "telemetry" }],
   8: [{ op: "revoke" }],
@@ -78,14 +86,43 @@ const SCRIPT = {
   ],
   11: [{ op: "send", from: "u2", to: "u1", cls: "coordination", payload: { command: "claim-task", task: "T-13" } }],
   12: [{ op: "send", from: "u2", to: "u1", cls: "telemetry" }],
+  // The controller becomes unreachable. Everything below is checked against attestations and lists saved earlier.
+  13: [
+    { op: "controller", offline: true },
+    { op: "send", from: "u2", to: "u1", cls: "telemetry" },
+    { op: "send", from: "u1", to: "u2", cls: "motion", payload: { command: "waypoint", x: 44, y: 40, speed: 3 } },
+    { op: "send", from: "u2", to: "u4", cls: "coordination", payload: { command: "reserve-path", path: "aisle-5" } },
+    { op: "send", from: "u4", to: "u2", cls: "telemetry" },
+  ],
+  14: [
+    { op: "send", from: "u4", to: "u2", cls: "coordination", payload: { command: "claim-task", task: "T-14" } },
+    { op: "send", from: "u2", to: "u4", cls: "telemetry" },
+  ],
+  15: [
+    { op: "send", from: "u4", to: "u2", cls: "motion", payload: { command: "waypoint", x: 46, y: 50, speed: 3, reason: "make room at the dock" } },
+    { op: "send", from: "u3", to: "u2", cls: "motion", payload: { command: "waypoint", x: 60, y: 24, speed: 5, reason: "cut through keep-out" } },
+  ],
+  16: [{ op: "send", from: "u2", to: "u4", cls: "motion", tag: "no delegation presented", withoutClaim: "peer-motion", payload: { command: "waypoint", x: 82, y: 44, speed: 3 } }],
+  17: [{ op: "send", from: "u4", to: "u2", cls: "actuation", payload: { command: "release-payload", bay: 1 } }],
+  18: [{ op: "send", from: "u4", to: "u2", cls: "safety", payload: { command: "e-stop", reason: "person in aisle" } }],
+  19: [
+    { op: "send", from: "u2", to: "u4", cls: "telemetry" },
+    { op: "send", from: "u4", to: "u2", cls: "telemetry" },
+  ],
+  20: [
+    { op: "controller", offline: false },
+    { op: "send", from: "u1", to: "u2", cls: "motion", payload: { command: "waypoint", x: 30, y: 44, speed: 3 } },
+    { op: "send", from: "u2", to: "u1", cls: "telemetry" },
+  ],
 };
 
 const PATROL = {
   u1: [{ x: 20, y: 30 }, { x: 24, y: 40 }, { x: 18, y: 22 }],
   u2: [{ x: 40, y: 46 }, { x: 46, y: 52 }, { x: 34, y: 40 }],
   u3: [{ x: 74, y: 18 }, { x: 80, y: 26 }, { x: 86, y: 16 }],
+  u4: [{ x: 78, y: 44 }, { x: 84, y: 48 }, { x: 72, y: 46 }],
 };
-const START = { u1: { x: 20, y: 30 }, u2: { x: 40, y: 46 }, u3: { x: 74, y: 18 } };
+const START = { u1: { x: 20, y: 30 }, u2: { x: 40, y: 46 }, u3: { x: 74, y: 18 }, u4: { x: 78, y: 44 } };
 
 const hex = atep.bytesToHex;
 
@@ -109,6 +146,8 @@ export class Engine {
     this.revoked = false;
     this.revokedAt = null;
     this.revokedIds = []; // Agent IDs on the root SRL
+    this.controllerOffline = false; // Unit 1 unreachable: nothing to or from it is delivered
+    this.pendingRevoke = null; // revocation the operator published while the controller was offline
     this.notes = [];
 
     this.root = atep.keygen(false);
@@ -168,6 +207,7 @@ export class Engine {
     this.claims = {};
     const fleet = { fleet: "fleet-7" };
     const u2id = this.u("u2").identity.agentIdBytes;
+    const u4id = this.u("u4").identity.agentIdBytes;
     const evidence = (label) => atep.sha256(new TextEncoder().encode("audit report " + label));
     const std = { standard: "ISO 3691-4", date: "2026-09-01" };
     // root -> controller: fleet-controller, fleet-member, authority to issue fleet claims
@@ -181,13 +221,20 @@ export class Engine {
     const fm2 = this._issue("u1", "u2", CLAIM.FLEET_MEMBER, fleet);
     const ss2 = this._issue("u1", "u2", CLAIM.SENSOR_SOURCE, { sensors: ["lidar-front"] });
     const sc2 = this._issue("cert", "u2", CLAIM.SAFETY_CERTIFIED, std, { days: 365, evidence: evidence("u2") });
+    const pm2 = this._issue("u1", "u2", CLAIM.PEER_MOTION, { peers: [{ $hex: hex(u4id) }] });
+    const fm4 = this._issue("u1", "u4", CLAIM.FLEET_MEMBER, fleet);
+    const ss4 = this._issue("u1", "u4", CLAIM.SENSOR_SOURCE, { sensors: ["camera-top"] });
+    const sc4 = this._issue("cert", "u4", CLAIM.SAFETY_CERTIFIED, std, { days: 365, evidence: evidence("u4") });
+    const pm4 = this._issue("u1", "u4", CLAIM.PEER_MOTION, { peers: [{ $hex: hex(u2id) }] });
     const fm3 = this._issue("u1", "u3", CLAIM.FLEET_MEMBER, fleet);
     const pm3 = this._issue("u1", "u3", CLAIM.PEER_MOTION, { peers: [{ $hex: hex(u2id) }] });
     // inline attestations each unit presents (chain: member -> controller -> root)
     this.inline = {
       u1: [fc, fm1, sc1],
-      u2: [fm2, ss2, sc2, auth],
+      u2: [fm2, ss2, sc2, pm2, auth],
+      u2NoPeerMotion: [fm2, ss2, sc2, auth], // the same member presenting no peer-motion delegation
       u3: [fm3, pm3, auth],
+      u4: [fm4, ss4, sc4, pm4, auth],
       x: [],
     };
     // the intruder is not attested at all
@@ -259,7 +306,8 @@ export class Engine {
     const t0 = performance.now();
     const plain = encode(p);
     let signed = sender.identity.sign(plain, { issuedAt: this.now, expiresAt: this.now + 120, commandClass: cls });
-    const atts = meta.attestations ?? this.inline[meta.signerKey ?? from] ?? [];
+    const skey = meta.signerKey ?? from;
+    const atts = meta.attestations ?? (meta.withoutClaim === "peer-motion" ? this.inline[skey + "NoPeerMotion"] : null) ?? this.inline[skey] ?? [];
     if (atts.length) signed = atep.withAttestations(signed, atts);
     let bytes = atep.encrypt(signed, receiver.identity.publicBundle);
     const buildMs = performance.now() - t0;
@@ -269,7 +317,46 @@ export class Engine {
       bytes[at] ^= 0x01;
       meta = { ...meta, tamperedAt: at };
     }
+    if (this.controllerOffline && (from === "u1" || to === "u1")) return this._undelivered({ from, to, cls, payload: p, bytes, buildMs, ...meta });
     return this._deliver({ from, to, cls, payload: p, bytes, buildMs, ...meta });
+  }
+
+  // Nothing to or from the offline controller is delivered, so nothing is verified either. This is
+  // a transport outcome, not a verification result: no step, no error code, no nonce is consumed.
+  _undelivered(r) {
+    const other = r.from === "u1" ? this.u(r.to).name : this.u(r.from).name;
+    const rec = {
+      id: "E-" + String(++this.seq).padStart(4, "0"),
+      tick: this.tick,
+      now: this.now,
+      kind: r.attack ? "attack" : "normal",
+      attack: r.attack ?? null,
+      tag: r.tag ?? null,
+      delivered: false,
+      controllerOffline: this.controllerOffline,
+      from: r.from,
+      to: r.to,
+      cls: r.cls,
+      payload: r.payload,
+      bytes: r.bytes,
+      size: r.bytes.length,
+      preview: hex(r.bytes.slice(0, 48)),
+      ok: null,
+      step: null,
+      error: null,
+      cause: null,
+      warnings: [],
+      claims: [],
+      result: null,
+      srls: [],
+      buildMs: r.buildMs ?? 0,
+      verifyMs: 0,
+      replayOf: null,
+      tamperedAt: null,
+      effect: `not delivered: controller offline (${other} carries on with its last safe behavior)`,
+    };
+    this.log.push(rec);
+    return rec;
   }
 
   _deliver(r) {
@@ -284,6 +371,9 @@ export class Engine {
       now: this.now,
       kind: r.attack ? "attack" : "normal",
       attack: r.attack ?? null,
+      tag: r.tag ?? null,
+      delivered: true,
+      controllerOffline: this.controllerOffline,
       from: r.from,
       to: r.to,
       cls: r.cls,
@@ -310,9 +400,23 @@ export class Engine {
       rec.effect = this._apply(rec);
     } else {
       rec.effect = "ignored, " + receiver.name + " continues its last safe behavior";
+      if (res.step === 9 && res.error === "claim_missing" && this.stale && this._acceptedWithFreshList(r.bytes, r.to)) {
+        rec.staleCaused = true;
+        rec.effect += ". Fails closed because the root revocation list is stale: the same envelope verifies with a fresh list. The verifier names the error of the first alternative (fleet-controller), claim_missing";
+      }
     }
     this.log.push(rec);
     return rec;
+  }
+
+  // Diagnosis only: would this rejected envelope verify if the stale root list were fresh? Runs the real
+  // verifier again with a freshly signed copy of the root list. Nothing it creates is kept.
+  _acceptedWithFreshList(bytes, to) {
+    const saved = { ...this.srlSeqs };
+    const fresh = this._mkSrl("root", this.revokedIds.map((id) => ({ id, at: this.revokedAt })), false);
+    this.srlSeqs = saved;
+    const res = this.u(to).identity.verify(bytes, this.policyFor(to, { srls: [fresh.bytes, this.srls.u1.bytes, this.srls.cert.bytes] }), this.now);
+    return res.ok;
   }
 
   _apply(rec) {
@@ -327,7 +431,13 @@ export class Engine {
         to.lastEffect = "payload released, bay " + p.bay;
         return `${to.name} releases payload, bay ${p.bay}`;
       case "coordination":
-        return `${to.name} records task claim ${p.task}`;
+        return p.path ? `${to.name} records path reservation ${p.path} by ${this.parties[rec.from].name}` : `${to.name} records task claim ${p.task}`;
+      case "safety":
+        to.mode = "e-stopped";
+        to.estopTicks = 2;
+        to.target = { ...to.pos };
+        to.status = "stopped (e-stop)";
+        return `${to.name} stops at once (e-stop from ${this.parties[rec.from].name})`;
       case "sensor":
         return `${to.name} logs ${p.kind} at (${p.x}, ${p.y})`;
       default:
@@ -338,18 +448,48 @@ export class Engine {
   // --------------------------------------------------------------- revocation
   // The fleet operator (root) publishes an SRL revoking Unit 3's identity.
   revokeUnit3() {
-    if (this.revoked) return null;
+    if (this.revoked || this.pendingRevoke) return null;
+    if (this.controllerOffline) {
+      // The operator signs the list, but units only receive lists through the controller.
+      this.pendingRevoke = { at: this.now };
+      const note = `Fleet operator signed a revocation naming ${this.u("u3").name}, but the controller is offline, so no unit has received it. ${this.u("u3").name} is still accepted until the controller is back.`;
+      this.notes.push({ tick: this.tick, text: note });
+      return note;
+    }
+    return this._applyRevocation(this.now);
+  }
+
+  _applyRevocation(at) {
+    this.pendingRevoke = null;
     this.revoked = true;
-    this.revokedAt = this.now;
+    this.revokedAt = at;
     this.revokedIds = [this.u("u3").identity.agentId];
     this._publishSrls(this.stale);
     const u3 = this.u("u3");
     u3.status = "revoked";
     u3.mode = "locked out";
     u3.target = { ...u3.pos };
-    const note = `Fleet operator published SRL #${this.srls.root.sequence} naming ${u3.name} as compromised since t=${this.now - T0}s. All units now enforce it.`;
+    const note = `Fleet operator published SRL #${this.srls.root.sequence} naming ${u3.name} as compromised since t=${at - T0}s. All units now enforce it.`;
     this.notes.push({ tick: this.tick, text: note });
     return note;
+  }
+
+  // Unit 1 becomes unreachable (or returns). Units keep verifying with the attestations and revocation
+  // lists they already hold; a returning controller delivers any list published meanwhile.
+  setControllerOffline(off) {
+    if (off === this.controllerOffline) return [];
+    this.controllerOffline = off;
+    const u1 = this.u("u1");
+    u1.status = off ? "offline" : "active";
+    const notes = [];
+    notes.push(off
+      ? "Controller offline. Units 2, 3 and 4 keep verifying each other with the certificates and revocation lists they saved earlier. Messages to or from Unit 1 are not delivered."
+      : "Controller back online. Messages to and from Unit 1 are delivered again.");
+    if (!off && this.pendingRevoke) {
+      notes.push(this._applyRevocation(this.pendingRevoke.at));
+    }
+    for (const n of notes) this.notes.push({ tick: this.tick, text: n });
+    return notes;
   }
 
   // Toggle the stale-SRL demonstration: the root SRL is past next-update.
@@ -362,7 +502,15 @@ export class Engine {
   }
 
   // Two probe messages: a motion command and a telemetry report.
+  // With the controller offline the probes run between members instead, plus an e-stop.
   probe() {
+    if (this.controllerOffline) {
+      return [
+        this.send("u4", "u2", "motion", { command: "waypoint", x: 28, y: 36, speed: 3 }, { probe: true }),
+        this.send("u2", "u4", "telemetry", undefined, { probe: true }),
+        this.send("u4", "u2", "safety", { command: "e-stop", reason: "probe" }, { probe: true }),
+      ];
+    }
     return [
       this.send("u1", "u2", "motion", { command: "waypoint", x: 28, y: 36, speed: 3 }, { probe: true }),
       this.send("u2", "u1", "telemetry", undefined, { probe: true }),
@@ -373,16 +521,17 @@ export class Engine {
   attack(name) {
     switch (name) {
       case "replay": {
-        const orig = [...this.log].reverse().find((r) => r.ok && r.kind === "normal");
+        const orig = [...this.log].reverse().find((r) => r.ok && r.kind === "normal" && !(this.controllerOffline && (r.from === "u1" || r.to === "u1")));
         if (!orig) throw new Error("nothing captured yet");
         return this._deliver({ from: orig.from, to: orig.to, cls: orig.cls, payload: orig.payload, bytes: orig.bytes, attack: "replay", replayOf: orig.id });
       }
       case "tamper":
-        return this.send("u2", "u1", "telemetry", undefined, { attack: "tamper", tamper: true });
+        return this.send("u2", this.controllerOffline ? "u4" : "u1", "telemetry", undefined, { attack: "tamper", tamper: true });
       case "forged":
         return this.send("x", "u2", "motion", { command: "waypoint", x: 60, y: 24, speed: 6 }, { attack: "forged", signerKey: "x", attestations: [] });
       case "noclaim":
-        return this.send("u2", "u1", "motion", { command: "waypoint", x: 60, y: 24, speed: 6 }, { attack: "noclaim" });
+        // A real, certified member sends a motion command without any peer-motion delegation.
+        return this.send("u2", this.controllerOffline ? "u4" : "u1", "motion", { command: "waypoint", x: 60, y: 24, speed: 6 }, { attack: "noclaim", withoutClaim: "peer-motion" });
       default:
         throw new Error("unknown attack " + name);
     }
@@ -406,7 +555,8 @@ export class Engine {
       /* leave null */
     }
     let verify = rec.result;
-    if (rec.ok) {
+    if (rec.delivered === false) verify = null;
+    else if (rec.ok) {
       // Re-run the verifier without the replay set so the claims chain is fresh.
       verify = rcv.verify(rec.bytes, this.policyFor(rec.to, { seen_nonces: [], srls: rec.srls }), rec.now);
     }
@@ -442,13 +592,28 @@ export class Engine {
       issuer: c.issuer,
       expiresInDays: Math.round((c.expiresAt - T0) / DAY),
       data: c.data,
+      dataText: this._dataText(c.data),
     }));
+  }
+
+  _dataText(data) {
+    if (!data) return "";
+    const names = new Map(this.units.map((u) => [hex(u.identity.agentIdBytes), u.name]));
+    return JSON.stringify(data, (k, v) => (v && v.$hex ? names.get(v.$hex) ?? "unknown unit" : v));
   }
 
   // --------------------------------------------------------------- simulation
   _move() {
     for (const u of this.units) {
       if (u.status === "revoked") continue;
+      if (u.mode === "e-stopped") {
+        if (--u.estopTicks <= 0) {
+          u.mode = "patrol";
+          u.status = "active";
+          u.target = { ...PATROL[u.id][u.patrol] };
+        }
+        continue;
+      }
       const dx = u.target.x - u.pos.x;
       const dy = u.target.y - u.pos.y;
       const d = Math.hypot(dx, dy);
@@ -470,13 +635,16 @@ export class Engine {
   _idleActions(k) {
     const acts = [];
     if (k % 2 === 0) acts.push({ op: "send", from: "u2", to: "u1", cls: "telemetry" });
+    if (k % 2 === 1) acts.push({ op: "send", from: "u4", to: "u2", cls: "telemetry" });
     if (k % 3 === 0) {
       const wp = [{ x: 62, y: 44 }, { x: 30, y: 44 }, { x: 44, y: 38 }][(k / 3) % 3];
       acts.push({ op: "send", from: "u1", to: "u2", cls: "motion", payload: { command: "waypoint", ...wp, speed: 3 } });
     }
+    if (k % 3 === 1) acts.push({ op: "send", from: "u2", to: "u4", cls: "coordination", payload: { command: "reserve-path", path: "aisle-" + (2 + (k % 4)) } });
     if (k % 4 === 1) {
       acts.push({ op: "send", from: "u3", to: "u2", cls: "motion", payload: { command: "waypoint", x: 60, y: 24, speed: 5, reason: "cut through keep-out" } });
     }
+    if (k % 6 === 2) acts.push({ op: "send", from: "u4", to: "u2", cls: "motion", payload: { command: "waypoint", x: 46, y: 50, speed: 3, reason: "make room at the dock" } });
     return acts;
   }
 
@@ -488,7 +656,8 @@ export class Engine {
     const records = [];
     const notes = [];
     for (const a of acts) {
-      if (a.op === "send") records.push(this.send(a.from, a.to, a.cls, a.payload));
+      if (a.op === "send") records.push(this.send(a.from, a.to, a.cls, a.payload, { ...(a.tag ? { tag: a.tag } : {}), ...(a.withoutClaim ? { withoutClaim: a.withoutClaim } : {}) }));
+      else if (a.op === "controller") notes.push(...this.setControllerOffline(a.offline));
       else if (a.op === "revoke") {
         const n = this.revokeUnit3();
         if (n) notes.push(n);

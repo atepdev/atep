@@ -29,10 +29,21 @@ function enc(v, out) {
     head(4, v.length, out);
     for (const x of v) enc(x, out);
   } else if (typeof v === "object") {
-    const keys = Object.keys(v);
-    head(5, keys.length, out);
-    for (const k of keys) {
-      enc(k, out);
+    // Deterministic encoding (RFC 8949 section 4.2.1): map entries sorted by their encoded keys.
+    // The real verifier decodes payloads strictly, so a map in any other order is not an e-stop.
+    const entries = Object.keys(v).map((k) => {
+      const kb = [];
+      enc(k, kb);
+      return { k, kb };
+    });
+    entries.sort((a, b) => {
+      const n = Math.min(a.kb.length, b.kb.length);
+      for (let i = 0; i < n; i++) if (a.kb[i] !== b.kb[i]) return a.kb[i] - b.kb[i];
+      return a.kb.length - b.kb.length;
+    });
+    head(5, entries.length, out);
+    for (const { k, kb } of entries) {
+      for (const x of kb) out.push(x);
       enc(v[k], out);
     }
   } else throw new Error("cbor: unsupported value");

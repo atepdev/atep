@@ -9,7 +9,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 * In practice, in plain language: https://atep.dev/in-practice.html (what ATEP changes for robot fleets and AI agents, and what it does not do)
 * Specification: [`spec/ATEP-Specification-Draft-07.md`](spec/ATEP-Specification-Draft-07.md) (Draft 07, the first public draft)
 * Test vectors: [`vectors/`](vectors/README.md), 436 vectors in 28 categories
-* Interactive demo: https://atep.dev/demo/ (runs in your browser), three simulated units exchanging real encrypted envelopes with one revoked mid-run. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
+* Interactive demo: https://atep.dev/demo/ (runs in your browser), four simulated units exchanging real encrypted envelopes, one revoked mid-run, with certified members verifying each other directly while the fleet controller is offline. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
 * Site: https://atep.dev (the site sources are in `site/`)
 
 ## Registry names are placeholders: do not install
@@ -24,10 +24,10 @@ Run all commands from the repository root. The examples below verify the same ve
 
 ```
 node demo/serve.mjs          # then open http://127.0.0.1:8088/
-node demo/selftest.mjs       # headless check, 34 assertions
+node demo/selftest.mjs       # headless check, 80 assertions
 ```
 
-Three simulated units exchange real ATEP-R envelopes; the operator revokes one, and its next command is refused at a named step. The map, movement and clock are simulated; the envelopes, keys and verification are real. See [`demo/README.md`](demo/README.md).
+Four simulated units exchange real ATEP-R envelopes; the operator revokes one, and its next command is refused at a named step. Two certified members keep verifying each other when you take the fleet controller offline, because they check each other against certificates saved earlier. The map, movement and clock are simulated; the envelopes, keys and verification are real. See [`demo/README.md`](demo/README.md).
 
 ### Python (standard library only, Python 3.8 or later)
 
@@ -85,7 +85,7 @@ ATEP is a layer that composes with these, not a replacement for any of them. The
 | Python implementation | `python/` | Standard library only, written from the spec and vectors without the Rust code; 470 tests, 431 of 436 vectors (5 skipped by name). |
 | MCP server | `mcp/` | Read-only tools: verify, inspect, log lookups; 54 tests. |
 | Carrier examples | `examples/` | MCP, A2A, files, HTTP (25 tests), MQTT (5 tests, in-process broker), ROS 2 (not run on a ROS 2 install). |
-| Demo | `demo/` | Three simulated units, real envelopes; 34 self-test assertions. |
+| Demo | `demo/` | Four simulated units, real envelopes, a controller-offline mode; 80 self-test assertions. |
 
 Honest limits:
 

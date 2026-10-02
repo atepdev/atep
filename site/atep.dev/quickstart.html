@@ -134,7 +134,7 @@ print(verify_json(open(n + '.cbor', 'rb').read(), v['inputs']['policy']))"</code
 <pre><code>./target/release/atep verify -i ../vectors/verify-negative/bad-eddsa-signature.cbor --now 1800000000
 REJECTED at step 4 (eddsa_signature_invalid): signature does not verify</code></pre>
 <p>Rejections name the step of the ten step algorithm and a stable error code. Data envelopes must be encrypted, so the verification of data vectors also needs the recipient keys that each vector lists. See <a href="vectors.html">test vectors</a>.</p>
-<p>To see a rejection without installing anything, open the <a href="demo/">ATEP-R demo</a>: three simulated units exchange real envelopes in your browser, and one is revoked mid-run and refused at a named step.</p>
+<p>To see a rejection without installing anything, open the <a href="demo/">ATEP-R demo</a>: four simulated units exchange real envelopes in your browser; one is revoked mid-run and refused at a named step, and you can take the fleet controller offline to see certified members keep verifying each other.</p>
 
 </main>
 <footer class="site">

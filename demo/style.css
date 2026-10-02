@@ -12,6 +12,7 @@
   --u1: #4cc9f0;
   --u2: #8ae234;
   --u3: #ffb454;
+  --u4: #ff7fbf;
   --ux: #c792ea;
   --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
   color-scheme: dark;
@@ -151,3 +152,29 @@ tr.struck td { text-decoration: line-through; text-decoration-color: var(--bad);
   td { display: grid !important; grid-template-columns: 7.5em minmax(0, 1fr); }
   td::before { flex: none; }
 }
+
+/* Controller offline control, indicator and captions */
+button.warn[aria-pressed="true"] { background: #2b2410; border-color: var(--warn); border-style: dashed; font-weight: 600; }
+.ctl-state { display: inline-flex; gap: 8px; align-items: center; font-weight: 600; color: var(--text); }
+.ctl-state .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--ok); border: 2px solid var(--ok); flex: none; }
+.ctl-state.off { color: var(--warn); }
+.ctl-state.off .dot { background: transparent; border-color: var(--warn); border-style: dashed; }
+.ctl-captions { margin: 8px 16px 0; color: var(--muted); font-size: .9rem; }
+.ctl-captions p { margin: 0; }
+.unit.offline { opacity: .7; }
+.unit .rev.note { fill: #c9d6e2; }
+.badge-nd { fill: #c9d6e2; }
+.pill.tag { margin-left: 6px; border-style: dashed; color: var(--text); white-space: normal; }
+.res-nd { color: #c9d6e2; font-weight: 600; border-bottom: 1px dashed #8aa0b3; }
+tbody tr.nd td { background: #101a24; color: var(--muted); }
+tbody tr.nd td:first-child { box-shadow: inset 3px 0 0 #8aa0b3; }
+.banner.nd { border-left-color: #8aa0b3; border-left-style: dashed; }
+.who .glyph { margin-right: 2px; }
+@media (max-width: 760px) {
+  tbody tr.nd td { background: transparent; }
+  tbody tr.nd { background: #101a24; border-left: 3px dashed #8aa0b3; }
+}
+.ctl-group { display: inline-flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+@media (max-width: 760px) { .toolbar { position: static; } }
+@media (max-width: 760px) { .who { white-space: normal; } }
+@media (min-width: 761px) { td:nth-child(2), td:nth-child(7) { white-space: nowrap; } }

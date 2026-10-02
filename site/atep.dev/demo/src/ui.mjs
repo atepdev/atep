@@ -9,6 +9,7 @@ const SVGNS = "http://www.w3.org/2000/svg";
 const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
 const BASE_TICK_MS = 2400;
 const FLIGHT_MS = 1300;
+const NOT_DELIVERED_REACH = 0.45; // an envelope to or from the offline controller stops part of the way
 
 let engine = null;
 let playing = false;
@@ -45,6 +46,7 @@ const reduce = () => reduceMq.matches;
 function shapePath(shape, r) {
   if (shape === "diamond") return `M0 ${-r * 1.15} L${r * 1.15} 0 L0 ${r * 1.15} L${-r * 1.15} 0 Z`;
   if (shape === "triangle") return `M0 ${-r * 1.15} L${r * 1.1} ${r * 0.85} L${-r * 1.1} ${r * 0.85} Z`;
+  if (shape === "hexagon") return `M${r * 1.1} 0 L${r * 0.55} ${r * 0.95} L${-r * 0.55} ${r * 0.95} L${-r * 1.1} 0 L${-r * 0.55} ${-r * 0.95} L${r * 0.55} ${-r * 0.95} Z`;
   if (shape === "square") return `M${-r * 0.9} ${-r * 0.9} h${r * 1.8} v${r * 1.8} h${-r * 1.8} Z`;
   return `M${-r} 0 a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0 Z`;
 }
@@ -53,11 +55,10 @@ function glyphSvg(p) {
   svg.append(s("path", { d: shapePath(p.shape, 4.6), fill: p.color, stroke: "#04090d", "stroke-width": "0.6" }));
   return svg;
 }
-const SHAPE_CHAR = { diamond: "◆", circle: "●", triangle: "▲", square: "■" };
 const party = (id) => (id === "x" ? ATTACKER : UNITS.find((u) => u.id === id));
 const whoLabel = (id) => {
   const p = party(id);
-  return h("span", { class: "who" }, h("span", { style: `color:${p.color}`, "aria-hidden": "true" }, SHAPE_CHAR[p.shape] + " "), p.n ? `${p.n} ${p.role}` : p.name);
+  return h("span", { class: "who" }, glyphSvg(p), " ", p.n ? `${p.n} ${p.role}` : p.name);
 };
 const whoText = (id) => {
   const p = party(id);
@@ -120,8 +121,12 @@ function placeUnits(instant) {
     el.tgt.style.display = u.status === "revoked" ? "none" : "";
     el.g.classList.toggle("revoked", u.status === "revoked");
     el.g.querySelector(".shape").setAttribute("fill", u.status === "revoked" ? "#59636d" : u.color);
-    el.g.querySelector(".shape").setAttribute("stroke-dasharray", u.status === "revoked" ? "1 0.7" : "");
-    $("#rev-" + u.id).textContent = u.status === "revoked" ? "REVOKED, LOCKED OUT" : "";
+    const off = u.status === "offline";
+    el.g.classList.toggle("offline", off);
+    el.g.querySelector(".shape").setAttribute("stroke-dasharray", u.status === "revoked" || off ? "1 0.7" : "");
+    const tag = $("#rev-" + u.id);
+    tag.textContent = u.status === "revoked" ? "REVOKED, LOCKED OUT" : off ? "CONTROLLER OFFLINE" : u.mode === "e-stopped" ? "E-STOPPED" : "";
+    tag.classList.toggle("note", u.status !== "revoked");
   }
 }
 
@@ -154,7 +159,8 @@ function launch(rec, delayMs) {
   const a = posOf(rec.from);
   const b = posOf(rec.to);
   const col = party(rec.from).color;
-  const line = s("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: col, "stroke-width": "0.3", "stroke-dasharray": "1 1", opacity: "0.6" });
+  const nd = rec.delivered === false;
+  const line = s("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y, stroke: nd ? "#8aa0b3" : col, "stroke-width": "0.3", "stroke-dasharray": nd ? "0.4 1.6" : "1 1", opacity: nd ? "0.5" : "0.6" });
   const g = envGlyph(rec);
   flightLayer.append(line, g);
   const f = { rec, a: { ...a }, b: { ...b }, line, g, start: performance.now() + delayMs / speed, dur: FLIGHT_MS / speed, done: false };
@@ -172,7 +178,7 @@ function frame(now) {
     f.g.style.display = "";
     f.line.style.display = "";
     const t = Math.min(1, (now - f.start) / f.dur);
-    const e = reduce() ? 0.5 : t;
+    const e = (reduce() ? 0.5 : t) * (f.rec.delivered === false ? NOT_DELIVERED_REACH : 1);
     const x = f.a.x + (f.b.x - f.a.x) * e;
     const y = f.a.y + (f.b.y - f.a.y) * e - 3.6;
     f.g.setAttribute("transform", `translate(${x} ${y})`);
@@ -188,11 +194,15 @@ function arrive(f) {
   f.g.remove();
   f.line.remove();
   appendLog(rec);
-  const dst = posOf(rec.to);
-  const bad = !rec.ok;
-  const text = bad ? `REJECTED step ${rec.step} ${rec.error}` : rec.warnings.length ? "VERIFIED (warning)" : "VERIFIED";
-  const b = s("g", { transform: `translate(${dst.x} ${dst.y - 5.2})` });
-  b.append(s("text", { class: "badge " + (bad ? "badge-bad" : "badge-ok") }, (bad ? "✗ " : "✓ ") + text));
+  const nd = rec.delivered === false;
+  const src = posOf(rec.from);
+  const full = posOf(rec.to);
+  const dst = nd ? { x: src.x + (full.x - src.x) * NOT_DELIVERED_REACH, y: src.y + (full.y - src.y) * NOT_DELIVERED_REACH } : full;
+  const bad = rec.ok === false;
+  const text = nd ? "NOT DELIVERED: controller offline" : bad ? `REJECTED step ${rec.step} ${rec.error}` : rec.warnings.length ? "VERIFIED (warning)" : "VERIFIED";
+  const bx = Math.min(Math.max(dst.x, 24), MAP.w - 24);
+  const b = s("g", { transform: `translate(${bx} ${dst.y - 5.2})` });
+  b.append(s("text", { class: "badge " + (nd ? "badge-nd" : bad ? "badge-bad" : "badge-ok") }, (nd ? "" : bad ? "✗ " : "✓ ") + text));
   badgeLayer.append(b);
   setTimeout(() => b.remove(), 2600 / speed + 600);
   if (bad) {
@@ -203,16 +213,21 @@ function arrive(f) {
     }
   }
   banner(rec);
-  if (!selected || rec.kind === "attack" || !rec.ok) select(rec, true);
-  else if (!selected) select(rec, true);
+  if (!selected || rec.kind === "attack" || rec.ok === false) select(rec, true);
 }
 
 function banner(rec) {
   const el = $("#banner");
   const route = `${whoText(rec.from)} to ${whoText(rec.to)}`;
-  if (rec.ok) {
+  if (rec.delivered === false) {
+    el.className = "banner nd";
+    el.textContent = `${rec.cls} message, ${route}: not delivered, controller offline. This is not a verification failure: the envelope never reached a verifier.`;
+  } else if (rec.ok) {
     el.className = "banner ok";
     el.textContent = `${rec.cls} command, ${route}: verified. ${rec.effect}.` + (rec.warnings.length ? " Warning: " + rec.warnings[0] : "");
+  } else if (rec.staleCaused) {
+    el.className = "banner bad";
+    el.textContent = `${rec.cls} command, ${route}, REJECTED at step ${rec.step} (${rec.error}). Fails closed: the root revocation list is stale, and the same envelope verifies with a fresh one. The receiver ignores it and continues its last safe behavior.`;
   } else {
     el.className = "banner bad";
     el.textContent = `${rec.attack ? "ATTACK " + rec.attack + ": " : ""}${rec.cls} command, ${route}, REJECTED at step ${rec.step} (${rec.error}). Receiver ignores it and ${rec.attack ? "carries on" : "continues its last safe behavior"}.`;
@@ -224,17 +239,18 @@ const logBody = $("#log-body");
 let rowEls = new Map();
 
 function resultCell(rec) {
+  if (rec.delivered === false) return h("span", { class: "res-nd" }, "NOT DELIVERED: controller offline");
   if (rec.ok) return h("span", { class: rec.warnings.length ? "res-warn" : "res-ok" }, rec.warnings.length ? "VERIFIED with warning" : "VERIFIED");
   return h("span", { class: "res-bad" }, `REJECTED at step ${rec.step}: ${rec.error}`);
 }
 
 function appendLog(rec) {
-  const tr = h("tr", { class: rec.ok ? "" : "rej" });
+  const tr = h("tr", { class: rec.delivered === false ? "nd" : rec.ok ? "" : "rej" });
   const cell = (label, ...kids) => h("td", { "data-label": label }, ...kids);
   tr.append(
     cell("Envelope", h("button", { type: "button", class: "selbtn", "aria-label": `Inspect envelope ${rec.id}` }, rec.id)),
     cell("Time", `t+${rec.now - T0} s`),
-    cell("Kind", rec.attack ? h("span", { class: "pill attack" }, "attack: " + rec.attack) : h("span", { class: "pill" }, "fleet traffic")),
+    cell("Kind", rec.attack ? h("span", { class: "pill attack" }, "attack: " + rec.attack) : h("span", { class: "pill" }, "fleet traffic"), rec.tag ? h("span", { class: "pill tag" }, rec.tag) : null),
     cell("Class", h("span", { class: "pill" }, rec.cls)),
     cell("From", whoLabel(rec.from)),
     cell("To", whoLabel(rec.to)),
@@ -298,7 +314,9 @@ $("#btn-decrypt").addEventListener("click", () => {
     h("div", {}, `Signed by ${r.signerName}, command class "${r.commandClass}". Plaintext command:`),
     h("pre", {}, JSON.stringify(r.payload, null, 2)),
   );
-  if (r.verify.ok) {
+  if (!r.verify) {
+    out.append(h("div", { class: "head" }, "Not delivered: the controller was offline, so no verifier ran on this envelope."));
+  } else if (r.verify.ok) {
     out.append(h("div", { class: "head good" }, "Real verifier result: VERIFIED. Claims chain:"), claimsList(r.verify.claims));
     if (r.verify.warnings?.length) out.append(h("div", { class: "warnc" }, "Warning: " + r.verify.warnings.join("; ")));
   } else {
@@ -322,7 +340,7 @@ const ATTACK_TEXT = {
   replay: "Replay: a previously accepted envelope is delivered again to the same receiver.",
   tamper: "Tamper: one byte of an honest envelope is flipped in transit.",
   forged: "Forgery: an identity with no attestations signs a motion command.",
-  noclaim: "Missing claim: a real fleet member without peer-motion sends a motion command.",
+  noclaim: "Missing claim: a real fleet member presents no peer-motion delegation and sends a motion command.",
 };
 document.querySelectorAll("[data-attack]").forEach((b) =>
   b.addEventListener("click", () => {
@@ -347,7 +365,7 @@ document.querySelectorAll("[data-attack]").forEach((b) =>
 
 // ----------------------------------------------------------- policy panel
 function refreshPolicy(force) {
-  const key = `${engine.srls.root.sequence}|${engine.stale}|${engine.revoked}`;
+  const key = `${engine.srls.root.sequence}|${engine.stale}|${engine.revoked}|${engine.controllerOffline}|${!!engine.pendingRevoke}`;
   if (!force && key === policyKey) return;
   policyKey = key;
   const root = $("#policy");
@@ -362,6 +380,8 @@ function refreshPolicy(force) {
       h("li", {}, "ATEP-R enforcement: on (encryption required, command class required, claims per class)"),
       h("li", {}, "Revocation lists: stale or missing means fail closed for motion and actuation; telemetry may continue"),
       h("li", {}, "Replay protection: per receiver nonce set. Clock skew allowed: 300 s"),
+      h("li", {}, "Caches: every unit holds the root, certifier and controller keys and the revocation lists it saved earlier, so checking a peer needs no contact with the controller"),
+      h("li", {}, `Controller reachable now: ${engine.controllerOffline ? "NO (units use the lists they already hold)" : "yes"}`),
     ),
     h("details", {}, h("summary", {}, "Raw policy object passed to the verifier"), h("pre", {}, JSON.stringify(tp, null, 2))),
   );
@@ -380,6 +400,7 @@ function refreshPolicy(force) {
       h("td", { "data-label": "Status", class: stale ? "res-bad" : "res-ok" }, stale ? "STALE (past next-update)" : "fresh"),
       h("td", { "data-label": "Revoked" }, x.revoked.length ? x.revoked.map((r) => `${nameFor(r.id)} (compromised, from t+${r.at - T0} s)`).join("; ") : "none"));
   });
+  if (engine.pendingRevoke) left.append(h("p", { class: "attack-out" }, "Pending: the operator signed a revocation naming Unit 3, but it reaches units only through the controller, which is offline."));
   left.append(h("h3", {}, "Signed revocation lists in force"),
     h("table", {}, h("caption", { class: "sr" }, "Revocation lists"),
       h("thead", {}, h("tr", {}, ["Issuer", "Seq", "Next update", "Status", "Revoked identities"].map((t) => h("th", { scope: "col" }, t)))),
@@ -396,13 +417,13 @@ function refreshPolicy(force) {
         h("td", { "data-label": "Claim" }, c.short),
         h("td", { "data-label": "Issuer" }, c.issuer),
         h("td", { "data-label": "Expires" }, `in ${c.expiresInDays} days`),
-        h("td", { "data-label": "Data" }, c.data ? JSON.stringify(c.data, (k, v) => (v && v.$hex ? "unit 2 id" : v)) : "")));
+        h("td", { "data-label": "Data" }, c.dataText)));
     card.append(h("table", {}, h("caption", { class: "sr" }, `${u.name} claims`),
       h("thead", {}, h("tr", {}, ["Claim", "Issued by", "Expires", "Data"].map((t) => h("th", { scope: "col" }, t)))),
       h("tbody", {}, rows)));
     right.append(card);
   }
-  right.append(h("p", { class: "attack-out" }, "Unit 2 has no peer-motion claim, so it may not send motion commands. The intruder holds no claims at all."));
+  right.append(h("p", { class: "attack-out" }, "Units 2 and 4 may send motion commands only to the unit named in their peer-motion claim, each other. Unit 3's names Unit 2 only. The intruder holds no claims at all."));
   wrap.append(left, right);
   root.replaceChildren(wrap);
 }
@@ -416,6 +437,7 @@ function doTick() {
   if (!engine) return;
   const t = engine.stepTick();
   placeUnits(false);
+  controllerUi();
   t.records.forEach((r, i) => launch(r, i * 450));
   if (t.notes.length) {
     const el = $("#banner");
@@ -458,10 +480,27 @@ $("#btn-revoke").addEventListener("click", () => {
   if (note) {
     const el = $("#banner");
     el.className = "banner";
-    el.textContent = note + " The next envelope from Unit 3 will be refused.";
+    el.textContent = note + (engine.pendingRevoke ? "" : " The next envelope from Unit 3 will be refused.");
     placeUnits(false);
     refreshPolicy();
   }
+});
+function controllerUi() {
+  const off = engine ? engine.controllerOffline : false;
+  const b = $("#btn-controller");
+  b.setAttribute("aria-pressed", String(off));
+  $("#ctl-state").classList.toggle("off", off);
+  $("#ctl-state-text").textContent = off ? "Controller OFFLINE" : "Controller online";
+}
+$("#btn-controller").addEventListener("click", () => {
+  if (!engine || busy) return;
+  const notes = engine.setControllerOffline(!engine.controllerOffline);
+  controllerUi();
+  placeUnits(false);
+  const el = $("#banner");
+  el.className = "banner";
+  el.textContent = notes.join(" ");
+  refreshPolicy();
 });
 $("#chk-stale").addEventListener("change", (e) => {
   const recs = engine.setStale(e.target.checked);
@@ -487,6 +526,9 @@ async function start() {
   $("#btn-decrypt").disabled = true;
   $("#btn-observer").disabled = true;
   $("#chk-stale").checked = false;
+  $("#btn-controller").setAttribute("aria-pressed", "false");
+  $("#ctl-state").classList.remove("off");
+  $("#ctl-state-text").textContent = "Controller online";
   $("#attack-out").textContent = "Each attack is really attempted against the real verifier. Nothing here is mocked.";
   $("#log-count").textContent = "0";
   const banner0 = $("#banner");

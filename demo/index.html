@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ATEP-R Reference Demo | AIRAD LABS</title>
-<meta name="description" content="Three simulated units exchange real sign-then-encrypt ATEP-R envelopes. One is revoked mid-run and rejected on screen while the fleet continues safely.">
+<meta name="description" content="Four simulated units exchange real sign-then-encrypt ATEP-R envelopes. One is revoked mid-run and rejected on screen, and certified members keep verifying each other while the controller is unreachable.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0f14'/%3E%3Cpath d='M16 5l9 11-9 11-9-11z' fill='none' stroke='%234cc9f0' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -35,7 +35,16 @@
   </label>
   <button id="btn-revoke" type="button" class="warn">Revoke Unit 3 now</button>
   <label class="check"><input type="checkbox" id="chk-stale"> Stale revocation list (fail-closed example)</label>
+  <span class="ctl-group">
+    <button id="btn-controller" type="button" class="warn" aria-pressed="false" aria-describedby="ctl-captions">Controller goes offline</button>
+    <span class="ctl-state" id="ctl-state" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="ctl-state-text">Controller online</span></span>
+  </span>
   <span class="clock" id="clock" aria-live="off">tick 0 | t+0 s</span>
+</div>
+
+<div class="ctl-captions" id="ctl-captions">
+  <p>Certificates were issued earlier; checking them needs no contact with the controller.</p>
+  <p>A new revocation cannot reach units while the controller is offline.</p>
 </div>
 
 <p id="banner" class="banner" role="status" aria-live="polite">Loading the ATEP wasm module and generating real identities...</p>
@@ -44,7 +53,7 @@
   <section class="panel" id="map-panel" aria-labelledby="h-map">
     <h2 id="h-map">Fleet map</h2>
     <div class="mapwrap">
-      <svg id="map" viewBox="0 0 100 60" role="img" aria-label="Map with three units and envelopes in flight. The same events are listed in the envelope log."></svg>
+      <svg id="map" viewBox="0 0 100 60" role="img" aria-label="Map with four units and envelopes in flight. The same events are listed in the envelope log."></svg>
     </div>
     <ul class="legend" id="legend" aria-label="Legend"></ul>
     <div class="attack" id="attack-row">
