@@ -156,6 +156,8 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Site checks (links, JSON-LD, llms-full.txt up to date)
         run: node site/check.mjs
+      - name: Site server tests (headers, hidden files, redirects)
+        run: node --test site/server.test.mjs
       - name: No em dashes in tracked text files
         run: scripts/ci/no-em-dashes.sh
       - name: Vector counts and manifest consistency

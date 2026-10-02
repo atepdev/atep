@@ -1,0 +1,13 @@
+{
+  "name": "atep-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static server for the ATEP sites (atep.dev, airadlabs.com). No dependencies.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test server.test.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

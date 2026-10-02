@@ -1,43 +1,39 @@
 # Deploying the sites on Heroku
 
-Each site in this folder is plain static files and deploys as its own Heroku app from this repository, using two buildpacks: the monorepo buildpack (keeps only the site's folder) and the static buildpack (serves it with nginx, configured by that folder's `static.json`).
+Both sites are plain static files served by one small Node server, `site/server.mjs` (no dependencies). Each site is its own Heroku app built from this repository with two buildpacks: the monorepo buildpack, which keeps only the `site/` folder, and Heroku's standard `heroku/nodejs` buildpack, which runs the server from `site/Procfile`. Heroku's old static buildpack is deprecated and does not support the current Heroku-24 stack, so it is not used.
 
-| App | `APP_BASE` | Domains |
+| App | Config var `SITE` | Domains |
 | --- | --- | --- |
-| atep.dev | `site/atep.dev` | `atep.dev`, `www.atep.dev` |
-| airadlabs.com | `site/airadlabs.com` | `airadlabs.com`, `www.airadlabs.com` |
+| atep.dev | `atep.dev` | `atep.dev`, `www.atep.dev` |
+| airadlabs.com | `airadlabs.com` | `airadlabs.com`, `www.airadlabs.com` |
 
-Replace `<app>` with your Heroku app name. The buildpack names below are from memory of Heroku's documentation; confirm them there before the first deploy.
+For both apps, `APP_BASE` is `site`.
+
+## In the Heroku dashboard (per app)
+
+1. **Settings, Buildpacks.** Remove `heroku-community/static` if present. Add, in this order: `https://github.com/lstoll/heroku-buildpack-monorepo`, then `heroku/nodejs`.
+2. **Settings, Config Vars.** Set `APP_BASE` to `site` and `SITE` to the site folder name from the table.
+3. **Deploy.** Connect the GitHub repository `atepdev/atep`, choose branch `main`, and use Manual deploy.
+4. **Resources.** Check that a `web` dyno is running (Procfile: `web: node server.mjs`).
+5. **Settings, Domains.** Add the apex and `www` domains with Automatic Certificate Management on, and point DNS at the DNS targets shown. The apex name needs an ALIAS, ANAME or flattened CNAME record. With Cloudflare, keep the records on "DNS only" until the certificate is issued, then turn the proxy on with SSL mode Full (strict).
+
+`.dev` is on the browser HSTS preload list, so `atep.dev` only works once the certificate is issued.
+
+## What the server does
+
+`server.mjs` serves `site/<SITE>/` and reads that folder's `static.json` for response headers: a strict Content Security Policy (same-origin scripts and styles only, no inline code, no external requests), HSTS without `includeSubDomains`, `nosniff`, no framing, a strict referrer policy and a locked-down permissions policy. It redirects plain HTTP to HTTPS (Heroku reports the original scheme in `X-Forwarded-Proto`), answers only GET and HEAD, sends ETags and gzip, serves `.html` URLs as they are (the JSON-LD and `llms.txt` link to them), and never serves `static.json`, `.mjs` files, `README.md` files or dotfiles. `site/server.test.mjs` tests it for both sites (`cd site && npm test`).
+
+If a page ever needs an inline script or style or an external resource, the Content Security Policy in `static.json` must be changed deliberately.
+
+## Run it locally
 
 ```
-heroku create <app>
-heroku buildpacks:add https://github.com/lstoll/heroku-buildpack-monorepo
-heroku buildpacks:add heroku-community/static
-heroku config:set APP_BASE=site/atep.dev          # or site/airadlabs.com
-git push heroku main                               # or connect the GitHub repo and enable automatic deploys after CI passes
+cd site
+SITE=atep.dev PORT=8080 ATEP_SITE_ALLOW_HTTP=1 node server.mjs
 ```
-
-Order matters: the monorepo buildpack must come first.
-
-## Domains and the certificate
-
-```
-heroku domains:add atep.dev -a <app>
-heroku domains:add www.atep.dev -a <app>
-heroku certs:auto:enable -a <app>
-heroku domains -a <app>                            # shows the DNS target for each domain
-```
-
-At the DNS provider, point `www` at its DNS target with a CNAME. The apex name (`atep.dev`) needs an ALIAS, ANAME or CNAME-flattening record at the provider, pointing at the apex's DNS target; a plain CNAME is not allowed at the apex. Heroku issues the HTTPS certificate automatically once DNS resolves (`heroku certs:auto -a <app>` shows progress). Custom domains need a paid dyno type; the cheapest one is enough for a static site.
-
-`.dev` is on the browser HSTS preload list: browsers refuse plain HTTP for `atep.dev`, so the site only works once the certificate is issued.
-
-## What `static.json` sets
-
-HTTPS only, URLs keep their `.html` names (the JSON-LD and the `llms.txt` links use them), and security headers: a strict Content Security Policy (same-origin scripts and styles only, no inline code, no external requests), HSTS without `includeSubDomains` (so other subdomains you run are not forced to HTTPS by this site), `nosniff`, no framing, a strict referrer policy and a locked-down permissions policy. If a page ever needs an inline script or style or an external resource, the Content Security Policy must be changed deliberately.
 
 ## Notes
 
-* The airadlabs.com pages link to the demo with a relative path (`../../demo/index.html`) that works from the repository but not on the live site. Decide where the demo is hosted (a third app serving `demo/`, or a sub-path) before launch.
+* The airadlabs.com pages link to the demo with a relative path (`../../demo/index.html`) that works from the repository but not on the live site. Decide where the demo is hosted before launch.
 * `https://atep.dev/claims/<name>` is named in the specification as a resolvable claim URI. It can be served by generating static files from the claim definitions (a later step) or by proxying to a log.
 * After deploy, check `https://atep.dev/llms.txt`, `https://atep.dev/llms-full.txt` and the response headers with `curl -sI https://atep.dev/`.
