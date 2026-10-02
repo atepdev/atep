@@ -92,3 +92,36 @@ dl.kv dd { margin: 0; overflow-wrap: anywhere; }
 @media (max-width: 40rem) { dl.kv { grid-template-columns: 1fr; gap: 0; padding: 0.75rem 1rem; } dl.kv dd { margin-bottom: 0.6rem; } }
 @media (max-width: 40rem) { header.site { gap: 0.5rem 1rem; } header.site nav { gap: 0.25rem 0.9rem; flex: 1 1 100%; order: 3; } #theme { margin-left: auto; } th, td { padding: 0.4rem; } header.site .brand img { height: 3rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+/* In practice page: readable line length for prose, cards in a grid, inline SVG diagram that follows the theme tokens. */
+.prose > p, .prose > ul, .prose > ol { max-width: 80ch; }
+.prose .grid > .card h3 { margin-top: 0; }
+.plain { font-size: 1.05rem; max-width: 80ch; }
+.fine { color: var(--muted); }
+.words { max-width: 60rem; }
+.words h2 { margin-top: 0; }
+.words dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.5rem; margin: 0; }
+.words dt { font-weight: 700; }
+.words dd { margin: 0; }
+.spec { margin: 0.75rem 0 0; font-size: 0.95rem; }
+.classtable td:nth-child(3), .compare td { min-width: 14rem; }
+.compare th[scope="row"] { min-width: 10rem; }
+figure.diagram { margin: 1.5rem 0; }
+figure.diagram figcaption { color: var(--muted); margin-top: 0.5rem; max-width: 80ch; }
+svg.dg { display: block; width: 100%; height: auto; max-width: 62rem; background: var(--surface); border: 1px solid var(--border); border-radius: 0.6rem; }
+svg.dg-narrow { display: none; max-width: 24rem; }
+.dg-box { fill: var(--raised); stroke: var(--accent); stroke-width: 2; }
+.dg-mid { stroke: var(--muted); }
+.dg-cache { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 8 6; }
+.dg-line { fill: none; stroke: var(--accent); stroke-width: 3; }
+.dg-dash { stroke: var(--muted); stroke-dasharray: 6 5; }
+.dg-head { fill: var(--accent); }
+.dg-title { fill: var(--text); }
+.dg-title { font-size: 21px; font-weight: 700; }
+.dg-text { fill: var(--text); font-size: 17px; }
+ol.alt { color: var(--muted); }
+.closing { margin-top: 2rem; font-size: 1.1rem; }
+@media (max-width: 56rem) { svg.dg-wide { display: none; } svg.dg-narrow { display: block; margin: 0 auto; } }
+@media (max-width: 40rem) { .words dl { grid-template-columns: 1fr; gap: 0; } .words dd { margin-bottom: 0.6rem; } }
+/* Eleven nav items: keep the header on one line at 1280 px. */
+@media (min-width: 56.01rem) and (max-width: 90rem) { header.site { gap: 0.75rem 1.1rem; } header.site nav { gap: 0.25rem 0.65rem; } header.site nav a { font-size: 0.92rem; } #theme { padding: 0.35rem 0.6rem; font-size: 0.92rem; } }

@@ -6,6 +6,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 
 "Quantum-safe" here means the algorithms are the finalized NIST standards (FIPS 203 and FIPS 204) in a hybrid construction. It does not mean audited: the reference code has had no independent security audit, and the post-quantum libraries it uses are young. ATEP rides on any carrier (MCP, A2A, MQTT, ROS 2, HTTP, files). It is a working draft, not an Internet-Draft or a standard.
 
+* In practice, in plain language: https://atep.dev/in-practice.html (what ATEP changes for robot fleets and AI agents, and what it does not do)
 * Specification: [`spec/ATEP-Specification-Draft-07.md`](spec/ATEP-Specification-Draft-07.md) (Draft 07, the first public draft)
 * Test vectors: [`vectors/`](vectors/README.md), 436 vectors in 28 categories
 * Interactive demo: https://atep.dev/demo/ (runs in your browser), three simulated units exchanging real encrypted envelopes with one revoked mid-run. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)

@@ -54,6 +54,34 @@ function finalFile(t) {
 
 const idsOf = (html) => new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((x) => x[1]));
 
+
+// The plain-language page: nav order, wording rules, the illustration disclaimer, diagram accessibility, no inline style or script.
+function checkInPractice(html, rel) {
+  const nav = [...(/<nav aria-label="Main">([\s\S]*?)<\/nav>/.exec(html)?.[1] || "").matchAll(/>([^<]+)<\/a>/g)].map((m) => m[1]).join("|");
+  const want = "Overview|In practice|Specification|Claims|Demo|Quick start|Test vectors|Governance|Security|About|llms.txt";
+  if (nav !== want) err(`${rel}: nav order is ${nav}, expected ${want}`);
+  if (!/<a [^>]*href="in-practice\.html" aria-current="page"/.test(html)) err(`${rel}: nav lacks aria-current on In practice`);
+  const main = (/<main[\s\S]*<\/main>/.exec(html) || [""])[0];
+  const text = main.replace(/<svg[\s\S]*?<\/svg>/g, " ").replace(/<[^>]+>/g, " ");
+  if (/<script(?![^>]*\b(src=|type="application\/ld\+json"))/.test(html) || /\son[a-z]+=/.test(html)) err(`${rel}: inline script or event handler (CSP)`);
+  if (/\b(first|only)\b/i.test(text)) err(`${rel}: uses "first" or "only" (needs the related-work hedge; reword)`);
+  if (/quantum-proof|unbreakable|revolutionary/i.test(text)) err(`${rel}: overclaiming wording`);
+  if (!/quantum-safe/i.test(text)) err(`${rel}: should say quantum-safe`);
+  if (!/Illustrations of how the protocol behaves, not case studies: no deployment is described\./.test(text)) err(`${rel}: missing the scenarios disclaimer`);
+  if (!/To our knowledge, no open, vendor-neutral standard combines these today/.test(text)) err(`${rel}: missing the hedged positioning sentence`);
+  if (!/#18-related-work-and-positioning/.test(html)) err(`${rel}: no link to the related-work section`);
+  for (const w of ["Envelope", "Attestation", "Certifier", "Revocation list", "Offline verification"]) if (!new RegExp(`<dt>${w}</dt>`).test(html)) err(`${rel}: Words box lacks ${w}`);
+  if ((html.match(/<section class="card"><h3>/g) || []).length < 11) err(`${rel}: expected 6 point cards and 5 scenario cards`);
+  if ((html.match(/class="spec"/g) || []).length !== 5) err(`${rel}: each of the five scenarios needs a Spec link`);
+  const svgs = [...html.matchAll(/<svg\b[\s\S]*?<\/svg>/g)].map((m) => m[0]);
+  if (svgs.length < 1) err(`${rel}: no diagram`);
+  for (const v of svgs) if (!/role="img"/.test(v) || !/<title\b/.test(v) || !/<desc\b/.test(v)) err(`${rel}: an svg lacks role=img, title or desc`);
+  if (!/<ol class="alt"/.test(html)) err(`${rel}: no text alternative list under the diagram`);
+  if (!/<th scope="row">/.test((/<table class="compare">[\s\S]*?<\/table>/.exec(html) || [""])[0])) err(`${rel}: Without/With table missing`);
+  const words = text.replace(/\s+/g, " ").trim().split(" ").length;
+  if (words < 900 || words > 2000) err(`${rel}: ${words} words (expected about 900 to 1400 of prose plus tables)`);
+}
+
 function checkHtml(file, siteRoot) {
   const html = read(file);
   const rel = path.relative(here, file);
@@ -84,7 +112,11 @@ function checkHtml(file, siteRoot) {
     const isDemo = relInSite === "demo/index.html";
     if (!isDemo && !/<a [^>]*href="(\/|)claims\/?"/.test(html)) err(`${rel}: no visible link to the claims directory in the nav`);
     if (!isDemo && !/<a [^>]*href="(\/|)demo\/"[^>]*>Demo<\/a>/.test(html)) err(`${rel}: no Demo link in the nav`);
+    if (!/<a [^>]*href="(\/|)in-practice\.html"[^>]*>In practice<\/a>/.test(html)) err(`${rel}: no In practice link in the nav`);
+    if (/\sstyle=|<style/.test(html)) err(`${rel}: inline style (CSP)`);
   }
+  if (relInSite === "404.html" && !/<a [^>]*href="\/in-practice\.html"[^>]*>In practice<\/a>/.test(html)) err(`${rel}: no In practice link in the nav`);
+  if (relInSite === "in-practice.html") checkInPractice(html, rel);
   for (const img of html.matchAll(/<img\b[^>]*>/g)) if (!/\salt=/.test(img[0])) err(`${rel}: img without alt`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     nLd++;

@@ -54,10 +54,11 @@
   <a class="brand" href="index.html"><img src="assets/atep-wordmark.jpg" alt="ATEP" width="970" height="340"></a>
   <nav aria-label="Main">
       <a href="index.html" aria-current="page">Overview</a>
+      <a href="in-practice.html">In practice</a>
       <a href="specification.html">Specification</a>
       <a href="claims/">Claims</a>
-      <a href="quickstart.html">Quick start</a>
       <a href="demo/">Demo</a>
+      <a href="quickstart.html">Quick start</a>
       <a href="vectors.html">Test vectors</a>
       <a href="governance.html">Governance</a>
       <a href="security.html">Security</a>
@@ -76,7 +77,7 @@
 <div class="claim"><h2>Offline identification and verification</h2><p>A robot or agent can identify and verify another with no internet connection, registry or central server, in milliseconds on a desktop CPU.</p></div>
 </div>
 <p class="fine">Quantum-safe here means finalized NIST standards in a hybrid construction. The reference code has not had an independent security audit.</p>
-<p class="cta"><a class="btn primary" href="specification.html">Specification</a> <a class="btn" href="quickstart.html">Quick start</a> <a class="btn" href="demo/">Try the demo</a> <a class="btn" href="vectors.html">Test vectors</a> <a class="btn" href="claims/">Claim types</a> <a class="btn" href="https://github.com/atepdev/atep">Source on GitHub</a></p>
+<p class="cta"><a class="btn primary" href="in-practice.html">In practice</a> <a class="btn" href="demo/">Try the demo</a> <a class="btn" href="specification.html">Specification</a> <a class="btn" href="quickstart.html">Quick start</a> <a class="btn" href="vectors.html">Test vectors</a> <a class="btn" href="claims/">Claim types</a> <a class="btn" href="https://github.com/atepdev/atep">Source on GitHub</a></p>
 <dl class="facts" aria-label="Status">
 <div><dt>Draft</dt><dd>07</dd></div>
 <div><dt>Rust passes</dt><dd>436 of 436 vectors</dd></div>
@@ -84,6 +85,7 @@
 <div><dt>Independent audit</dt><dd>none yet</dd></div>
 </dl>
 </section>
+<p class="plain">New to this? <a href="in-practice.html">ATEP in practice</a> explains in plain language what it changes for robot fleets and AI agents, with five scenarios that illustrate how the protocol behaves.</p>
 <p class="lead">ATEP is an open, quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a NIST post-quantum standard (Ed25519 with ML-DSA-65 from FIPS 204, X25519 with ML-KEM-768 from FIPS 203) and both halves must hold, so protection is designed to hold against future quantum computers and against a flaw in either half. A signed and encrypted envelope lets one robot or AI agent prove to another who produced a piece of data, that it was not altered, and which third-party certifications the producer holds. It also works offline: a robot or agent can identify and verify another with no internet connection, registry or central server, because an identity is a hash of the sender's public keys and the receiver checks everything against keys, revocation lists and log checkpoints it has already cached, in milliseconds on a desktop CPU. It rides on any carrier (MCP, A2A, MQTT, ROS 2, HTTP, files) and replaces none of them. Quantum-safe here means finalized NIST standards in a hybrid construction; the reference code has not had an independent security audit.</p>
 <div class="note"><p><strong>Status.</strong> Working draft (Draft 07, the first public draft, 2 October 2026). It is not an Internet-Draft, not a standard, and its media types and some labels are provisional. Reference implementations exist: Rust passes all 436 shared test vectors, JavaScript and Python pass the 431 they can run (five need a log or a monitor); no functional package has been published to a package registry (placeholder names with no code are reserved on crates.io, npm and PyPI) and there has been no external security audit.</p></div>
 <div class="grid">

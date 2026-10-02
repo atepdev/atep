@@ -90,6 +90,7 @@ ${END}
   <span class="atep-site-name">ATEP</span>
   <nav aria-label="atep.dev">
     <a href="/">Overview</a>
+    <a href="/in-practice.html">In practice</a>
     <a href="/specification.html">Specification</a>
     <a href="https://github.com/atepdev/atep">Source</a>
   </nav>

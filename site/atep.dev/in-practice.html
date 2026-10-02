@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP in practice</title>
+<meta name="description" content="What ATEP changes for robot fleets and AI agents, in plain language: who sent a command, whether it was altered, whether the sender is certified, and how it works offline.">
+<link rel="canonical" href="https://atep.dev/in-practice.html">
+<link rel="stylesheet" href="style.css">
+<script src="theme-boot.js"></script>
+<meta name="theme-color" content="#0c0d0f">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ATEP">
+<meta property="og:title" content="ATEP in practice">
+<meta property="og:description" content="What ATEP changes for robot fleets and AI agents, in plain language.">
+<meta property="og:url" content="https://atep.dev/in-practice.html">
+<meta property="og:image" content="https://atep.dev/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ATEP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ATEP in practice">
+<meta name="twitter:description" content="What ATEP changes for robot fleets and AI agents, in plain language.">
+<meta name="twitter:image" content="https://atep.dev/assets/og-card.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "ATEP in practice",
+  "description": "What the Autonomy Trust Envelope Protocol changes for robot fleets and AI agents, explained in plain language with five illustrated scenarios.",
+  "url": "https://atep.dev/in-practice.html",
+  "inLanguage": "en",
+  "datePublished": "2026-10-02",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "author": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "image": "https://atep.dev/assets/og-card.jpg",
+  "about": "Autonomy Trust Envelope Protocol (ATEP)"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="index.html"><img src="assets/atep-wordmark.jpg" alt="ATEP" width="970" height="340"></a>
+  <nav aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="in-practice.html" aria-current="page">In practice</a>
+      <a href="specification.html">Specification</a>
+      <a href="claims/">Claims</a>
+      <a href="demo/">Demo</a>
+      <a href="quickstart.html">Quick start</a>
+      <a href="vectors.html">Test vectors</a>
+      <a href="governance.html">Governance</a>
+      <a href="security.html">Security</a>
+      <a href="about.html">About</a>
+      <a href="llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main" class="prose">
+
+<h1>ATEP in practice</h1>
+<p class="lead">This page explains, without protocol jargon, what ATEP changes for the people who run, build, certify, insure or fund robots and AI agents. The technical detail lives in the <a href="specification.html">specification</a>.</p>
+
+<h2 id="problem">The problem</h2>
+<p>Robots and AI agents from different makers have no shared, open way to prove three things: who is sending a command, that it was not changed on the way, and that the sender is certified for that kind of command. In practice, each vendor tends to build its own closed version of this, these rarely work across vendors, and many assume a working internet connection. To our knowledge, no open, vendor-neutral standard combines these today (see the <a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#18-related-work-and-positioning">related-work section of the specification</a>).</p>
+
+<div class="note words">
+<h2 id="words">Words used here</h2>
+<dl>
+<dt>Envelope</dt><dd>A message wrapped so that it is signed, and between agents also encrypted, which lets the receiver check who made it and that it is unchanged.</dd>
+<dt>Attestation</dt><dd>A signed statement by a third party, for example that a named robot passed a safety standard.</dd>
+<dt>Certifier</dt><dd>Any organization that issues attestations, such as a safety testing body or a fleet operator; each receiver decides which ones it trusts.</dd>
+<dt>Revocation list</dt><dd>A signed list, published by an issuer, of identities or certifications that must no longer be trusted.</dd>
+<dt>Offline verification</dt><dd>Checking an envelope on the machine itself, using keys and lists saved earlier, with no internet connection.</dd>
+</dl>
+</div>
+
+<h2 id="gives">What ATEP gives you</h2>
+<div class="grid points">
+<section class="card"><h3>Who sent it</h3><p>Every sender has an identity that is a fingerprint of its own public keys. A receiver can recognize a known sender without looking anything up, and nobody without the matching private keys can sign as that identity.</p></section>
+<section class="card"><h3>Was it altered</h3><p>The sender signs the message, so a change after signing makes the check fail. Messages between agents are also encrypted from sender to receiver, so relays, brokers and base stations carry them without being able to read them.</p></section>
+<section class="card"><h3>Is the sender certified for this kind of command</h3><p>In the robotics profile every command belongs to one of seven classes, and each class needs certificates the sender must hold. Moving a robot is a lower bar than operating its arm: see the table below.</p></section>
+<section class="card"><h3>Works offline</h3><p>The checks run on the robot or agent itself. Nothing needs to be fetched at the moment of use, as long as the keys and revocation lists were saved earlier and have not gone stale.</p></section>
+<section class="card"><h3>Cutting off a compromised unit</h3><p>An operator publishes a signed revocation list naming the unit. To be honest about the limit: a unit learns of a revocation when it next receives the updated list. A unit whose list is too old refuses motion, actuation and maintenance commands (and safety commands other than an emergency stop) but still accepts telemetry.</p></section>
+<section class="card"><h3>Quantum-safe</h3><p>Every signature and key exchange pairs a classical algorithm with a NIST post-quantum standard (FIPS 204 and FIPS 203), and both halves must hold. That is why we say quantum-safe, not more. The reference code has not been independently audited.</p></section>
+</div>
+<p>Two further properties. ATEP is carrier-agnostic: an envelope is a string of bytes that is checked the same way whether it travelled over MQTT, ROS 2, HTTP, MCP, A2A or as a file. It is also vendor-neutral: each receiver chooses which certifiers it trusts, and there is no mandatory root authority.</p>
+
+<div class="tablewrap"><table class="classtable">
+<caption>What a sender must hold, by class</caption>
+<thead><tr><th scope="col">Class</th><th scope="col">Examples</th><th scope="col">The sender must hold</th></tr></thead>
+<tbody>
+<tr><th scope="row">telemetry</th><td>position, battery, status</td><td>fleet member</td></tr>
+<tr><th scope="row">sensor</th><td>lidar, camera, detections</td><td>fleet member and trusted sensor source</td></tr>
+<tr><th scope="row">coordination</th><td>task claims, path reservations</td><td>fleet member</td></tr>
+<tr><th scope="row">motion</th><td>waypoints, velocity, path updates</td><td>fleet controller, or fleet member with the controller's permission to command the listed peers</td></tr>
+<tr><th scope="row">actuation</th><td>arms, tools, payload release</td><td>fleet controller and safety certified</td></tr>
+<tr><th scope="row">safety</th><td>emergency stop, geofence changes</td><td>safety authority (an emergency stop is also accepted from any safety certified fleet member)</td></tr>
+<tr><th scope="row">maintenance</th><td>firmware, configuration, key rotation</td><td>maintenance authority</td></tr>
+</tbody></table></div>
+
+<h2 id="scenarios">Five scenarios</h2>
+<p class="fine"><strong>Illustrations of how the protocol behaves, not case studies: no deployment is described.</strong> Each has a link to the section of the specification that defines the behavior.</p>
+<div class="grid scenarios">
+<section class="card"><h3>A warehouse with the network down</h3>
+<p>Robots from three vendors share a floor. <strong>Without ATEP</strong>, a check that depends on a cloud service stops working when the network does, and the robots either stall or trust more than they should. <strong>With ATEP</strong>, they verify each other from keys and certificates saved earlier and keep coordinating. A motion command from a device the fleet holds no certificate for is refused. This holds while their revocation lists are fresh; once a list is past its update time, motion commands are refused until a new one arrives.</p>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#10-verification-algorithm">Spec: sections 3, 10 and 17</a></p></section>
+<section class="card"><h3>A hospital robot is offered an update</h3>
+<p>A delivery robot receives a software update from a sender it has never seen. <strong>Without ATEP</strong>, whether it accepts depends on how well that vendor's own update channel is guarded. <strong>With ATEP</strong>, an update is a maintenance command, and that class needs a sender certified as a maintenance authority by a certifier the robot trusts. This sender holds no such certificate, so the robot declines the update and carries on with its last safe behavior.</p>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#17-robotics-profile-atep-r">Spec: section 17</a></p></section>
+<section class="card"><h3>A remote farm with patchy connectivity</h3>
+<p>A field robot is online for a few minutes a day. <strong>Without ATEP</strong>, proving that a machine is safety certified usually means asking someone over the internet. <strong>With ATEP</strong>, the safety certificate travels with the message and is checked on the machine against issuer keys saved earlier. The robot works with the last revocation list it has. If that list is too old, it fails closed: it refuses motion commands and keeps handling telemetry.</p>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#8-revocation">Spec: sections 8 and 17</a></p></section>
+<section class="card"><h3>A compromised unit</h3>
+<p>One robot's keys are stolen. <strong>Without ATEP</strong>, each vendor system has its own way to cut it off, if any. <strong>With ATEP</strong>, the operator publishes one signed revocation list, and units that receive it reject that unit's commands from the revocation time on. Units that have not yet received it do not know. An emergency stop from any certified fleet member still works even if its other certificates have expired, but never from a revoked or retired identity.</p>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#8-revocation">Spec: sections 8 and 17</a></p></section>
+<section class="card"><h3>AI agents handing work to each other</h3>
+<p>An agent passes a result to another agent. <strong>Without ATEP</strong>, the receiver knows little beyond the channel the text arrived on. <strong>With ATEP</strong>, the receiving agent can tell which agent produced the result and that it was not altered on the way. The protocol treats the content as data, never as instructions. ATEP does not make the content true or safe; it makes its origin checkable, so the receiver can handle it accordingly.</p>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#11-security-considerations">Spec: section 11</a></p></section>
+</div>
+
+<div class="tablewrap"><table class="compare">
+<caption>Without ATEP and with ATEP</caption>
+<thead><tr><th scope="col">Situation</th><th scope="col">Without ATEP</th><th scope="col">With ATEP</th></tr></thead>
+<tbody>
+<tr><th scope="row">Network is down</th><td>Checks that need the internet cannot run</td><td>Robots verify each other from keys saved earlier; unknown senders are refused</td></tr>
+<tr><th scope="row">Unknown sender offers an update</th><td>Depends on the vendor's own update channel</td><td>Declined unless the sender is a certified maintenance authority</td></tr>
+<tr><th scope="row">Patchy connectivity</th><td>Proving a certification needs a connection</td><td>Certificates are checked on the machine; motion stops when the revocation list is too old</td></tr>
+<tr><th scope="row">A unit is compromised</th><td>Vendor-specific, often manual</td><td>One signed revocation list; units that receive it reject that unit</td></tr>
+<tr><th scope="row">Agents hand off work</th><td>Origin and integrity are not checkable</td><td>Producer and integrity are checkable; the content is still treated as data</td></tr>
+</tbody></table></div>
+
+<h2 id="how">How it fits together</h2>
+<figure class="diagram">
+<svg class="dg dg-wide" viewBox="0 0 960 330" role="img" aria-labelledby="dgw-t dgw-d" xmlns="http://www.w3.org/2000/svg">
+<title id="dgw-t">How an ATEP envelope travels from sender to receiver</title>
+<desc id="dgw-d">A sender signs and encrypts a message, it crosses any carrier, and the receiver checks it on the machine itself using cached keys and revocation lists filled earlier. No internet is needed at that moment.</desc>
+<defs><marker id="dgw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="dg-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+<rect class="dg-box" x="10" y="30" width="270" height="175" rx="12"/>
+<text class="dg-title" x="145" y="66" text-anchor="middle">Sender</text>
+<text class="dg-text" x="145" y="98" text-anchor="middle">Signs the message with</text>
+<text class="dg-text" x="145" y="122" text-anchor="middle">its private keys and</text>
+<text class="dg-text" x="145" y="146" text-anchor="middle">encrypts it for the receiver</text>
+<rect class="dg-box dg-mid" x="345" y="30" width="270" height="175" rx="12"/>
+<text class="dg-title" x="480" y="66" text-anchor="middle">Any carrier</text>
+<text class="dg-text" x="480" y="98" text-anchor="middle">Radio, MQTT, ROS 2,</text>
+<text class="dg-text" x="480" y="122" text-anchor="middle">HTTP, MCP, A2A or a file</text>
+<text class="dg-text" x="480" y="146" text-anchor="middle">(relays cannot read it)</text>
+<rect class="dg-box" x="680" y="30" width="270" height="175" rx="12"/>
+<text class="dg-title" x="815" y="66" text-anchor="middle">Receiver</text>
+<text class="dg-text" x="815" y="98" text-anchor="middle">Checks identity, signature,</text>
+<text class="dg-text" x="815" y="122" text-anchor="middle">certificates and revocation</text>
+<text class="dg-text" x="815" y="146" text-anchor="middle">list on the machine itself</text>
+<text class="dg-text" x="815" y="170" text-anchor="middle">No internet needed</text>
+<path class="dg-line" d="M282 118 H341" marker-end="url(#dgw-a)"/>
+<path class="dg-line" d="M617 118 H676" marker-end="url(#dgw-a)"/>
+<rect class="dg-cache" x="680" y="256" width="270" height="62" rx="10"/>
+<text class="dg-text" x="815" y="281" text-anchor="middle">Cached keys and revocation</text>
+<text class="dg-text" x="815" y="303" text-anchor="middle">lists, filled earlier</text>
+<path class="dg-line dg-dash" d="M815 254 V209" marker-end="url(#dgw-a)"/>
+</svg>
+<svg class="dg dg-narrow" viewBox="0 0 340 640" role="img" aria-labelledby="dgn-t dgn-d" xmlns="http://www.w3.org/2000/svg">
+<title id="dgn-t">How an ATEP envelope travels from sender to receiver</title>
+<desc id="dgn-d">A sender signs and encrypts a message, it crosses any carrier, and the receiver checks it on the machine itself using cached keys and revocation lists filled earlier. No internet is needed at that moment.</desc>
+<defs><marker id="dgn-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="dg-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+<rect class="dg-box" x="20" y="10" width="300" height="130" rx="12"/>
+<text class="dg-title" x="170" y="42" text-anchor="middle">Sender</text>
+<text class="dg-text" x="170" y="72" text-anchor="middle">Signs the message with</text>
+<text class="dg-text" x="170" y="94" text-anchor="middle">its private keys and</text>
+<text class="dg-text" x="170" y="116" text-anchor="middle">encrypts it for the receiver</text>
+<path class="dg-line" d="M170 142 V186" marker-end="url(#dgn-a)"/>
+<rect class="dg-box dg-mid" x="20" y="192" width="300" height="130" rx="12"/>
+<text class="dg-title" x="170" y="224" text-anchor="middle">Any carrier</text>
+<text class="dg-text" x="170" y="254" text-anchor="middle">Radio, MQTT, ROS 2,</text>
+<text class="dg-text" x="170" y="276" text-anchor="middle">HTTP, MCP, A2A or a file</text>
+<text class="dg-text" x="170" y="298" text-anchor="middle">(relays cannot read it)</text>
+<path class="dg-line" d="M170 324 V368" marker-end="url(#dgn-a)"/>
+<rect class="dg-box" x="20" y="374" width="300" height="150" rx="12"/>
+<text class="dg-title" x="170" y="406" text-anchor="middle">Receiver</text>
+<text class="dg-text" x="170" y="436" text-anchor="middle">Checks identity, signature,</text>
+<text class="dg-text" x="170" y="458" text-anchor="middle">certificates and revocation</text>
+<text class="dg-text" x="170" y="480" text-anchor="middle">list on the machine itself</text>
+<text class="dg-text" x="170" y="504" text-anchor="middle">No internet needed</text>
+<rect class="dg-cache" x="20" y="574" width="300" height="58" rx="10"/>
+<text class="dg-text" x="170" y="599" text-anchor="middle">Cached keys and revocation</text>
+<text class="dg-text" x="170" y="621" text-anchor="middle">lists, filled earlier</text>
+<path class="dg-line dg-dash" d="M170 572 V528" marker-end="url(#dgn-a)"/>
+</svg>
+<figcaption>The dashed box is what makes offline checking possible: it has to be filled before the connection is lost.</figcaption>
+</figure>
+<ol class="alt" aria-label="Text version of the diagram">
+<li><strong>Sender:</strong> signs the message with its private keys and encrypts it for the receiver.</li>
+<li><strong>Any carrier:</strong> radio, MQTT, ROS 2, HTTP, MCP, A2A or a file. Relays cannot read the message.</li>
+<li><strong>Receiver:</strong> checks identity, signature, certificates and the revocation list on the machine itself. No internet is needed at that moment.</li>
+<li><strong>Cached keys and revocation lists, filled earlier:</strong> the receiver reads these during the check. They must have been saved before the connection was lost.</li>
+</ol>
+
+<h2 id="not">What ATEP does not do</h2>
+<ul>
+<li>It does not make a robot safe, and it does not decide whether a command is wise. It shows who sent the command and what that sender is certified for.</li>
+<li>Certifications are as good as the certifier. ATEP shows that a certificate exists and who issued it; each receiver decides whether that issuer deserves trust.</li>
+<li>A compromised sender that still holds valid keys can keep sending valid commands until it is revoked, and a unit learns of the revocation when its list is updated, not before.</li>
+<li>Offline verification needs caches filled earlier. A unit that has been cut off for longer than its revocation list stays fresh will refuse the commands that matter most.</li>
+<li>It is not a product. It is an open protocol with an open specification, reference code and test vectors.</li>
+<li>It is a working draft (Draft 07), not a standard, and the code has not been independently audited.</li>
+</ul>
+
+<h2 id="who">Who it is for</h2>
+<ul class="who">
+<li><strong>Fleet operators</strong> choose which certifiers to trust, issue fleet and authority certificates, and publish revocation lists. Start with the <a href="demo/">demo</a>, where one of three units is revoked and refused on screen.</li>
+<li><strong>Robot and software makers</strong> add verification to the software they already ship, over whatever carrier it uses. Start with the <a href="quickstart.html">quick start</a>.</li>
+<li><strong>Safety certifiers and insurers</strong> can issue certificates that are checked on the machine and can be withdrawn, with a public log of issuance defined to keep certifiers accountable. Start with the <a href="claims/">claim types</a> and section 17 of the <a href="specification.html">specification</a>.</li>
+<li><strong>Agent developers</strong> can verify which agent produced a result and that it was not altered before acting on it. Start with the <a href="quickstart.html">quick start</a>; the repository also has carrier examples for MCP and A2A.</li>
+<li><strong>Funders and journalists</strong> can read the status on the <a href="index.html">overview</a> and the commitments on the <a href="governance.html">governance</a> page.</li>
+</ul>
+
+<p class="closing">Try it in your browser at the <a href="https://atep.dev/demo/">demo</a>, read the <a href="specification.html">specification</a>, or follow the work on <a href="https://github.com/atepdev/atep">GitHub</a>.</p>
+
+</main>
+<footer class="site">
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
