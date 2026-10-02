@@ -1,0 +1,145 @@
+{
+  "namespace": "https://atep.dev/claims/",
+  "claims": [
+    {
+      "claim": "https://atep.dev/claims/domain-control",
+      "name": "domain-control",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject is authorized for a DNS name, proven by a record at _atep.<domain> or https://<domain>/.well-known/atep.json.",
+      "title": "Domain control",
+      "url": "https://atep.dev/claims/domain-control"
+    },
+    {
+      "claim": "https://atep.dev/claims/operator",
+      "name": "operator",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject is operated by the named legal entity.",
+      "title": "Operator",
+      "url": "https://atep.dev/claims/operator"
+    },
+    {
+      "claim": "https://atep.dev/claims/successor",
+      "name": "successor",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject replaces the issuer's identity (key rotation).",
+      "title": "Successor",
+      "url": "https://atep.dev/claims/successor"
+    },
+    {
+      "claim": "https://atep.dev/claims/retired",
+      "name": "retired",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject is permanently retired. Self-issued.",
+      "title": "Retired",
+      "url": "https://atep.dev/claims/retired"
+    },
+    {
+      "claim": "https://atep.dev/claims/issuer-authority",
+      "name": "issuer-authority",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject may issue the listed claim types (chain delegation).",
+      "title": "Issuer authority",
+      "url": "https://atep.dev/claims/issuer-authority"
+    },
+    {
+      "claim": "https://atep.dev/claims/audited",
+      "name": "audited",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject passed the named audit on the given date; evidence hash required.",
+      "title": "Audited",
+      "url": "https://atep.dev/claims/audited"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/fleet-member",
+      "name": "robotics/fleet-member",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject belongs to the named fleet.",
+      "title": "Fleet member",
+      "url": "https://atep.dev/claims/robotics/fleet-member"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/fleet-controller",
+      "name": "robotics/fleet-controller",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject may issue motion and coordination commands for the fleet.",
+      "title": "Fleet controller",
+      "url": "https://atep.dev/claims/robotics/fleet-controller"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/safety-certified",
+      "name": "robotics/safety-certified",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject passed the named safety standard on the given date; evidence hash required.",
+      "title": "Safety certified",
+      "url": "https://atep.dev/claims/robotics/safety-certified"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/sensor-source",
+      "name": "robotics/sensor-source",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject's named sensors are calibrated and trusted.",
+      "title": "Sensor source",
+      "url": "https://atep.dev/claims/robotics/sensor-source"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/safety-authority",
+      "name": "robotics/safety-authority",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject may issue e-stops and geofence changes.",
+      "title": "Safety authority",
+      "url": "https://atep.dev/claims/robotics/safety-authority"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/maintenance-authority",
+      "name": "robotics/maintenance-authority",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject may push firmware, configuration and key rotation.",
+      "title": "Maintenance authority",
+      "url": "https://atep.dev/claims/robotics/maintenance-authority"
+    },
+    {
+      "claim": "https://atep.dev/claims/robotics/peer-motion",
+      "name": "robotics/peer-motion",
+      "core": true,
+      "status": "core",
+      "profile": "robotics",
+      "definition": "Subject may send motion commands to the listed peers.",
+      "title": "Peer motion",
+      "url": "https://atep.dev/claims/robotics/peer-motion"
+    },
+    {
+      "claim": "https://atep.dev/claims/registry-endpoint",
+      "name": "registry-endpoint",
+      "core": true,
+      "status": "core",
+      "profile": "core",
+      "definition": "Subject operates the service at the given URL (registry, verifier, MCP server or A2A agent).",
+      "title": "Registry endpoint",
+      "url": "https://atep.dev/claims/registry-endpoint"
+    }
+  ]
+}

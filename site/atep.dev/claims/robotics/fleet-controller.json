@@ -1,0 +1,32 @@
+{
+  "claim": "https://atep.dev/claims/robotics/fleet-controller",
+  "name": "robotics/fleet-controller",
+  "core": true,
+  "status": "core",
+  "profile": "robotics",
+  "definition": "Subject may issue motion and coordination commands for the fleet.",
+  "data-schema": "fleet-controller-data = { * tstr => any }   ; free map, recommended: fleet: tstr",
+  "title": "Fleet controller",
+  "description": [
+    "Required for ATEP-R motion commands (or a fleet-member with a peer-motion delegation) and, together with safety-certified, for actuation commands."
+  ],
+  "issued-by": "Fleet operator (root)",
+  "subject": "Agent ID of the controller",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Not checked.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 17"
+  ],
+  "example-data": {
+    "fleet": "warehouse-7"
+  },
+  "links": {
+    "self": "/claims/robotics/fleet-controller",
+    "html": "/claims/robotics/fleet-controller.html",
+    "json": "/claims/robotics/fleet-controller.json",
+    "directory": "/claims/"
+  }
+}

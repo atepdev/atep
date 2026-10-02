@@ -1,0 +1,33 @@
+{
+  "claim": "https://atep.dev/claims/successor",
+  "name": "successor",
+  "core": true,
+  "status": "core",
+  "profile": "core",
+  "definition": "Subject replaces the issuer's identity (key rotation).",
+  "data-schema": "successor-data = { ? reason: tstr, * tstr => any }   ; issuer is the old identity",
+  "title": "Successor",
+  "description": [
+    "Signed by the old identity, naming the new identity as subject. A verifier MAY follow exactly one hop of succession when no attestation of the old identity satisfies a rule for a signer that is the subject of a valid successor attestation. A second hop MUST NOT be followed and monitors SHOULD alert on it."
+  ],
+  "issued-by": "The subject's old identity",
+  "subject": "Agent ID of the new identity",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "The optional succession rule at step 9.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 4 (Lifecycle, Rotate)",
+    "Specification section 7 (Retirement and succession)"
+  ],
+  "example-data": {
+    "reason": "scheduled key rotation"
+  },
+  "links": {
+    "self": "/claims/successor",
+    "html": "/claims/successor.html",
+    "json": "/claims/successor.json",
+    "directory": "/claims/"
+  }
+}

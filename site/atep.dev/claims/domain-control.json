@@ -1,0 +1,35 @@
+{
+  "claim": "https://atep.dev/claims/domain-control",
+  "name": "domain-control",
+  "core": true,
+  "status": "core",
+  "profile": "core",
+  "definition": "Subject is authorized for a DNS name, proven by a record at _atep.<domain> or https://<domain>/.well-known/atep.json.",
+  "data-schema": "domain-control-data = { domain: dns-name, * tstr => any }\n; lowercase DNS name: labels of 1 to 63 of a-z, 0-9 and \"-\" (no leading or\n; trailing \"-\" in a label), at most 253 characters, no trailing dot.\ndns-name = tstr",
+  "title": "Domain control",
+  "description": [
+    "The issuer states that it checked that the domain publishes the subject Agent ID, either in the document at https://<domain>/.well-known/atep.json or in a TXT record at _atep.<domain>. The protocol cannot verify that check, so monitors watch the log for domain-control attestations whose subject the domain owner does not recognize.",
+    "The binding applies to exactly the named DNS name. A binding for example.com does not bind a.example.com and the reverse; monitors that watch a name also watch every subdomain of it."
+  ],
+  "issued-by": "Domain owner",
+  "subject": "Agent ID of the identity the domain authorizes",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Logs at admission (schema_invalid); the core verifier does not check it.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 4 (Lifecycle, Bind)",
+    "Specification section 7",
+    "Specification section 9 (Admission, Monitors)"
+  ],
+  "example-data": {
+    "domain": "example.com"
+  },
+  "links": {
+    "self": "/claims/domain-control",
+    "html": "/claims/domain-control.html",
+    "json": "/claims/domain-control.json",
+    "directory": "/claims/"
+  }
+}

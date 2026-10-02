@@ -1,0 +1,5 @@
+Contact: mailto:nathan@airadlabs.com
+Expires: 2027-10-01T00:00:00.000Z
+Preferred-Languages: en
+Policy: https://github.com/atepdev/atep/blob/main/SECURITY.md
+Canonical: https://atep.dev/.well-known/security.txt

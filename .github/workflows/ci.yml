@@ -154,7 +154,11 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Site checks (links, JSON-LD, llms-full.txt up to date)
+      - name: Claim pages up to date (generated from rust/atep-log/data/claims.json)
+        run: node site/build-claims.mjs --check
+      - name: Sitemap up to date
+        run: node site/build-sitemap.mjs --check
+      - name: Site checks (links, JSON-LD, canonical URLs, claim pages, sitemap, security.txt, llms-full.txt up to date)
         run: node site/check.mjs
       - name: Site server tests (headers, hidden files, redirects)
         run: node --test site/server.test.mjs

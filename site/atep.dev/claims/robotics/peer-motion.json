@@ -1,0 +1,37 @@
+{
+  "claim": "https://atep.dev/claims/robotics/peer-motion",
+  "name": "robotics/peer-motion",
+  "core": true,
+  "status": "core",
+  "profile": "robotics",
+  "definition": "Subject may send motion commands to the listed peers.",
+  "data-schema": "peer-motion-data = { peers: [* agent-id], * tstr => any }   ; REQUIRED for the ATEP-R motion rule\nagent-id = bstr .size 32",
+  "title": "Peer motion",
+  "description": [
+    "Lets a fleet-member send motion commands to specific peers for cooperative tasks. The delegation counts for the ATEP-R motion class only when the receiving agent (the recipient identity that opened the envelope) is listed in data.peers; otherwise it fails with claim_data_mismatch.",
+    "In JSON tools an Agent ID in peers is written as {\"$hex\": \"<64 hex characters>\"}; on the wire it is a byte string of 32 bytes."
+  ],
+  "issued-by": "Fleet controller",
+  "subject": "Agent ID allowed to command the peers",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "ATEP-R motion enforcement (claim_data_mismatch).",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 17 (peer-motion)"
+  ],
+  "example-data": {
+    "peers": [
+      {
+        "$hex": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  },
+  "links": {
+    "self": "/claims/robotics/peer-motion",
+    "html": "/claims/robotics/peer-motion.html",
+    "json": "/claims/robotics/peer-motion.json",
+    "directory": "/claims/"
+  }
+}

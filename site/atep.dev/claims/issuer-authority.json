@@ -1,0 +1,34 @@
+{
+  "claim": "https://atep.dev/claims/issuer-authority",
+  "name": "issuer-authority",
+  "core": true,
+  "status": "core",
+  "profile": "core",
+  "definition": "Subject may issue the listed claim types (chain delegation).",
+  "data-schema": "issuer-authority-data = { claims: [* uri], * tstr => any }   ; REQUIRED layout\nuri = tstr",
+  "title": "Issuer authority",
+  "description": [
+    "Delegates the right to issue the listed claim types. A verifier walks from a claim attestation up through issuer-authority attestations to a root in its trust policy. To let the subject delegate further, the list MUST contain the issuer-authority URI itself. An empty list delegates nothing. Delegation cannot exceed the delegator's own authority."
+  ],
+  "issued-by": "A root issuer or a delegate",
+  "subject": "Agent ID of the delegate",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Every consumer (attestation_schema_invalid).",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 7 (Chains)"
+  ],
+  "example-data": {
+    "claims": [
+      "https://atep.dev/claims/operator"
+    ]
+  },
+  "links": {
+    "self": "/claims/issuer-authority",
+    "html": "/claims/issuer-authority.html",
+    "json": "/claims/issuer-authority.json",
+    "directory": "/claims/"
+  }
+}

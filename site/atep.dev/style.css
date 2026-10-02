@@ -22,13 +22,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .skip:focus { top: 0.5rem; }
 
 /* Header band stays dark in both themes so the logo image never sits on white. */
-header.site { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 2.25rem; padding: 0.6rem clamp(1rem, 2vw, 3rem); background: var(--band); border-bottom: 1px solid var(--band-border); box-shadow: 0 1px 0 rgba(23, 181, 241, 0.18), 0 8px 28px -18px var(--glow); color: #e7e5ea; }
+header.site { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; padding: 0.6rem clamp(1rem, 2vw, 3rem); background: var(--band); border-bottom: 1px solid var(--band-border); box-shadow: 0 1px 0 rgba(23, 181, 241, 0.18), 0 8px 28px -18px var(--glow); color: #e7e5ea; }
 header.site .brand { display: inline-flex; align-items: center; line-height: 0; }
 header.site .brand img { height: 3.4rem; width: auto; display: block; margin: -0.55rem 0; -webkit-mask-image: radial-gradient(ellipse 54% 58% at 50% 50%, #000 60%, transparent 100%); mask-image: radial-gradient(ellipse 54% 58% at 50% 50%, #000 60%, transparent 100%); }
-header.site nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; flex: 1; }
+header.site nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.2rem; flex: 1; }
 header.site nav a { color: #a9abb3; text-decoration: none; padding: 0.25rem 0; border-bottom: 2px solid transparent; }
 header.site nav a:hover { color: #e7e5ea; border-bottom-color: #17b5f1; }
-header.site nav a[aria-current="page"] { font-weight: 700; color: #e7e5ea; border-bottom-color: #17b5f1; }
+header.site nav a[aria-current="page"], header.site nav a[aria-current="true"] { font-weight: 700; color: #e7e5ea; border-bottom-color: #17b5f1; }
 header.site a:focus-visible, header.site button:focus-visible { outline-color: #17b5f1; }
 #theme { background: #14161a; color: #e7e5ea; border: 1px solid #343840; border-radius: 0.4rem; padding: 0.35rem 0.8rem; font: inherit; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
 #theme:hover { border-color: #17b5f1; box-shadow: 0 0 14px -2px rgba(23, 181, 241, 0.45); }
@@ -77,5 +77,18 @@ footer.site a { color: var(--accent); }
 .facts div { text-align: center; }
 .facts dt { color: #a9abb3; font-size: 0.9rem; }
 .facts dd { margin: 0.15rem 0 0; font-size: 1.35rem; font-weight: 700; color: #17b5f1; font-variant-numeric: tabular-nums; }
+
+/* Claim type pages */
+.crumbs { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.25rem; overflow-wrap: anywhere; }
+.uri { margin: 0 0 1rem; overflow-wrap: anywhere; }
+.badge { display: inline-block; margin-left: 0.5rem; padding: 0.05rem 0.6rem; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-size: 0.85rem; font-weight: 600; vertical-align: middle; }
+dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.5rem; margin: 0.5rem 0 1.5rem; padding: 1rem 1.4rem; background: var(--surface); border: 1px solid var(--border); border-radius: 0.6rem; }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; overflow-wrap: anywhere; }
+.claimtable th[scope="row"] code { white-space: nowrap; overflow-wrap: normal; }
+.claimtable td:nth-child(3) { min-width: 15rem; }
+.claimtable td:nth-child(4) { min-width: 11rem; }
+.blk + .blk { margin-top: 1.75rem; }
+@media (max-width: 40rem) { dl.kv { grid-template-columns: 1fr; gap: 0; padding: 0.75rem 1rem; } dl.kv dd { margin-bottom: 0.6rem; } }
 @media (max-width: 40rem) { header.site { gap: 0.5rem 1rem; } header.site nav { gap: 0.25rem 0.9rem; flex: 1 1 100%; order: 3; } #theme { margin-left: auto; } th, td { padding: 0.4rem; } header.site .brand img { height: 3rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }

@@ -1,0 +1,5 @@
+# Policy for AI crawlers and content signals is decided by the site owner at Cloudflare, not in this file.
+User-agent: *
+Allow: /
+
+Sitemap: https://atep.dev/sitemap.xml

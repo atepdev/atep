@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://atep.dev/about.html</loc></url>
+  <url><loc>https://atep.dev/governance.html</loc></url>
+  <url><loc>https://atep.dev/</loc></url>
+  <url><loc>https://atep.dev/quickstart.html</loc></url>
+  <url><loc>https://atep.dev/security.html</loc></url>
+  <url><loc>https://atep.dev/specification.html</loc></url>
+  <url><loc>https://atep.dev/vectors.html</loc></url>
+  <url><loc>https://atep.dev/claims/audited</loc></url>
+  <url><loc>https://atep.dev/claims/domain-control</loc></url>
+  <url><loc>https://atep.dev/claims/</loc></url>
+  <url><loc>https://atep.dev/claims/issuer-authority</loc></url>
+  <url><loc>https://atep.dev/claims/operator</loc></url>
+  <url><loc>https://atep.dev/claims/registry-endpoint</loc></url>
+  <url><loc>https://atep.dev/claims/retired</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/fleet-controller</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/fleet-member</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/maintenance-authority</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/peer-motion</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/safety-authority</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/safety-certified</loc></url>
+  <url><loc>https://atep.dev/claims/robotics/sensor-source</loc></url>
+  <url><loc>https://atep.dev/claims/successor</loc></url>
+</urlset>

@@ -1,0 +1,34 @@
+{
+  "claim": "https://atep.dev/claims/operator",
+  "name": "operator",
+  "core": true,
+  "status": "core",
+  "profile": "core",
+  "definition": "Subject is operated by the named legal entity.",
+  "data-schema": "operator-data = { ? name: tstr, * tstr => any }   ; recommended layout, not enforced",
+  "title": "Operator",
+  "description": [
+    "Names the legal entity (never a private individual, spec section 16 point 1) that operates the subject. Any issuer may make the statement; whether a verifier accepts it depends on its trust policy and the issuer's chain to a root.",
+    "The data map is free. The recommended layout is {\"name\": tstr}."
+  ],
+  "issued-by": "Any issuer (in ATEP-R, the fleet operator)",
+  "subject": "Agent ID operated by the entity",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Not checked.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 7",
+    "Specification section 17"
+  ],
+  "example-data": {
+    "name": "Acme Robotics GmbH"
+  },
+  "links": {
+    "self": "/claims/operator",
+    "html": "/claims/operator.html",
+    "json": "/claims/operator.json",
+    "directory": "/claims/"
+  }
+}

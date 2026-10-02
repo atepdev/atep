@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ATEP Overview</title>
 <meta name="description" content="ATEP is an open, transport-agnostic trust layer: signed, encrypted, post-quantum envelopes that let robots and AI agents prove who sent data, that it is unaltered, and what certifications the sender holds.">
+<link rel="canonical" href="https://atep.dev/">
 <link rel="stylesheet" href="style.css">
 <script src="theme-boot.js"></script>
 <meta name="theme-color" content="#0c0d0f">
@@ -54,6 +55,7 @@
   <nav aria-label="Main">
       <a href="index.html" aria-current="page">Overview</a>
       <a href="specification.html">Specification</a>
+      <a href="claims/">Claims</a>
       <a href="quickstart.html">Quick start</a>
       <a href="vectors.html">Test vectors</a>
       <a href="governance.html">Governance</a>
@@ -73,7 +75,7 @@
 <div class="claim"><h2>Offline identification and verification</h2><p>A robot or agent can identify and verify another with no internet connection, registry or central server, in milliseconds on a desktop CPU.</p></div>
 </div>
 <p class="fine">Quantum-safe here means finalized NIST standards in a hybrid construction. The reference code has not had an independent security audit.</p>
-<p class="cta"><a class="btn primary" href="specification.html">Specification</a> <a class="btn" href="quickstart.html">Quick start</a> <a class="btn" href="vectors.html">Test vectors</a> <a class="btn" href="https://github.com/atepdev/atep">Source on GitHub</a></p>
+<p class="cta"><a class="btn primary" href="specification.html">Specification</a> <a class="btn" href="quickstart.html">Quick start</a> <a class="btn" href="vectors.html">Test vectors</a> <a class="btn" href="claims/">Claim types</a> <a class="btn" href="https://github.com/atepdev/atep">Source on GitHub</a></p>
 <dl class="facts" aria-label="Status">
 <div><dt>Draft</dt><dd>07</dd></div>
 <div><dt>Rust passes</dt><dd>436 of 436 vectors</dd></div>
@@ -101,6 +103,7 @@
 <li><a href="quickstart.html">Quick start</a> in Rust, JavaScript and Python.</li>
 <li><a href="specification.html">Specification</a> and the whole text in one file: <a href="llms-full.txt">llms-full.txt</a>.</li>
 <li><a href="vectors.html">Test vectors</a>: how an implementer proves conformance.</li>
+<li><a href="claims/">Claim types</a>: the definition and schema of every claim URI under <code>https://atep.dev/claims/</code>.</li>
 <li><a href="llms.txt">llms.txt</a>, a one screen map for language models.</li>
 </ul></section>
 </div>

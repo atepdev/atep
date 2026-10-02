@@ -1,0 +1,36 @@
+{
+  "claim": "https://atep.dev/claims/registry-endpoint",
+  "name": "registry-endpoint",
+  "core": true,
+  "status": "core",
+  "profile": "core",
+  "definition": "Subject operates the service at the given URL (registry, verifier, MCP server or A2A agent).",
+  "data-schema": "registry-endpoint-data = { url: uri, kind: endpoint-kind, * tstr => any }\nendpoint-kind = \"registry\" / \"verifier\" / \"mcp\" / \"a2a\" / (tstr .regexp \"x-[a-z0-9-]+\")\nuri = tstr   ; an https URL",
+  "title": "Registry endpoint",
+  "description": [
+    "Binds a service endpoint to an Agent ID through an ordinary attestation, so a client can find where an identity runs a registry, verifier, MCP server or A2A agent and check that the statement is logged. Attestations only: agent traffic is never logged (spec section 16 point 5).",
+    "kind is one of registry, verifier, mcp, a2a, or an extension name beginning with x-. A signed A2A agent card is carried by hashing the card JSON into the attestation evidence field and pointing evidence-uri at the card.",
+    "A log validates url (an https URL of at most 2048 characters with a host, no credentials and no whitespace) and kind at admission (schema_invalid); the core verifier does not check it. It is the seventh claim type of the core list of Draft 05, which with the seven robotics claim types makes 14."
+  ],
+  "issued-by": "The endpoint operator (usually the subject itself, or its domain owner)",
+  "subject": "Agent ID the endpoint belongs to",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Logs at admission (schema_invalid); the core verifier does not check it.",
+  "evidence": "optional (the A2A agent card digest)",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 7 (Registry endpoints)",
+    "Specification section 9 (Admission)"
+  ],
+  "example-data": {
+    "url": "https://registry.example.com/v1",
+    "kind": "registry"
+  },
+  "links": {
+    "self": "/claims/registry-endpoint",
+    "html": "/claims/registry-endpoint.html",
+    "json": "/claims/registry-endpoint.json",
+    "directory": "/claims/"
+  }
+}

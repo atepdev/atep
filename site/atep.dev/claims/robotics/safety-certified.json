@@ -1,0 +1,34 @@
+{
+  "claim": "https://atep.dev/claims/robotics/safety-certified",
+  "name": "robotics/safety-certified",
+  "core": true,
+  "status": "core",
+  "profile": "robotics",
+  "definition": "Subject passed the named safety standard on the given date; evidence hash required.",
+  "data-schema": "safety-certified-data = { ? standard: tstr, ? date: tstr, * tstr => any }   ; recommended layout, not enforced\n; the attestation MUST carry evidence: bstr .size 32",
+  "title": "Safety certified",
+  "description": [
+    "Subject's software and hardware passed the named standard (for example ISO 10218, ISO 3691-4, UL 3100). The evidence field is REQUIRED. Together with fleet-controller it authorizes actuation; a fleet-member with safety-certified may send an e-stop."
+  ],
+  "issued-by": "Safety certifier",
+  "subject": "Agent ID that passed",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Evidence presence by every consumer; the data map is not checked.",
+  "evidence": "required",
+  "lifetime": "up to 400 days (audit-backed)",
+  "spec": [
+    "Specification section 7 (Evidence requirement)",
+    "Specification section 17"
+  ],
+  "example-data": {
+    "standard": "ISO 10218-1:2025",
+    "date": "2026-08-15"
+  },
+  "links": {
+    "self": "/claims/robotics/safety-certified",
+    "html": "/claims/robotics/safety-certified.html",
+    "json": "/claims/robotics/safety-certified.json",
+    "directory": "/claims/"
+  }
+}

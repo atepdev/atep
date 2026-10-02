@@ -1,0 +1,30 @@
+{
+  "claim": "https://atep.dev/claims/robotics/safety-authority",
+  "name": "robotics/safety-authority",
+  "core": true,
+  "status": "core",
+  "profile": "robotics",
+  "definition": "Subject may issue e-stops and geofence changes.",
+  "data-schema": "safety-authority-data = { * tstr => any }   ; free map",
+  "title": "Safety authority",
+  "description": [
+    "Required for ATEP-R safety commands other than an e-stop accepted from a safety-certified fleet-member."
+  ],
+  "issued-by": "Fleet operator",
+  "subject": "Agent ID of the authority",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Not checked.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 17"
+  ],
+  "example-data": {},
+  "links": {
+    "self": "/claims/robotics/safety-authority",
+    "html": "/claims/robotics/safety-authority.html",
+    "json": "/claims/robotics/safety-authority.json",
+    "directory": "/claims/"
+  }
+}

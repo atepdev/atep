@@ -1,0 +1,32 @@
+{
+  "claim": "https://atep.dev/claims/robotics/fleet-member",
+  "name": "robotics/fleet-member",
+  "core": true,
+  "status": "core",
+  "profile": "robotics",
+  "definition": "Subject belongs to the named fleet.",
+  "data-schema": "fleet-member-data = { * tstr => any }   ; free map, recommended: fleet: tstr",
+  "title": "Fleet member",
+  "description": [
+    "Minimum claim for ATEP-R telemetry and coordination commands, together with sensor-source for sensor data, and with peer-motion for delegated motion. Safety e-stops are accepted from a fleet-member that is also safety-certified."
+  ],
+  "issued-by": "Fleet controller",
+  "subject": "Agent ID of the unit",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Not checked.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 17 (Claim vocabulary, command classes)"
+  ],
+  "example-data": {
+    "fleet": "warehouse-7"
+  },
+  "links": {
+    "self": "/claims/robotics/fleet-member",
+    "html": "/claims/robotics/fleet-member.html",
+    "json": "/claims/robotics/fleet-member.json",
+    "directory": "/claims/"
+  }
+}

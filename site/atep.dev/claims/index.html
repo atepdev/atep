@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP claim types</title>
+<meta name="description" content="The 14 core claim types of ATEP under https://atep.dev/claims/: definitions, who issues them, the CDDL schema of data, and lifetimes.">
+<link rel="canonical" href="https://atep.dev/claims/">
+<link rel="alternate" type="application/json" href="https://atep.dev/claims/index.json">
+<link rel="stylesheet" href="/style.css">
+<script src="/theme-boot.js"></script>
+<meta name="theme-color" content="#0c0d0f">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ATEP">
+<meta property="og:title" content="ATEP claim types">
+<meta property="og:description" content="The 14 core claim types of ATEP under https://atep.dev/claims/: definitions, who issues them, the CDDL schema of data, and lifetimes.">
+<meta property="og:url" content="https://atep.dev/claims/">
+<meta property="og:image" content="https://atep.dev/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ATEP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ATEP claim types">
+<meta name="twitter:description" content="The 14 core claim types of ATEP under https://atep.dev/claims/: definitions, who issues them, the CDDL schema of data, and lifetimes.">
+<meta name="twitter:image" content="https://atep.dev/assets/og-card.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": "https://atep.dev/claims/",
+  "name": "ATEP claim types",
+  "url": "https://atep.dev/claims/",
+  "description": "The closed core vocabulary of ATEP claim types.",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/domain-control",
+      "url": "https://atep.dev/claims/domain-control",
+      "name": "Domain control",
+      "termCode": "domain-control",
+      "description": "Subject is authorized for a DNS name, proven by a record at _atep.\u003cdomain> or https://\u003cdomain>/.well-known/atep.json.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/operator",
+      "url": "https://atep.dev/claims/operator",
+      "name": "Operator",
+      "termCode": "operator",
+      "description": "Subject is operated by the named legal entity.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/successor",
+      "url": "https://atep.dev/claims/successor",
+      "name": "Successor",
+      "termCode": "successor",
+      "description": "Subject replaces the issuer's identity (key rotation).",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/retired",
+      "url": "https://atep.dev/claims/retired",
+      "name": "Retired",
+      "termCode": "retired",
+      "description": "Subject is permanently retired. Self-issued.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/issuer-authority",
+      "url": "https://atep.dev/claims/issuer-authority",
+      "name": "Issuer authority",
+      "termCode": "issuer-authority",
+      "description": "Subject may issue the listed claim types (chain delegation).",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/audited",
+      "url": "https://atep.dev/claims/audited",
+      "name": "Audited",
+      "termCode": "audited",
+      "description": "Subject passed the named audit on the given date; evidence hash required.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/fleet-member",
+      "url": "https://atep.dev/claims/robotics/fleet-member",
+      "name": "Fleet member",
+      "termCode": "robotics/fleet-member",
+      "description": "Subject belongs to the named fleet.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/fleet-controller",
+      "url": "https://atep.dev/claims/robotics/fleet-controller",
+      "name": "Fleet controller",
+      "termCode": "robotics/fleet-controller",
+      "description": "Subject may issue motion and coordination commands for the fleet.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/safety-certified",
+      "url": "https://atep.dev/claims/robotics/safety-certified",
+      "name": "Safety certified",
+      "termCode": "robotics/safety-certified",
+      "description": "Subject passed the named safety standard on the given date; evidence hash required.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/sensor-source",
+      "url": "https://atep.dev/claims/robotics/sensor-source",
+      "name": "Sensor source",
+      "termCode": "robotics/sensor-source",
+      "description": "Subject's named sensors are calibrated and trusted.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/safety-authority",
+      "url": "https://atep.dev/claims/robotics/safety-authority",
+      "name": "Safety authority",
+      "termCode": "robotics/safety-authority",
+      "description": "Subject may issue e-stops and geofence changes.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/maintenance-authority",
+      "url": "https://atep.dev/claims/robotics/maintenance-authority",
+      "name": "Maintenance authority",
+      "termCode": "robotics/maintenance-authority",
+      "description": "Subject may push firmware, configuration and key rotation.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/robotics/peer-motion",
+      "url": "https://atep.dev/claims/robotics/peer-motion",
+      "name": "Peer motion",
+      "termCode": "robotics/peer-motion",
+      "description": "Subject may send motion commands to the listed peers.",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atep.dev/claims/registry-endpoint",
+      "url": "https://atep.dev/claims/registry-endpoint",
+      "name": "Registry endpoint",
+      "termCode": "registry-endpoint",
+      "description": "Subject operates the service at the given URL (registry, verifier, MCP server or A2A agent).",
+      "inDefinedTermSet": "https://atep.dev/claims/"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="/"><img src="/assets/atep-wordmark.jpg" alt="ATEP" width="970" height="340"></a>
+  <nav aria-label="Main">
+      <a href="/">Overview</a>
+      <a href="/specification.html">Specification</a>
+      <a href="/claims/" aria-current="page">Claims</a>
+      <a href="/quickstart.html">Quick start</a>
+      <a href="/vectors.html">Test vectors</a>
+      <a href="/governance.html">Governance</a>
+      <a href="/security.html">Security</a>
+      <a href="/about.html">About</a>
+      <a href="/llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main">
+<h1>Claim types</h1>
+<p class="uri"><code>https://atep.dev/claims/</code></p>
+<p class="lead">An ATEP attestation names what it asserts with a claim type, a URI. ATEP reserves <code>https://atep.dev/claims/</code> for a closed core set of 14 claim types, listed here: seven core claim types and the seven of the robotics profile (ATEP-R). Each URI resolves to a definition, who issues it, the CDDL schema of <code>data</code>, and the evidence and lifetime rules. Anyone may use their own namespace for other claim types.</p>
+<div class="note"><p>Fetch a claim URI with a browser for the page, with <code>Accept: application/json</code> for the JSON document, or add <code>.json</code> or <code>.html</code> to the path. The directory itself is also available as <a href="/claims/index.json"><code>/claims/index.json</code></a>. Robotics claim types live under <code>/claims/robotics/</code>. Sections 7 and 17 of the <a href="/specification.html">specification</a> define the vocabulary.</p></div>
+<section class="blk" aria-labelledby="g-core"><h2 id="g-core">Core claims</h2>
+<div class="tablewrap"><table class="claimtable">
+<caption>7 claim types</caption>
+<thead><tr><th scope="col">Claim</th><th scope="col">Status</th><th scope="col">Definition</th><th scope="col">Issued by</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="/claims/domain-control"><code>domain-control</code></a></th><td>core</td><td>Subject is authorized for a DNS name, proven by a record at _atep.&lt;domain&gt; or https://&lt;domain&gt;/.well-known/atep.json.</td><td>Domain owner</td></tr>
+<tr><th scope="row"><a href="/claims/operator"><code>operator</code></a></th><td>core</td><td>Subject is operated by the named legal entity.</td><td>Any issuer (in ATEP-R, the fleet operator)</td></tr>
+<tr><th scope="row"><a href="/claims/successor"><code>successor</code></a></th><td>core</td><td>Subject replaces the issuer's identity (key rotation).</td><td>The subject's old identity</td></tr>
+<tr><th scope="row"><a href="/claims/retired"><code>retired</code></a></th><td>core</td><td>Subject is permanently retired. Self-issued.</td><td>The subject itself</td></tr>
+<tr><th scope="row"><a href="/claims/issuer-authority"><code>issuer-authority</code></a></th><td>core</td><td>Subject may issue the listed claim types (chain delegation).</td><td>A root issuer or a delegate</td></tr>
+<tr><th scope="row"><a href="/claims/audited"><code>audited</code></a></th><td>core</td><td>Subject passed the named audit on the given date; evidence hash required.</td><td>Auditor</td></tr>
+<tr><th scope="row"><a href="/claims/registry-endpoint"><code>registry-endpoint</code></a></th><td>core</td><td>Subject operates the service at the given URL (registry, verifier, MCP server or A2A agent).</td><td>The endpoint operator (usually the subject itself, or its domain owner)</td></tr>
+</tbody></table></div>
+</section>
+<section class="blk" aria-labelledby="g-robotics"><h2 id="g-robotics">Robotics claims (ATEP-R)</h2>
+<div class="tablewrap"><table class="claimtable">
+<caption>7 claim types</caption>
+<thead><tr><th scope="col">Claim</th><th scope="col">Status</th><th scope="col">Definition</th><th scope="col">Issued by</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="/claims/robotics/fleet-member"><code>robotics/fleet-member</code></a></th><td>core</td><td>Subject belongs to the named fleet.</td><td>Fleet controller</td></tr>
+<tr><th scope="row"><a href="/claims/robotics/fleet-controller"><code>robotics/fleet-controller</code></a></th><td>core</td><td>Subject may issue motion and coordination commands for the fleet.</td><td>Fleet operator (root)</td></tr>
+<tr><th scope="row"><a href="/claims/robotics/safety-certified"><code>robotics/safety-certified</code></a></th><td>core</td><td>Subject passed the named safety standard on the given date; evidence hash required.</td><td>Safety certifier</td></tr>
+<tr><th scope="row"><a href="/claims/robotics/sensor-source"><code>robotics/sensor-source</code></a></th><td>core</td><td>Subject's named sensors are calibrated and trusted.</td><td>Fleet controller or vendor</td></tr>
+<tr><th scope="row"><a href="/claims/robotics/safety-authority"><code>robotics/safety-authority</code></a></th><td>core</td><td>Subject may issue e-stops and geofence changes.</td><td>Fleet operator</td></tr>
+<tr><th scope="row"><a href="/claims/robotics/maintenance-authority"><code>robotics/maintenance-authority</code></a></th><td>core</td><td>Subject may push firmware, configuration and key rotation.</td><td>Fleet operator</td></tr>
+<tr><th scope="row"><a href="/claims/robotics/peer-motion"><code>robotics/peer-motion</code></a></th><td>core</td><td>Subject may send motion commands to the listed peers.</td><td>Fleet controller</td></tr>
+</tbody></table></div>
+</section>
+</main>
+<footer class="site">
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="/about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+</footer>
+<script src="/site.js"></script>
+</body>
+</html>

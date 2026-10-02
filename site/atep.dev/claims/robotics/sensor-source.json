@@ -1,0 +1,35 @@
+{
+  "claim": "https://atep.dev/claims/robotics/sensor-source",
+  "name": "robotics/sensor-source",
+  "core": true,
+  "status": "core",
+  "profile": "robotics",
+  "definition": "Subject's named sensors are calibrated and trusted.",
+  "data-schema": "sensor-source-data = { * tstr => any }   ; free map, recommended: sensors: [* tstr]",
+  "title": "Sensor source",
+  "description": [
+    "Required, together with fleet-member, for ATEP-R sensor commands (lidar, camera, detections)."
+  ],
+  "issued-by": "Fleet controller or vendor",
+  "subject": "Agent ID of the unit carrying the sensors",
+  "data-schema-format": "cddl",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "data-checked-by": "Not checked.",
+  "evidence": "optional",
+  "lifetime": "30 to 180 days by default, 400 days at most",
+  "spec": [
+    "Specification section 17"
+  ],
+  "example-data": {
+    "sensors": [
+      "lidar-front",
+      "cam-1"
+    ]
+  },
+  "links": {
+    "self": "/claims/robotics/sensor-source",
+    "html": "/claims/robotics/sensor-source.html",
+    "json": "/claims/robotics/sensor-source.json",
+    "directory": "/claims/"
+  }
+}
