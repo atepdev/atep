@@ -158,6 +158,8 @@ jobs:
         run: node site/build-claims.mjs --check
       - name: Sitemap up to date
         run: node site/build-sitemap.mjs --check
+      - name: Hosted demo copy up to date (generated from demo/)
+        run: node site/build-demo.mjs --check
       - name: Site checks (links, JSON-LD, canonical URLs, claim pages, sitemap, security.txt, llms-full.txt up to date)
         run: node site/check.mjs
       - name: Site server tests (headers, hidden files, redirects)

@@ -16,6 +16,9 @@
     "/assets/**": {
       "Cache-Control": "public, max-age=86400"
     },
+    "/demo/**": {
+      "Content-Security-Policy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    },
     "/claims/**": {
       "Cache-Control": "public, max-age=3600",
       "Access-Control-Allow-Origin": "*"

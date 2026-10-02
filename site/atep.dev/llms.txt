@@ -6,6 +6,7 @@
 - [Specification](https://atep.dev/specification.html): Draft 07 section map and licence (CC BY 4.0)
 - [Full specification as one Markdown file](https://atep.dev/llms-full.txt): load the whole protocol in one fetch
 - [Quick start](https://atep.dev/quickstart.html): verify a vector in Rust, JavaScript or Python
+- [ATEP-R demo](https://atep.dev/demo/): in-browser demo, three simulated units, real envelopes, one revoked and rejected on screen
 - [Claim types](https://atep.dev/claims/): the 14 core claim URIs, each with a definition, issuer, CDDL schema of data and lifetime (HTML or JSON)
 - [Test vectors](https://atep.dev/vectors.html): 436 vectors, the authoritative conformance suite
 - [Governance](https://atep.dev/governance.html): seven design commitments (no global score, no mandatory root, agents not people)

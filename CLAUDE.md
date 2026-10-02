@@ -33,9 +33,9 @@ Any Rust build needs a C toolchain (a working `cc` as linker; on Debian or Ubunt
 | Examples | `examples/` | `npm install`, `npm test` (25 tests; needs `js/dist`) |
 | MQTT example | `examples/mqtt/` | `npm install`, `npm test` (5 tests; own package.json; not part of `examples` `npm test`) |
 | ROS 2 example | `examples/ros2/` | `python3 -m unittest discover -s tests -v`; `python3 -m py_compile atep_ros2_example/*.py`. ROS 2 itself is not installed and the nodes are unrun. |
-| Demo | `demo/` | `node demo/selftest.mjs` (34 checks); `node demo/serve.mjs` then open http://127.0.0.1:8088/. `demo/vendor/atep-core` is a copy of `js/dist`; refresh it when the package is rebuilt. |
+| Demo | `demo/` | `node demo/selftest.mjs` (34 checks); `node demo/serve.mjs` then open http://127.0.0.1:8088/. `demo/vendor/atep-core` is a copy of `js/dist`; refresh it when the package is rebuilt. The hosted copy at https://atep.dev/demo/ is generated: run `node site/build-demo.mjs` after any change in `demo/` and commit `site/atep.dev/demo/`. |
 | MCP server | `mcp/` | see `mcp/README.md` (54 tests) |
-| Site | `site/` | `node site/build-llms-full.mjs` then `node site/check.mjs` |
+| Site | `site/` | `node site/build-llms-full.mjs` then `node site/check.mjs`; also `node site/build-claims.mjs --check`, `node site/build-sitemap.mjs --check`, `node site/build-demo.mjs --check` |
 
 After touching `rust/atep-core`, rebuild `js` and re-run all three: Rust vectors, `js` `npm test`, `python` `unittest`. Three implementations disagreeing is the signal that the spec is underspecified.
 

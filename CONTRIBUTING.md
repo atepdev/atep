@@ -33,8 +33,8 @@ Any Rust build needs a C toolchain (`cc` as linker; on Debian or Ubuntu, `sudo a
 | Python | `python/` | `python3 -m unittest`; `python3 -m atep_py.vectors check ../vectors` (Python 3.8 compatible) |
 | MCP server | `mcp/` | `npm install`, `npm test` (needs `js/dist`) |
 | Examples | `examples/`, `examples/mqtt/` | `npm install`, `npm test` in each (need `js/dist`); ROS 2 example: `python3 -m unittest discover -s tests -v` in `examples/ros2` |
-| Demo | `demo/` | `node demo/selftest.mjs`; `node demo/serve.mjs` |
-| Site and repository checks | root | `node site/build-llms-full.mjs`, `node site/check.mjs`, `bash scripts/ci/no-em-dashes.sh`, `bash scripts/ci/no-local-paths.sh`, `node scripts/ci/vector-counts.mjs`, `node scripts/ci/check-md-links.mjs` |
+| Demo | `demo/` | `node demo/selftest.mjs`; `node demo/serve.mjs`; after any change in `demo/`, `node site/build-demo.mjs` refreshes the hosted copy in `site/atep.dev/demo/` (commit it) |
+| Site and repository checks | root | `node site/build-llms-full.mjs`, `node site/build-demo.mjs --check`, `node site/check.mjs`, `bash scripts/ci/no-em-dashes.sh`, `bash scripts/ci/no-local-paths.sh`, `node scripts/ci/vector-counts.mjs`, `node scripts/ci/check-md-links.mjs` |
 
 The workflows in `.github/workflows/` run all of this; see `.github/workflows/README.md`.
 

@@ -1,6 +1,6 @@
 # ATEP-R reference demo (AIRAD LABS)
 
-Three simulated units on a map exchange real ATEP-R envelopes. Unit 1 is the fleet controller, Unit 2 a certified member, Unit 3 a member whose identity is revoked mid-run. The viewer sees ciphertext in flight, Unit 3's motion command rejected with the failing step and error code named, and the fleet carrying on. Its purpose is to make the robotics profile (ATEP-R, spec section 17) visible: what a receiver checks, what it refuses, and why, using the real verifier. It is an illustration, not a product: the map, movement, clock and the "certified" status of Unit 2 are simulated and no real certification is implied.
+A hosted copy runs in the browser at https://atep.dev/demo/ (generated from this folder by `node site/build-demo.mjs`; this folder stays the source of truth). Three simulated units on a map exchange real ATEP-R envelopes. Unit 1 is the fleet controller, Unit 2 a certified member, Unit 3 a member whose identity is revoked mid-run. The viewer sees ciphertext in flight, Unit 3's motion command rejected with the failing step and error code named, and the fleet carrying on. Its purpose is to make the robotics profile (ATEP-R, spec section 17) visible: what a receiver checks, what it refuses, and why, using the real verifier. It is an illustration, not a product: the map, movement, clock and the "certified" status of Unit 2 are simulated and no real certification is implied.
 
 ## Run
 

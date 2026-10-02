@@ -5,7 +5,9 @@ import http from "node:http";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import zlib from "node:zlib";
 import { createServer } from "./server.mjs";
+const zlibGunzip = (b) => zlib.gunzipSync(b);
 
 async function start(site, env = process.env) {
   const s = createServer(site, env);
@@ -321,4 +323,88 @@ test("generic mechanism on a scratch site: .well-known served, dot directories h
       assert.equal((await get(base, "/.hidden/x.txt", plain)).status, 404);
     } finally { s.close(); }
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test("atep.dev: the demo is served under /demo/ with its own CSP, wasm and ES modules", async () => {
+  const { s, base } = await start("atep.dev");
+  try {
+    const raw = await get(base, "/demo/", plain);
+    assert.equal(raw.status, 200);
+    assert.match(raw.headers.get("content-type"), /^text\/html/);
+    const html = await raw.text();
+    assert.match(html, /<link rel="canonical" href="https:\/\/atep\.dev\/demo\/">/);
+    let r = await get(base, "/demo/index.html", plain);
+    assert.equal(r.status, 200);
+    assert.equal(await r.text(), html);
+
+    // /demo (no slash) is a permanent redirect to /demo/; there is no listing of subdirectories.
+    r = await get(base, "/demo", plain);
+    assert.equal(r.status, 301);
+    assert.equal(r.headers.get("location"), "/demo/");
+    for (const p of ["/demo/src", "/demo/src/", "/demo/vendor/", "/demo/vendor/atep-core/wasm/"]) {
+      r = await get(base, p, plain);
+      assert.equal(r.status, 404, p);
+    }
+
+    for (const p of ["/demo/src/ui.mjs", "/demo/src/engine.mjs", "/demo/src/cbor.mjs"]) {
+      r = await get(base, p, plain);
+      assert.equal(r.status, 200, p);
+      assert.match(r.headers.get("content-type"), /^text\/javascript/, p);
+    }
+    r = await get(base, "/demo/vendor/atep-core/index.js", plain);
+    assert.match(r.headers.get("content-type"), /^text\/javascript/);
+    r = await get(base, "/demo/style.css", plain);
+    assert.match(r.headers.get("content-type"), /^text\/css/);
+
+    const wasmPath = "/demo/vendor/atep-core/wasm/atep_wasm_bg.wasm";
+    r = await get(base, wasmPath, plain);
+    assert.equal(r.status, 200);
+    assert.equal(r.headers.get("content-type"), "application/wasm");
+    const size = (await r.arrayBuffer()).byteLength;
+    assert.ok(size > 100000);
+    assert.equal(r.headers.get("content-encoding"), null);
+    // gzip: use a raw request so the body is not decoded behind our back.
+    const gz = await new Promise((resolve, reject) => {
+      const u = new URL(base);
+      http.get({ host: u.hostname, port: u.port, path: wasmPath, headers: { "accept-encoding": "gzip", "x-forwarded-proto": "https" } }, (res) => {
+        const chunks = [];
+        res.on("data", (c) => chunks.push(c));
+        res.on("end", () => resolve({ res, body: Buffer.concat(chunks) }));
+      }).on("error", reject);
+    });
+    assert.equal(gz.res.statusCode, 200);
+    assert.equal(gz.res.headers["content-encoding"], "gzip");
+    assert.equal(gz.res.headers["content-type"], "application/wasm");
+    assert.ok(gz.body.length < size);
+    assert.equal(Buffer.from(zlibGunzip(gz.body)).length, size);
+
+    // Nothing that is not a browser file is published.
+    for (const p of ["/demo/selftest.mjs", "/demo/serve.mjs", "/demo/package.json", "/demo/README.md", "/demo/../server.mjs", "/demo/..%2fserver.mjs", "/demo/%2e%2e/server.mjs", "/demo/src/../../server.mjs", "/demo/src/nope.mjs", "/assets/build-assets.mjs", "/server.mjs", "/build-demo.mjs", "/selftest.mjs", "/serve.mjs", "/src/ui.mjs"]) {
+      r = await get(base, p, plain);
+      assert.equal(r.status, 404, p);
+    }
+  } finally { s.close(); }
+});
+
+test("atep.dev: /demo/** gets the demo CSP (wasm-unsafe-eval only), every other path keeps the strict one", async () => {
+  const { s, base } = await start("atep.dev");
+  try {
+    const csp = async (p) => (await get(base, p, plain)).headers.get("content-security-policy");
+    const strict = await csp("/index.html");
+    assert.match(strict, /script-src 'self' https:\/\/static\.cloudflareinsights\.com;/);
+    assert.doesNotMatch(strict, /wasm-unsafe-eval/);
+    for (const p of ["/", "/quickstart.html", "/claims/", "/llms.txt", "/assets/favicon.svg"]) assert.equal(await csp(p), strict, p);
+    const demo = await csp("/demo/");
+    assert.match(demo, /script-src 'self' 'wasm-unsafe-eval' https:\/\/static\.cloudflareinsights\.com;/);
+    assert.doesNotMatch(demo, /unsafe-inline|'unsafe-eval'/);
+    // Everything but 'wasm-unsafe-eval' is the site policy.
+    assert.equal(demo.replace(" 'wasm-unsafe-eval'", ""), strict);
+    for (const p of ["/demo/index.html", "/demo/src/ui.mjs", "/demo/style.css", "/demo/vendor/atep-core/wasm/atep_wasm_bg.wasm"]) assert.equal(await csp(p), demo, p);
+    // The other security headers are inherited, and the cache lifetime is the site default.
+    const r = await get(base, "/demo/", plain);
+    assert.equal(r.headers.get("cache-control"), "public, max-age=300");
+    assert.equal(r.headers.get("x-frame-options"), "DENY");
+    assert.equal(r.headers.get("x-content-type-options"), "nosniff");
+    assert.ok(r.headers.get("strict-transport-security"));
+  } finally { s.close(); }
 });

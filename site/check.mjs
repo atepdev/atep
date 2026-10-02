@@ -40,6 +40,7 @@ function resolveTarget(fromFile, siteRoot, href) {
 function canonicalOf(rel) {
   if (rel === "index.html") return `${ATEP}/`;
   if (rel === "claims/index.html") return `${ATEP}/claims/`;
+  if (rel === "demo/index.html") return `${ATEP}/demo/`;
   if (rel.startsWith("claims/")) return `${ATEP}/${rel.slice(0, -5)}`;
   return `${ATEP}/${rel}`;
 }
@@ -80,7 +81,9 @@ function checkHtml(file, siteRoot) {
     const ou = /<meta property="og:url" content="([^"]*)"/.exec(html);
     if (!ou) err(`${rel}: missing og:url`);
     else if (ou[1] !== (can[0] || want)) err(`${rel}: og:url ${ou[1]} differs from canonical`);
-    if (!/<a [^>]*href="(\/|)claims\/?"/.test(html)) err(`${rel}: no visible link to the claims directory in the nav`);
+    const isDemo = relInSite === "demo/index.html";
+    if (!isDemo && !/<a [^>]*href="(\/|)claims\/?"/.test(html)) err(`${rel}: no visible link to the claims directory in the nav`);
+    if (!isDemo && !/<a [^>]*href="(\/|)demo\/"[^>]*>Demo<\/a>/.test(html)) err(`${rel}: no Demo link in the nav`);
   }
   for (const img of html.matchAll(/<img\b[^>]*>/g)) if (!/\salt=/.test(img[0])) err(`${rel}: img without alt`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
@@ -137,6 +140,34 @@ const run = (script, label) => {
 if (exists(path.join(here, "..", "rust/atep-log/data/claims.json"))) run("build-claims.mjs", "claim pages");
 else err("rust/atep-log/data/claims.json not found (claim pages cannot be checked)");
 run("build-sitemap.mjs", "sitemap.xml");
+run("build-demo.mjs", "demo copy (site/atep.dev/demo/)");
+
+// The hosted demo: no inline script or style (it runs under a CSP without 'unsafe-inline'), the files it loads exist,
+// only the Content-Security-Policy differs for /demo/** and only by 'wasm-unsafe-eval' in script-src.
+{
+  const dp = path.join(atepRoot, "demo", "index.html");
+  if (!exists(dp)) err("atep.dev/demo/index.html missing (run node site/build-demo.mjs)");
+  else {
+    const h = read(dp);
+    if (/<script(?![^>]*\bsrc=)/.test(h) || /\sstyle=|<style|\son[a-z]+=/.test(h)) err("demo/index.html: inline script, style or event handler (CSP)");
+    for (const f of ["style.css", "demo-site.css", "src/ui.mjs", "src/engine.mjs", "src/cbor.mjs", "vendor/atep-core/index.js", "vendor/atep-core/wasm/atep_wasm.js", "vendor/atep-core/wasm/atep_wasm_bg.wasm", "vendor/atep-core/THIRD-PARTY-NOTICES.md"]) {
+      if (!exists(path.join(atepRoot, "demo", f))) err(`demo/${f} missing`);
+    }
+    for (const f of ["selftest.mjs", "serve.mjs", "package.json", "README.md"]) if (exists(path.join(atepRoot, "demo", f))) err(`demo/${f} must not be published`);
+    for (const f of listFiles(path.join(atepRoot, "demo")).filter((x) => x.endsWith(".mjs") || x.endsWith(".js"))) {
+      if (/\b(eval\s*\(|new Function\s*\()/.test(read(path.join(atepRoot, "demo", f)))) err(`demo/${f}: eval or new Function (the CSP does not allow it)`);
+    }
+    const hdr = JSON.parse(read(path.join(atepRoot, "static.json"))).headers;
+    const base = hdr["/**"]?.["Content-Security-Policy"] || "", demo = hdr["/demo/**"]?.["Content-Security-Policy"] || "";
+    if (!demo) err("static.json: no /demo/** Content-Security-Policy");
+    else {
+      if (demo.replace(" 'wasm-unsafe-eval'", "") !== base) err("static.json: the /demo/** CSP may differ from the site CSP only by 'wasm-unsafe-eval' in script-src");
+      if (!/script-src[^;]*'wasm-unsafe-eval'/.test(demo)) err("static.json: the /demo/** CSP lacks 'wasm-unsafe-eval' in script-src");
+      if (/unsafe-inline|'unsafe-eval'/.test(demo)) err("static.json: the /demo/** CSP must not allow unsafe-inline or unsafe-eval");
+    }
+    if (/wasm-unsafe-eval/.test(base)) err("static.json: the site-wide CSP must stay strict (no wasm-unsafe-eval)");
+  }
+}
 
 // Claim pages: one HTML page and one JSON file per claim in claims.json, no extras; JSON-LD is a DefinedTerm in the set.
 {

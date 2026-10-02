@@ -106,7 +106,7 @@ const hasHex = (v) => JSON.stringify(v).includes('"$hex"');
 const SET_ID = NS; // https://atep.dev/claims/
 
 const NAV = [
-  ["/", "Overview"], ["/specification.html", "Specification"], ["/claims/", "Claims"], ["/quickstart.html", "Quick start"],
+  ["/", "Overview"], ["/specification.html", "Specification"], ["/claims/", "Claims"], ["/quickstart.html", "Quick start"], ["/demo/", "Demo"],
   ["/vectors.html", "Test vectors"], ["/governance.html", "Governance"], ["/security.html", "Security"], ["/about.html", "About"], ["/llms.txt", "llms.txt"],
 ];
 

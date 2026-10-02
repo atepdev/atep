@@ -1,4 +1,4 @@
-// Generates site/atep.dev/sitemap.xml: every HTML page of the site plus the claims directory and every claim page,
+// Generates site/atep.dev/sitemap.xml: every HTML page of the site plus the demo page and the claims directory and every claim page,
 // as absolute https://atep.dev URLs. No lastmod (a deterministic build needs none). 404.html is not listed.
 //
 //   node site/build-sitemap.mjs           write the file
@@ -20,6 +20,7 @@ export function pageUrls() {
     if (!f.endsWith(".html") || f === "404.html") continue;
     urls.push(f === "index.html" ? `${ORIGIN}/` : `${ORIGIN}/${f}`);
   }
+  if (fs.existsSync(path.join(root, "demo", "index.html"))) urls.push(`${ORIGIN}/demo/`);
   const walk = (dir, rel) => {
     for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : 1))) {
       if (e.isDirectory()) walk(path.join(dir, e.name), `${rel}${e.name}/`);

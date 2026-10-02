@@ -8,7 +8,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 
 * Specification: [`spec/ATEP-Specification-Draft-07.md`](spec/ATEP-Specification-Draft-07.md) (Draft 07, the first public draft)
 * Test vectors: [`vectors/`](vectors/README.md), 436 vectors in 28 categories
-* Interactive demo: [`demo/`](demo/README.md), three simulated units exchanging real encrypted envelopes with one revoked mid-run. It runs on your own machine: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
+* Interactive demo: https://atep.dev/demo/ (runs in your browser), three simulated units exchanging real encrypted envelopes with one revoked mid-run. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
 * Site: https://atep.dev (the site sources are in `site/`)
 
 ## Registry names are placeholders: do not install

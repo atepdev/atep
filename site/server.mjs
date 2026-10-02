@@ -27,12 +27,15 @@ const TYPES = {
   ".jpeg": "image/jpeg",
   ".ico": "image/x-icon",
   ".webmanifest": "application/manifest+json",
+  ".mjs": "text/javascript; charset=utf-8",
+  ".wasm": "application/wasm",
 };
-const COMPRESSIBLE = new Set([".html", ".css", ".js", ".json", ".txt", ".md", ".xml", ".svg"]);
+const COMPRESSIBLE = new Set([".html", ".css", ".js", ".mjs", ".json", ".txt", ".md", ".xml", ".svg", ".wasm"]);
 // Files that live in the site folders but are never served. Dot directories and files stay hidden except
-// the .well-known directory (RFC 8615), whose files are served.
+// the .well-known directory (RFC 8615), whose files are served. ES modules (.mjs) are build scripts and stay hidden
+// everywhere except the browser modules of the demo, which live directly under demo/src/.
 const HIDDEN = (rel) =>
-  rel === "static.json" || rel.endsWith(".mjs") || /(^|\/)README\.md$/i.test(rel) ||
+  rel === "static.json" || (rel.endsWith(".mjs") && !/^demo\/src\/[^/]+\.mjs$/.test(rel)) || /(^|\/)README\.md$/i.test(rel) ||
   rel.split("/").some((p) => p.startsWith(".") && p !== ".well-known");
 
 // Under /claims/ an extensionless URL names a claim type that has an HTML and a JSON representation.
@@ -78,6 +81,7 @@ export function createServer(site, env = process.env) {
     return out;
   };
 
+  const gzipCache = new Map();
   const canonicalHost = (env.CANONICAL_HOST || "").trim().toLowerCase().replace(/\.$/, "");
   const tieIsJson = (env.CLAIMS_DEFAULT || "json").toLowerCase() !== "html";
   const notFoundPage = path.join(root, "404.html");
@@ -172,7 +176,11 @@ export function createServer(site, env = process.env) {
 
     let body = fs.readFileSync(file);
     if (COMPRESSIBLE.has(ext) && body.length > 1024 && /\bgzip\b/.test(req.headers["accept-encoding"] || "")) {
-      body = zlib.gzipSync(body);
+      // Compressed bodies are kept per file version (the wasm is large and gzip is not free).
+      const key = `${file}|${etag}`;
+      let z = gzipCache.get(key);
+      if (!z) { z = zlib.gzipSync(body); gzipCache.set(key, z); }
+      body = z;
       headers["Content-Encoding"] = "gzip";
     }
     headers["Content-Length"] = body.length;
