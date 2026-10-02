@@ -1,0 +1,41 @@
+{
+  "name": "txt-only-unrelated-records",
+  "category": "domain-binding",
+  "description": "The name carries other uses only (an SPF record and a site verification record): no `v=atep1` record, so no `_atep` TXT data, which is silent.",
+  "cbor_file": "txt-only-unrelated-records.cbor",
+  "cbor_sha256": "1258c37bfcc7dddd8338a78f9890273dd9043eb7d09152faf485f05e1c396929",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=spf1 -all",
+            "google-site-verification=abc"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

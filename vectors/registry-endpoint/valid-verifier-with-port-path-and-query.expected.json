@@ -1,0 +1,17 @@
+{
+  "name": "valid-verifier-with-port-path-and-query",
+  "category": "registry-endpoint",
+  "description": "Kind `verifier`; the URL has a port, a path and a query.",
+  "cbor_file": "valid-verifier-with-port-path-and-query.cbor",
+  "cbor_sha256": "a7164716c374e93a093c32d56441a942e7d972444c21315582640d4fb5a77b6c",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

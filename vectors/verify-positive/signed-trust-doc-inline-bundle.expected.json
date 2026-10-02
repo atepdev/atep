@@ -1,0 +1,28 @@
+{
+  "name": "signed-trust-doc-inline-bundle",
+  "category": "verify-positive",
+  "description": "Signed-only attestation-typed document with the signer bundle inline.",
+  "cbor_file": "signed-trust-doc-inline-bundle.cbor",
+  "cbor_sha256": "8562681f993bc7986d874584503f9d7346e862d92a5026770a5b2568213d2b0a",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep-attestation+cbor",
+    "issued_at": 1799996400,
+    "expires_at": 1802592000,
+    "nonce_hex": "3eacd6a35bb7f4ae71a21414bee57f21",
+    "encrypted": false,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72627031"
+  }
+}

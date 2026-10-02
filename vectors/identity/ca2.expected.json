@@ -1,0 +1,21 @@
+{
+  "name": "ca2",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `ca2` (signing keys only), used by the M2 vectors.",
+  "cbor_file": "ca2.cbor",
+  "cbor_sha256": "0bf1c521ad1b72e2d2a808ae0bf5fc93e999408a96088ba9641afd9ab844f2f8",
+  "inputs": {
+    "seeds": {
+      "ed25519": "0294f6fee422793da48bde1d0f91979c1e5a3fff0be2e6372b1bbed514a8a06d",
+      "mldsa65": "0d351377f99cf690d7494fa8041d08d9053d478f48fb2237fb10441bccb92c90"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a",
+    "did": "did:atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a",
+    "agent_id_hex": "0bf1c521ad1b72e2d2a808ae0bf5fc93e999408a96088ba9641afd9ab844f2f8",
+    "bundle_len": 2005,
+    "ed25519_public_hex": "57b0631ac88b75b70ab910ed4950897bf36f315be80132874fc7e51cf12b972d",
+    "mldsa65_public_sha256": "f2a100e5a3586ec785c69a146d7ce0c0e9bbe9a1bb4339af92a530150d693165"
+  }
+}

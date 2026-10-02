@@ -1,0 +1,34 @@
+{
+  "name": "encrypted-data-envelope-with-expiry",
+  "category": "verify-positive",
+  "description": "Encrypted data envelope opened by the recipient and verified.",
+  "cbor_file": "encrypted-data-envelope-with-expiry.cbor",
+  "cbor_sha256": "7d07a129fdb603c49b212f3f5fe86eacfff54d201eb25e6f86eacdba400f6c42",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep+cbor",
+    "issued_at": 1799999970,
+    "expires_at": 1800003600,
+    "nonce_hex": "4d3c361c257efd2f76ea6fc314b993dc",
+    "encrypted": true,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72781c656e632d616c6963652d746f2d626f622d776974682d657870697279"
+  }
+}

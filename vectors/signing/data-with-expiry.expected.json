@@ -1,0 +1,27 @@
+{
+  "name": "data-with-expiry",
+  "category": "signing",
+  "description": "Data envelope with expires-at.",
+  "cbor_file": "data-with-expiry.cbor",
+  "cbor_sha256": "7a69fbb5893d6f43bbd97e85b81847ec78b876de20327959a12c74d2bbdc918b",
+  "inputs": {
+    "signer_seeds": {
+      "ed25519": "77227357f0539a0c7665a037e23c3560d5248b0edf195893b21b08ba53509dae",
+      "mldsa65": "c2aab893967f0123f14e89553c327068fafd622e6386e11d26977271ad07ad2b"
+    },
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f7270646174612d776974682d657870697279",
+    "content_type": "application/atep+cbor",
+    "nonce_hex": "3ee2eedbdd20224104da5baa6ba0cc7b",
+    "issued_at": 1799999940,
+    "expires_at": 1800003600,
+    "detached": false,
+    "include_bundle": true,
+    "mode": "deterministic"
+  },
+  "expected": {
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "payload_digest_hex": "65b265c5a33a83068dd9f643ed9f0f0c6ec5f06d25af1a84d576cc81ba327110",
+    "envelope_len": 5692,
+    "envelope_sha256": "7a69fbb5893d6f43bbd97e85b81847ec78b876de20327959a12c74d2bbdc918b"
+  }
+}

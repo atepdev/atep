@@ -1,0 +1,47 @@
+{
+  "name": "invalid-source-does-not-contradict",
+  "category": "domain-binding",
+  "description": "The document is invalid (version 2) and the TXT record lists the Agent ID: an invalid source is not a valid source that omits the Agent ID, so it does not contradict; bound.",
+  "cbor_file": "invalid-source-does-not-contradict.cbor",
+  "cbor_sha256": "26480598a6cbc7df7d142aa093f9596a86f654cbf41d076dbcb4a5b34812cd35",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":2,\"agents\":[\"atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

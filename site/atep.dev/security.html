@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP Security policy</title>
+<meta name="description" content="How to report a vulnerability in the ATEP specification or reference implementations, supported versions and scope.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "ATEP security policy",
+  "description": "Vulnerability reporting for the ATEP specification and reference implementations.",
+  "url": "https://atep.dev/security.html",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "author": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "about": "Autonomy Trust Envelope Protocol (ATEP)"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="index.html">ATEP</a>
+  <nav aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="specification.html">Specification</a>
+      <a href="quickstart.html">Quick start</a>
+      <a href="vectors.html">Test vectors</a>
+      <a href="governance.html">Governance</a>
+      <a href="security.html" aria-current="page">Security</a>
+      <a href="about.html">About</a>
+      <a href="llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main">
+
+<h1>Security policy</h1>
+<p class="lead">Reports of weaknesses in the specification or the reference implementations are welcome. Use GitHub private vulnerability reporting on the repository (<a href="https://github.com/atepdev/atep/security/advisories/new">report a vulnerability</a>) or email <strong>nathan@airadlabs.com</strong>, with the affected component and version, what you found, and a way to reproduce it. Please do not open a public issue for a vulnerability.</p>
+<div class="note"><p>GitHub private vulnerability reporting is enabled on the repository and is the preferred channel. No PGP key is published yet.</p></div>
+<div class="grid">
+<section class="card"><h2>Supported</h2><p>Specification Draft 07, and the 0.1.0 pre-release reference code on the main branch. Earlier drafts are superseded. There is no stable release and no bug bounty.</p></section>
+<section class="card"><h2>In scope</h2><p>Protocol flaws (forgery, replay, downgrade, confusion of envelopes, attestations, revocation lists or log proofs); reference implementations that accept what the vectors reject or the reverse; key or memory handling in the Rust, JavaScript and Python code; log or monitor flaws that hide a forked history.</p></section>
+<section class="card"><h2>Out of scope</h2><p>Examples and the demo, denial of service on the plain HTTP reference log daemon, secrets in JavaScript or Python process memory, third party dependency bugs (report upstream), social engineering of issuers.</p></section>
+<section class="card"><h2>Audit status</h2><p>The project has had no external security audit. The post-quantum crates it uses are young. Treat the code as pre-release.</p></section>
+</div>
+
+</main>
+<footer class="site">
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

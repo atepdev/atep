@@ -1,0 +1,265 @@
+{
+  "format": 1,
+  "source": "ATEP Draft 03 sections 7 and 17, spec/schemas/atep.cddl; registry-endpoint is the seventh core claim type (Draft 05 section 7)",
+  "namespace": "https://atep.dev/claims/",
+  "attestation-schema": "attestation = {\n  subject: agent-id,\n  issuer: agent-id,                      ; MUST equal the envelope signer\n  claim: uri,\n  data: { * tstr => any },\n  ? evidence: bstr .size 32,\n  ? evidence-uri: uri,\n  id: bstr .size 16,\n}\nagent-id = bstr .size 32\nuri = tstr",
+  "claims": [
+    {
+      "name": "domain-control",
+      "profile": "core",
+      "status": "core",
+      "title": "Domain control",
+      "summary": "Subject is authorized for a DNS name, proven by a record at _atep.<domain> or https://<domain>/.well-known/atep.json.",
+      "description": [
+        "The issuer states that it checked that the domain publishes the subject Agent ID, either in the document at https://<domain>/.well-known/atep.json or in a TXT record at _atep.<domain>. The protocol cannot verify that check, so monitors watch the log for domain-control attestations whose subject the domain owner does not recognize.",
+        "The binding applies to exactly the named DNS name. A binding for example.com does not bind a.example.com and the reverse; monitors that watch a name also watch every subdomain of it."
+      ],
+      "issued-by": "Domain owner",
+      "subject": "Agent ID of the identity the domain authorizes",
+      "data-schema": "domain-control-data = { domain: dns-name, * tstr => any }\n; lowercase DNS name: labels of 1 to 63 of a-z, 0-9 and \"-\" (no leading or\n; trailing \"-\" in a label), at most 253 characters, no trailing dot.\ndns-name = tstr",
+      "data-checked-by": "Logs at admission (schema_invalid); the core verifier does not check it.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 4 (Lifecycle, Bind)", "Draft 03 section 7", "Draft 03 section 9 (Admission, Monitors)"],
+      "example-data": { "domain": "example.com" }
+    },
+    {
+      "name": "operator",
+      "profile": "core",
+      "status": "core",
+      "title": "Operator",
+      "summary": "Subject is operated by the named legal entity.",
+      "description": [
+        "Names the legal entity (never a private individual, spec section 16 point 1) that operates the subject. Any issuer may make the statement; whether a verifier accepts it depends on its trust policy and the issuer's chain to a root.",
+        "The data map is free. The recommended layout is {\"name\": tstr}."
+      ],
+      "issued-by": "Any issuer (in ATEP-R, the fleet operator)",
+      "subject": "Agent ID operated by the entity",
+      "data-schema": "operator-data = { ? name: tstr, * tstr => any }   ; recommended layout, not enforced",
+      "data-checked-by": "Not checked.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 7", "Draft 03 section 17"],
+      "example-data": { "name": "Acme Robotics GmbH" }
+    },
+    {
+      "name": "successor",
+      "profile": "core",
+      "status": "core",
+      "title": "Successor",
+      "summary": "Subject replaces the issuer's identity (key rotation).",
+      "description": [
+        "Signed by the old identity, naming the new identity as subject. A verifier MAY follow exactly one hop of succession when no attestation of the old identity satisfies a rule for a signer that is the subject of a valid successor attestation. A second hop MUST NOT be followed and monitors SHOULD alert on it."
+      ],
+      "issued-by": "The subject's old identity",
+      "subject": "Agent ID of the new identity",
+      "data-schema": "successor-data = { ? reason: tstr, * tstr => any }   ; issuer is the old identity",
+      "data-checked-by": "The optional succession rule at step 9.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 4 (Lifecycle, Rotate)", "Draft 03 section 7 (Retirement and succession)"],
+      "example-data": { "reason": "scheduled key rotation" }
+    },
+    {
+      "name": "retired",
+      "profile": "core",
+      "status": "core",
+      "title": "Retired",
+      "summary": "Subject is permanently retired. Self-issued.",
+      "description": [
+        "Self-issued: subject and issuer MUST be the same identity. It takes effect at its own issued-at. Afterwards any other envelope signed by that identity with an issued-at at or after the retirement MUST be rejected (step 8). No issuer can block or lift it (spec section 16 point 7)."
+      ],
+      "issued-by": "The subject itself",
+      "subject": "The issuer's own Agent ID",
+      "data-schema": "retired-data = { ? reason: tstr, * tstr => any }   ; subject MUST equal issuer",
+      "data-checked-by": "Step 8 (subject equals issuer).",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most; expiry is not compared when it is consulted at step 8",
+      "spec": ["Draft 03 section 4 (Lifecycle, Retire)", "Draft 03 section 7", "Draft 03 section 16 point 7"],
+      "example-data": { "reason": "decommissioned" }
+    },
+    {
+      "name": "issuer-authority",
+      "profile": "core",
+      "status": "core",
+      "title": "Issuer authority",
+      "summary": "Subject may issue the listed claim types (chain delegation).",
+      "description": [
+        "Delegates the right to issue the listed claim types. A verifier walks from a claim attestation up through issuer-authority attestations to a root in its trust policy. To let the subject delegate further, the list MUST contain the issuer-authority URI itself. An empty list delegates nothing. Delegation cannot exceed the delegator's own authority."
+      ],
+      "issued-by": "A root issuer or a delegate",
+      "subject": "Agent ID of the delegate",
+      "data-schema": "issuer-authority-data = { claims: [* uri], * tstr => any }   ; REQUIRED layout\nuri = tstr",
+      "data-checked-by": "Every consumer (attestation_schema_invalid).",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 7 (Chains)"],
+      "example-data": { "claims": ["https://atep.dev/claims/operator"] }
+    },
+    {
+      "name": "audited",
+      "profile": "core",
+      "status": "core",
+      "title": "Audited",
+      "summary": "Subject passed the named audit on the given date; evidence hash required.",
+      "description": [
+        "The evidence field (SHA-256 of the audit report) is REQUIRED; every consumer rejects an audited attestation without it as attestation_schema_invalid. Because it carries evidence it is audit-backed and may live up to 400 days."
+      ],
+      "issued-by": "Auditor",
+      "subject": "Agent ID that passed the audit",
+      "data-schema": "audited-data = { ? audit: tstr, ? date: tstr, * tstr => any }   ; recommended layout, not enforced\n; the attestation MUST carry evidence: bstr .size 32",
+      "data-checked-by": "Evidence presence by every consumer; the data map is not checked.",
+      "evidence": "required",
+      "lifetime": "up to 400 days (audit-backed)",
+      "spec": ["Draft 03 section 7 (Evidence requirement, lifetimes)"],
+      "example-data": { "audit": "SOC 2 Type II", "date": "2026-09-01" }
+    },
+    {
+      "name": "robotics/fleet-member",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Fleet member",
+      "summary": "Subject belongs to the named fleet.",
+      "description": [
+        "Minimum claim for ATEP-R telemetry and coordination commands, together with sensor-source for sensor data, and with peer-motion for delegated motion. Safety e-stops are accepted from a fleet-member that is also safety-certified."
+      ],
+      "issued-by": "Fleet controller",
+      "subject": "Agent ID of the unit",
+      "data-schema": "fleet-member-data = { * tstr => any }   ; free map, recommended: fleet: tstr",
+      "data-checked-by": "Not checked.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 17 (Claim vocabulary, command classes)"],
+      "example-data": { "fleet": "warehouse-7" }
+    },
+    {
+      "name": "robotics/fleet-controller",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Fleet controller",
+      "summary": "Subject may issue motion and coordination commands for the fleet.",
+      "description": [
+        "Required for ATEP-R motion commands (or a fleet-member with a peer-motion delegation) and, together with safety-certified, for actuation commands."
+      ],
+      "issued-by": "Fleet operator (root)",
+      "subject": "Agent ID of the controller",
+      "data-schema": "fleet-controller-data = { * tstr => any }   ; free map, recommended: fleet: tstr",
+      "data-checked-by": "Not checked.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 17"],
+      "example-data": { "fleet": "warehouse-7" }
+    },
+    {
+      "name": "robotics/safety-certified",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Safety certified",
+      "summary": "Subject passed the named safety standard on the given date; evidence hash required.",
+      "description": [
+        "Subject's software and hardware passed the named standard (for example ISO 10218, ISO 3691-4, UL 3100). The evidence field is REQUIRED. Together with fleet-controller it authorizes actuation; a fleet-member with safety-certified may send an e-stop."
+      ],
+      "issued-by": "Safety certifier",
+      "subject": "Agent ID that passed",
+      "data-schema": "safety-certified-data = { ? standard: tstr, ? date: tstr, * tstr => any }   ; recommended layout, not enforced\n; the attestation MUST carry evidence: bstr .size 32",
+      "data-checked-by": "Evidence presence by every consumer; the data map is not checked.",
+      "evidence": "required",
+      "lifetime": "up to 400 days (audit-backed)",
+      "spec": ["Draft 03 section 7 (Evidence requirement)", "Draft 03 section 17"],
+      "example-data": { "standard": "ISO 10218-1:2025", "date": "2026-08-15" }
+    },
+    {
+      "name": "robotics/sensor-source",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Sensor source",
+      "summary": "Subject's named sensors are calibrated and trusted.",
+      "description": [
+        "Required, together with fleet-member, for ATEP-R sensor commands (lidar, camera, detections)."
+      ],
+      "issued-by": "Fleet controller or vendor",
+      "subject": "Agent ID of the unit carrying the sensors",
+      "data-schema": "sensor-source-data = { * tstr => any }   ; free map, recommended: sensors: [* tstr]",
+      "data-checked-by": "Not checked.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 17"],
+      "example-data": { "sensors": ["lidar-front", "cam-1"] }
+    },
+    {
+      "name": "robotics/safety-authority",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Safety authority",
+      "summary": "Subject may issue e-stops and geofence changes.",
+      "description": [
+        "Required for ATEP-R safety commands other than an e-stop accepted from a safety-certified fleet-member."
+      ],
+      "issued-by": "Fleet operator",
+      "subject": "Agent ID of the authority",
+      "data-schema": "safety-authority-data = { * tstr => any }   ; free map",
+      "data-checked-by": "Not checked.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 17"],
+      "example-data": {}
+    },
+    {
+      "name": "robotics/maintenance-authority",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Maintenance authority",
+      "summary": "Subject may push firmware, configuration and key rotation.",
+      "description": [
+        "Required for ATEP-R maintenance commands, which fail closed on a stale or missing revocation list."
+      ],
+      "issued-by": "Fleet operator",
+      "subject": "Agent ID of the maintainer",
+      "data-schema": "maintenance-authority-data = { * tstr => any }   ; free map",
+      "data-checked-by": "Not checked.",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 17"],
+      "example-data": {}
+    },
+    {
+      "name": "robotics/peer-motion",
+      "profile": "robotics",
+      "status": "core",
+      "title": "Peer motion",
+      "summary": "Subject may send motion commands to the listed peers.",
+      "description": [
+        "Lets a fleet-member send motion commands to specific peers for cooperative tasks. The delegation counts for the ATEP-R motion class only when the receiving agent (the recipient identity that opened the envelope) is listed in data.peers; otherwise it fails with claim_data_mismatch.",
+        "In JSON tools an Agent ID in peers is written as {\"$hex\": \"<64 hex characters>\"}; on the wire it is a byte string of 32 bytes."
+      ],
+      "issued-by": "Fleet controller",
+      "subject": "Agent ID allowed to command the peers",
+      "data-schema": "peer-motion-data = { peers: [* agent-id], * tstr => any }   ; REQUIRED for the ATEP-R motion rule\nagent-id = bstr .size 32",
+      "data-checked-by": "ATEP-R motion enforcement (claim_data_mismatch).",
+      "evidence": "optional",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 03 section 17 (peer-motion)"],
+      "example-data": { "peers": [{ "$hex": "0000000000000000000000000000000000000000000000000000000000000000" }] }
+    },
+    {
+      "name": "registry-endpoint",
+      "profile": "core",
+      "status": "core",
+      "title": "Registry endpoint",
+      "summary": "Subject operates the service at the given URL (registry, verifier, MCP server or A2A agent).",
+      "description": [
+        "Binds a service endpoint to an Agent ID through an ordinary attestation, so a client can find where an identity runs a registry, verifier, MCP server or A2A agent and check that the statement is logged. Attestations only: agent traffic is never logged (spec section 16 point 5).",
+        "kind is one of registry, verifier, mcp, a2a, or an extension name beginning with x-. A signed A2A agent card is carried by hashing the card JSON into the attestation evidence field and pointing evidence-uri at the card.",
+        "A log validates url (an https URL of at most 2048 characters with a host, no credentials and no whitespace) and kind at admission (schema_invalid); the core verifier does not check it. It is the seventh claim type of the core list of Draft 05, which with the seven robotics claim types makes 14."
+      ],
+      "issued-by": "The endpoint operator (usually the subject itself, or its domain owner)",
+      "subject": "Agent ID the endpoint belongs to",
+      "data-schema": "registry-endpoint-data = { url: uri, kind: endpoint-kind, * tstr => any }\nendpoint-kind = \"registry\" / \"verifier\" / \"mcp\" / \"a2a\" / (tstr .regexp \"x-[a-z0-9-]+\")\nuri = tstr   ; an https URL",
+      "data-checked-by": "Logs at admission (schema_invalid); the core verifier does not check it.",
+      "evidence": "optional (the A2A agent card digest)",
+      "lifetime": "30 to 180 days by default, 400 days at most",
+      "spec": ["Draft 05 section 7 (Registry endpoints)", "Draft 05 section 9 (Admission)"],
+      "example-data": { "url": "https://registry.example.com/v1", "kind": "registry" }
+    }
+  ]
+}

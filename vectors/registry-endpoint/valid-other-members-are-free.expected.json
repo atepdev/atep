@@ -1,0 +1,17 @@
+{
+  "name": "valid-other-members-are-free",
+  "category": "registry-endpoint",
+  "description": "`data` has members beyond `url` and `kind`; they are free and ignored.",
+  "cbor_file": "valid-other-members-are-free.cbor",
+  "cbor_sha256": "5712e2dfb836cc1535596df0b30e6637db5a02bd708333d350dc279a837c5c28",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

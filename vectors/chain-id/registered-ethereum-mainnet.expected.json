@@ -1,0 +1,15 @@
+{
+  "name": "registered-ethereum-mainnet",
+  "category": "chain-id",
+  "description": "Registered: Ethereum mainnet.",
+  "cbor_file": "registered-ethereum-mainnet.cbor",
+  "cbor_sha256": "ea8074af318df8255ccddd30a376448529f0fff5234e29e4951f6466211ae370",
+  "inputs": {
+    "check": "chain-id",
+    "id": "ethereum-mainnet"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "registered"
+  }
+}

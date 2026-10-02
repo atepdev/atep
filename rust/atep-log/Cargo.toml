@@ -1,0 +1,26 @@
+[package]
+name = "atep-log"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "ATEP transparency log and registry service (ATEP Draft 07)"
+
+[lib]
+name = "atep_log"
+path = "src/lib.rs"
+
+[[bin]]
+name = "atep-logd"
+path = "src/bin/atep-logd.rs"
+
+[features]
+# A std::net fetcher for the domain binding check (plain HTTP through a local
+# TLS terminating proxy; no TLS or DNS client). Off by default.
+net-fetch = []
+
+[dependencies]
+atep-core = { path = "../atep-core" }
+clap = { version = "4.6.7", features = ["derive"] }
+hex = "0.4.3"
+base64 = "0.23.1"
+serde_json = { version = "1", features = ["preserve_order"] }

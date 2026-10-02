@@ -1,0 +1,17 @@
+{
+  "name": "invalid-member-is-null",
+  "category": "require-anchor",
+  "description": "`require_anchor` is null.",
+  "cbor_file": "invalid-member-is-null.cbor",
+  "cbor_sha256": "3fcb5d5474f25123d1c25cd529afd895e76d24106ac8436b417086a7e5e2427e",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": null
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

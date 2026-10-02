@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-2049-characters",
+  "category": "registry-endpoint",
+  "description": "A URL of 2049 characters: one over the limit.",
+  "cbor_file": "reject-url-2049-characters.cbor",
+  "cbor_sha256": "6f139b8aa58932510fcfbe39bbe462146ee11155b673c7356b025e9d8b7d8f5d",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

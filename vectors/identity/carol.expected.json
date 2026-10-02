@@ -1,0 +1,23 @@
+{
+  "name": "carol",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `carol` (signing and encryption keys).",
+  "cbor_file": "carol.cbor",
+  "cbor_sha256": "e958133f35a877a7566bddfc450a2ea0e864a503fc933397a8b89d42b157aa10",
+  "inputs": {
+    "seeds": {
+      "ed25519": "0139149fabd5445396e1e9405b95b741ae821bf086d4adfa2c89cc7250e2059e",
+      "mldsa65": "d73a571237ebb30cbed749cdb22dc40fd0dfebb387a467893eb6794eb388c72f",
+      "x25519": "76448f2b930503dfffbdee25c5606becbb6e22e15ac156b4322c6b37c71f8cb5",
+      "mlkem768": "7eaefb7c26dd874fde358a9e40abc7ef689a16a0967d414bb5afdb67073760e15dc419e65414bdf318ff1ab8f197d05fb2b13d10d7f119867bdbee9498eebcc9"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:5fmbgpzvvb32ovtl3x6ekcroudugjjid7sjthf5ixcoufmkxviia",
+    "did": "did:atep:5fmbgpzvvb32ovtl3x6ekcroudugjjid7sjthf5ixcoufmkxviia",
+    "agent_id_hex": "e958133f35a877a7566bddfc450a2ea0e864a503fc933397a8b89d42b157aa10",
+    "bundle_len": 3246,
+    "ed25519_public_hex": "60f433061c129f025cfa660daf01cc0be4a312523bbc386eefe2ba2d4ac38d58",
+    "mldsa65_public_sha256": "0b0943cf8b64ce2b3a83d02ba24ddf716fedf5b7091f8749269eeb427c8672d3"
+  }
+}

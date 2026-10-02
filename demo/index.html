@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP-R Reference Demo | AIRAD LABS</title>
+<meta name="description" content="Three simulated units exchange real sign-then-encrypt ATEP-R envelopes. One is revoked mid-run and rejected on screen while the fleet continues safely.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0f14'/%3E%3Cpath d='M16 5l9 11-9 11-9-11z' fill='none' stroke='%234cc9f0' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#log-panel">Skip to envelope log</a>
+<header class="top">
+  <div class="brand">
+    <span class="logo" aria-hidden="true"></span>
+    <div>
+      <h1>ATEP-R <span class="by">by AIRAD LABS</span></h1>
+      <p class="sub">Autonomy Trust Envelope Protocol, robotics profile. Reference demo: a generic autonomous fleet.</p>
+    </div>
+  </div>
+  <p class="crypto" id="crypto-chip">Real cryptography: Ed25519 + ML-DSA-65 signatures, X25519 + ML-KEM-768 + AES-256-GCM encryption, running as Rust compiled to WebAssembly. Only movement and the map are simulated.</p>
+</header>
+
+<div class="toolbar" role="toolbar" aria-label="Simulation controls">
+  <button id="btn-play" type="button" class="primary" aria-pressed="false">Play</button>
+  <button id="btn-step" type="button">Step</button>
+  <button id="btn-restart" type="button">Restart</button>
+  <label class="field">Speed
+    <select id="speed">
+      <option value="0.5">0.5x</option>
+      <option value="1" selected>1x</option>
+      <option value="2">2x</option>
+      <option value="4">4x</option>
+    </select>
+  </label>
+  <button id="btn-revoke" type="button" class="warn">Revoke Unit 3 now</button>
+  <label class="check"><input type="checkbox" id="chk-stale"> Stale revocation list (fail-closed example)</label>
+  <span class="clock" id="clock" aria-live="off">tick 0 | t+0 s</span>
+</div>
+
+<p id="banner" class="banner" role="status" aria-live="polite">Loading the ATEP wasm module and generating real identities...</p>
+
+<main class="grid">
+  <section class="panel" id="map-panel" aria-labelledby="h-map">
+    <h2 id="h-map">Fleet map</h2>
+    <div class="mapwrap">
+      <svg id="map" viewBox="0 0 100 60" role="img" aria-label="Map with three units and envelopes in flight. The same events are listed in the envelope log."></svg>
+    </div>
+    <ul class="legend" id="legend" aria-label="Legend"></ul>
+    <div class="attack" id="attack-row">
+      <h3>Attack</h3>
+      <div class="btnrow" role="group" aria-label="Attack buttons">
+        <button type="button" data-attack="replay">Replay a captured envelope</button>
+        <button type="button" data-attack="tamper">Tamper one byte</button>
+        <button type="button" data-attack="forged">Forge from an unattested identity</button>
+        <button type="button" data-attack="noclaim">Motion command from a member lacking the claim</button>
+      </div>
+      <p id="attack-out" class="attack-out" role="status" aria-live="polite">Each attack is really attempted against the real verifier. Nothing here is mocked.</p>
+    </div>
+  </section>
+
+  <section class="panel" id="log-panel" aria-labelledby="h-log">
+    <h2 id="h-log">Envelope log <span class="count" id="log-count">0</span></h2>
+    <div class="tablewrap">
+      <table id="log">
+        <caption class="sr">Every envelope sent, newest first. Select an envelope to inspect it.</caption>
+        <thead><tr>
+          <th scope="col">Envelope</th><th scope="col">Time</th><th scope="col">Kind</th><th scope="col">Class</th>
+          <th scope="col">From</th><th scope="col">To</th><th scope="col">Size</th><th scope="col">Result</th><th scope="col">What the receiver did</th>
+        </tr></thead>
+        <tbody id="log-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="inspect-panel" aria-labelledby="h-inspect">
+    <h2 id="h-inspect">Inspect envelope</h2>
+    <div id="inspect-sel" class="inspect-sel">Select an envelope in the log or click one in flight on the map.</div>
+    <div class="btnrow">
+      <button type="button" id="btn-decrypt" disabled>Decrypt as recipient</button>
+      <button type="button" id="btn-observer" class="warn" disabled>Try as outside observer</button>
+    </div>
+    <div id="inspect-out" class="inspect-out" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="panel" id="policy-panel" aria-labelledby="h-policy">
+    <h2 id="h-policy">Live trust policy and claims</h2>
+    <div id="policy"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p>ATEP is an open protocol. ATEP-R is its robotics profile (spec Draft 02, section 17). AIRAD LABS stewards the protocol. This page needs no network after it loads.</p>
+</footer>
+<noscript><p class="banner">This demo needs JavaScript and WebAssembly.</p></noscript>
+<script type="module" src="src/ui.mjs"></script>
+</body>
+</html>

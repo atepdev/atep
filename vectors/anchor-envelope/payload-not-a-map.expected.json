@@ -1,0 +1,17 @@
+{
+  "name": "payload-not-a-map",
+  "category": "anchor-envelope",
+  "description": "A validly signed envelope of the anchor type whose payload is the text `hello`. Expect step 9 anchor_schema_invalid.",
+  "cbor_file": "payload-not-a-map.cbor",
+  "cbor_sha256": "188298073bfd0e3da06dd63d4ece34a8d9df0e52fff0db4b32212b76072be3fb",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "anchor_schema_invalid"
+  }
+}

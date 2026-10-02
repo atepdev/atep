@@ -1,0 +1,28 @@
+{
+  "name": "bare-anchor-envelope-garbage-payload-accepted",
+  "category": "anchor-media-type",
+  "description": "A bare envelope of the anchor type whose payload is the text `not a record`. The core verifier checks the label only (section 5), so with no trust policy it is accepted; whoever interprets the payload as an anchor record validates it (anchor-envelope vectors).",
+  "cbor_file": "bare-anchor-envelope-garbage-payload-accepted.cbor",
+  "cbor_sha256": "d069de890752b93ad1755b8fd88671cd06278121a97326bcd18d490ea058c0c3",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "content_type": "application/atep-anchor+cbor",
+    "issued_at": 1799997100,
+    "expires_at": null,
+    "nonce_hex": "5c8b9066cbbbc13c79ac193e089064df",
+    "encrypted": false,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "6c6e6f742061207265636f7264"
+  }
+}

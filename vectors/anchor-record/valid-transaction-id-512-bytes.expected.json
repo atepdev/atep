@@ -1,0 +1,20 @@
+{
+  "name": "valid-transaction-id-512-bytes",
+  "category": "anchor-record",
+  "description": "The longest `transaction-id`, 512 bytes (a two byte text head).",
+  "cbor_file": "valid-transaction-id-512-bytes.cbor",
+  "cbor_sha256": "1f3f0cc9cc757f840e66a4345d2c3841b4e87cd9149c6e36af6bc6118d6a75f4",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "rekor",
+      "transaction_id": "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+      "block_height": null,
+      "anchored_at": 1799997000
+    }
+  }
+}

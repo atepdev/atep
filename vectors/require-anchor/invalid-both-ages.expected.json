@@ -1,0 +1,24 @@
+{
+  "name": "invalid-both-ages",
+  "category": "require-anchor",
+  "description": "A rule with both `max_age_days` and `max_age_hours`: exactly one is allowed.",
+  "cbor_file": "invalid-both-ages.cbor",
+  "cbor_sha256": "08a07e58abe33e244492b525bf6b04a63913c516d1e0559dba5478c8d974ad09",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 1,
+          "max_age_hours": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

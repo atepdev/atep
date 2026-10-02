@@ -1,0 +1,19 @@
+{
+  "name": "consistency-rewritten-history",
+  "category": "log",
+  "description": "The log rewrote leaf 1 after signing the size 3 checkpoint, then signed a size 8 checkpoint over the rewritten tree and an honest looking proof from that tree. Expect step 9 consistency_proof_invalid.",
+  "cbor_file": "consistency-rewritten-history.cbor",
+  "cbor_sha256": "bc34740a588930d4945618564506925936a9b2f76011ddb22cef2c8dd60419f8",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "consistency_proof_invalid"
+  }
+}

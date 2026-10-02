@@ -1,0 +1,47 @@
+{
+  "name": "stale-txt-contradicted-by-the-document",
+  "category": "domain-binding",
+  "description": "The document no longer lists the Agent ID (the owner withdrew it) but a stale TXT record still does: a valid source that does not list the Agent ID contradicts the one that does, so the Agent ID is not bound.",
+  "cbor_file": "stale-txt-contradicted-by-the-document.cbor",
+  "cbor_sha256": "4dc6bdbc95ccc1f0222fb62c88f09a9d862155282c8b77b4e79f86a9d58c311d",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "not-listed",
+    "dns": "listed",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

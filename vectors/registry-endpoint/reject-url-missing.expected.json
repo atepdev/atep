@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-missing",
+  "category": "registry-endpoint",
+  "description": "`data` has no `url`.",
+  "cbor_file": "reject-url-missing.cbor",
+  "cbor_sha256": "2a5af7967f64be43ad849fe11c426d422f817d9cdf744497fd31ae0fde866331",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

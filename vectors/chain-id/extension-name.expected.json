@@ -1,0 +1,15 @@
+{
+  "name": "extension-name",
+  "category": "chain-id",
+  "description": "Extension id `x-acme`.",
+  "cbor_file": "extension-name.cbor",
+  "cbor_sha256": "c50cdd1af9c4d0a63778fe820f1aeec991ed7c08063981969daad766e914a431",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-acme"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "extension"
+  }
+}

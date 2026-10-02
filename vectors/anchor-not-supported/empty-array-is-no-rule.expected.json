@@ -1,0 +1,37 @@
+{
+  "name": "empty-array-is-no-rule",
+  "category": "anchor-not-supported",
+  "description": "`require_anchor` is an empty array: the policy behaves exactly as under Draft 03. With no other rule step 9 evaluates nothing and the envelope is accepted.",
+  "cbor_file": "empty-array-is-no-rule.cbor",
+  "cbor_sha256": "c65fcd067b9b70d76a21774f7b546316f016a4b9c8bbdd674303c4e297c78ce4",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "require_anchor": []
+      }
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep+cbor",
+    "issued_at": 1799999940,
+    "expires_at": 1800003600,
+    "nonce_hex": "0c24d96ce9b6633e8e502cb036dcadb8",
+    "encrypted": true,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f7269616e732f656d707479"
+  }
+}

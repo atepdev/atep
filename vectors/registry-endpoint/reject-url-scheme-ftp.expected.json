@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-scheme-ftp",
+  "category": "registry-endpoint",
+  "description": "`url` has the scheme `ftp`.",
+  "cbor_file": "reject-url-scheme-ftp.cbor",
+  "cbor_sha256": "d9f2a80e710735d218b19a900d9de7db60258525ebdd50ff6267b47571a2e90e",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

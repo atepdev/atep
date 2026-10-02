@@ -1,0 +1,20 @@
+{
+  "name": "valid-block-height-zero",
+  "category": "anchor-record",
+  "description": "`block-height` 0 is an unsigned integer and is accepted (one byte head).",
+  "cbor_file": "valid-block-height-zero.cbor",
+  "cbor_sha256": "34211bdd85cb4191996fbc4c94e905b13c6b3dffbb1e6ce3427243c5d0ac5895",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "solana-mainnet",
+      "transaction_id": "zero-height",
+      "block_height": 0,
+      "anchored_at": 1799997000
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "reject-block-height-null",
+  "category": "anchor-record",
+  "description": "`block-height` is present as null: an absent height is omitted, never null.",
+  "cbor_file": "reject-block-height-null.cbor",
+  "cbor_sha256": "9d320ac0fb5cec3c22e76179735a248b1d970a88d86fe5dc540eb5d789ef36ed",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

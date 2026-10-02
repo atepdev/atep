@@ -1,0 +1,28 @@
+{
+  "name": "fleet-member",
+  "category": "attestation",
+  "description": "ATEP-R `fleet-member` claim from a fleet controller.",
+  "cbor_file": "fleet-member.cbor",
+  "cbor_sha256": "30e86d7b1f571dd0d213d05d2370a4a3cb2f799a0729af48bd717d604a1922a0",
+  "inputs": {
+    "issuer_seeds": {
+      "ed25519": "967606d9db50416f48d2ab90e4fae5e57cd40c4827bb0332d5698e45e23d67dd",
+      "mldsa65": "6956477461e41e31d2be2812c100c77296ac79e6240de441a4b3a8625c07c252"
+    },
+    "subject": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "claim": "https://atep.dev/claims/robotics/fleet-member",
+    "data_hex": "a165666c65657467666c6565742d37",
+    "evidence_hex": null,
+    "evidence_uri": null,
+    "id_hex": "d745fbd5114f8605064c1d7f5aa1952e",
+    "nonce_hex": "09d543a79ae6a3cd1f72048995f662e5",
+    "issued_at": 1798272000,
+    "expires_at": 1810368000
+  },
+  "expected": {
+    "issuer": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+    "payload_hex": "a562696450d745fbd5114f8605064c1d7f5aa1952e6464617461a165666c65657467666c6565742d3765636c61696d782d68747470733a2f2f617465702e6465762f636c61696d732f726f626f746963732f666c6565742d6d656d62657266697373756572582025d59e9b3241fdbbea1f5980e4e8dd31d8c4b70a88c4479f6166cc6230c46c50677375626a65637458203809c693c268e9c09e1bd6524e19fa718528d2aad0bfad151696b337f900cc3c",
+    "envelope_len": 5834,
+    "envelope_sha256": "30e86d7b1f571dd0d213d05d2370a4a3cb2f799a0729af48bd717d604a1922a0"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "valid-with-other-members",
+  "category": "require-anchor",
+  "description": "A policy that sets other members as well; only `require_anchor` is reported.",
+  "cbor_file": "valid-with-other-members.cbor",
+  "cbor_sha256": "241a3865f44dc1a328811a0356fbadc9a7b24537a2bd2e81ae00be3ccb7a81be",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "roots": [
+        "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+      ],
+      "max_depth": 3,
+      "require_inclusion": false,
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "solana-mainnet",
+          "max_age_hours": 24
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "solana-mainnet",
+        "max_age_hours": 24
+      }
+    ]
+  }
+}

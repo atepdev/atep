@@ -1,0 +1,21 @@
+{
+  "name": "bad-eddsa-signature",
+  "category": "verify-negative",
+  "description": "Last byte of the EdDSA signature flipped. Expect step 4.",
+  "cbor_file": "bad-eddsa-signature.cbor",
+  "cbor_sha256": "54623fb78e05502acf2ef6760231268cdc63f4d426842229a4d6cc7eeeb53302",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 4,
+    "error": "eddsa_signature_invalid"
+  }
+}

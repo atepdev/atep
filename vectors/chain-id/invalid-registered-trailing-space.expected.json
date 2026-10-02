@@ -1,0 +1,14 @@
+{
+  "name": "invalid-registered-trailing-space",
+  "category": "chain-id",
+  "description": "A registered id with a trailing space.",
+  "cbor_file": "invalid-registered-trailing-space.cbor",
+  "cbor_sha256": "e7e2df850401fcfc0ac9f856455691c988289a4bb15606582163df52a4933b04",
+  "inputs": {
+    "check": "chain-id",
+    "id": "solana-mainnet "
+  },
+  "expected": {
+    "ok": false
+  }
+}

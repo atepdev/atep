@@ -1,0 +1,14 @@
+{
+  "name": "reject-block-height-as-text",
+  "category": "anchor-record",
+  "description": "`block-height` is the text `280000000`.",
+  "cbor_file": "reject-block-height-as-text.cbor",
+  "cbor_sha256": "6717883065b004b98bed60255c2a9ff6ce52d7edf6a0b2082dfebeaca9732ab6",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

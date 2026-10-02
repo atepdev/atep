@@ -1,0 +1,27 @@
+{
+  "name": "trust-doc-detached-payload",
+  "category": "signing",
+  "description": "Detached payload: the payload slot is nil and the digest binds the payload.",
+  "cbor_file": "trust-doc-detached-payload.cbor",
+  "cbor_sha256": "2781a2cf165b46bd5727fa71c2d3572a086318f5cd85eb6806b00e0d5b3768c3",
+  "inputs": {
+    "signer_seeds": {
+      "ed25519": "77227357f0539a0c7665a037e23c3560d5248b0edf195893b21b08ba53509dae",
+      "mldsa65": "c2aab893967f0123f14e89553c327068fafd622e6386e11d26977271ad07ad2b"
+    },
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72781a74727573742d646f632d64657461636865642d7061796c6f6164",
+    "content_type": "application/atep-attestation+cbor",
+    "nonce_hex": "b58c667b441e5b97c0c6e0f9deb44975",
+    "issued_at": 1799999940,
+    "expires_at": 1807776000,
+    "detached": true,
+    "include_bundle": true,
+    "mode": "deterministic"
+  },
+  "expected": {
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "payload_digest_hex": "a075e0ef080bdac3c79f257023adec5e4173fd8d4775c7098b6cce6d38d276c4",
+    "envelope_len": 5656,
+    "envelope_sha256": "2781a2cf165b46bd5727fa71c2d3572a086318f5cd85eb6806b00e0d5b3768c3"
+  }
+}

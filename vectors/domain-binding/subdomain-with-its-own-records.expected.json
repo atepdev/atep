@@ -1,0 +1,47 @@
+{
+  "name": "subdomain-with-its-own-records",
+  "category": "domain-binding",
+  "description": "`a.example.com` publishes its own records: bound by them, reading its own names.",
+  "cbor_file": "subdomain-with-its-own-records.cbor",
+  "cbor_sha256": "d9bc7c0b82be284593d00003f79e2cae0527eb59144f104d90eb515cecfe773e",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "a.example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "a.example.com": {
+          "status": 200,
+          "final_url": "https://a.example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.a.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "a.example.com"
+      ],
+      "txt": [
+        "_atep.a.example.com"
+      ]
+    }
+  }
+}

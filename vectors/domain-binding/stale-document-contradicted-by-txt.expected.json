@@ -1,0 +1,47 @@
+{
+  "name": "stale-document-contradicted-by-txt",
+  "category": "domain-binding",
+  "description": "The TXT record was cleared (a `v=atep1` record with no `id=`) but the document still lists the Agent ID: contradiction, not bound.",
+  "cbor_file": "stale-document-contradicted-by-txt.cbor",
+  "cbor_sha256": "0427efa9648fca06de40818abd66e992b18a0168f0a0cdfd221e60bc4cbc3b7d",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "not-listed",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

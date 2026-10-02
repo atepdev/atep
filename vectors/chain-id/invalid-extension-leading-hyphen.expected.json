@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-leading-hyphen",
+  "category": "chain-id",
+  "description": "The name begins with a hyphen.",
+  "cbor_file": "invalid-extension-leading-hyphen.cbor",
+  "cbor_sha256": "1dfa377fd187e211df50f9585b5c796f980a92436381b87e15aecfc1f2230150",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x--acme"
+  },
+  "expected": {
+    "ok": false
+  }
+}

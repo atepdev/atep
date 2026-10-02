@@ -1,0 +1,14 @@
+{
+  "name": "reject-checkpoint-hash-31-bytes",
+  "category": "anchor-record",
+  "description": "`checkpoint-hash` has 31 bytes.",
+  "cbor_file": "reject-checkpoint-hash-31-bytes.cbor",
+  "cbor_sha256": "809f3e1c150b357b508433346fe0f461f2920444ef221466eda0feebc05fe697",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

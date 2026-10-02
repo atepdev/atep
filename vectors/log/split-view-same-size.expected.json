@@ -1,0 +1,19 @@
+{
+  "name": "split-view-same-size",
+  "category": "log",
+  "description": "Two valid signed checkpoints of the same log for tree size 6 with different root hashes. Expect step 9 split_view_detected.",
+  "cbor_file": "split-view-same-size.cbor",
+  "cbor_sha256": "a9218712fe1ac5d65aabc4228f3184cfed520136eda6b587d0d26d4a211d854f",
+  "inputs": {
+    "now": 1800000000,
+    "check": "split-view",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "split_view_detected"
+  }
+}

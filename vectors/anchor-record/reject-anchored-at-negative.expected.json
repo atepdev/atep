@@ -1,0 +1,14 @@
+{
+  "name": "reject-anchored-at-negative",
+  "category": "anchor-record",
+  "description": "`anchored-at` is -1.",
+  "cbor_file": "reject-anchored-at-negative.cbor",
+  "cbor_sha256": "2a13f1885eabb5c916bc3f734d65346e3b4dfe99d7e4465f21898d427b16f786",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

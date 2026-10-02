@@ -1,0 +1,40 @@
+{
+  "name": "wk-status-403",
+  "category": "domain-binding",
+  "description": "HTTP 403: any other status makes the document invalid.",
+  "cbor_file": "wk-status-403.cbor",
+  "cbor_sha256": "521708f0bd528957a055d06be9542b1d037f209400431193d724a4d91ec524b3",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 403,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "txt-leading-space-is-not-the-version-term",
+  "category": "domain-binding",
+  "description": "The record starts with a space: it does not begin with the term `v=atep1`, so it is ignored.",
+  "cbor_file": "txt-leading-space-is-not-the-version-term.cbor",
+  "cbor_sha256": "07be88dbd4d9060537fe622565ab1d14ce1295148c6b2d85c9ed1298e81dbf7c",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            " v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

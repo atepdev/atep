@@ -1,0 +1,21 @@
+{
+  "name": "signer-mismatch",
+  "category": "verify-negative",
+  "description": "signer header names bob, but the inline bundle and the signatures are alice's. Expect step 3.",
+  "cbor_file": "signer-mismatch.cbor",
+  "cbor_sha256": "4ac906dec49de5ccbaac7c5f0913cceb844f2dbc562f46725993c2eb9d3a117b",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 3,
+    "error": "signer_id_mismatch"
+  }
+}

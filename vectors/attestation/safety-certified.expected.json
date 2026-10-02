@@ -1,0 +1,28 @@
+{
+  "name": "safety-certified",
+  "category": "attestation",
+  "description": "ATEP-R `safety-certified` claim: evidence hash required, 365 day lifetime.",
+  "cbor_file": "safety-certified.cbor",
+  "cbor_sha256": "fe13bf5a9535cd58c1843b78802605395d66bafd2ed0f7ba3d84d21f7e21ec4b",
+  "inputs": {
+    "issuer_seeds": {
+      "ed25519": "1e7e0cf8ab793c385dee2bdc3eff6e74d752f318bd53b5c6d052bf0dd81d7c1d",
+      "mldsa65": "86fb28d35a26c522fc2481ce3a259c6b98960495f4aaba36f54443d01f8400f7"
+    },
+    "subject": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "claim": "https://atep.dev/claims/robotics/safety-certified",
+    "data_hex": "a264646174656a323032362d30392d3031687374616e646172646a49534f20333639312d34",
+    "evidence_hex": "81dbab0668dc281da6b46f3ce33d298efc93cf636faafc2aa5801e670af2aea7",
+    "evidence_uri": null,
+    "id_hex": "e172d2536d49cac243f9d84b3c4f07a0",
+    "nonce_hex": "ee934fcdf41da5ca2c8b828665e396fd",
+    "issued_at": 1797408000,
+    "expires_at": 1828944000
+  },
+  "expected": {
+    "issuer": "atep:7sbiobw3ok3nnn54kbh22f5n4fqtka5sr6xuacakogrpwua3smua",
+    "payload_hex": "a662696450e172d2536d49cac243f9d84b3c4f07a06464617461a264646174656a323032362d30392d3031687374616e646172646a49534f20333639312d3465636c61696d783168747470733a2f2f617465702e6465762f636c61696d732f726f626f746963732f7361666574792d636572746966696564666973737565725820fc828706db72b6d6b7bc504fad17ade1613503b28faf40080a71a2fb501b9328677375626a65637458203809c693c268e9c09e1bd6524e19fa718528d2aad0bfad151696b337f900cc3c6865766964656e6365582081dbab0668dc281da6b46f3ce33d298efc93cf636faafc2aa5801e670af2aea7",
+    "envelope_len": 5903,
+    "envelope_sha256": "fe13bf5a9535cd58c1843b78802605395d66bafd2ed0f7ba3d84d21f7e21ec4b"
+  }
+}

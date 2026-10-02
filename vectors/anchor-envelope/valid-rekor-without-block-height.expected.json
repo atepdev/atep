@@ -1,0 +1,23 @@
+{
+  "name": "valid-rekor-without-block-height",
+  "category": "anchor-envelope",
+  "description": "As valid-solana for `rekor`, a record without `block-height`.",
+  "cbor_file": "valid-rekor-without-block-height.cbor",
+  "cbor_sha256": "1032a9d8cae078fd7f813aac2dbf6aa7e4a61bd931d79661b571be472dfb9c1c",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": true,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "record": {
+      "checkpoint_hash": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182",
+      "chain_id": "rekor",
+      "transaction_id": "24296fb24b8ad77a0d3ac2c6d5e2f1a6",
+      "block_height": null,
+      "anchored_at": 1799997000
+    }
+  }
+}

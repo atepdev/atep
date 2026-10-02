@@ -1,0 +1,21 @@
+{
+  "name": "bad-mldsa-signature",
+  "category": "verify-negative",
+  "description": "Last byte of the ML-DSA-65 signature flipped, EdDSA intact. Expect step 4.",
+  "cbor_file": "bad-mldsa-signature.cbor",
+  "cbor_sha256": "79941f3035e425f59c881b9b0b7ba390e45e8cc121073d3a7c0e66105518a25f",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 4,
+    "error": "mldsa_signature_invalid"
+  }
+}

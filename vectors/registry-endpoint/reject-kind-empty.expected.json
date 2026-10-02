@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-empty",
+  "category": "registry-endpoint",
+  "description": "`kind` is the empty string.",
+  "cbor_file": "reject-kind-empty.cbor",
+  "cbor_sha256": "44ed9c5a6bd0aa241ffbd9643088139e3c579ba74c45f06dcb8f323ab9caa6f3",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

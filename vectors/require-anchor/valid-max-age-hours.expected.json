@@ -1,0 +1,29 @@
+{
+  "name": "valid-max-age-hours",
+  "category": "require-anchor",
+  "description": "One rule with `max_age_hours`.",
+  "cbor_file": "valid-max-age-hours.cbor",
+  "cbor_sha256": "9743f1fba70c2bb7bfb7fc6279d99aa71adfdc0677f0c0e37b928c582a2681c7",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "ethereum-mainnet",
+          "max_age_hours": 6
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "ethereum-mainnet",
+        "max_age_hours": 6
+      }
+    ]
+  }
+}

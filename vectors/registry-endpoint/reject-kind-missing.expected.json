@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-missing",
+  "category": "registry-endpoint",
+  "description": "`data` has no `kind`.",
+  "cbor_file": "reject-kind-missing.cbor",
+  "cbor_sha256": "5411f0f846b880bd1b688019e5de3da3aa90fc2d8245ff8e71965c8bfe158410",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

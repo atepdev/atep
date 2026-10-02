@@ -1,0 +1,20 @@
+{
+  "name": "valid-solana-with-block-height",
+  "category": "anchor-record",
+  "description": "A record on a registered chain with every key. Decoding gives the five fields; encoding them gives these bytes (map keys sorted by encoded length: chain-id, anchored-at, block-height, transaction-id, checkpoint-hash).",
+  "cbor_file": "valid-solana-with-block-height.cbor",
+  "cbor_sha256": "a3963340127f51435ace67e35a1a90490aac8eb4a81dc54c046061dc53948392",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "solana-mainnet",
+      "transaction_id": "5VERv8NMvzbJMEkV8xnrLkEaWRtSz9CosKDYjCJjBRnb",
+      "block_height": 280000000,
+      "anchored_at": 1799997000
+    }
+  }
+}

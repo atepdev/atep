@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-prefix-missing-hyphen",
+  "category": "chain-id",
+  "description": "`xacme` is not an extension id.",
+  "cbor_file": "invalid-extension-prefix-missing-hyphen.cbor",
+  "cbor_sha256": "79f46f434397e59fd1575984ac2c5406b73f0077dfaf8174b1819342702b7f8d",
+  "inputs": {
+    "check": "chain-id",
+    "id": "xacme"
+  },
+  "expected": {
+    "ok": false
+  }
+}

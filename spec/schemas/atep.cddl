@@ -1,0 +1,414 @@
+; ATEP Draft 07 CDDL schemas (RFC 8610)
+; Matches the Draft 07 text and the vectors/ directory byte for byte. Draft 06 and
+; Draft 05 add no wire change to an envelope, attestation, SRL, checkpoint or
+; anchor record; Draft 06 adds only comments here (the rules it states in prose
+; were already in this file). Draft 05 added the document shapes of the monitor
+; vectors at the end of this file. Relative to Draft 03, Draft 04 added the
+; anchor record (log-signed, media type application/atep-anchor+cbor) and the
+; chain-id rule, the data
+; layouts of registry-endpoint, retired and successor (normative), the 14th core
+; claim type, the require_anchor and follow_succession members of the trust
+; policy file, and the JSON document of the domain records. Draft 03 added the
+; consistency and split view documents, the claim data layouts, the log policy
+; data, the trust policy file (JSON) and the verification result shapes.
+; Header labels -70001 to -70014, alg ids -49, -70010, -70011 and kty 7 are
+; provisional private-use values. All ATEP CBOR is deterministic (RFC 8949
+; section 4.2.1); CDDL cannot express that, see spec section 5 "Encoding rules".
+; Validation: this file is machine-checked against all 436 vectors with the Rust
+; `cddl` crate (scripts/ci/validate-cddl.mjs, table in scripts/ci/cddl-map.json,
+; CI job `cddl`); see spec/schemas/NOTES.md for what that covers and what it cannot.
+
+agent-id = bstr .size 32
+
+; ---- COSE_Key encodings and key bundle (section 4) ----
+ed25519-key = {
+  1 => 1,                    ; kty OKP
+  3 => -8,                   ; alg EdDSA
+  -1 => 6,                   ; crv Ed25519
+  -2 => bstr .size 32,       ; x
+}
+
+mldsa65-key = {
+  1 => 7,                    ; kty AKP, provisional
+  3 => -49,                  ; alg ML-DSA-65, provisional
+  -1 => bstr .size 1952,     ; pub
+}
+
+x25519-key = {
+  1 => 1,                    ; kty OKP
+  3 => -25,                  ; alg ECDH-ES+HKDF-256
+  -1 => 4,                   ; crv X25519
+  -2 => bstr .size 32,       ; x
+}
+
+mlkem768-key = {
+  1 => 7,                    ; kty AKP, provisional
+  3 => -70010,               ; alg ML-KEM-768, provisional private-use
+  -1 => bstr .size 1184,     ; pub
+}
+
+; [sig_classical_key, sig_pq_key, enc_keys?]
+; The third element is omitted (never null) when there are no encryption keys.
+; Agent ID = SHA-256 of the deterministic encoding of this array.
+key-bundle = [
+  sig-classical: ed25519-key,
+  sig-pq: mldsa65-key,
+  ? enc-keys: [enc-classical: x25519-key, enc-pq: mlkem768-key],
+]
+
+; ---- Envelope (section 5) ----
+signed-envelope = #6.98([
+  protected: bstr .cbor protected-header,
+  unprotected: unprotected-header,
+  payload: bstr / nil,                   ; nil when detached
+  signatures: [classical-sig, pq-sig] / [pq-sig, classical-sig],   ; exactly one of each; signers emit EdDSA first, verifiers accept either order (section 5)
+])
+
+protected-header = {
+  3 => tstr,                             ; content type
+  -70001 => 1,                           ; atep-version
+  -70002 => agent-id,                    ; signer
+  -70003 => int,                         ; issued-at
+  ? -70004 => int,                       ; expires-at (REQUIRED for attestations, checked at step 1)
+  -70005 => bstr .size 16,               ; nonce
+  -70006 => bstr .size 32,               ; payload-digest, SHA-256
+  -70007 => "ATEP-1",                    ; suite
+  ? -70014 => command-class,             ; ATEP-R command class (REQUIRED in ATEP-R envelopes)
+  * (int / tstr) => any,                 ; unknown labels are ignored but signed
+}
+
+; Labels -70008, -70009 and -70012 are provisional.
+unprotected-header = {
+  ? -70008 => key-bundle,                ; signer-bundle, embedded as a CBOR value, not a bstr
+  ? -70009 => [* signed-envelope],       ; inline attestations
+  ? -70012 => inclusion-proof,
+  * (int / tstr) => any,
+}
+
+; kid is the signer Agent ID and MUST equal the signer header (step 3).
+classical-sig = [
+  protected: bstr .cbor { 1 => -8, 4 => agent-id },   ; EdDSA
+  unprotected: {},
+  signature: bstr .size 64,
+]
+
+pq-sig = [
+  protected: bstr .cbor { 1 => -49, 4 => agent-id },  ; ML-DSA-65, provisional id
+  unprotected: {},
+  signature: bstr .size 3309,
+]
+
+; Sig_structure signed by each COSE_Signature (not carried on the wire):
+; ["Signature", body_protected, sign_protected, h'', payload]
+
+; ---- Encrypted envelope (section 6) ----
+; sign-then-encrypt: ciphertext is AES-256-GCM over the encoded signed-envelope
+; (output followed by the 16 byte tag), AAD = ["Encrypt", protected, h''].
+encrypted-envelope = #6.96([
+  protected: bstr .cbor {
+    1 => 3,                              ; A256GCM
+    -70001 => 1,                         ; atep-version
+    -70007 => "ATEP-1",                  ; suite
+  },
+  unprotected: { 5 => bstr .size 12 },   ; iv
+  ciphertext: bstr,
+  recipients: [kem-recipient],           ; exactly one
+])
+
+kem-recipient = [
+  protected: bstr .cbor { 1 => -70011 }, ; ATEP-1 hybrid KEM, provisional
+  unprotected: {
+    4 => agent-id,                       ; recipient kid
+    -1 => ephemeral-x25519-key,
+    -70013 => bstr .size 1088,           ; ML-KEM-768 ciphertext, provisional label
+  },
+  ciphertext: bstr .size 0,              ; h''
+]
+
+ephemeral-x25519-key = {
+  1 => 1,
+  3 => -25,
+  -1 => 4,
+  -2 => bstr .size 32,
+}
+
+; ---- Attestation payload (section 7) ----
+; content type application/atep-attestation+cbor
+; Text keys, no other keys allowed. Rules CDDL cannot say (spec section 7):
+; issuer equals the envelope signer; evidence is REQUIRED when claim is
+; audited or robotics/safety-certified; expires-at - issued-at is at most
+; 400 days.
+attestation = {
+  subject: agent-id,
+  issuer: agent-id,                      ; MUST equal the envelope signer
+  claim: uri,
+  data: { * tstr => any },
+  ? evidence: bstr .size 32,
+  ? evidence-uri: uri,
+  id: bstr .size 16,
+}
+
+; A text string "scheme:rest": scheme is an ASCII letter followed by letters,
+; digits, "+", "." or "-", and rest is not empty.
+uri = tstr
+
+; ---- Claim data layouts (section 7), the `data` map of the attestation ----
+issuer-authority-data = { claims: [* uri], * tstr => any }   ; REQUIRED layout
+domain-control-data = { domain: dns-name, * tstr => any }    ; checked by logs
+retired-data = { ? reason: tstr, * tstr => any }             ; subject = issuer
+successor-data = { ? reason: tstr, * tstr => any }           ; issuer = old identity, subject differs from issuer
+peer-motion-data = { peers: [* agent-id], * tstr => any }    ; ATEP-R motion rule
+registry-endpoint-data = { url: uri, kind: endpoint-kind, * tstr => any }
+endpoint-kind = "registry" / "verifier" / "mcp" / "a2a" / (tstr .regexp "x-[a-z0-9-]+")
+; The extension kind allows a hyphen anywhere after "x-" (spec section 7); it is looser
+; than extension-chain-id below, as the spec text states.
+
+; Rules CDDL cannot say about these layouts (spec section 7, "Retirement and
+; succession"): for retired the subject MUST equal the issuer; for successor the
+; subject MUST differ from the issuer; in both, reason (when present) is text and
+; other members are ignored. registry-endpoint url is an https URL of at most 2048
+; characters with a host, no credentials and no whitespace.
+; The exemption of step 8 (spec section 7) looks only at the content type and at
+; the claim, subject and issuer of the payload map, so a retired attestation of
+; the signer whose data breaks this layout is exempt at step 8 and fails the
+; schema check of its consumer (attestation_schema_invalid, schema_invalid at a log).
+
+; lowercase DNS name: labels of 1 to 63 of a-z, 0-9 and "-" (no leading or
+; trailing "-" in a label), at most 253 characters, no trailing dot.
+dns-name = tstr
+
+; The 14 claim types of the closed core namespace https://atep.dev/claims/
+core-claim = "https://atep.dev/claims/domain-control"
+  / "https://atep.dev/claims/operator"
+  / "https://atep.dev/claims/successor"
+  / "https://atep.dev/claims/retired"
+  / "https://atep.dev/claims/issuer-authority"
+  / "https://atep.dev/claims/audited"
+  / "https://atep.dev/claims/registry-endpoint"
+  / "https://atep.dev/claims/robotics/fleet-member"
+  / "https://atep.dev/claims/robotics/fleet-controller"
+  / "https://atep.dev/claims/robotics/safety-certified"
+  / "https://atep.dev/claims/robotics/sensor-source"
+  / "https://atep.dev/claims/robotics/safety-authority"
+  / "https://atep.dev/claims/robotics/maintenance-authority"
+  / "https://atep.dev/claims/robotics/peer-motion"
+
+; ---- Signed revocation list payload (section 8) ----
+; content type application/atep-srl+cbor
+; Text keys, no other keys allowed. next-update MUST be later than issued-at.
+; An SRL is stale when now >= next-update.
+srl = {
+  issuer: agent-id,                      ; MUST equal the envelope signer
+  sequence: uint,
+  issued-at: uint,
+  next-update: uint,
+  revoked: [* revocation-entry],
+}
+
+; id is told apart by length: 16 bytes names an attestation of this SRL's
+; issuer (any revoked-at); 32 bytes is an Agent ID, an identity revocation that
+; step 8 applies whatever the reason.
+revocation-entry = {
+  id: bstr .size 16 / agent-id,
+  reason: "superseded" / "withdrawn" / "compromised" / "retired" / tstr,
+  revoked-at: uint,
+}
+
+; ---- Transparency log (section 9) ----
+checkpoint = {
+  tree-size: uint,
+  root-hash: bstr .size 32,
+  timestamp: uint,
+}
+
+; Checkpoint hash = SHA-256 of the deterministic encoding of the checkpoint map
+; above (the payload bytes, not the envelope), spec section 9.
+
+; ---- Anchor record (spec section 9), optional ----
+; Payload of an envelope with content type application/atep-anchor+cbor, a trust
+; document, signed by the log (signer bundle inline, no expires-at). Text keys, no
+; other keys allowed. Not a log entry and not part of any checkpoint.
+anchor-record = {
+  "checkpoint-hash" : bstr .size 32,
+  "chain-id"        : chain-id,
+  "transaction-id"  : tstr .size (1..512),
+  ? "block-height"  : uint,
+  "anchored-at"     : uint,
+}
+; Integers: block-height and anchored-at are unsigned integers in 0 to 2^63-1 (spec
+; section 9): ATEP CBOR integers fit a signed 64-bit range (spec section 5), which
+; the decoder enforces and CDDL does not restate. An absent block-height is never
+; encoded as null or 0.
+; Registered ids: solana-mainnet, ethereum-mainnet, bitcoin-mainnet,
+; opentimestamps, rekor. Extension form x-<name> (lowercase letters, digits and
+; hyphens, not starting or ending with a hyphen), at most 64 bytes in total.
+chain-id = "solana-mainnet" / "ethereum-mainnet" / "bitcoin-mainnet" / "opentimestamps" / "rekor"
+         / extension-chain-id
+; x- plus 1 to 62 characters, so 3 to 64 bytes in all (the length is in the pattern: this validator cannot chain .size and .regexp)
+extension-chain-id = tstr .regexp "x-[a-z0-9]([a-z0-9-]{0,60}[a-z0-9])?"
+
+; Leaf hash = SHA-256(0x00 || submitted form), the envelope with its -70012
+; entry removed (spec section 9). Tree and proofs: RFC 9162.
+inclusion-proof = {
+  leaf-index: uint,
+  audit-path: [* bstr .size 32],
+  checkpoint: signed-envelope,           ; content type application/atep-checkpoint+cbor, embedded as a CBOR value
+}
+
+consistency-proof = {
+  from: uint,                            ; older tree size
+  to: uint,                              ; newer tree size
+  path: [* bstr .size 32],               ; RFC 9162 section 2.1.4.1
+}
+
+; Document of a consistency check: two checkpoints of one log and the proof.
+consistency-evidence = {
+  old: signed-envelope,                  ; checkpoint, embedded as a CBOR value
+  new: signed-envelope,
+  proof: consistency-proof,
+}
+
+; Document of a split view check, and the transferable evidence of a split view.
+split-view-evidence = {
+  a: signed-envelope,
+  b: signed-envelope,
+  ? proof: consistency-proof,
+}
+
+; Log policy entry (spec section 9): an attestation the log issues to itself,
+; subject = issuer = the log, claim https://atep.dev/log/policy (provisional,
+; outside the closed core namespace). This is its `data` map.
+log-policy-data = {
+  version: 1,
+  log: tstr,                             ; the log's Agent ID, text form
+  operator: tstr,
+  admission: [* tstr],
+  retention: tstr,
+  availability: tstr,
+  checkpoint-interval-seconds: uint,
+  checkpoint-media-type: "application/atep-checkpoint+cbor",
+  max-envelope-bytes: uint,
+  key-custody: tstr,
+  core-namespace: "https://atep.dev/claims/",
+  core-claims: [* uri],
+  commitments: [* tstr],
+  * tstr => any,
+}
+
+; ---- ATEP-R (section 17) ----
+; Carried in the protected header under label -70014.
+command-class = "telemetry" / "sensor" / "coordination" / "motion"
+              / "actuation" / "safety" / "maintenance"
+
+; ---- Trust policy file (section 7), a JSON document ----
+; Every member is optional and an unknown member is an error. Agent IDs are
+; texts in the atep: or did:atep: form. A claim is a URI or a short name; the
+; expansion rule is in spec section 7 ("Short claim names").
+trust-policy = {
+  ? "roots": [* tstr],                   ; default []
+  ? "rules": [* policy-rule],            ; default []
+  ? "max_depth": uint .ge 1,             ; default 5
+  ? "require_inclusion": bool,           ; default false
+  ? "trusted_logs": [* tstr],            ; default []
+  ? "srl": { ? "on_stale": stale-mode,   ; default "fail-closed"
+             ? "on_missing": stale-mode, ; default "fail-open"
+  },
+  ? "atep_r": bool,                      ; default false
+  ? "require_anchor": [* anchor-rule],   ; default []; not evaluable in Draft 06, step 9 fails closed with anchor_not_supported
+  ? "follow_succession": bool,           ; default false; one hop of succession, spec section 7
+}
+
+; Exactly one of max_age_days and max_age_hours. log is an Agent ID text.
+anchor-rule = {
+  "log": tstr,
+  "chain": chain-id,
+  ( "max_age_days": uint .ge 1 // "max_age_hours": uint .ge 1 ),
+}
+
+policy-rule = {
+  "claim": tstr,
+  ? "root": tstr,                        ; MUST be in roots, else policy_invalid
+  ? "max_age_days": uint,
+}
+
+stale-mode = "fail-closed" / "fail-open"
+
+; ---- Verification result (section 10), as compared by the vectors (JSON) ----
+verify-result = verify-ok / verify-rejected
+
+verify-ok = {
+  "ok": true,
+  "signer": tstr,
+  "content_type": tstr,
+  "issued_at": int,
+  "expires_at": int / null,
+  "nonce_hex": tstr,
+  "encrypted": bool,
+  "claims": [* verified-claim],
+  "checkpoint": null / checkpoint-used,
+  "payload_hex": tstr,
+  ? "warnings": [+ tstr],                ; only when non-empty
+  ? "command_class": tstr,               ; only when header -70014 is present
+}
+
+verified-claim = {
+  "claim": tstr,
+  "issuer": tstr,
+  "root": tstr,
+  "expires_at": int,                     ; earliest over the chain
+  "chain": [+ chain-link],               ; claim attestation first
+}
+
+chain-link = {
+  "id": tstr,                            ; 16 bytes, lowercase hex
+  "claim": tstr,
+  "subject": tstr,
+  "issuer": tstr,
+  "issued_at": int,
+  "expires_at": int,
+}
+
+checkpoint-used = {
+  "log": tstr,
+  "tree_size": uint,
+  "root_hash": tstr,                     ; hex
+  "timestamp": uint,
+}
+
+verify-rejected = {
+  "ok": false,
+  "step": 1..9,
+  "error": tstr,                         ; stable code, spec section 10
+  ? "cause": { "step": 1..9, "error": tstr },
+}
+
+; ---- Domain records (spec section 4), the JSON document at https://<domain>/.well-known/atep.json ----
+; Served as application/json, at most 65536 bytes. Members not listed are ignored.
+well-known-document = {
+  "version": 1,
+  "agents": [* any],                     ; Agent ID texts, atep: or did:atep:, at most 1024; an entry that is not an Agent ID (even a non-text one) is ignored by the reader
+  ? "domain": tstr,                      ; MUST equal the name it was fetched for
+  ? "srl-url": tstr,                     ; https URL
+  ? "updated": uint,                     ; Unix seconds, informational
+  * tstr => any,
+}
+; The TXT record syntax at _atep.<domain> is ABNF, in spec section 4:
+;   record   = "v=atep1" *( 1*SP term )
+;   term     = id-term / srl-term / ext-term
+;   id-term  = "id=" agent-id
+;   srl-term = "srl=" https-url
+
+; ---- Document shapes of the monitor vectors (spec section 12, Draft 05) ----
+; Test file formats, not wire formats of the protocol. The file of a `monitor`
+; vector is a map of the entries of a log in log order, each a tag 98 envelope
+; (submitted form) embedded as a CBOR value, numbered from 0.
+monitor-input = { "entries": [* any] }
+; The expected result lists alerts in entry order. `entry` is the index of the
+; link whose issuer is the subject of another successor attestation of the list.
+monitor-expected = { "alerts": [* successor-chain-alert] }
+successor-chain-alert = {
+  "alert": "successor_chain",
+  "entry": uint,
+  "issuer": tstr,                        ; Agent ID text of the link's issuer
+  "subject": tstr,                       ; Agent ID text of the link's subject
+}

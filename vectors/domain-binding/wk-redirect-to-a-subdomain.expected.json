@@ -1,0 +1,40 @@
+{
+  "name": "wk-redirect-to-a-subdomain",
+  "category": "domain-binding",
+  "description": "The document came from `www.example.com`, not from the host `example.com`.",
+  "cbor_file": "wk-redirect-to-a-subdomain.cbor",
+  "cbor_sha256": "fd8bed80e2923b7bc2bd1a5e07817e944bc20603f11ac0797e2c0504e7640505",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://www.example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

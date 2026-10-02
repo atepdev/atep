@@ -1,0 +1,21 @@
+{
+  "name": "future-dated",
+  "category": "verify-negative",
+  "description": "issued-at is 3600 s after now, beyond the 300 s skew. Expect step 5.",
+  "cbor_file": "future-dated.cbor",
+  "cbor_sha256": "951838ecb6f7b608386cb8eb4cf2c8cb8f29d7c2bd77f509ec93beec99c2b227",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 5,
+    "error": "issued_in_future"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "invalid-missing-age",
+  "category": "require-anchor",
+  "description": "A rule with neither `max_age_days` nor `max_age_hours`.",
+  "cbor_file": "invalid-missing-age.cbor",
+  "cbor_sha256": "da7dec28c1ea6ddfacce32f7ba9a1478185dc1adfc960644dc6c92ab4b82bf2b",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor"
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

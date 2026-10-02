@@ -1,0 +1,27 @@
+{
+  "name": "wrong-recipient",
+  "category": "verify-negative",
+  "description": "Encrypted to bob but opened with carol's keys. Expect step 2.",
+  "cbor_file": "wrong-recipient.cbor",
+  "cbor_sha256": "9f8f2a4e9b23cc8c2218c5dfd76ed136fec2c967d9b08a4215a0a3b94d11b388",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "0139149fabd5445396e1e9405b95b741ae821bf086d4adfa2c89cc7250e2059e",
+        "mldsa65": "d73a571237ebb30cbed749cdb22dc40fd0dfebb387a467893eb6794eb388c72f",
+        "x25519": "76448f2b930503dfffbdee25c5606becbb6e22e15ac156b4322c6b37c71f8cb5",
+        "mlkem768": "7eaefb7c26dd874fde358a9e40abc7ef689a16a0967d414bb5afdb67073760e15dc419e65414bdf318ff1ab8f197d05fb2b13d10d7f119867bdbee9498eebcc9"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 2,
+    "error": "not_addressed_to_recipient"
+  }
+}

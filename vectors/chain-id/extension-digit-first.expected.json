@@ -1,0 +1,15 @@
+{
+  "name": "extension-digit-first",
+  "category": "chain-id",
+  "description": "The name may begin with a digit.",
+  "cbor_file": "extension-digit-first.cbor",
+  "cbor_sha256": "882deff38d7a10de861a0756438808c0f8bef5d1c5bdffd549a838aedc780003",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-0ledger"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "extension"
+  }
+}

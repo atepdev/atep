@@ -1,0 +1,42 @@
+{
+  "name": "txt-union-of-records-and-terms",
+  "category": "domain-binding",
+  "description": "Three records: one with two `id=` terms that do not include the Agent ID, an unrelated one, and one that lists it. The authorized set is the union of the `id=` terms of all `v=atep1` records.",
+  "cbor_file": "txt-union-of-records-and-terms.cbor",
+  "cbor_sha256": "f26d81dd5848a07c46031d8b9ad96b7fde7e09cbd5c41ab2a66281ee386adca0",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra id=atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra",
+            "v=spf1 -all",
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

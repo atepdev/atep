@@ -1,0 +1,19 @@
+{
+  "name": "inclusion-wrong-audit-path",
+  "category": "log",
+  "description": "First audit path hash altered. Expect step 9.",
+  "cbor_file": "inclusion-wrong-audit-path.cbor",
+  "cbor_sha256": "7820a478e9feed46711308d4144b16b15eb0e29b8f61cb1b7efdb4cd5e8d8695",
+  "inputs": {
+    "now": 1800000000,
+    "check": "inclusion",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "inclusion_proof_invalid"
+  }
+}

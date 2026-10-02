@@ -1,0 +1,14 @@
+{
+  "name": "invalid-registered-wrong-case",
+  "category": "chain-id",
+  "description": "Registered ids are matched exactly, in lowercase.",
+  "cbor_file": "invalid-registered-wrong-case.cbor",
+  "cbor_sha256": "612db8a741fb4a76a44dadd5f163b5d6e52d7936cb638f0377a81e2629de80ff",
+  "inputs": {
+    "check": "chain-id",
+    "id": "Solana-mainnet"
+  },
+  "expected": {
+    "ok": false
+  }
+}

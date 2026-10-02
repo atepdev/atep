@@ -1,0 +1,19 @@
+{
+  "name": "consistency-untrusted-log",
+  "category": "log",
+  "description": "A valid proof between a trusted checkpoint and a checkpoint signed by an untrusted log. Expect step 9 checkpoint_untrusted.",
+  "cbor_file": "consistency-untrusted-log.cbor",
+  "cbor_sha256": "a5859ffdc371135f948c9bd88566681de402e04cc6d3d894e491ea26324b27ef",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_untrusted"
+  }
+}

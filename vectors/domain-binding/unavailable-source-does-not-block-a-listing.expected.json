@@ -1,0 +1,44 @@
+{
+  "name": "unavailable-source-does-not-block-a-listing",
+  "category": "domain-binding",
+  "description": "The document lists the Agent ID and the DNS lookup failed: a listed source and no valid source that omits it, so bound.",
+  "cbor_file": "unavailable-source-does-not-block-a-listing.cbor",
+  "cbor_sha256": "bc22a82e9a6c379c3a0d5da3c0cddd22a5689c2560558c01908e15d673d35392",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "unavailable": "SERVFAIL"
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "unavailable",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

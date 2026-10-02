@@ -1,0 +1,19 @@
+{
+  "name": "split-view-failed-consistency",
+  "category": "log",
+  "description": "A size 5 checkpoint from one view and a size 8 checkpoint from another view whose history differs at leaf 1; the proof is valid for the second view only. Expect step 9 split_view_detected.",
+  "cbor_file": "split-view-failed-consistency.cbor",
+  "cbor_sha256": "00f0ce11c71f59c4565690f7d75cd3c671a214553920ad94fd0032ce19d33e75",
+  "inputs": {
+    "now": 1800000000,
+    "check": "split-view",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "split_view_detected"
+  }
+}

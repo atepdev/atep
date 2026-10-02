@@ -1,0 +1,40 @@
+{
+  "name": "wk-content-type-text-plain",
+  "category": "domain-binding",
+  "description": "`text/plain`: the content type must be application/json.",
+  "cbor_file": "wk-content-type-text-plain.cbor",
+  "cbor_sha256": "0b7cdab1dbd7b585bce7016ff895f01f47ec6c3c0cae759c9dcac6e63ff9d034",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "text/plain",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

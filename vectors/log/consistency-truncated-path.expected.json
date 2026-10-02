@@ -1,0 +1,19 @@
+{
+  "name": "consistency-truncated-path",
+  "category": "log",
+  "description": "Last hash removed from the consistency path. Expect step 9 consistency_proof_invalid.",
+  "cbor_file": "consistency-truncated-path.cbor",
+  "cbor_sha256": "2f8cbb1a75e2c894933b0573d46c9f5986257ace0a1841f61a54277a24b1059b",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "consistency_proof_invalid"
+  }
+}

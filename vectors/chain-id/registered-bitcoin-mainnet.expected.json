@@ -1,0 +1,15 @@
+{
+  "name": "registered-bitcoin-mainnet",
+  "category": "chain-id",
+  "description": "Registered: Bitcoin mainnet, direct transaction.",
+  "cbor_file": "registered-bitcoin-mainnet.cbor",
+  "cbor_sha256": "5347bbbc4af003be9b5f32035e830c7ce5f063e4d7f66248a9aa7588cc9466fb",
+  "inputs": {
+    "check": "chain-id",
+    "id": "bitcoin-mainnet"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "registered"
+  }
+}

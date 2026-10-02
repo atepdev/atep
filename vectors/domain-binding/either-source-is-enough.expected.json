@@ -1,0 +1,47 @@
+{
+  "name": "either-source-is-enough",
+  "category": "domain-binding",
+  "description": "The document lists the Agent ID and the TXT name has only unrelated records (no `_atep` data): a source that does not exist is silent, so one listing is enough.",
+  "cbor_file": "either-source-is-enough.cbor",
+  "cbor_sha256": "aa5543ab1281f0564654f1d92912e71da4a5c738ea5fd04c89474e17d6e24c1b",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=spf1 -all"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

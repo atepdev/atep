@@ -1,0 +1,14 @@
+{
+  "require_anchor": [
+    {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "chain": "bitcoin-mainnet",
+      "max_age_days": 3
+    },
+    {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "chain": "opentimestamps",
+      "max_age_hours": 12
+    }
+  ]
+}

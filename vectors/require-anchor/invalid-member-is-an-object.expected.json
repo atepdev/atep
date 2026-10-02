@@ -1,0 +1,21 @@
+{
+  "name": "invalid-member-is-an-object",
+  "category": "require-anchor",
+  "description": "`require_anchor` is an object, not an array.",
+  "cbor_file": "invalid-member-is-an-object.cbor",
+  "cbor_sha256": "0d83defd799ebd5742fa5a12f50aa57c29f3602f78cfedb72f1c293d9b66ed1b",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "rekor",
+        "max_age_days": 1
+      }
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "replayed-nonce",
+  "category": "verify-negative",
+  "description": "The verifier has already seen this nonce. Expect step 6.",
+  "cbor_file": "replayed-nonce.cbor",
+  "cbor_sha256": "e439bc6d31831bb1c091fde2cc42783701da894dcef7f431c82aa415700bb190",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [
+        "568ec0bcee85b514aed522f69f2d8480"
+      ],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 6,
+    "error": "nonce_replayed"
+  }
+}

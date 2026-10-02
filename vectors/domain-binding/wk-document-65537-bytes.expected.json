@@ -1,0 +1,45 @@
+{
+  "name": "wk-document-65537-bytes",
+  "category": "domain-binding",
+  "description": "The same document one byte longer: over the limit, so the source is invalid and the Agent ID is not bound although the (unread) body lists it.",
+  "cbor_file": "wk-document-65537-bytes.cbor",
+  "cbor_sha256": "4c5d6cc3b4024837de85ff056e0de65fd04c63046b8236b61cb551c8865e9caf",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body_filler": {
+            "prefix": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"],\"pad\":\"",
+            "fill": "a",
+            "suffix": "\"}",
+            "total_bytes": 65537
+          }
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

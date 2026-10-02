@@ -1,0 +1,1849 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ATEP log and registry API",
+    "version": "0.2.0",
+    "summary": "Transparency log, directories and claim-type resolver of an ATEP registry.",
+    "description": "HTTP/1.1 API of an ATEP transparency log (atep-logd), ATEP Draft 07 section 9 plus the discovery additions of Draft 04. All data is signed, so TLS adds privacy and no trust. Responses are JSON unless `Accept` contains `cbor`, which selects the CBOR form where one exists. Binary values in JSON are unpadded base64url (`envelope`, `checkpoint`, `proof`) or lowercase hex (`leaf-hash`, `root-hash`, `audit-path`). Agent IDs are `atep:` text. Errors are `{\"error\": \"<code>\", \"detail\": \"...\"}`. `HEAD` is answered for every `GET` route. Every response allows any origin (CORS `*`). Layouts marked provisional are described in docs/implementation-findings/rust-findings.md, findings 33 to 41.",
+    "license": {
+      "name": "Apache-2.0",
+      "identifier": "Apache-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "This log"
+    },
+    {
+      "url": "https://atep.dev",
+      "description": "Hosted registry when deployed there; also serves https://atep.dev/claims/<name>"
+    }
+  ],
+  "tags": [
+    {
+      "name": "log",
+      "description": "Merkle log: submission, checkpoints, proofs, entries, policy"
+    },
+    {
+      "name": "registry",
+      "description": "Directories derived from the log"
+    },
+    {
+      "name": "claims",
+      "description": "Claim-type resolution: definition plus CDDL schema"
+    },
+    {
+      "name": "gossip",
+      "description": "Checkpoint exchange and split view detection"
+    },
+    {
+      "name": "meta",
+      "description": "Service index and this description"
+    }
+  ],
+  "security": [],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "getIndex",
+        "tags": [
+          "meta"
+        ],
+        "summary": "Service index",
+        "description": "The log's Agent ID, the list of routes and the location of this description.",
+        "responses": {
+          "200": {
+            "description": "Service index",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiIndex"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "operationId": "getOpenApi",
+        "tags": [
+          "meta"
+        ],
+        "summary": "This OpenAPI 3.1 description",
+        "responses": {
+          "200": {
+            "description": "The OpenAPI document",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/submit": {
+      "post": {
+        "operationId": "submit",
+        "tags": [
+          "log"
+        ],
+        "summary": "Submit an attestation or an SRL",
+        "description": "Accepts attestations (`application/atep-attestation+cbor`) and signed revocation lists (`application/atep-srl+cbor`) only. Encrypted envelopes, data envelopes and checkpoints are refused; envelopes exchanged between agents are never logged (spec section 16 point 5). A resubmission is idempotent. The reply's `proof` is the value of the `-70012` inclusion-proof header. Admission rules: GET /v1/policy.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/cbor": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "description": "The signed envelope (COSE tag 98), deterministic CBOR."
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Duplicate: the existing entry and a proof against the latest checkpoint. With `Accept: application/cbor` the body is the inclusion-proof CBOR value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitReply"
+                }
+              },
+              "application/cbor": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "CBOR inclusion-proof map {leaf-index, audit-path, checkpoint}."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "New entry. With `Accept: application/cbor` the body is the inclusion-proof CBOR value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitReply"
+                }
+              },
+              "application/cbor": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "CBOR inclusion-proof map {leaf-index, audit-path, checkpoint}."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "413": {
+            "$ref": "#/components/responses/TooLarge"
+          },
+          "422": {
+            "$ref": "#/components/responses/Rejected"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/v1/checkpoint": {
+      "get": {
+        "operationId": "getCheckpoint",
+        "tags": [
+          "log"
+        ],
+        "summary": "Latest signed checkpoint",
+        "description": "A fresh checkpoint is signed first when the configured interval has passed. Send `Accept: application/cbor` for the CBOR form.",
+        "responses": {
+          "200": {
+            "description": "The latest checkpoint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkpoint"
+                }
+              },
+              "application/atep-checkpoint+cbor": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "Signed checkpoint envelope (tag 98), payload {tree-size, root-hash, timestamp}."
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          },
+          "503": {
+            "$ref": "#/components/responses/Unavailable"
+          }
+        }
+      },
+      "post": {
+        "operationId": "signCheckpoint",
+        "tags": [
+          "log"
+        ],
+        "summary": "Sign a checkpoint now",
+        "responses": {
+          "201": {
+            "description": "The new checkpoint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Checkpoint"
+                }
+              },
+              "application/atep-checkpoint+cbor": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "Signed checkpoint envelope (tag 98)."
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/v1/checkpoints": {
+      "get": {
+        "operationId": "listCheckpoints",
+        "tags": [
+          "log"
+        ],
+        "summary": "Published checkpoints",
+        "description": "Every published checkpoint with tree size at least `from`, oldest first, at most 1000.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "Smallest tree size to return (default 0).",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Checkpoints",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckpointList"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v1/proof/inclusion": {
+      "get": {
+        "operationId": "getInclusionProof",
+        "tags": [
+          "log"
+        ],
+        "summary": "Inclusion proof of a leaf",
+        "description": "Proof against the latest checkpoint (one is signed first if none covers the leaf yet). Give `leaf-hash` or `index`. Send `Accept: application/cbor` for the CBOR form.",
+        "parameters": [
+          {
+            "name": "leaf-hash",
+            "in": "query",
+            "required": false,
+            "description": "Leaf hash, 64 lowercase hex characters: SHA-256(0x00 || submitted envelope).",
+            "schema": {
+              "$ref": "#/components/schemas/Hex32"
+            }
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "required": false,
+            "description": "Leaf index, alternative to `leaf-hash`.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The proof",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InclusionProof"
+                }
+              },
+              "application/cbor": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "CBOR inclusion-proof map {leaf-index, audit-path, checkpoint}."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/v1/proof/consistency": {
+      "get": {
+        "operationId": "getConsistencyProof",
+        "tags": [
+          "log"
+        ],
+        "summary": "Consistency proof between two tree sizes",
+        "description": "Proof that tree size `to` extends tree size `from` (`from <= to <= current tree size`). Send `Accept: application/cbor` for the CBOR form.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "description": "Older tree size.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "description": "Newer tree size.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The proof",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsistencyProof"
+                }
+              },
+              "application/cbor": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "CBOR consistency-proof map {from, to, path}."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/v1/entries": {
+      "get": {
+        "operationId": "listEntries",
+        "tags": [
+          "log"
+        ],
+        "summary": "Log entries",
+        "description": "Entries `from` to `to` (exclusive), at most 1000 per call. `envelope` is the submitted form, so SHA-256(0x00 || envelope) is the leaf hash.",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "description": "First index (default 0).",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "description": "End index, exclusive (default the tree size).",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntryList"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/v1/lookup": {
+      "get": {
+        "operationId": "lookupSubject",
+        "tags": [
+          "registry"
+        ],
+        "summary": "Attestations about a subject",
+        "description": "Logged attestations whose subject is the given Agent ID, optionally filtered by claim type. Serves attestations only, never agent traffic (spec section 16 point 5). Operators SHOULD rate limit it.",
+        "parameters": [
+          {
+            "name": "subject",
+            "in": "query",
+            "required": true,
+            "description": "Agent ID (`atep:` text, percent-encoded).",
+            "schema": {
+              "$ref": "#/components/schemas/AgentId"
+            }
+          },
+          {
+            "name": "claim",
+            "in": "query",
+            "required": false,
+            "description": "Claim URI or short name (`audited`, `robotics/fleet-member`).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LookupReply"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/v1/issuers": {
+      "get": {
+        "operationId": "listIssuers",
+        "tags": [
+          "registry"
+        ],
+        "summary": "Issuer directory",
+        "description": "Derived from the log: every identity that issued a logged document, the claim types it issued, its delegations, bound domains and SRL locations.",
+        "parameters": [
+          {
+            "name": "issuer",
+            "in": "query",
+            "required": false,
+            "description": "Return only this issuer.",
+            "schema": {
+              "$ref": "#/components/schemas/AgentId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issuer directory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssuerDirectory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/claims": {
+      "get": {
+        "operationId": "listClaimTypes",
+        "tags": [
+          "registry",
+          "claims"
+        ],
+        "summary": "Claim-type directory",
+        "description": "The core vocabulary and Draft 04 proposals (with definition and CDDL schema of `data`) plus every other claim type seen in the log. Resolve one with GET /v1/claims/{claim}.",
+        "responses": {
+          "200": {
+            "description": "Claim-type directory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimDirectory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/claims/{claim}": {
+      "get": {
+        "operationId": "resolveClaimType",
+        "tags": [
+          "claims"
+        ],
+        "summary": "Resolve a claim type",
+        "description": "Human-readable definition and CDDL schema of `data` for a claim type. `claim` is the full claim URI (percent-encode it: `https%3A%2F%2Fatep.dev%2Fclaims%2Faudited`; the plain form also works) or a short name (`audited`, `robotics/fleet-member`). A trailing `.html` or `.json` selects the format, otherwise `Accept: text/html` selects HTML and anything else JSON. Unknown claims, including claim types of other namespaces, are 404.",
+        "parameters": [
+          {
+            "name": "claim",
+            "in": "path",
+            "required": true,
+            "description": "Claim URI (percent-encoded) or short name.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimDefinition"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v1/policy": {
+      "get": {
+        "operationId": "getPolicy",
+        "tags": [
+          "log"
+        ],
+        "summary": "Log policy",
+        "description": "The log policy with the entry that records it. The policy is a self-attestation of the log and the first entry of a new log.",
+        "responses": {
+          "200": {
+            "description": "Policy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyReply"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/v1/gossip": {
+      "get": {
+        "operationId": "getGossip",
+        "tags": [
+          "gossip"
+        ],
+        "summary": "Checkpoints and split view evidence held by this node",
+        "responses": {
+          "200": {
+            "description": "Gossip state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GossipState"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "postGossip",
+        "tags": [
+          "gossip"
+        ],
+        "summary": "Exchange checkpoints",
+        "description": "Verifies and compares each checkpoint with what the log holds for the same signing log. `409` when a split view was found; `results[].evidence` is then the evidence document, confirmable with the signing log's public key.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GossipRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "No split view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GossipReply"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "409": {
+            "description": "Split view found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GossipReply"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/claims": {
+      "get": {
+        "operationId": "getClaimsIndex",
+        "tags": [
+          "claims"
+        ],
+        "summary": "Claim-type index (path style)",
+        "description": "Index of the claim types the registry defines. JSON by default, HTML with `Accept: text/html`. A deployment mounted at atep.dev serves `https://atep.dev/claims`.",
+        "responses": {
+          "200": {
+            "description": "Index",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimsIndex"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/claims/robotics/{name}": {
+      "get": {
+        "operationId": "getRoboticsClaim",
+        "tags": [
+          "claims"
+        ],
+        "summary": "Resolve a robotics claim type (path style)",
+        "description": "`https://atep.dev/claims/robotics/<name>`. JSON by default, HTML with `Accept: text/html` or a `.html` suffix.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "Claim name below robotics/, for example `fleet-member`; may end in `.html` or `.json`.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimDefinition"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/claims/{name}": {
+      "get": {
+        "operationId": "getClaim",
+        "tags": [
+          "claims"
+        ],
+        "summary": "Resolve a core claim type (path style)",
+        "description": "`https://atep.dev/claims/<name>`. JSON by default, HTML with `Accept: text/html` or a `.html` suffix.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "Claim name, for example `audited`; may end in `.html` or `.json`.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimDefinition"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AgentId": {
+        "type": "string",
+        "pattern": "^(did:)?atep:[a-z2-7]{52}$",
+        "description": "Agent ID: `atep:` (canonical) or `did:atep:` plus 52 lowercase base32 characters."
+      },
+      "Hex32": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$",
+        "description": "32 bytes as lowercase hex."
+      },
+      "Base64Url": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]*$",
+        "description": "Unpadded base64url."
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "detail"
+        ]
+      },
+      "Rejection": {
+        "description": "A refused submission: the admission reason, with the failing verification step when the reason is `verification_failed`.",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "encrypted_envelope",
+              "data_envelope",
+              "content_type_not_loggable",
+              "verification_failed",
+              "schema_invalid",
+              "lifetime_exceeded",
+              "claim_vocabulary",
+              "srl_rollback"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "step": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9
+          },
+          "rejection": {
+            "type": "string",
+            "description": "Stable rejection code of spec section 10."
+          }
+        },
+        "required": [
+          "error",
+          "detail"
+        ]
+      },
+      "ApiIndex": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string"
+          },
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "openapi": {
+            "type": "string"
+          },
+          "endpoints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "service",
+          "log",
+          "openapi",
+          "endpoints"
+        ]
+      },
+      "SubmitRequest": {
+        "type": "object",
+        "properties": {
+          "envelope": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "envelope"
+        ]
+      },
+      "SubmitReply": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "duplicate"
+            ]
+          },
+          "leaf-index": {
+            "type": "integer"
+          },
+          "leaf-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "audit-path": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hex32"
+            }
+          },
+          "proof": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "status",
+          "leaf-index",
+          "leaf-hash",
+          "audit-path",
+          "proof"
+        ]
+      },
+      "Anchor": {
+        "type": "object",
+        "properties": {
+          "checkpoint-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "chain-id": {
+            "type": "string"
+          },
+          "transaction-id": {
+            "type": "string"
+          },
+          "block-height": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "anchored-at": {
+            "type": "integer"
+          },
+          "anchor": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "checkpoint-hash",
+          "chain-id",
+          "transaction-id",
+          "block-height",
+          "anchored-at",
+          "anchor"
+        ]
+      },
+      "Checkpoint": {
+        "type": "object",
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "tree-size": {
+            "type": "integer"
+          },
+          "root-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "checkpoint": {
+            "$ref": "#/components/schemas/Base64Url"
+          },
+          "checkpoint-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "anchors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Anchor"
+            }
+          }
+        },
+        "required": [
+          "log",
+          "tree-size",
+          "root-hash",
+          "timestamp",
+          "checkpoint",
+          "checkpoint-hash",
+          "anchors"
+        ]
+      },
+      "CheckpointList": {
+        "type": "object",
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "checkpoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Checkpoint"
+            }
+          }
+        },
+        "required": [
+          "log",
+          "checkpoints"
+        ]
+      },
+      "InclusionProof": {
+        "type": "object",
+        "properties": {
+          "leaf-index": {
+            "type": "integer"
+          },
+          "leaf-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "audit-path": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hex32"
+            }
+          },
+          "proof": {
+            "$ref": "#/components/schemas/Base64Url"
+          },
+          "tree-size": {
+            "type": "integer"
+          },
+          "checkpoint": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "leaf-index",
+          "leaf-hash",
+          "audit-path",
+          "proof"
+        ]
+      },
+      "ConsistencyProof": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "integer"
+          },
+          "to": {
+            "type": "integer"
+          },
+          "first-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "second-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hex32"
+            }
+          },
+          "proof": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "first-hash",
+          "second-hash",
+          "path",
+          "proof"
+        ]
+      },
+      "Entry": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer"
+          },
+          "leaf-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "logged-at": {
+            "type": "integer"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "attestation",
+              "srl"
+            ]
+          },
+          "issuer": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "issued-at": {
+            "type": "integer"
+          },
+          "expires-at": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "subject": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "attestation-id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{32}$"
+          },
+          "srl-sequence": {
+            "type": "integer"
+          },
+          "policy": {
+            "type": "boolean"
+          },
+          "envelope": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "index",
+          "leaf-hash",
+          "logged-at",
+          "kind",
+          "issuer",
+          "issued-at",
+          "expires-at"
+        ]
+      },
+      "EntryList": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "integer"
+          },
+          "to": {
+            "type": "integer"
+          },
+          "tree-size": {
+            "type": "integer"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Entry"
+            }
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "tree-size",
+          "entries"
+        ]
+      },
+      "LookupReply": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "tree-size": {
+            "type": "integer"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Entry"
+            }
+          }
+        },
+        "required": [
+          "subject",
+          "tree-size",
+          "entries"
+        ]
+      },
+      "Issuer": {
+        "type": "object",
+        "properties": {
+          "issuer": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "first-index": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "entries": {
+            "type": "integer"
+          },
+          "claims": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "namespaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "delegated-claims": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "delegated-by": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "srl-urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "latest-srl": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "entry": {
+                    "type": "integer"
+                  },
+                  "sequence": {
+                    "type": "integer"
+                  },
+                  "issued-at": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "entry",
+                  "sequence",
+                  "issued-at"
+                ]
+              }
+            ]
+          },
+          "included": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "issuer",
+          "first-index",
+          "entries",
+          "claims",
+          "namespaces",
+          "delegated-claims",
+          "delegated-by",
+          "domains",
+          "srl-urls",
+          "latest-srl",
+          "included"
+        ]
+      },
+      "IssuerDirectory": {
+        "type": "object",
+        "properties": {
+          "tree-size": {
+            "type": "integer"
+          },
+          "issuers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Issuer"
+            }
+          }
+        },
+        "required": [
+          "tree-size",
+          "issuers"
+        ]
+      },
+      "ClaimRow": {
+        "type": "object",
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "core": {
+            "type": "boolean"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "integer"
+          },
+          "issuers": {
+            "type": "integer"
+          },
+          "first-index": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "definition": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "data-schema": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "core",
+              "proposed",
+              "open"
+            ],
+            "description": "`core`: Draft 03 vocabulary; `proposed`: a Draft 04 proposal the log admits; `open`: any other claim type seen in the log."
+          },
+          "resolve": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "claim",
+          "core",
+          "namespace",
+          "entries",
+          "issuers",
+          "first-index",
+          "definition",
+          "data-schema",
+          "status",
+          "resolve"
+        ]
+      },
+      "ClaimDirectory": {
+        "type": "object",
+        "properties": {
+          "tree-size": {
+            "type": "integer"
+          },
+          "core-namespace": {
+            "type": "string"
+          },
+          "claim-types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClaimRow"
+            }
+          }
+        },
+        "required": [
+          "tree-size",
+          "core-namespace",
+          "claim-types"
+        ]
+      },
+      "ClaimDefinition": {
+        "type": "object",
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "core": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "core",
+              "proposed"
+            ]
+          },
+          "profile": {
+            "type": "string",
+            "enum": [
+              "core",
+              "robotics",
+              "draft-04"
+            ]
+          },
+          "definition": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "issued-by": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "data-schema": {
+            "type": "string",
+            "description": "CDDL (RFC 8610) of the attestation `data` map."
+          },
+          "data-schema-format": {
+            "type": "string",
+            "enum": [
+              "cddl"
+            ]
+          },
+          "attestation-schema": {
+            "type": "string",
+            "description": "CDDL of the whole attestation payload."
+          },
+          "data-checked-by": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "lifetime": {
+            "type": "string"
+          },
+          "spec": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "example-data": {
+            "type": "object"
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "string"
+              },
+              "html": {
+                "type": "string"
+              },
+              "api": {
+                "type": "string"
+              },
+              "directory": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "self",
+              "html",
+              "api",
+              "directory"
+            ]
+          }
+        },
+        "required": [
+          "claim",
+          "name",
+          "core",
+          "status",
+          "profile",
+          "definition",
+          "title",
+          "description",
+          "issued-by",
+          "subject",
+          "data-schema",
+          "data-schema-format",
+          "attestation-schema",
+          "data-checked-by",
+          "evidence",
+          "lifetime",
+          "spec",
+          "example-data",
+          "links"
+        ]
+      },
+      "ClaimsIndex": {
+        "type": "object",
+        "properties": {
+          "namespace": {
+            "type": "string"
+          },
+          "claims": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "claim": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "core": {
+                  "type": "boolean"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "profile": {
+                  "type": "string"
+                },
+                "definition": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "claim",
+                "name",
+                "core",
+                "status",
+                "profile",
+                "definition",
+                "title",
+                "url"
+              ]
+            }
+          }
+        },
+        "required": [
+          "namespace",
+          "claims"
+        ]
+      },
+      "PolicyReply": {
+        "type": "object",
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "entry-index": {
+            "type": "integer"
+          },
+          "first-entry": {
+            "type": "boolean"
+          },
+          "leaf-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "issued-at": {
+            "type": "integer"
+          },
+          "expires-at": {
+            "type": "integer"
+          },
+          "policy": {
+            "type": "object",
+            "description": "The `data` of the policy attestation (spec section 9, log policy entry)."
+          },
+          "envelope": {
+            "$ref": "#/components/schemas/Base64Url"
+          },
+          "proof": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Base64Url"
+              }
+            ]
+          }
+        },
+        "required": [
+          "log",
+          "claim",
+          "entry-index",
+          "first-entry",
+          "leaf-hash",
+          "issued-at",
+          "expires-at",
+          "policy",
+          "envelope",
+          "proof"
+        ]
+      },
+      "Observed": {
+        "type": "object",
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "tree-size": {
+            "type": "integer"
+          },
+          "root-hash": {
+            "$ref": "#/components/schemas/Hex32"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "checkpoint": {
+            "$ref": "#/components/schemas/Base64Url"
+          }
+        },
+        "required": [
+          "log",
+          "tree-size",
+          "root-hash",
+          "timestamp",
+          "checkpoint"
+        ]
+      },
+      "GossipState": {
+        "type": "object",
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "latest": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Checkpoint"
+              }
+            ]
+          },
+          "observed": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Observed"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "log": {
+                  "$ref": "#/components/schemas/AgentId"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "pair": {
+                  "$ref": "#/components/schemas/Base64Url"
+                }
+              },
+              "required": [
+                "log",
+                "reason",
+                "pair"
+              ]
+            }
+          }
+        },
+        "required": [
+          "log",
+          "latest",
+          "observed",
+          "evidence"
+        ]
+      },
+      "GossipRequest": {
+        "type": "object",
+        "properties": {
+          "checkpoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Base64Url"
+            }
+          },
+          "checkpoint": {
+            "$ref": "#/components/schemas/Base64Url"
+          },
+          "proofs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Base64Url"
+            },
+            "description": "Consistency proofs (CBOR, base64url) that may help to compare checkpoints."
+          }
+        }
+      },
+      "GossipResult": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "enum": [
+              "new",
+              "known",
+              "split-view",
+              "rejected"
+            ]
+          },
+          "log": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AgentId"
+              }
+            ]
+          },
+          "tree-size": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/Base64Url"
+          },
+          "error": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result"
+        ]
+      },
+      "GossipReply": {
+        "type": "object",
+        "properties": {
+          "log": {
+            "$ref": "#/components/schemas/AgentId"
+          },
+          "split-view": {
+            "type": "boolean"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GossipResult"
+            }
+          },
+          "checkpoints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Base64Url"
+            }
+          }
+        },
+        "required": [
+          "log",
+          "split-view",
+          "results",
+          "checkpoints"
+        ]
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Malformed request or parameter (`malformed`, `bad_parameter`, `bad_request`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Nothing there (`not_found`, `claim_unknown`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "TooLarge": {
+        "description": "The body is larger than the admission limit (`too_large`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Rejected": {
+        "description": "The submission was refused; `error` is the admission reason.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Rejection"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Storage or crypto failure of the log (`log_error`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unavailable": {
+        "description": "The log has no checkpoint yet (`no_checkpoint`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}

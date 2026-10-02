@@ -1,0 +1,21 @@
+{
+  "name": "expires-exactly-now",
+  "category": "verify-negative",
+  "description": "expires-at equals now; it MUST be later than now. Expect step 5.",
+  "cbor_file": "expires-exactly-now.cbor",
+  "cbor_sha256": "5c855a4285c1604c391e9bb10ce134983b464a019b6a9f2a57c8d83a0211a5f1",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 5,
+    "error": "expired"
+  }
+}

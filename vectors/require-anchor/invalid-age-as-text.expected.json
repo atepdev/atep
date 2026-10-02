@@ -1,0 +1,23 @@
+{
+  "name": "invalid-age-as-text",
+  "category": "require-anchor",
+  "description": "`max_age_days` is the text `2`.",
+  "cbor_file": "invalid-age-as-text.cbor",
+  "cbor_sha256": "10e416814e1c3041357fac9a48b4fa605770698c5bd3ef3e77c1d4dd27492d5d",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": "2"
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

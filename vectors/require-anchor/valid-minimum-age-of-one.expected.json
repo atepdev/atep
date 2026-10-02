@@ -1,0 +1,29 @@
+{
+  "name": "valid-minimum-age-of-one",
+  "category": "require-anchor",
+  "description": "`max_age_days` 1 is the smallest allowed value.",
+  "cbor_file": "valid-minimum-age-of-one.cbor",
+  "cbor_sha256": "6a7b257511df5d095af62501436478f7bc8667cdee065aef9871a284f0fe623c",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "rekor",
+        "max_age_days": 1
+      }
+    ]
+  }
+}

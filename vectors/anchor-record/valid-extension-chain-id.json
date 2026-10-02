@@ -1,0 +1,7 @@
+{
+  "chain-id": "x-acme-ledger",
+  "anchored-at": 1799997000,
+  "block-height": 7,
+  "transaction-id": "acme-tx-1",
+  "checkpoint-hash": "zGnG5J2mZT0d2bptcduvTb6Sq_gOb4q_IjWEUOCcOfk"
+}

@@ -1,0 +1,40 @@
+{
+  "name": "wk-status-410",
+  "category": "domain-binding",
+  "description": "HTTP 410: the document does not exist.",
+  "cbor_file": "wk-status-410.cbor",
+  "cbor_sha256": "b2e963bd0a680f1597096d11621caa71c040510022acb3bbc48366e2785c49ad",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 410,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

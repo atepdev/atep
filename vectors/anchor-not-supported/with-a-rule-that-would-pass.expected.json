@@ -1,0 +1,44 @@
+{
+  "name": "with-a-rule-that-would-pass",
+  "category": "anchor-not-supported",
+  "description": "roots [root], rule `operator`, and alice holds an operator attestation from the root: without require_anchor this is accepted. With the require_anchor rule it is step 9 anchor_not_supported, whether or not the other rules would have passed.",
+  "cbor_file": "with-a-rule-that-would-pass.cbor",
+  "cbor_sha256": "f07f1755d514a8d8125ebff3274f5422627fa84be7b2c9ac0f68d7bbc46b72da",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "roots": [
+          "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q"
+        ],
+        "rules": [
+          {
+            "claim": "operator"
+          }
+        ],
+        "require_anchor": [
+          {
+            "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+            "chain": "solana-mainnet",
+            "max_age_hours": 6
+          }
+        ]
+      }
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "anchor_not_supported"
+  }
+}

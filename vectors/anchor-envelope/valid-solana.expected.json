@@ -1,0 +1,23 @@
+{
+  "name": "valid-solana",
+  "category": "anchor-envelope",
+  "description": "A log-signed anchor record: tag 98, content type application/atep-anchor+cbor, no expires-at, signer bundle inline, signed by the log the verifier asked about, and its checkpoint-hash is the hash of the checkpoint the verifier is looking at. Accepted.",
+  "cbor_file": "valid-solana.cbor",
+  "cbor_sha256": "87b942305e46e45d717726067fb575bbfc1cc648483a0ad5bb4ef208fce909fc",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": true,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "record": {
+      "checkpoint_hash": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182",
+      "chain_id": "solana-mainnet",
+      "transaction_id": "5VERv8NMvzbJMEkV8xnrLkEaWRtSz9CosKDYjCJjBRnb",
+      "block_height": 280000000,
+      "anchored_at": 1799997000
+    }
+  }
+}

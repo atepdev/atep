@@ -1,0 +1,19 @@
+{
+  "name": "consistency-invalid-path",
+  "category": "log",
+  "description": "First hash of the consistency path altered. Expect step 9 consistency_proof_invalid.",
+  "cbor_file": "consistency-invalid-path.cbor",
+  "cbor_sha256": "3de44905990be754fcdd9d037dd5dbe93d2cff502624fc846d2997808f683a00",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "consistency_proof_invalid"
+  }
+}

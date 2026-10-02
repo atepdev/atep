@@ -1,0 +1,40 @@
+{
+  "name": "txt-several-spaces-between-terms",
+  "category": "domain-binding",
+  "description": "Terms are separated by one or more spaces.",
+  "cbor_file": "txt-several-spaces-between-terms.cbor",
+  "cbor_sha256": "b673d2a9605aa91b7c417c7c4b0a41ff63005258dc3ceabff250e1921ca99010",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1   id=atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra    id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

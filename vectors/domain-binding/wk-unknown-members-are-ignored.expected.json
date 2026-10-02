@@ -1,0 +1,40 @@
+{
+  "name": "wk-unknown-members-are-ignored",
+  "category": "domain-binding",
+  "description": "Members that are not listed (`srl-url`, `updated`, `future-member`) are ignored; the document still lists the Agent ID.",
+  "cbor_file": "wk-unknown-members-are-ignored.cbor",
+  "cbor_sha256": "bbc5c680626c3b85fd960652d1aa628ed5716bad8d109f5d0a79e946a2cc329c",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"domain\":\"example.com\",\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"],\"srl-url\":\"https://example.com/.well-known/atep-revocations.cbor\",\"updated\":1790000000,\"future-member\":{\"x\":1}}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

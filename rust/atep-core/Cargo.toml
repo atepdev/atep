@@ -1,0 +1,32 @@
+[package]
+name = "atep-core"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/atepdev/atep"
+homepage = "https://atep.dev"
+description = "ATEP (Autonomy Trust Envelope Protocol) core library (ATEP Draft 07)"
+
+[lib]
+name = "atep_core"
+path = "src/lib.rs"
+
+[[bin]]
+name = "atep-vectors"
+path = "src/bin/atep-vectors.rs"
+
+[dependencies]
+ml-dsa = { version = "0.1.1", features = ["zeroize"] }
+ml-kem = { version = "0.3.2", features = ["zeroize"] }
+ed25519-dalek = "3.0.0"
+x25519-dalek = "3.0.0"
+aes-gcm = "0.11.1"
+hkdf = "0.13.0"
+sha2 = "0.11.0"
+zeroize = { version = "1.9.0", features = ["derive"] }
+base32 = "1.0.0-rc.1"
+hex = "0.4.3"
+base64 = "0.23.1"
+rand_core = "0.10.1"
+getrandom = "0.4.3"
+serde_json = { version = "1", features = ["preserve_order"] }

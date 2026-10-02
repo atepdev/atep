@@ -1,0 +1,21 @@
+{
+  "name": "tampered-payload",
+  "category": "verify-negative",
+  "description": "A valid envelope whose attached payload has its last byte flipped after signing. Expect step 4 (EdDSA fails first).",
+  "cbor_file": "tampered-payload.cbor",
+  "cbor_sha256": "88d87e5ec12707c24ef774f4f93e8d5d3c5a095684411f25374db0f189301b42",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 4,
+    "error": "eddsa_signature_invalid"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@atep/core",
+  "version": "0.1.0",
+  "description": "ATEP (Autonomy Trust Envelope Protocol) core: the Rust atep-core compiled to WebAssembly, with a TypeScript API for Node, Bun, Deno and browsers.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./atep_core_bg.wasm": "./dist/wasm/atep_wasm_bg.wasm",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "THIRD-PARTY-NOTICES.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
+    "smoke": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atepdev/atep.git",
+    "directory": "js"
+  },
+  "homepage": "https://atep.dev"
+}

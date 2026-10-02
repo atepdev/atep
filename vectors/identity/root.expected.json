@@ -1,0 +1,21 @@
+{
+  "name": "root",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `root` (signing keys only), used by the M2 vectors.",
+  "cbor_file": "root.cbor",
+  "cbor_sha256": "ceb6937afb117ac9b6d5400ab9c295001ffeeb92b8616db518b406fbca5906ff",
+  "inputs": {
+    "seeds": {
+      "ed25519": "4fd2ff3b3b2f9e833e9d62275a9c0dadfbd3d7b033244c3ecea4a9750d0d6ace",
+      "mldsa65": "2c5b9a2219c18784e18ac29ab94ee3b25684f6da83f0ad4affb520ed9d8b4ad7"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+    "did": "did:atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+    "agent_id_hex": "ceb6937afb117ac9b6d5400ab9c295001ffeeb92b8616db518b406fbca5906ff",
+    "bundle_len": 2005,
+    "ed25519_public_hex": "ea7250b4afffce10b27f3125b1a1f4011bd6458c8695c2a84ffbdaffdf3544f8",
+    "mldsa65_public_sha256": "bea77fa998093445a78436039efdc73c3b9f0fecfcc905e0c2df500dcea2b72a"
+  }
+}

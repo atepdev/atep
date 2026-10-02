@@ -1,0 +1,18 @@
+[package]
+name = "atep-cli"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "ATEP command line tool: keygen, sign, encrypt, verify (ATEP Draft 07)"
+repository = "https://github.com/atepdev/atep"
+homepage = "https://atep.dev"
+
+[[bin]]
+name = "atep"
+path = "src/main.rs"
+
+[dependencies]
+atep-core = { path = "../atep-core" }
+clap = { version = "4.6.7", features = ["derive"] }
+hex = "0.4.3"
+serde_json = { version = "1", features = ["preserve_order"] }

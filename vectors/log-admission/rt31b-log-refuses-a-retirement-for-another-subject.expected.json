@@ -1,0 +1,17 @@
+{
+  "name": "rt31b-log-refuses-a-retirement-for-another-subject",
+  "category": "log-admission",
+  "description": "RT31, second part. A `retired` attestation with issuer X and subject Y is submitted to a log that holds nothing. Refused schema_invalid.",
+  "cbor_file": "rt31b-log-refuses-a-retirement-for-another-subject.cbor",
+  "cbor_sha256": "12c50e041ad3628c0bd1e190ab670c455f661d9f3de4d07125b54c2fa6801cc6",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "roots": [
+    "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+  ],
+  "max_depth": 3,
+  "require_anchor": [
+    {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "chain": "solana-mainnet",
+      "max_age_hours": 24
+    }
+  ],
+  "require_inclusion": false
+}

@@ -1,0 +1,40 @@
+{
+  "name": "txt-non-ascii-record-is-ignored",
+  "category": "domain-binding",
+  "description": "A record that lists the Agent ID but contains a non ASCII character in an unknown term: records are US-ASCII, so it is ignored (spec-issues 51).",
+  "cbor_file": "txt-non-ascii-record-is-ignored.cbor",
+  "cbor_sha256": "ef2a2940317a1db5f948c49f8c6d4acbc3ace5db8bc69a36d3bd5c13d37fe231",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a note=café"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

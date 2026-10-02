@@ -1,0 +1,17 @@
+{
+  "name": "reject-lookalike-claim-uri",
+  "category": "registry-endpoint",
+  "description": "The claim URI is https://atep.dev/claims/registry-endpoints (plural), not a core claim type: the reserved namespace is closed to the 14 core types. Expect claim_vocabulary.",
+  "cbor_file": "reject-lookalike-claim-uri.cbor",
+  "cbor_sha256": "6c1aa1a5680e0f85a74f5746f2968a6fbf7ec5bc2bcfc6acfc5593e54e6da656",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "claim_vocabulary"
+  }
+}

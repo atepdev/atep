@@ -1,0 +1,18 @@
+{
+  "name": "reject-unknown-payload-key",
+  "category": "checkpoint-hash",
+  "description": "The payload has a fourth key, `note`. Expect step 9 checkpoint_schema_invalid.",
+  "cbor_file": "reject-unknown-payload-key.cbor",
+  "cbor_sha256": "eee3fabcd742b6a4349f2c8dc5f30bc93e1a54ef20d8b59c261e464decd66f25",
+  "inputs": {
+    "now": 1800000000,
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_schema_invalid"
+  }
+}

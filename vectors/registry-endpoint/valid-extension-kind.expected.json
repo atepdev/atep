@@ -1,0 +1,17 @@
+{
+  "name": "valid-extension-kind",
+  "category": "registry-endpoint",
+  "description": "Kind `x-acme-queue`: an extension name is `x-` followed by lowercase letters, digits and hyphens.",
+  "cbor_file": "valid-extension-kind.cbor",
+  "cbor_sha256": "b1c757bfeb01a1c2557717f8b959e20ac950fe6c37870fe9777bef8adc1c8276",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

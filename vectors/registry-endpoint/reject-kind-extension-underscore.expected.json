@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-extension-underscore",
+  "category": "registry-endpoint",
+  "description": "`kind` is `x-acme_queue`: an underscore is not allowed.",
+  "cbor_file": "reject-kind-extension-underscore.cbor",
+  "cbor_sha256": "aacb2be6fe1b748e1edd3faa6f00bdfbfc15b44fdf7ae792cb32d3678b6c1194",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

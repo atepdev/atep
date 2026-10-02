@@ -1,0 +1,23 @@
+{
+  "name": "invalid-log-not-text",
+  "category": "require-anchor",
+  "description": "`log` is the integer 5.",
+  "cbor_file": "invalid-log-not-text.cbor",
+  "cbor_sha256": "1d94d1d80c52cc71359a36275c721d231fe1264cf61a5bf3a30f6b55297eda2c",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": 5,
+          "chain": "rekor",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

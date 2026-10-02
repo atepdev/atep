@@ -1,0 +1,43 @@
+{
+  "name": "domain-empty-label-is-not-read",
+  "category": "domain-binding",
+  "description": "The domain has an empty label: nothing is read.",
+  "cbor_file": "domain-empty-label-is-not-read.cbor",
+  "cbor_sha256": "18181e39c90a8ba7e31864c9a05ed2e264d1099c3300e417156b4bc88ce13c17",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "a..example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "not-read",
+    "dns": "not-read",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [],
+      "txt": []
+    }
+  }
+}

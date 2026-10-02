@@ -1,0 +1,37 @@
+{
+  "name": "srl-valid",
+  "category": "srl",
+  "description": "A fresh SRL from root: sequence 7, one withdrawn attestation and one compromised identity (mallory).",
+  "cbor_file": "srl-valid.cbor",
+  "cbor_sha256": "0c5db375b89837d2aca3fe16f1ba4e9af1bca989737b7df165e6b6babc780950",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-closed"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null
+  },
+  "expected": {
+    "ok": true,
+    "issuer": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+    "sequence": 7,
+    "issued_at": 1799996400,
+    "next_update": 1800082800,
+    "stale": false,
+    "revoked": [
+      {
+        "kind": "attestation",
+        "id_hex": "0f58e0f477ddb8d8386604ce1831cf0e",
+        "reason": "withdrawn",
+        "revoked_at": 1799740800
+      },
+      {
+        "kind": "identity",
+        "id": "atep:3y46msif62jfsyhzsok5dmlrf6xdrrsknr45o4lguo5g2p3l7izq",
+        "reason": "compromised",
+        "revoked_at": 1799827200
+      }
+    ]
+  }
+}

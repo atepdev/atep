@@ -1,0 +1,28 @@
+{
+  "name": "issuer-authority-delegation",
+  "category": "attestation",
+  "description": "`issuer-authority` delegation: data.claims lists the claim types the subject may issue.",
+  "cbor_file": "issuer-authority-delegation.cbor",
+  "cbor_sha256": "94576c05883f95556225fc9abaacf948190453f5da3f09cc0672609e0abad229",
+  "inputs": {
+    "issuer_seeds": {
+      "ed25519": "4fd2ff3b3b2f9e833e9d62275a9c0dadfbd3d7b033244c3ecea4a9750d0d6ace",
+      "mldsa65": "2c5b9a2219c18784e18ac29ab94ee3b25684f6da83f0ad4affb520ed9d8b4ad7"
+    },
+    "subject": "atep:naxms7vpvvuhxqd64duudknbmnutn64uwdnqptcncsdfu4oh6auq",
+    "claim": "https://atep.dev/claims/issuer-authority",
+    "data_hex": "a166636c61696d7382782868747470733a2f2f617465702e6465762f636c61696d732f6973737565722d617574686f72697479782068747470733a2f2f617465702e6465762f636c61696d732f6f70657261746f72",
+    "evidence_hex": null,
+    "evidence_uri": null,
+    "id_hex": "5f5bdf3d5a9561009154216bc610ff9c",
+    "nonce_hex": "d87834edb4ca11e11c0e433da433cc2c",
+    "issued_at": 1798272000,
+    "expires_at": 1810368000
+  },
+  "expected": {
+    "issuer": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+    "payload_hex": "a5626964505f5bdf3d5a9561009154216bc610ff9c6464617461a166636c61696d7382782868747470733a2f2f617465702e6465762f636c61696d732f6973737565722d617574686f72697479782068747470733a2f2f617465702e6465762f636c61696d732f6f70657261746f7265636c61696d782868747470733a2f2f617465702e6465762f636c61696d732f6973737565722d617574686f72697479666973737565725820ceb6937afb117ac9b6d5400ab9c295001ffeeb92b8616db518b406fbca5906ff677375626a6563745820682ec97eafad687bc07ee0e941a9a1636936fb94b0db07cc4d14865a71c7f029",
+    "envelope_len": 5899,
+    "envelope_sha256": "94576c05883f95556225fc9abaacf948190453f5da3f09cc0672609e0abad229"
+  }
+}

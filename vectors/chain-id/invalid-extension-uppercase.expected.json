@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-uppercase",
+  "category": "chain-id",
+  "description": "The name has an uppercase letter.",
+  "cbor_file": "invalid-extension-uppercase.cbor",
+  "cbor_sha256": "3f036468540a41d6c9d78b636219be479cc484297156d8943f552b81c8fd58e5",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-Acme"
+  },
+  "expected": {
+    "ok": false
+  }
+}

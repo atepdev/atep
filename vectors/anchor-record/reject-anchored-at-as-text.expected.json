@@ -1,0 +1,14 @@
+{
+  "name": "reject-anchored-at-as-text",
+  "category": "anchor-record",
+  "description": "`anchored-at` is a text string.",
+  "cbor_file": "reject-anchored-at-as-text.cbor",
+  "cbor_sha256": "c6855334e57ba665b8b152c061d7ab94e6a3ab84d8f71f97ec13f99bbad8cdd4",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

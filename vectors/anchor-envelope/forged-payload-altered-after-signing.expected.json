@@ -1,0 +1,17 @@
+{
+  "name": "forged-payload-altered-after-signing",
+  "category": "anchor-envelope",
+  "description": "The last byte of the attached record (part of `checkpoint-hash`) is changed after signing. Expect step 4 eddsa_signature_invalid.",
+  "cbor_file": "forged-payload-altered-after-signing.cbor",
+  "cbor_sha256": "e9eb89c99fd340d3f3679316b3372068278ee1f6e0668ca7f00198717e7f32eb",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": false,
+    "step": 4,
+    "error": "eddsa_signature_invalid"
+  }
+}

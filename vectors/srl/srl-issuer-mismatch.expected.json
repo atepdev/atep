@@ -1,0 +1,20 @@
+{
+  "name": "srl-issuer-mismatch",
+  "category": "srl",
+  "description": "The payload names ca1 as issuer but the envelope is signed by root. Expect step 9.",
+  "cbor_file": "srl-issuer-mismatch.cbor",
+  "cbor_sha256": "b66a0a1f236de2c077ae893383eb4a5bb1e7480c0f5da99affec4713ea4d8d46",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-closed"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "srl_issuer_mismatch"
+  }
+}

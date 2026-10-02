@@ -1,0 +1,21 @@
+{
+  "name": "missing-pq-signature",
+  "category": "verify-negative",
+  "description": "Only the EdDSA signature is present; the ML-DSA-65 entry is absent. Expect step 1.",
+  "cbor_file": "missing-pq-signature.cbor",
+  "cbor_sha256": "9c0d3d82debcc5b5364dfd4a8f2dee756aa8f7a0a93371112fb54beaaef861df",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "signature_count_invalid"
+  }
+}

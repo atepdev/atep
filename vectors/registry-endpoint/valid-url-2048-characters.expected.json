@@ -1,0 +1,17 @@
+{
+  "name": "valid-url-2048-characters",
+  "category": "registry-endpoint",
+  "description": "A URL of exactly 2048 characters: the longest allowed.",
+  "cbor_file": "valid-url-2048-characters.cbor",
+  "cbor_sha256": "6b6de52590862285dbf7acf822fcccfb1af2046b1cf577131c40fd1d1d8ff780",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

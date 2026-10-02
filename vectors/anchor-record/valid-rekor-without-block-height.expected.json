@@ -1,0 +1,20 @@
+{
+  "name": "valid-rekor-without-block-height",
+  "category": "anchor-record",
+  "description": "A record on `rekor`, a public append-only log that is not a chain, with no `block-height`.",
+  "cbor_file": "valid-rekor-without-block-height.cbor",
+  "cbor_sha256": "07b31616a8e45d6202b71f5930337b8ed87a6e6e601a4614b28bfcd4b54a382c",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "rekor",
+      "transaction_id": "24296fb24b8ad77a0d3ac2c6d5e2f1a6",
+      "block_height": null,
+      "anchored_at": 1799997000
+    }
+  }
+}

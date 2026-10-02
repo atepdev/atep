@@ -1,0 +1,18 @@
+{
+  "name": "reject-untrusted-log",
+  "category": "checkpoint-hash",
+  "description": "A well formed checkpoint signed by the log, but the verifier trusts another log (mallory). Expect step 9 checkpoint_untrusted: no hash is taken from a checkpoint that does not check.",
+  "cbor_file": "reject-untrusted-log.cbor",
+  "cbor_sha256": "561599b6da1aeb190248225257a2b3f0b15604c62640c7924f7fd1efa8573cee",
+  "inputs": {
+    "now": 1800000000,
+    "trusted_logs": [
+      "atep:3y46msif62jfsyhzsok5dmlrf6xdrrsknr45o4lguo5g2p3l7izq"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_untrusted"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "reject-chain-id-wrong-case",
+  "category": "anchor-record",
+  "description": "`chain-id` is `Solana-mainnet`: registered ids are lowercase.",
+  "cbor_file": "reject-chain-id-wrong-case.cbor",
+  "cbor_sha256": "f649a8743433b82a43b179e2afa0cc0340dbdbf8d7f5b026e28ff79a3fffa914",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

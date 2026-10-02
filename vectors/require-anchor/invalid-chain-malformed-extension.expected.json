@@ -1,0 +1,23 @@
+{
+  "name": "invalid-chain-malformed-extension",
+  "category": "require-anchor",
+  "description": "`chain` is `x-`: an extension id needs a name.",
+  "cbor_file": "invalid-chain-malformed-extension.cbor",
+  "cbor_sha256": "698cf1c0ccf7e13d4a0fa738da0566ba34b4af184bbb2511a31590dabd981127",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "x-",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

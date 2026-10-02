@@ -1,0 +1,24 @@
+{
+  "name": "hash-same-payload-envelope-b",
+  "category": "checkpoint-hash",
+  "description": "Second envelope with the payload of hash-same-payload-envelope-a: a different envelope and the same checkpoint hash.",
+  "cbor_file": "hash-same-payload-envelope-b.cbor",
+  "cbor_sha256": "719a36e45bd04851585cc82f5b4eb4833590a7f7145ef76dbb9d099a23c63f05",
+  "inputs": {
+    "now": 1800000000,
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "checkpoint": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 9,
+      "root_hash": "320ad7578f4a1a371e50f0062600e8692e8a7010928b8438d72605703492df68",
+      "timestamp": 1799996400
+    },
+    "checkpoint_hash": "2d616c32af75a3cb011e2842da04c7e4d8d21b981e20d3a26f6df55072e597b4",
+    "payload_hex": "a369726f6f742d686173685820320ad7578f4a1a371e50f0062600e8692e8a7010928b8438d72605703492df686974696d657374616d701a6b49c3f069747265652d73697a6509"
+  }
+}

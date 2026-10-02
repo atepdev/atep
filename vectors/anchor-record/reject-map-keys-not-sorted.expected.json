@@ -1,0 +1,14 @@
+{
+  "name": "reject-map-keys-not-sorted",
+  "category": "anchor-record",
+  "description": "A valid record whose map keys are not in the deterministic order (`anchored-at` before `chain-id`): not strict deterministic CBOR.",
+  "cbor_file": "reject-map-keys-not-sorted.cbor",
+  "cbor_sha256": "c32c71e5001ad1e87a66d94f782744cd5da26ef7a29b23ddec0d4a38c33094d9",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

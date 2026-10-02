@@ -1,0 +1,37 @@
+{
+  "name": "rule-claim-missing",
+  "category": "chain-negative",
+  "description": "The policy requires `audited`; alice carries only `operator`. Expect step 9.",
+  "cbor_file": "rule-claim-missing.cbor",
+  "cbor_sha256": "fcbcde654e40c64c9d1cf80742e35e98150df24c4e352ddfd17ebb9a6d018c64",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "roots": [
+          "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q"
+        ],
+        "rules": [
+          {
+            "claim": "https://atep.dev/claims/audited"
+          }
+        ]
+      }
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "claim_missing"
+  }
+}

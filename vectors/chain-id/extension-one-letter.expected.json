@@ -1,0 +1,15 @@
+{
+  "name": "extension-one-letter",
+  "category": "chain-id",
+  "description": "Extension id with a one character name.",
+  "cbor_file": "extension-one-letter.cbor",
+  "cbor_sha256": "ba2194bf4886d795877b6e1c91e723752062283aeb58a0f704217781a60f8d79",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-a"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "extension"
+  }
+}

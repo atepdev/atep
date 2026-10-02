@@ -1,0 +1,21 @@
+{
+  "name": "alice",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `alice` (signing only keys).",
+  "cbor_file": "alice.cbor",
+  "cbor_sha256": "3809c693c268e9c09e1bd6524e19fa718528d2aad0bfad151696b337f900cc3c",
+  "inputs": {
+    "seeds": {
+      "ed25519": "77227357f0539a0c7665a037e23c3560d5248b0edf195893b21b08ba53509dae",
+      "mldsa65": "c2aab893967f0123f14e89553c327068fafd622e6386e11d26977271ad07ad2b"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "did": "did:atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "agent_id_hex": "3809c693c268e9c09e1bd6524e19fa718528d2aad0bfad151696b337f900cc3c",
+    "bundle_len": 2005,
+    "ed25519_public_hex": "a29cfd9869aa738eb5884e022d7f8ed2c82dd9d19edaa4ba898b071ae34b86f9",
+    "mldsa65_public_sha256": "e846587a6a1a27b9f7e846de5c77b56075b49e7cbd4d2661386026e5f285cd41"
+  }
+}

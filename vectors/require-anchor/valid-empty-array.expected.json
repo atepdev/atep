@@ -1,0 +1,17 @@
+{
+  "name": "valid-empty-array",
+  "category": "require-anchor",
+  "description": "An empty `require_anchor` array is the same as no member: no rules.",
+  "cbor_file": "valid-empty-array.cbor",
+  "cbor_sha256": "b375ee4b21f68e9508074a603302bfe5fb3c0b4cdd88ebb1710276250e368442",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": []
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": []
+  }
+}

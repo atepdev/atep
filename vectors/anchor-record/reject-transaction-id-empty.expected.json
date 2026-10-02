@@ -1,0 +1,14 @@
+{
+  "name": "reject-transaction-id-empty",
+  "category": "anchor-record",
+  "description": "`transaction-id` is empty.",
+  "cbor_file": "reject-transaction-id-empty.cbor",
+  "cbor_sha256": "78e9de75d19d92766aeea3d78e338f96f5574d7afa02a35289f9863d6d0ae9b3",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

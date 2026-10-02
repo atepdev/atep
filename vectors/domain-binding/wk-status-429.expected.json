@@ -1,0 +1,40 @@
+{
+  "name": "wk-status-429",
+  "category": "domain-binding",
+  "description": "HTTP 429: the document could not be read; with nothing else listing the Agent ID the result is indeterminate.",
+  "cbor_file": "wk-status-429.cbor",
+  "cbor_sha256": "911710db20319b594120384037eaa3ecdefd6ace3ccc57eda8e38a4c9e13037f",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 429,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "unavailable",
+    "dns": "absent",
+    "outcome": "indeterminate",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

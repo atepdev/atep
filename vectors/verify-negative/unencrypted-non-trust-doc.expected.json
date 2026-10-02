@@ -1,0 +1,21 @@
+{
+  "name": "unencrypted-non-trust-doc",
+  "category": "verify-negative",
+  "description": "A tag 98 envelope with content type application/atep+cbor and no COSE_Encrypt wrapper. Expect step 1.",
+  "cbor_file": "unencrypted-non-trust-doc.cbor",
+  "cbor_sha256": "8ed365b459f74eabecfe30f745fae6f0976b2cf9c8bf6b29237af1dd30d7312a",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "unencrypted_non_trust_document"
+  }
+}

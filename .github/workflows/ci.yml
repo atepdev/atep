@@ -1,0 +1,213 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: "0"
+  NODE_VERSION: "22"
+
+jobs:
+  rust:
+    name: rust (fmt, clippy, test, vectors)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --profile minimal --component rustfmt --component clippy --no-self-update
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: rust
+      - name: cargo fmt
+        working-directory: rust
+        run: cargo fmt --all -- --check
+      - name: cargo clippy
+        working-directory: rust
+        run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - name: cargo test (includes the no-chain-dependency guard and vector regeneration test)
+        working-directory: rust
+        run: cargo test --locked --workspace
+      - name: Check every vector with the Rust reference implementation
+        working-directory: rust
+        run: cargo run --locked --release -p atep-core --bin atep-vectors -- check ../vectors
+      - name: Regenerating vectors must be byte-identical
+        run: scripts/ci/check-vector-regeneration.sh
+
+  js:
+    name: js, mcp, examples, demo
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain with the wasm32 target
+        run: rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown --no-self-update
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: rust
+          key: wasm
+      - name: Read the wasm-bindgen version from rust/Cargo.lock
+        id: wbg
+        run: echo "version=$(scripts/ci/wasm-bindgen-version.sh)" >> "$GITHUB_OUTPUT"
+      - name: Cache wasm-bindgen CLI
+        id: wbg-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo-tools/bin
+          key: wasm-bindgen-cli-${{ steps.wbg.outputs.version }}-${{ runner.os }}
+      - name: Install wasm-bindgen CLI (exact version from the lockfile)
+        if: steps.wbg-cache.outputs.cache-hit != 'true'
+        # The runner has a C toolchain, so default features would also work.
+        # --no-default-features avoids ring, as js/README.md documents.
+        run: cargo install --locked --no-default-features --version "${{ steps.wbg.outputs.version }}" --root ~/.cargo-tools wasm-bindgen-cli
+      - name: Put wasm-bindgen on PATH
+        run: echo "$HOME/.cargo-tools/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            js/package-lock.json
+            mcp/package-lock.json
+            examples/package-lock.json
+            examples/mqtt/package-lock.json
+      - name: Build @atep/core
+        working-directory: js
+        run: |
+          npm ci
+          wasm-bindgen --version
+          npm run build
+      - name: No local paths in the wasm build, js/dist or the committed demo copy
+        run: scripts/ci/no-local-paths.sh js/dist js/src/wasm demo/vendor/atep-core/wasm/atep_wasm_bg.wasm
+      - name: Test @atep/core
+        working-directory: js
+        run: npm test
+      - name: Test @atep/mcp
+        working-directory: mcp
+        run: |
+          npm ci
+          npm test
+      - name: Test examples
+        working-directory: examples
+        run: |
+          npm ci
+          npm test
+      - name: Test MQTT example
+        working-directory: examples/mqtt
+        run: |
+          npm ci
+          npm test
+      - name: Demo self-test
+        run: node demo/selftest.mjs
+
+  python:
+    name: python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    # The pure-Python crypto is slow (about 20 s for the unit tests on a fast machine).
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.12"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests (include every vector)
+        working-directory: python
+        run: python -m unittest
+      - name: Vector check
+        working-directory: python
+        run: python -m atep_py.vectors check ../vectors
+      - name: ROS 2 example tests (ROS-free stub transport)
+        working-directory: examples/ros2
+        run: |
+          python -m unittest discover -s tests -v
+          python -m py_compile atep_ros2_example/*.py
+
+  site-and-docs:
+    name: site and docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Site checks (links, JSON-LD, llms-full.txt up to date)
+        run: node site/check.mjs
+      - name: No em dashes in tracked text files
+        run: scripts/ci/no-em-dashes.sh
+      - name: Vector counts and manifest consistency
+        run: node scripts/ci/vector-counts.mjs
+      - name: Relative links and anchors in Markdown files
+        run: node scripts/ci/check-md-links.mjs
+
+  cddl:
+    name: cddl (spec/schemas/atep.cddl against the vectors)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # Keep in step with "validator.version" in scripts/ci/cddl-map.json (the script refuses any other version).
+      CDDL_VERSION: "0.10.7"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache cddl CLI
+        id: cddl-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo-tools/bin
+          key: cddl-cli-${{ env.CDDL_VERSION }}-${{ runner.os }}
+      - name: Install Rust toolchain
+        if: steps.cddl-cache.outputs.cache-hit != 'true'
+        run: rustup toolchain install stable --profile minimal --no-self-update
+      - name: Install cddl CLI (Rust cddl crate, exact version, its own lockfile)
+        if: steps.cddl-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --version "$CDDL_VERSION" --root ~/.cargo-tools cddl
+      - name: Put cddl on PATH
+        run: echo "$HOME/.cargo-tools/bin" >> "$GITHUB_PATH"
+      - name: Validate the vectors against atep.cddl
+        run: node scripts/ci/validate-cddl.mjs
+
+  workflow-lint:
+    name: lint workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: actionlint 1.7.12 (checksum verified)
+        run: |
+          set -euo pipefail
+          v=1.7.12
+          f="actionlint_${v}_linux_amd64.tar.gz"
+          curl -sSfL -o "$f" "https://github.com/rhysd/actionlint/releases/download/v${v}/${f}"
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  $f" | sha256sum -c -
+          tar xzf "$f" actionlint
+          ./actionlint -color

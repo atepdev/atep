@@ -1,0 +1,20 @@
+{
+  "name": "srl-bad-signature",
+  "category": "srl",
+  "description": "ML-DSA-65 signature last byte flipped. Expect step 4.",
+  "cbor_file": "srl-bad-signature.cbor",
+  "cbor_sha256": "1faeeaa714d35be9cab87974b6320a1053b1473ae8ede7706bae2d52549db603",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-closed"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null
+  },
+  "expected": {
+    "ok": false,
+    "step": 4,
+    "error": "mldsa_signature_invalid"
+  }
+}

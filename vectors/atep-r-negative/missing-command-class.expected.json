@@ -1,0 +1,35 @@
+{
+  "name": "missing-command-class",
+  "category": "atep-r-negative",
+  "description": "an encrypted envelope without the -70014 header under an ATEP-R policy. Expect step 1.",
+  "cbor_file": "missing-command-class.cbor",
+  "cbor_sha256": "a4522ecc137d337a91fdb6dd3d2f7ca74b0931a832ae6caa9f0ebae9b347ea65",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "roots": [
+          "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+          "atep:7sbiobw3ok3nnn54kbh22f5n4fqtka5sr6xuacakogrpwua3smua"
+        ],
+        "rules": [],
+        "atep_r": true
+      }
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "missing_command_class"
+  }
+}

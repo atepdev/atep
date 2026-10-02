@@ -1,0 +1,18 @@
+{
+  "name": "reject-missing-root-hash",
+  "category": "checkpoint-hash",
+  "description": "The payload lacks `root-hash`. Expect step 9 checkpoint_schema_invalid.",
+  "cbor_file": "reject-missing-root-hash.cbor",
+  "cbor_sha256": "3aa38b59bb2bb893d6daf87068a260a58f61748c0e067769ea0574824d80abd4",
+  "inputs": {
+    "now": 1800000000,
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_schema_invalid"
+  }
+}

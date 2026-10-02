@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP Overview</title>
+<meta name="description" content="ATEP is an open, transport-agnostic trust layer: signed, encrypted, post-quantum envelopes that let robots and AI agents prove who sent data, that it is unaltered, and what certifications the sender holds.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "ATEP overview",
+  "description": "Overview of the Autonomy Trust Envelope Protocol, an open, quantum-safe trust layer that lets robots and AI agents identify and verify each other, even offline.",
+  "url": "https://atep.dev/",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "author": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "about": "Autonomy Trust Envelope Protocol (ATEP)"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="index.html">ATEP</a>
+  <nav aria-label="Main">
+      <a href="index.html" aria-current="page">Overview</a>
+      <a href="specification.html">Specification</a>
+      <a href="quickstart.html">Quick start</a>
+      <a href="vectors.html">Test vectors</a>
+      <a href="governance.html">Governance</a>
+      <a href="security.html">Security</a>
+      <a href="about.html">About</a>
+      <a href="llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main">
+
+<h1>ATEP: Autonomy Trust Envelope Protocol</h1>
+<p class="lead">ATEP is an open, quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a NIST post-quantum standard (Ed25519 with ML-DSA-65 from FIPS 204, X25519 with ML-KEM-768 from FIPS 203) and both halves must hold, so protection is designed to hold against future quantum computers and against a flaw in either half. A signed and encrypted envelope lets one robot or AI agent prove to another who produced a piece of data, that it was not altered, and which third-party certifications the producer holds. It also works offline: a robot or agent can identify and verify another with no internet connection, registry or central server, because an identity is a hash of the sender's public keys and the receiver checks everything against keys, revocation lists and log checkpoints it has already cached, in milliseconds on a desktop CPU. It rides on any carrier (MCP, A2A, MQTT, ROS 2, HTTP, files) and replaces none of them. Quantum-safe here means finalized NIST standards in a hybrid construction; the reference code has not had an independent security audit.</p>
+<div class="note"><p><strong>Status.</strong> Working draft (Draft 07, the first public draft, 2 October 2026). It is not an Internet-Draft, not a standard, and its media types and some labels are provisional. Reference implementations exist: Rust passes all 436 shared test vectors, JavaScript and Python pass the 431 they can run (five need a log or a monitor); no functional package has been published to a package registry (placeholder names with no code are reserved on crates.io, npm and PyPI) and there has been no external security audit.</p></div>
+<div class="grid">
+<section class="card"><h2>What it defines</h2>
+<ul>
+<li>An identity model: an Agent ID is the SHA-256 of a public key bundle.</li>
+<li>A COSE and CBOR envelope format, signed then encrypted.</li>
+<li>An attestation schema for third-party claims such as <code>fleet-member</code> or <code>safety-certified</code>.</li>
+<li>Signed revocation lists and a transparency log that make certifiers accountable.</li>
+<li>ATEP-R, a robotics profile with required encryption and seven command classes.</li>
+</ul></section>
+<section class="card"><h2>What it does not define</h2>
+<p>Transport, discovery, task negotiation, or the meaning of the payload. An envelope is a byte string that verifies the same way whatever carried it.</p></section>
+<section class="card"><h2>Design commitments</h2>
+<p>Subjects are agents and organizations, never individuals. There is no global score, no mandatory root, no reputation in the core, and no surveillance feed. See <a href="governance.html">governance</a>.</p></section>
+<section class="card"><h2>Where to start</h2>
+<ul>
+<li><a href="quickstart.html">Quick start</a> in Rust, JavaScript and Python.</li>
+<li><a href="specification.html">Specification</a> and the whole text in one file: <a href="llms-full.txt">llms-full.txt</a>.</li>
+<li><a href="vectors.html">Test vectors</a>: how an implementer proves conformance.</li>
+<li><a href="llms.txt">llms.txt</a>, a one screen map for language models.</li>
+</ul></section>
+</div>
+<div class="tablewrap"><table>
+<caption>What is built, as of 2 October 2026</caption>
+<thead><tr><th scope="col">Part</th><th scope="col">State</th><th scope="col">Limit</th></tr></thead>
+<tbody>
+<tr><th scope="row">Rust reference core and CLI</th><td>Passes all 436 vectors</td><td>No external audit; needs a C linker to build</td></tr>
+<tr><th scope="row">Transparency log and monitor</th><td>Implemented in Rust, acceptance tested</td><td>Plain HTTP, keys in files; not run by anyone outside the project</td></tr>
+<tr><th scope="row">JavaScript (<code>@atep/core</code>, WebAssembly)</th><td>Passes 431 of 436 vectors under Node (five for a log and a monitor are skipped)</td><td>Not published (the name is reserved on npm as a placeholder with no code); not tested in a real browser, Bun or Deno</td></tr>
+<tr><th scope="row">Python (<code>atep_py</code>)</th><td>Independent, standard library only, passes 431 of 436 vectors (five for a log and a monitor are skipped)</td><td>Slow; not published (the name is reserved on PyPI as a placeholder with no code); written by the project, not by an outside party</td></tr>
+<tr><th scope="row">Carrier examples</th><td>MCP, A2A, HTTP, file and MQTT run and tested</td><td>ROS 2 example has not been run on ROS 2</td></tr>
+</tbody></table></div>
+
+</main>
+<footer class="site">
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

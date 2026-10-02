@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-dot",
+  "category": "chain-id",
+  "description": "The name has a dot.",
+  "cbor_file": "invalid-extension-dot.cbor",
+  "cbor_sha256": "abc1f250e3f37b2128cb1361ce0de803830e08c0b5c3db5de7e9d767177712ed",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-acme.ledger"
+  },
+  "expected": {
+    "ok": false
+  }
+}

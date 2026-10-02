@@ -1,0 +1,21 @@
+{
+  "name": "signer-bundle-unavailable",
+  "category": "verify-negative",
+  "description": "No inline bundle and no cached bundle for the signer. Expect step 3.",
+  "cbor_file": "signer-bundle-unavailable.cbor",
+  "cbor_sha256": "c85f8bb9e4d96ca53baff3313942b3fd2e65e08cb6a7a067eb05bacda471f84a",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 3,
+    "error": "signer_bundle_unavailable"
+  }
+}

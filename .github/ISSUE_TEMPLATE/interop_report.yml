@@ -1,0 +1,30 @@
+name: Interoperability report
+description: Two implementations disagree, or your implementation fails a vector.
+labels: ["interop"]
+body:
+  - type: textarea
+    id: implementations
+    attributes:
+      label: Implementations
+      description: Which implementations and versions (Rust, npm, Python, or your own), and whether yours was written from the spec and vectors only.
+    validations:
+      required: true
+  - type: input
+    id: vector
+    attributes:
+      label: Vector
+      description: Category and name, for example `verify-negative/bad-eddsa-signature`. Say "none" if no vector covers it.
+    validations:
+      required: true
+  - type: textarea
+    id: difference
+    attributes:
+      label: The difference
+      description: Expected and actual bytes, accept or reject, step and error code.
+    validations:
+      required: true
+  - type: textarea
+    id: reading
+    attributes:
+      label: Which reading of the spec you followed
+      description: Quote the section. Vectors are authoritative; if the vector and the text disagree, say so.

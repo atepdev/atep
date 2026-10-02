@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-extension-uppercase",
+  "category": "registry-endpoint",
+  "description": "`kind` is `x-Acme`: the extension name is lowercase.",
+  "cbor_file": "reject-kind-extension-uppercase.cbor",
+  "cbor_sha256": "3582e68ca6b39ab47d89f9f2989660e8e2fb8cfacd27d07883c4416b45b0de3b",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

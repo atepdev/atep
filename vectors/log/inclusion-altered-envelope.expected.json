@@ -1,0 +1,19 @@
+{
+  "name": "inclusion-altered-envelope",
+  "category": "log",
+  "description": "The attestation was changed (an extra unprotected header) after it was logged, so its leaf hash differs. Expect step 9.",
+  "cbor_file": "inclusion-altered-envelope.cbor",
+  "cbor_sha256": "082344e029204fcdd613e93c8973f5c911dd0c8b8d0742c4e1d6c3906e0b4f6d",
+  "inputs": {
+    "now": 1800000000,
+    "check": "inclusion",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "inclusion_proof_invalid"
+  }
+}

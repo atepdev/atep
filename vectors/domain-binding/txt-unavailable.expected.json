@@ -1,0 +1,37 @@
+{
+  "name": "txt-unavailable",
+  "category": "domain-binding",
+  "description": "The DNS lookup failed (SERVFAIL, DNSSEC validation failure, timeout): unavailable, with nothing listing the Agent ID the result is indeterminate.",
+  "cbor_file": "txt-unavailable.cbor",
+  "cbor_sha256": "8a0274c69f25ec1ce7b58099977186747c12a45eb7191a20f6fea4f52b5df045",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "unavailable": "SERVFAIL"
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "unavailable",
+    "outcome": "indeterminate",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

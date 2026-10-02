@@ -1,0 +1,14 @@
+{
+  "name": "reject-indefinite-length-map",
+  "category": "anchor-record",
+  "description": "The record is an indefinite length map (0xbf ... 0xff).",
+  "cbor_file": "reject-indefinite-length-map.cbor",
+  "cbor_sha256": "5554b04b55f64269a949b64e0bd2b5f659f13bf02b454d57041197b18097407c",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

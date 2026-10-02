@@ -1,0 +1,24 @@
+{
+  "name": "hash-large-tree-size",
+  "category": "checkpoint-hash",
+  "description": "Tree size 4294967296: the integer needs an eight byte head, which the payload bytes (and so the hash) carry.",
+  "cbor_file": "hash-large-tree-size.cbor",
+  "cbor_sha256": "3f65b75cc560fae92d521ee72939de31fd4a84283e5a71a26d8761daac67db90",
+  "inputs": {
+    "now": 1800000000,
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "checkpoint": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 4294967296,
+      "root_hash": "7b10f02a008249d368b336fc402a9239f50f8f5b2317638e807f66dbcf274bfa",
+      "timestamp": 1799996400
+    },
+    "checkpoint_hash": "f61b71308bcad4d4ee83f9884bf942bee2030b703bddac6d8e24c58662561fa1",
+    "payload_hex": "a369726f6f742d6861736858207b10f02a008249d368b336fc402a9239f50f8f5b2317638e807f66dbcf274bfa6974696d657374616d701a6b49c3f069747265652d73697a651b0000000100000000"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "registered-opentimestamps",
+  "category": "chain-id",
+  "description": "Registered: Bitcoin via an OpenTimestamps calendar.",
+  "cbor_file": "registered-opentimestamps.cbor",
+  "cbor_sha256": "44813fe088eebb615e3d67780672d818f8a4842f76a0170fbef93f585a32d664",
+  "inputs": {
+    "check": "chain-id",
+    "id": "opentimestamps"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "registered"
+  }
+}

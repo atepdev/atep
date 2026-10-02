@@ -1,0 +1,43 @@
+{
+  "name": "domain-with-underscore-is-not-read",
+  "category": "domain-binding",
+  "description": "The domain begins with an underscore label: not a canonical name, nothing is read.",
+  "cbor_file": "domain-with-underscore-is-not-read.cbor",
+  "cbor_sha256": "45567c31715362d2b8bd7532d3f7ced73d5582dbc93a324965bbbb3af131d82f",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "_atep.example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "not-read",
+    "dns": "not-read",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [],
+      "txt": []
+    }
+  }
+}

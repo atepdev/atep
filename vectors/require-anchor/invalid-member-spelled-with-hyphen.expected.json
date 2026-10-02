@@ -1,0 +1,23 @@
+{
+  "name": "invalid-member-spelled-with-hyphen",
+  "category": "require-anchor",
+  "description": "`require-anchor` (hyphen) is not a member of the policy: an unknown member is an error, so the typo cannot silently weaken the policy.",
+  "cbor_file": "invalid-member-spelled-with-hyphen.cbor",
+  "cbor_sha256": "563d9c848d505db82278b3497b208d34fbaeb60680cac37029b4dff489ea6e1e",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require-anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

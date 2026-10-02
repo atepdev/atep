@@ -1,0 +1,14 @@
+{
+  "name": "reject-transaction-id-as-bytes",
+  "category": "anchor-record",
+  "description": "`transaction-id` is a byte string, not text.",
+  "cbor_file": "reject-transaction-id-as-bytes.cbor",
+  "cbor_sha256": "fdf949af63043f07b4d8461c506de2055915b4009e68dd530211ac6e4e8ab3fb",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

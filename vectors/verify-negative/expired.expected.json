@@ -1,0 +1,21 @@
+{
+  "name": "expired",
+  "category": "verify-negative",
+  "description": "expires-at is before now. Signatures are valid. Expect step 5.",
+  "cbor_file": "expired.cbor",
+  "cbor_sha256": "ee37087d038813d96f813529ed22b8cf574bc45ac764b8cdc0669080bd91da24",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 5,
+    "error": "expired"
+  }
+}

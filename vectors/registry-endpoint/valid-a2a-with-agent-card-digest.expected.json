@@ -1,0 +1,17 @@
+{
+  "name": "valid-a2a-with-agent-card-digest",
+  "category": "registry-endpoint",
+  "description": "Kind `a2a` carrying the digest of the agent card as `evidence` and the https URL it is fetched from as `evidence-uri`. Evidence makes the attestation audit-backed for the lifetime tiers; the layout of `data` is unchanged and admission accepts it.",
+  "cbor_file": "valid-a2a-with-agent-card-digest.cbor",
+  "cbor_sha256": "45ab34a314acd68e3887bd1dee66d9b035667ea036197a30b6704731be130c87",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

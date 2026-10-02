@@ -1,0 +1,19 @@
+{
+  "name": "invalid-rule-not-an-object",
+  "category": "require-anchor",
+  "description": "A rule that is a text string.",
+  "cbor_file": "invalid-rule-not-an-object.cbor",
+  "cbor_sha256": "5400ce962cb2b1474b6e4aec091894166352fd69810092670b7b66967f6e2210",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        "rekor"
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "@atep/mcp",
+  "version": "0.1.0",
+  "description": "Read-only MCP server for ATEP (Autonomy Trust Envelope Protocol): verify and inspect envelopes, look up agents, issuers, claim types and revocations. No signing, no key handling.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./src/server.mjs",
+  "exports": {
+    ".": "./src/server.mjs",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "atep-mcp": "./bin/atep-mcp.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "autonomy",
+    "robot fleet",
+    "trust",
+    "attestation",
+    "post-quantum",
+    "COSE",
+    "MCP",
+    "A2A",
+    "ROS 2",
+    "ATEP",
+    "model-context-protocol"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "@atep/core": "file:../js",
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^3.25.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atepdev/atep.git",
+    "directory": "mcp"
+  },
+  "homepage": "https://atep.dev"
+}

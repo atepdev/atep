@@ -1,0 +1,40 @@
+{
+  "name": "txt-unknown-terms-are-ignored",
+  "category": "domain-binding",
+  "description": "Terms the reader does not understand (`foo=bar`, `x-ext=1`, an `srl=` term) are ignored; the `id=` term counts.",
+  "cbor_file": "txt-unknown-terms-are-ignored.cbor",
+  "cbor_sha256": "e945440fcf00f87cfee9e9f7c24672aa923da1f3461ce04dde879cb8ad9f3b57",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 foo=bar x-ext=1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a srl=https://example.com/.well-known/atep-revocations.cbor"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

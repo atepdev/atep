@@ -1,0 +1,14 @@
+{
+  "name": "reject-transaction-id-513-bytes",
+  "category": "anchor-record",
+  "description": "`transaction-id` has 513 bytes.",
+  "cbor_file": "reject-transaction-id-513-bytes.cbor",
+  "cbor_sha256": "5d580f01fcb76244c15f04896d2bf8db0222dcfaaad823cae5554a5ce7f288a6",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

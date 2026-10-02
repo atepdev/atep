@@ -1,0 +1,40 @@
+{
+  "name": "wk-domain-member-names-another-host",
+  "category": "domain-binding",
+  "description": "`domain` is `other.example`: a document copied from another host does not bind this name.",
+  "cbor_file": "wk-domain-member-names-another-host.cbor",
+  "cbor_sha256": "bcaa92838fdb4e4ebe0225cee8870ae96f326a6049b59c9b8dff8a20991cc3c7",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"domain\":\"other.example\",\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

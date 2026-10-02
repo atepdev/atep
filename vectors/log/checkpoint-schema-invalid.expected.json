@@ -1,0 +1,19 @@
+{
+  "name": "checkpoint-schema-invalid",
+  "category": "log",
+  "description": "A checkpoint with a valid signature from the trusted log whose payload lacks root-hash. Expect step 9 checkpoint_schema_invalid.",
+  "cbor_file": "checkpoint-schema-invalid.cbor",
+  "cbor_sha256": "59f8ca1541ed2a705d9f8495c69af0947fb25a1cb5d9ea10cc272aa2d31bf888",
+  "inputs": {
+    "now": 1800000000,
+    "check": "checkpoint",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_schema_invalid"
+  }
+}

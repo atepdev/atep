@@ -1,0 +1,23 @@
+{
+  "name": "checkpoint-valid",
+  "category": "log",
+  "description": "A checkpoint of a 5 leaf log signed by the trusted log.",
+  "cbor_file": "checkpoint-valid.cbor",
+  "cbor_sha256": "e90ffb602dc4b874b8bf8076046da4a0d911018c13351c1f38ce79c2c1d1f843",
+  "inputs": {
+    "now": 1800000000,
+    "check": "checkpoint",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "checkpoint": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 5,
+      "root_hash": "18ced7abed17d287a6b04bdaecfd0643519bd9cb6df6a7896ba7f3debca821b0",
+      "timestamp": 1799999400
+    }
+  }
+}

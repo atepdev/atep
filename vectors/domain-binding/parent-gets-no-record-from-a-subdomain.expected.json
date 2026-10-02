@@ -1,0 +1,47 @@
+{
+  "name": "parent-gets-no-record-from-a-subdomain",
+  "category": "domain-binding",
+  "description": "The domain asked about is `example.com`; only `a.example.com` publishes records. A record at a.example.com says nothing about example.com.",
+  "cbor_file": "parent-gets-no-record-from-a-subdomain.cbor",
+  "cbor_sha256": "0ee045bc04bcc30c4ac2ce6519f0ce9880ec85c9c7f08f8e8894a232d3710f49",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "a.example.com": {
+          "status": 200,
+          "final_url": "https://a.example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.a.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

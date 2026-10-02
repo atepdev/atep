@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-underscore",
+  "category": "chain-id",
+  "description": "The name has an underscore.",
+  "cbor_file": "invalid-extension-underscore.cbor",
+  "cbor_sha256": "d1d143d6e1ca346954b43cb1582998a0a3fa2c9785fcfbb579034c9adb4fa6ce",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-acme_ledger"
+  },
+  "expected": {
+    "ok": false
+  }
+}

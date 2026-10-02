@@ -1,0 +1,15 @@
+# ATEP: Autonomy Trust Envelope Protocol
+
+> ATEP is an open, quantum-safe, transport-agnostic trust layer for robots and AI agents: a signed, encrypted envelope (COSE and CBOR) in which every signature and key exchange is hybrid, a classical algorithm paired with a NIST post-quantum standard (Ed25519 + ML-DSA-65, X25519 + ML-KEM-768), so data stays protected against future quantum computers. The envelope proves who produced data, that it is unaltered, and which third-party attestations the producer holds, and it verifies offline, with no network, registry or central server, against cached keys, revocation lists and log checkpoints. It rides on MCP, A2A, MQTT, ROS 2, HTTP or files. Status: working draft (Draft 07), reference implementations in Rust, JavaScript (WASM) and Python pass the shared test vectors they can run (436 vectors in all: Rust passes all, JavaScript and Python 431 and skip the five that need a log or monitor). No functional package is published to npm, crates.io or PyPI (placeholder names with no code are reserved: crates.io atep, atep-core, atep-cli; npm @atep/core, @atep/mcp; PyPI atep); media types are provisional.
+
+- [Overview](https://atep.dev/index.html): what ATEP defines and what is built
+- [Specification](https://atep.dev/specification.html): Draft 07 section map and licence (CC BY 4.0)
+- [Full specification as one Markdown file](https://atep.dev/llms-full.txt): load the whole protocol in one fetch
+- [Quick start](https://atep.dev/quickstart.html): verify a vector in Rust, JavaScript or Python
+- [Test vectors](https://atep.dev/vectors.html): 436 vectors, the authoritative conformance suite
+- [Governance](https://atep.dev/governance.html): seven design commitments (no global score, no mandatory root, agents not people)
+- [Security policy](https://atep.dev/security.html): vulnerability reporting (GitHub private reporting or email)
+- [Source code](https://github.com/atepdev/atep): the monorepo (spec, vectors, Rust, JavaScript, Python, examples, demo)
+- [About](https://atep.dev/about.html): stewarded by AIRAD LABS (https://airadlabs.com)
+
+Built but not yet published: @atep/mcp server, claim-type directory and registry API (in the reference log). Planned: packages on npm, crates.io and PyPI (the names crates.io atep, atep-core, atep-cli; npm @atep/core, @atep/mcp; PyPI atep are reserved at 0.0.1 as placeholders with no functional code).

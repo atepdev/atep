@@ -1,0 +1,20 @@
+{
+  "name": "valid-bitcoin-with-block-height",
+  "category": "anchor-record",
+  "description": "A record on `bitcoin-mainnet`.",
+  "cbor_file": "valid-bitcoin-with-block-height.cbor",
+  "cbor_sha256": "f5620229c772eff7c10d738db19b7d79c7540a812bc0728f1f6f3e83fe43b025",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "bitcoin-mainnet",
+      "transaction_id": "f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16",
+      "block_height": 850000,
+      "anchored_at": 1799997000
+    }
+  }
+}

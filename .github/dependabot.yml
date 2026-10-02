@@ -1,0 +1,84 @@
+version: 2
+# Version updates are grouped into one pull request per directory and ecosystem,
+# and major version bumps are ignored: they are reviewed by hand (the MCP server
+# tracks zod through the MCP SDK, the examples track the MQTT broker API, and the
+# Rust crypto crates must keep producing the shared test vectors byte for byte).
+# Security updates are raised separately by GitHub and are not affected by these rules.
+updates:
+  - package-ecosystem: cargo
+    directory: /rust
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      cargo-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    # wasm-bindgen must match the CLI version CI installs from Cargo.lock, so it is
+    # always taken from the lockfile; no extra handling needed here.
+
+  - package-ecosystem: npm
+    directory: /js
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: npm
+    directory: /mcp
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: npm
+    directory: /examples
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: npm
+    directory: /examples/mqtt
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 2
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # demo/package.json has no dependencies and no lockfile, so it is not listed.
+  # python/ has no dependency manifest (standard library only), so pip is not listed.
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]

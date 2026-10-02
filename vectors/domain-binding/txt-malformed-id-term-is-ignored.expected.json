@@ -1,0 +1,40 @@
+{
+  "name": "txt-malformed-id-term-is-ignored",
+  "category": "domain-binding",
+  "description": "`id=atep:notanid` is not an Agent ID: the term is ignored and the next one counts.",
+  "cbor_file": "txt-malformed-id-term-is-ignored.cbor",
+  "cbor_sha256": "442f971425e551f94e8df9934dabff58044093e845be5df9855351bce6b041f4",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:notanid id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

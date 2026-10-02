@@ -1,0 +1,29 @@
+{
+  "name": "valid-max-age-days",
+  "category": "require-anchor",
+  "description": "One rule with `max_age_days`. Parses; `require_anchor` is a known member.",
+  "cbor_file": "valid-max-age-days.cbor",
+  "cbor_sha256": "8f7743b70e20e837eb4f387598bb1485e620c75939c3e5abefb2c1b83c5e0643",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "solana-mainnet",
+          "max_age_days": 2
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "solana-mainnet",
+        "max_age_days": 2
+      }
+    ]
+  }
+}

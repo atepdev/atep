@@ -1,0 +1,27 @@
+{
+  "name": "revoked-signer",
+  "category": "verify-negative",
+  "description": "alice is listed as compromised since before issued-at. Expect step 8.",
+  "cbor_file": "revoked-signer.cbor",
+  "cbor_sha256": "eb3f370d38656643277f0d7a65cc937acc6c096441486ab15365db3b0587124c",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [
+        {
+          "id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+          "reason": "compromised",
+          "revoked_at": 1799992800
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 8,
+    "error": "signer_revoked"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "valid-opentimestamps-without-block-height",
+  "category": "anchor-record",
+  "description": "`block-height` is optional: a witness with no height omits the key (it is never encoded as null or zero).",
+  "cbor_file": "valid-opentimestamps-without-block-height.cbor",
+  "cbor_sha256": "1d1993c71adbb8ac7213c5fe93cf9a3c51a8465f53be729c773d0fc4c8cc2c38",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "opentimestamps",
+      "transaction_id": "ots-calendar-a-0001",
+      "block_height": null,
+      "anchored_at": 1799997000
+    }
+  }
+}

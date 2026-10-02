@@ -1,0 +1,34 @@
+{
+  "name": "srl-stale-fail-open",
+  "category": "srl",
+  "description": "The SRL is past next-update; with on_stale fail-open the list is still used and a warning is returned.",
+  "cbor_file": "srl-stale-fail-open.cbor",
+  "cbor_sha256": "6bfe69e5b2b014b2a3464feda5a55ac3b39ef1a4d2cbc323ba6982a31c29292c",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-open"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null
+  },
+  "expected": {
+    "ok": true,
+    "issuer": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+    "sequence": 1,
+    "issued_at": 1799740800,
+    "next_update": 1799827200,
+    "stale": true,
+    "revoked": [
+      {
+        "kind": "attestation",
+        "id_hex": "dbc03a9e5a2af4f6a276589235d192c5",
+        "reason": "withdrawn",
+        "revoked_at": 1799913600
+      }
+    ],
+    "warnings": [
+      "SRL of atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q is past next-update 1799827200; using the stale copy"
+    ]
+  }
+}

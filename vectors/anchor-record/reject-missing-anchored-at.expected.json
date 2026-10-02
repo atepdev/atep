@@ -1,0 +1,14 @@
+{
+  "name": "reject-missing-anchored-at",
+  "category": "anchor-record",
+  "description": "`anchored-at` is absent.",
+  "cbor_file": "reject-missing-anchored-at.cbor",
+  "cbor_sha256": "1e65cfc867a5d84ef7aa067fa8b6c7c372224a0bcb0cf5a99600ad96e3a6fe57",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "valid-extension-chain",
+  "category": "require-anchor",
+  "description": "A rule whose `chain` is an extension id.",
+  "cbor_file": "valid-extension-chain.cbor",
+  "cbor_sha256": "da7216608501c4be7739b8be0b9dda869172555e9ed7496394df9f021bd21a7e",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "x-acme-ledger",
+          "max_age_days": 7
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "x-acme-ledger",
+        "max_age_days": 7
+      }
+    ]
+  }
+}

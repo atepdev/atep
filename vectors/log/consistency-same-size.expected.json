@@ -1,0 +1,29 @@
+{
+  "name": "consistency-same-size",
+  "category": "log",
+  "description": "Two checkpoints of tree size 5 with different timestamps and the same root; the proof is empty.",
+  "cbor_file": "consistency-same-size.cbor",
+  "cbor_sha256": "fb187b33b1fb8e4891da514a6e204bfe83e45a0aff6349f7a9e6cc0d6c5612cc",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "old": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 5,
+      "root_hash": "580867f9d8462953fd1a3c65fe547b7526e5d762d4fb85d0b5acad3c8099cf95",
+      "timestamp": 1799995800
+    },
+    "new": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 5,
+      "root_hash": "580867f9d8462953fd1a3c65fe547b7526e5d762d4fb85d0b5acad3c8099cf95",
+      "timestamp": 1799999400
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "swapped-key",
+  "category": "verify-negative",
+  "description": "signer header is alice, but the inline bundle replaces alice's ML-DSA key with mallory's and the PQ signature is mallory's. Expect step 3 (bundle hash differs from signer).",
+  "cbor_file": "swapped-key.cbor",
+  "cbor_sha256": "4aff60dd216f2714f3b93892c496bada73b9e889d8d7dbf21935fd9a15bdbc81",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 3,
+    "error": "signer_id_mismatch"
+  }
+}

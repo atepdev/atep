@@ -1,0 +1,15 @@
+{
+  "name": "extension-64-bytes",
+  "category": "chain-id",
+  "description": "Extension id of exactly 64 bytes: the longest allowed.",
+  "cbor_file": "extension-64-bytes.cbor",
+  "cbor_sha256": "9de5e7fb1f96aebcb5d4c1a1ccb39e711841fc699e35223a7c272301c219d544",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "extension"
+  }
+}

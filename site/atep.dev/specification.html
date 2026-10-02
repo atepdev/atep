@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP Specification</title>
+<meta name="description" content="Draft 07 of the Autonomy Trust Envelope Protocol specification: structure, status, how to read it, and a plain Markdown copy for models and tools.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Autonomy Trust Envelope Protocol (ATEP) Specification, Draft 07",
+  "description": "Specification of the Autonomy Trust Envelope Protocol: identity, envelope, attestations, revocation, transparency log, verification and the robotics profile.",
+  "url": "https://atep.dev/specification.html",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "author": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "about": "Autonomy Trust Envelope Protocol (ATEP)"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="index.html">ATEP</a>
+  <nav aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="specification.html" aria-current="page">Specification</a>
+      <a href="quickstart.html">Quick start</a>
+      <a href="vectors.html">Test vectors</a>
+      <a href="governance.html">Governance</a>
+      <a href="security.html">Security</a>
+      <a href="about.html">About</a>
+      <a href="llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main">
+
+<h1>Specification, Draft 07</h1>
+<p class="lead">Draft 07 of the Autonomy Trust Envelope Protocol specification, a trust layer built on hybrid classical and NIST post-quantum cryptography, is dated 2 October 2026 and is the first public draft (Drafts 00 to 06 were internal working drafts). The complete text is available as plain Markdown in one file, <a href="llms-full.txt">llms-full.txt</a>, which is generated from <code>spec/ATEP-Specification-Draft-07.md</code> in the repository by a script and prefixed with a short note describing it.</p>
+<div class="note"><p>Published drafts are never edited: a change is a new draft. A rendered, browsable version of the specification is not part of this site yet. Behavior that the text leaves ambiguous is decided by the <a href="vectors.html">test vectors</a>, and the text then follows the vectors.</p></div>
+<div class="tablewrap"><table>
+<caption>Sections of Draft 07</caption>
+<thead><tr><th scope="col">Section</th><th scope="col">Topic</th></tr></thead>
+<tbody>
+<tr><th scope="row">1 to 3</th><td>Abstract and status, terminology, goals and scope</td></tr>
+<tr><th scope="row">4</th><td>Identity: key bundles, Agent IDs, domain records</td></tr>
+<tr><th scope="row">5, 6</th><td>Envelope format (COSE_Sign inside COSE_Encrypt, deterministic CBOR) and the ATEP-1 cryptographic suite</td></tr>
+<tr><th scope="row">7</th><td>Attestations, claim types, domain binding, retirement and succession, trust policy, chains</td></tr>
+<tr><th scope="row">8, 9</th><td>Revocation lists; transparency log, checkpoints, optional anchor records, proofs, registry services and the log API</td></tr>
+<tr><th scope="row">10</th><td>The ten step verification algorithm</td></tr>
+<tr><th scope="row">11</th><td>Security considerations</td></tr>
+<tr><th scope="row">12, 13</th><td>Conformance and test vectors; implementation roadmap and status</td></tr>
+<tr><th scope="row">16</th><td>Design commitments against misuse (normative)</td></tr>
+<tr><th scope="row">17</th><td>ATEP-R, the robotics profile</td></tr>
+<tr><th scope="row">18, 20, A</th><td>Related work; decisions taken during drafting; revision history</td></tr>
+</tbody></table></div>
+<h2>Licensing</h2>
+<p>The specification text is licensed CC BY 4.0 (<a href="https://creativecommons.org/licenses/by/4.0/">canonical terms</a>). Attribution line: "Autonomy Trust Envelope Protocol (ATEP), AIRAD LABS, CC BY 4.0".</p>
+<h2>Registrations</h2>
+<p>The media types <code>application/atep+cbor</code> and <code>application/atep-attestation+cbor</code>, the CBOR tag numbers and the COSE labels are provisional. None is registered with IANA, and no Internet-Draft has been submitted.</p>
+
+</main>
+<footer class="site">
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

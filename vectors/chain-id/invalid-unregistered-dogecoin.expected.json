@@ -1,0 +1,14 @@
+{
+  "name": "invalid-unregistered-dogecoin",
+  "category": "chain-id",
+  "description": "Not in the table and not an extension id.",
+  "cbor_file": "invalid-unregistered-dogecoin.cbor",
+  "cbor_sha256": "d904ac32ef9b50251660c499b1a5f9c1508f92c68519087d82f306b85df82dde",
+  "inputs": {
+    "check": "chain-id",
+    "id": "dogecoin"
+  },
+  "expected": {
+    "ok": false
+  }
+}

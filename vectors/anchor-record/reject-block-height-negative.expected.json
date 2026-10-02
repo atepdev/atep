@@ -1,0 +1,14 @@
+{
+  "name": "reject-block-height-negative",
+  "category": "anchor-record",
+  "description": "`block-height` is -1: it is unsigned.",
+  "cbor_file": "reject-block-height-negative.cbor",
+  "cbor_sha256": "9f0aa33c7248ac109b294d00c44c48a9a4cc26c3fceacf661b9c7418c7152d47",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

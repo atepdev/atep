@@ -1,0 +1,23 @@
+{
+  "name": "invalid-age-days-zero",
+  "category": "require-anchor",
+  "description": "`max_age_days` 0: at least 1 is required.",
+  "cbor_file": "invalid-age-days-zero.cbor",
+  "cbor_sha256": "ae48e2e30ed9833016e4dd94a3447045ef15f8128897465e47e30bf180bddd90",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 0
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "valid-registry",
+  "category": "registry-endpoint",
+  "description": "A registry-endpoint attestation (a core claim type) for kind `registry` with an https URL. A log admits it like any attestation: no new document type or endpoint.",
+  "cbor_file": "valid-registry.cbor",
+  "cbor_sha256": "b45c149480b72e24aea2a705e9886e65cf9f16bd7e18685bf0f163f1d5c9b10b",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

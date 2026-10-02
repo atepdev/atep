@@ -1,0 +1,14 @@
+{
+  "name": "reject-missing-checkpoint-hash",
+  "category": "anchor-record",
+  "description": "`checkpoint-hash` is absent.",
+  "cbor_file": "reject-missing-checkpoint-hash.cbor",
+  "cbor_sha256": "cfdf2c43e78dd865932937ea193be988a665545e5ac28ce61f9a1e1dfcc4f835",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

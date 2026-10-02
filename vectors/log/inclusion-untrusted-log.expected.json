@@ -1,0 +1,19 @@
+{
+  "name": "inclusion-untrusted-log",
+  "category": "log",
+  "description": "A valid proof against a checkpoint of an untrusted log. Expect step 9.",
+  "cbor_file": "inclusion-untrusted-log.cbor",
+  "cbor_sha256": "6a02e55d95ef0b698bb8e780850b92f6f4855c93276385a74f4e5114f34ccda0",
+  "inputs": {
+    "now": 1800000000,
+    "check": "inclusion",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_untrusted"
+  }
+}

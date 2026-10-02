@@ -1,0 +1,17 @@
+{
+  "txt": {
+    "_atep.example.com": {
+      "records": [
+        "v=atep1 id=ATEP:HAE4NE6CNDU4BHQ32ZJE4GP2OGCSRUVK2C722FIWS2ZTP6IAZQ6A"
+      ],
+      "dnssec_validated": true
+    }
+  },
+  "domain": "example.com",
+  "options": {
+    "require_both": false,
+    "require_dnssec": false
+  },
+  "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+  "well_known": {}
+}

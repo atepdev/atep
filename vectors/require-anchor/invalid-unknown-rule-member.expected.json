@@ -1,0 +1,24 @@
+{
+  "name": "invalid-unknown-rule-member",
+  "category": "require-anchor",
+  "description": "A rule with an extra member, `min_age_days`.",
+  "cbor_file": "invalid-unknown-rule-member.cbor",
+  "cbor_sha256": "66dc9b7a8b685866579cf3dbd152b4e9e2524d23d547c882f6a42b911ffd7ba6",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 1,
+          "min_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

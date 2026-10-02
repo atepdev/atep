@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATEP Test vectors</title>
+<meta name="description" content="How the 436 ATEP test vectors work and how an implementer proves a verifier conformant.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "ATEP test vectors",
+  "description": "Description of the ATEP conformance test vectors and how to use them.",
+  "url": "https://atep.dev/vectors.html",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "author": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "about": "Autonomy Trust Envelope Protocol (ATEP)"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="index.html">ATEP</a>
+  <nav aria-label="Main">
+      <a href="index.html">Overview</a>
+      <a href="specification.html">Specification</a>
+      <a href="quickstart.html">Quick start</a>
+      <a href="vectors.html" aria-current="page">Test vectors</a>
+      <a href="governance.html">Governance</a>
+      <a href="security.html">Security</a>
+      <a href="about.html">About</a>
+      <a href="llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main">
+
+<h1>Test vectors</h1>
+<p class="lead">The 436 vectors are the executable form of the specification. An independent implementation is conformant when it reproduces every byte of the generation vectors (identity, signing, encryption, attestation) and returns the expected accept or reject, step and error code for all the others. Where the text and a vector disagree, the vector wins and the text is amended.</p>
+<div class="grid">
+<section class="card"><h2>Format</h2><p>Each vector is three files with one base name: <code>name.cbor</code> (the exact bytes), <code>name.json</code> (a debug view) and <code>name.expected.json</code> (inputs, the verifier policy, and the required result). All keys come from fixed seeds written in plain hex, and the reference time is <code>now = 1800000000</code>.</p></section>
+<section class="card"><h2>Categories</h2><p>28 categories: identity, signing, encryption, verify-positive, verify-negative, attestation, chain-positive, chain-negative, srl, srl-context, log, log-admission, monitor, atep-r-positive, atep-r-negative, retired and successor (positive and negative), and the anchoring and discovery categories (checkpoint-hash, anchor-record, chain-id, anchor-envelope, anchor-media-type, require-anchor, anchor-not-supported, registry-endpoint, domain-binding).</p></section>
+<section class="card"><h2>Who passes</h2><p>The Rust core, the JavaScript package (the same Rust compiled to WebAssembly) and the independent Python implementation pass the vectors that apply to them: the Rust core passes all 436, and the JavaScript and Python implementations pass 431 and skip by name the five for a log (four) and a monitor (one), which the Rust log and monitor pass. The Python implementation was written from the specification and the vectors only and produced 44 reports of ambiguity in the text; all are resolved in the specification (see the implementation findings in the repository).</p></section>
+<section class="card"><h2>Not covered</h2><p>Hedged ML-DSA signing inputs and some edge cases are in the known gaps table of specification section 12. An implementation outside the project does not exist yet; that is the most useful next contribution.</p></section>
+</div>
+
+</main>
+<footer class="site">
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

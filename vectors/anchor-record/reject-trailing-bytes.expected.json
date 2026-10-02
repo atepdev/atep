@@ -1,0 +1,14 @@
+{
+  "name": "reject-trailing-bytes",
+  "category": "anchor-record",
+  "description": "A valid record followed by one extra byte.",
+  "cbor_file": "reject-trailing-bytes.cbor",
+  "cbor_sha256": "10504450241c441366d5ea8fcac155d43ca33afc3a9ad6cbd195d7929591b93e",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

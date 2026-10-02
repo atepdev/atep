@@ -1,0 +1,22 @@
+{
+  "name": "invalid-missing-log",
+  "category": "require-anchor",
+  "description": "A rule without `log`: a configuration error.",
+  "cbor_file": "invalid-missing-log.cbor",
+  "cbor_sha256": "de3da800e1d6fd7eed5e947be1b3d4667f63f957257e9581a3dae48ef56e31cd",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "chain": "rekor",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

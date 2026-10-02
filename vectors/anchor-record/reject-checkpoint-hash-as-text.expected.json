@@ -1,0 +1,14 @@
+{
+  "name": "reject-checkpoint-hash-as-text",
+  "category": "anchor-record",
+  "description": "`checkpoint-hash` is the lowercase hex text of the hash, not a byte string.",
+  "cbor_file": "reject-checkpoint-hash-as-text.cbor",
+  "cbor_sha256": "c8ddba6d213787b79886d50897f3addd3649d9fb244b2d98d339ccfa1aeaba2a",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

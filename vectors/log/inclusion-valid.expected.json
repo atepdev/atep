@@ -1,0 +1,23 @@
+{
+  "name": "inclusion-valid",
+  "category": "log",
+  "description": "An attestation with an inclusion proof: leaf 3 of 5. The leaf hash is SHA-256(0x00 || attestation without its -70012 header).",
+  "cbor_file": "inclusion-valid.cbor",
+  "cbor_sha256": "77c8b708364185b634bb9c7c9c3affa46353c0720aa523ed947ad1b9ebf4762a",
+  "inputs": {
+    "now": 1800000000,
+    "check": "inclusion",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "checkpoint": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 5,
+      "root_hash": "18ced7abed17d287a6b04bdaecfd0643519bd9cb6df6a7896ba7f3debca821b0",
+      "timestamp": 1799999400
+    }
+  }
+}

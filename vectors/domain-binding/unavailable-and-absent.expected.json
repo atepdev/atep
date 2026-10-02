@@ -1,0 +1,37 @@
+{
+  "name": "unavailable-and-absent",
+  "category": "domain-binding",
+  "description": "One source could not be read and the other does not exist: no source lists the Agent ID and one is unavailable, so indeterminate.",
+  "cbor_file": "unavailable-and-absent.cbor",
+  "cbor_sha256": "b47737bac6416922132eeebf86ce40a1df0ec5ceaa56fa56cf39688a5734763b",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "unavailable": "TLS handshake failed"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "unavailable",
+    "dns": "absent",
+    "outcome": "indeterminate",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

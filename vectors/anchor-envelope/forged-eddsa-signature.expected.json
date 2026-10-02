@@ -1,0 +1,17 @@
+{
+  "name": "forged-eddsa-signature",
+  "category": "anchor-envelope",
+  "description": "valid-solana with the last byte of the EdDSA signature flipped. Expect step 4 eddsa_signature_invalid: a record whose envelope does not verify is not published.",
+  "cbor_file": "forged-eddsa-signature.cbor",
+  "cbor_sha256": "dc38288c7e42f0479d735e0e1f4168b5eb63277ef10e2644e1b49d0452506e66",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": false,
+    "step": 4,
+    "error": "eddsa_signature_invalid"
+  }
+}

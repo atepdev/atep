@@ -1,0 +1,21 @@
+{
+  "name": "mallory",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `mallory` (signing only keys).",
+  "cbor_file": "mallory.cbor",
+  "cbor_sha256": "de39e64905f6925960f99395d1b1712fae38c64a6c79d77166a3ba6d3f6bfa33",
+  "inputs": {
+    "seeds": {
+      "ed25519": "c1b7b59499e2f9445b1a943cebd1e1649fdcde2d363bc9d65fe02a8f96ab4991",
+      "mldsa65": "d094cee05fdfa7a8fcfe8306c91255696f0b356e4a661cdbd2bcd010b4638053"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:3y46msif62jfsyhzsok5dmlrf6xdrrsknr45o4lguo5g2p3l7izq",
+    "did": "did:atep:3y46msif62jfsyhzsok5dmlrf6xdrrsknr45o4lguo5g2p3l7izq",
+    "agent_id_hex": "de39e64905f6925960f99395d1b1712fae38c64a6c79d77166a3ba6d3f6bfa33",
+    "bundle_len": 2005,
+    "ed25519_public_hex": "c2a7aa29684801b09df5335de4436be4f7a4ead6b221b02df75b555c92b92e8d",
+    "mldsa65_public_sha256": "f852aba5a74b3ddfe28c39278f8f6d7465a282e8427c44a5cf823266149e7fbd"
+  }
+}

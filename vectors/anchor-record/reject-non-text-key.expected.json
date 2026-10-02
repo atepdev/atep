@@ -1,0 +1,14 @@
+{
+  "name": "reject-non-text-key",
+  "category": "anchor-record",
+  "description": "A key is the integer 1 where a text key belongs.",
+  "cbor_file": "reject-non-text-key.cbor",
+  "cbor_sha256": "da069c622e899cdf78a569fa0454fce3790e5b5d0e7b175e545bbcca58df0911",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

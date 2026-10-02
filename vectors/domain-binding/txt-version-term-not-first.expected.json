@@ -1,0 +1,40 @@
+{
+  "name": "txt-version-term-not-first",
+  "category": "domain-binding",
+  "description": "`v=atep1` is the second term: the record does not begin with it, so it is ignored.",
+  "cbor_file": "txt-version-term-not-first.cbor",
+  "cbor_sha256": "29b3182b08b164b47b287a04c97e7ee06ef47bece10ec1e689e2a41e6e4eab96",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a v=atep1"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

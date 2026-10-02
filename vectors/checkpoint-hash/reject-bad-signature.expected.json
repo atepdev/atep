@@ -1,0 +1,22 @@
+{
+  "name": "reject-bad-signature",
+  "category": "checkpoint-hash",
+  "description": "The ML-DSA-65 signature of the checkpoint envelope has its last byte flipped. Expect step 9 inclusion_proof_invalid with cause step 4 mldsa_signature_invalid.",
+  "cbor_file": "reject-bad-signature.cbor",
+  "cbor_sha256": "352e3e0d7b339cd64c17988d8b7cb79ae65a8b3f4da9a7cc0f5ec771823caebe",
+  "inputs": {
+    "now": 1800000000,
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "inclusion_proof_invalid",
+    "cause": {
+      "step": 4,
+      "error": "mldsa_signature_invalid"
+    }
+  }
+}

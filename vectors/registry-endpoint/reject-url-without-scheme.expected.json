@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-without-scheme",
+  "category": "registry-endpoint",
+  "description": "`url` is a bare host name.",
+  "cbor_file": "reject-url-without-scheme.cbor",
+  "cbor_sha256": "199c9d2c0690bad9cf35a4d659ac6e89968098842f4d953101a847a13cf84614",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

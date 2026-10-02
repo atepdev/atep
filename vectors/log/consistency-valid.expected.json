@@ -1,0 +1,29 @@
+{
+  "name": "consistency-valid",
+  "category": "log",
+  "description": "Checkpoints of the same log at tree sizes 3 and 8 and the RFC 9162 consistency proof between them.",
+  "cbor_file": "consistency-valid.cbor",
+  "cbor_sha256": "2e36c0bbb940ab5f44b59bf513e604249666c5e39e6195bdf28389db40e68780",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "old": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 3,
+      "root_hash": "bb140aa675ccf6201f53ee874090000ed5df057df7da7b5637b9a1fd1f75e000",
+      "timestamp": 1799992200
+    },
+    "new": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 8,
+      "root_hash": "9f468483d1015ed46b2794761acf154c3439cb7506b2773cebad8a7ffe62289f",
+      "timestamp": 1799999400
+    }
+  }
+}

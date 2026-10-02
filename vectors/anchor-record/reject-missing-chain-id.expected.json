@@ -1,0 +1,14 @@
+{
+  "name": "reject-missing-chain-id",
+  "category": "anchor-record",
+  "description": "`chain-id` is absent.",
+  "cbor_file": "reject-missing-chain-id.cbor",
+  "cbor_sha256": "842e2973e37031d09b809ee29b25ee2948cb5d156e2665435f12873eba109b88",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

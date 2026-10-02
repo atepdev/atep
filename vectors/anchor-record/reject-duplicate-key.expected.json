@@ -1,0 +1,14 @@
+{
+  "name": "reject-duplicate-key",
+  "category": "anchor-record",
+  "description": "`chain-id` appears twice.",
+  "cbor_file": "reject-duplicate-key.cbor",
+  "cbor_sha256": "72e396097cd4b9fb1ce97f9137aa110c105ceb85b10ba94db068b1757d8eb2c4",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "srl-schema-invalid",
+  "category": "srl",
+  "description": "The payload has no next-update field. Expect step 9.",
+  "cbor_file": "srl-schema-invalid.cbor",
+  "cbor_sha256": "1be2401ccd7367ee128ed40a0e6dd3188e781ee3bae0e7ce13f5a3105430a460",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-closed"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "srl_schema_invalid"
+  }
+}

@@ -1,0 +1,70 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - "rust/Cargo.lock"
+      - "**/package-lock.json"
+      - ".github/workflows/security.yml"
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Informational: advisories appear (and are published as notices) without blocking merges.
+# The "no chain or wallet dependency" guard is a Rust test in rust/ and runs in the
+# required `rust` job of ci.yml (cargo test --workspace).
+jobs:
+  cargo-audit:
+    name: cargo audit (informational)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --profile minimal --no-self-update
+      - name: Cache cargo-audit
+        id: cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo-tools/bin
+          key: cargo-audit-0.22.2-${{ runner.os }}
+      - name: Install cargo-audit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --version 0.22.2 --root ~/.cargo-tools cargo-audit
+      - name: cargo audit
+        working-directory: rust
+        run: |
+          export PATH="$HOME/.cargo-tools/bin:$PATH"
+          cargo-audit audit
+
+  npm-audit:
+    name: npm audit, ${{ matrix.dir }} (informational)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [js, mcp, examples, examples/mqtt]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+      - name: npm audit (production dependencies)
+        working-directory: ${{ matrix.dir }}
+        run: npm audit --omit=dev

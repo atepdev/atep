@@ -1,0 +1,82 @@
+{
+  "name": "three-level-chain",
+  "category": "chain-positive",
+  "description": "alice carries three attestations inline: root delegates to ca1, ca1 delegates to ca2, ca2 issues `operator` to alice. Policy: `operator` from a chain to root.",
+  "cbor_file": "three-level-chain.cbor",
+  "cbor_sha256": "02606ea3c32cdf6b5ab4b7ea84675deebd64e12f8fa2f37a3630cfeb66165654",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "roots": [
+          "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q"
+        ],
+        "rules": [
+          {
+            "claim": "https://atep.dev/claims/operator"
+          }
+        ]
+      }
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep+cbor",
+    "issued_at": 1799999940,
+    "expires_at": 1800003600,
+    "nonce_hex": "f086187a653905b8c2c755fe56b421cc",
+    "encrypted": true,
+    "claims": [
+      {
+        "claim": "https://atep.dev/claims/operator",
+        "issuer": "atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a",
+        "root": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+        "expires_at": 1810368000,
+        "chain": [
+          {
+            "id": "0f58e0f477ddb8d8386604ce1831cf0e",
+            "claim": "https://atep.dev/claims/operator",
+            "subject": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+            "issuer": "atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          },
+          {
+            "id": "780410996d121566e231a315bed6e2b4",
+            "claim": "https://atep.dev/claims/issuer-authority",
+            "subject": "atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a",
+            "issuer": "atep:naxms7vpvvuhxqd64duudknbmnutn64uwdnqptcncsdfu4oh6auq",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          },
+          {
+            "id": "66d1c2febf3670308e156b892654aa96",
+            "claim": "https://atep.dev/claims/issuer-authority",
+            "subject": "atep:naxms7vpvvuhxqd64duudknbmnutn64uwdnqptcncsdfu4oh6auq",
+            "issuer": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          }
+        ]
+      }
+    ],
+    "checkpoint": null,
+    "warnings": [
+      "no SRL cached for issuer atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a; revocation status unknown",
+      "no SRL cached for issuer atep:naxms7vpvvuhxqd64duudknbmnutn64uwdnqptcncsdfu4oh6auq; revocation status unknown",
+      "no SRL cached for issuer atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q; revocation status unknown"
+    ],
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f726d632d74687265652d6c6576656c"
+  }
+}

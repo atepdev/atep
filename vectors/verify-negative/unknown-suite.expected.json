@@ -1,0 +1,21 @@
+{
+  "name": "unknown-suite",
+  "category": "verify-negative",
+  "description": "suite is `ATEP-9`; otherwise valid and signed. Expect step 1.",
+  "cbor_file": "unknown-suite.cbor",
+  "cbor_sha256": "c3ea4431c34564b0035b74f09be2c682a69e2c55a5c88b783d5b4cd056a01f6e",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "unsupported_suite"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "txt-not-dnssec-validated-still-counts",
+  "category": "domain-binding",
+  "description": "The answer was not DNSSEC validated: by default it still counts (an issuer MAY refuse unvalidated answers; the options of this vector do not).",
+  "cbor_file": "txt-not-dnssec-validated-still-counts.cbor",
+  "cbor_sha256": "fd8f9d7c05a340cf632a4f8c7d6804e4c1d4546c18ac0575345f8e89847672b5",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+          ],
+          "dnssec_validated": false
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

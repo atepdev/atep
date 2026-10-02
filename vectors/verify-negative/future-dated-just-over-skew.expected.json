@@ -1,0 +1,21 @@
+{
+  "name": "future-dated-just-over-skew",
+  "category": "verify-negative",
+  "description": "issued-at is now + 301 s. Expect step 5.",
+  "cbor_file": "future-dated-just-over-skew.cbor",
+  "cbor_sha256": "43f912208374874fa80088d69b1833081cedf8c52584f80d5d4a7543f6b33f24",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 5,
+    "error": "issued_in_future"
+  }
+}

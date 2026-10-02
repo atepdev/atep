@@ -1,0 +1,17 @@
+{
+  "name": "payload-unknown-key",
+  "category": "anchor-envelope",
+  "description": "A validly signed envelope of the anchor type whose record has a sixth key. Expect step 9 anchor_schema_invalid.",
+  "cbor_file": "payload-unknown-key.cbor",
+  "cbor_sha256": "5712d753ecbf0f7a4f89d3f845f3f4df81778a5464a5a67f7da1b691ce2a7609",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "anchor_schema_invalid"
+  }
+}

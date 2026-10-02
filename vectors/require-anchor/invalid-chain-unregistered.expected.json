@@ -1,0 +1,23 @@
+{
+  "name": "invalid-chain-unregistered",
+  "category": "require-anchor",
+  "description": "`chain` is `dogecoin`: not registered and not an extension id. A policy rule with an invalid chain-id is a configuration error, not a rule that never matches.",
+  "cbor_file": "invalid-chain-unregistered.cbor",
+  "cbor_sha256": "06a1964052dba70c32b129cd59faf3609453a9d165df716e71ab938937f44252",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "dogecoin",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

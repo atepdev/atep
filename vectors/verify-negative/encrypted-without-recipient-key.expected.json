@@ -1,0 +1,21 @@
+{
+  "name": "encrypted-without-recipient-key",
+  "category": "verify-negative",
+  "description": "Encrypted envelope and the verifier has no recipient identity. Expect step 2.",
+  "cbor_file": "encrypted-without-recipient-key.cbor",
+  "cbor_sha256": "9f8f2a4e9b23cc8c2218c5dfd76ed136fec2c967d9b08a4215a0a3b94d11b388",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 2,
+    "error": "no_recipient_key"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "consistency-shrinking-tree",
+  "category": "log",
+  "description": "The later checkpoint has a smaller tree size than the earlier one. Expect step 9 consistency_proof_invalid.",
+  "cbor_file": "consistency-shrinking-tree.cbor",
+  "cbor_sha256": "ab0f40211cc963c0d1130193722437cfd62ee511f4d8b34c9f150c02e0fe1f1e",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "consistency_proof_invalid"
+  }
+}

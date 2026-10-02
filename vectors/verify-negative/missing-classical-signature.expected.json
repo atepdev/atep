@@ -1,0 +1,21 @@
+{
+  "name": "missing-classical-signature",
+  "category": "verify-negative",
+  "description": "Only the ML-DSA-65 signature is present. Expect step 1.",
+  "cbor_file": "missing-classical-signature.cbor",
+  "cbor_sha256": "053c8cf997822825075f7fa93f90eac378fdb7759efea6a86e168ca17c4a969f",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "signature_count_invalid"
+  }
+}

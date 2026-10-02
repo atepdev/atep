@@ -1,0 +1,22 @@
+{
+  "name": "atep-example-mqtt",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "ATEP-R envelopes as MQTT payloads, verified with @atep/core.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test mqtt.test.mjs",
+    "demo": "node demo.mjs"
+  },
+  "dependencies": {
+    "@atep/core": "file:../../js",
+    "mqtt": "^5.10.0"
+  },
+  "devDependencies": {
+    "aedes": "^1.2.0"
+  }
+}

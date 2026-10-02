@@ -1,0 +1,40 @@
+{
+  "name": "wk-lists-the-agent-in-did-form",
+  "category": "domain-binding",
+  "description": "The document lists the Agent ID as `did:atep:...`: an exact alias of the `atep:` form.",
+  "cbor_file": "wk-lists-the-agent-in-did-form.cbor",
+  "cbor_sha256": "4e557fe3b178d1f8f5cc8a2099ed2675c2fdd81ce358581b2f245974d82a7255",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"did:atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

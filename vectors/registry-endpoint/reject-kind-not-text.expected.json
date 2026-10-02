@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-not-text",
+  "category": "registry-endpoint",
+  "description": "`kind` is the integer 3.",
+  "cbor_file": "reject-kind-not-text.cbor",
+  "cbor_sha256": "229a199034331229d4c4144a39adeab74cf1e975b783cedc655cbd603aa351e6",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

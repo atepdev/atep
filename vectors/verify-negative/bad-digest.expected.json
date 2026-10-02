@@ -1,0 +1,21 @@
+{
+  "name": "bad-digest",
+  "category": "verify-negative",
+  "description": "Signed correctly, but payload-digest is the SHA-256 of different bytes. Expect step 7.",
+  "cbor_file": "bad-digest.cbor",
+  "cbor_sha256": "ce073689ed69ba068ac6922803d52ee506d4b0ea1a0e22a16b9571d125ae949d",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 7,
+    "error": "payload_digest_mismatch"
+  }
+}

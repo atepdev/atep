@@ -1,0 +1,28 @@
+{
+  "name": "operator-90-days",
+  "category": "attestation",
+  "description": "Core `operator` claim, 90 day lifetime.",
+  "cbor_file": "operator-90-days.cbor",
+  "cbor_sha256": "010b5a2645fa0e9c051c121298099f64bc3586df9f7a80461422f473777f3a89",
+  "inputs": {
+    "issuer_seeds": {
+      "ed25519": "0294f6fee422793da48bde1d0f91979c1e5a3fff0be2e6372b1bbed514a8a06d",
+      "mldsa65": "0d351377f99cf690d7494fa8041d08d9053d478f48fb2237fb10441bccb92c90"
+    },
+    "subject": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "claim": "https://atep.dev/claims/operator",
+    "data_hex": "a1646e616d657141636d6520526f626f74696373204c7464",
+    "evidence_hex": null,
+    "evidence_uri": null,
+    "id_hex": "d83080809e5d69b987af79e14ff0a1ef",
+    "nonce_hex": "e4fab6af8c509f7f26ccb55cb1c99347",
+    "issued_at": 1799136000,
+    "expires_at": 1806912000
+  },
+  "expected": {
+    "issuer": "atep:bpy4kinndnzofuvibcxax5p4spuzsqeksyeixkledl6zvoce6l4a",
+    "payload_hex": "a562696450d83080809e5d69b987af79e14ff0a1ef6464617461a1646e616d657141636d6520526f626f74696373204c746465636c61696d782068747470733a2f2f617465702e6465762f636c61696d732f6f70657261746f726669737375657258200bf1c521ad1b72e2d2a808ae0bf5fc93e999408a96088ba9641afd9ab844f2f8677375626a65637458203809c693c268e9c09e1bd6524e19fa718528d2aad0bfad151696b337f900cc3c",
+    "envelope_len": 5830,
+    "envelope_sha256": "010b5a2645fa0e9c051c121298099f64bc3586df9f7a80461422f473777f3a89"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-prefix-underscore",
+  "category": "chain-id",
+  "description": "`x_acme` is not an extension id.",
+  "cbor_file": "invalid-extension-prefix-underscore.cbor",
+  "cbor_sha256": "4124287679bb116bafbc0942009e417864f1c5a3956de5a1af0aacdddb11819b",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x_acme"
+  },
+  "expected": {
+    "ok": false
+  }
+}

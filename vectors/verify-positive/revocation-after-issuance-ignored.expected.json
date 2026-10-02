@@ -1,0 +1,34 @@
+{
+  "name": "revocation-after-issuance-ignored",
+  "category": "verify-positive",
+  "description": "Signer is revoked, but only after the envelope was issued (revoked-at later than issued-at).",
+  "cbor_file": "revocation-after-issuance-ignored.cbor",
+  "cbor_sha256": "2924b65afd8f6be47f470c4cff4aba9879267839912ba93bee639e13110a1c70",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [
+        {
+          "id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+          "reason": "compromised",
+          "revoked_at": 1800000000
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep-srl+cbor",
+    "issued_at": 1799999990,
+    "expires_at": null,
+    "nonce_hex": "10025db90443341dae6a82687b1a1639",
+    "encrypted": false,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72627036"
+  }
+}

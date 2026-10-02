@@ -1,0 +1,40 @@
+{
+  "name": "txt-uppercase-agent-id-is-not-an-agent-id",
+  "category": "domain-binding",
+  "description": "The Agent ID is written in uppercase: only the canonical lowercase text is an Agent ID, so the term names nobody.",
+  "cbor_file": "txt-uppercase-agent-id-is-not-an-agent-id.cbor",
+  "cbor_sha256": "e19ab1a7b5e86a38641eb1648c27bdf9f7b636991f4417d042536e66ccff9f4b",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=ATEP:HAE4NE6CNDU4BHQ32ZJE4GP2OGCSRUVK2C722FIWS2ZTP6IAZQ6A"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "not-listed",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

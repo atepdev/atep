@@ -1,0 +1,23 @@
+{
+  "name": "inclusion-valid-odd-tree",
+  "category": "log",
+  "description": "Leaf 6 (the last) of a 7 leaf tree, which exercises the unbalanced right edge of RFC 9162.",
+  "cbor_file": "inclusion-valid-odd-tree.cbor",
+  "cbor_sha256": "c827fda9073814434a251d4e4f572f506f65ed3a15804bcb337afc0a6c9292e2",
+  "inputs": {
+    "now": 1800000000,
+    "check": "inclusion",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "checkpoint": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 7,
+      "root_hash": "66806df903ab86dbf5fb64cb01118a2ffab71ac10b7f28bae4c63975f50682aa",
+      "timestamp": 1799999400
+    }
+  }
+}

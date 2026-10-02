@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-prefix-only",
+  "category": "chain-id",
+  "description": "`x-` with no name.",
+  "cbor_file": "invalid-extension-prefix-only.cbor",
+  "cbor_sha256": "5d8c932142f519f431d6467c9dbcd67532ad768dbae0ebe2d6391825e28240ea",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-"
+  },
+  "expected": {
+    "ok": false
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "log",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `log` (signing keys only), used by the M2 vectors.",
+  "cbor_file": "log.cbor",
+  "cbor_sha256": "8d4d7a0be28923af4daf5e8316faf6e3535881750daa615f3708e30dee1a9bd0",
+  "inputs": {
+    "seeds": {
+      "ed25519": "4868bd5d36c538883b09f995e05031f7ac4c2f5ca7592f1e9c88af41b66f126d",
+      "mldsa65": "3310da76d2d7bff40742654d7c49c9aafd1b0804c4d1d6d1ab430400162ea56b"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "did": "did:atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "agent_id_hex": "8d4d7a0be28923af4daf5e8316faf6e3535881750daa615f3708e30dee1a9bd0",
+    "bundle_len": 2005,
+    "ed25519_public_hex": "c1316189272e84c8264eaca09cdda7d66c5c185cfbeb60b6ccf06c6cd2a21ef1",
+    "mldsa65_public_sha256": "996469c6317f88cf8b13687cb77bcbcd8206a7b0a3450df60facf195f877e11a"
+  }
+}

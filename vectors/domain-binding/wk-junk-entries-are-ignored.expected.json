@@ -1,0 +1,40 @@
+{
+  "name": "wk-junk-entries-are-ignored",
+  "category": "domain-binding",
+  "description": "`agents` holds `nope`, the integer 7 and the Agent ID: an entry that is not an Agent ID is ignored, the others count.",
+  "cbor_file": "wk-junk-entries-are-ignored.cbor",
+  "cbor_sha256": "98b2fae4365d99513f13ba658e306163bc11e5edf4bfb38b7becaf6cb07e351f",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"nope\",7,\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

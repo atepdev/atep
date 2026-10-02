@@ -1,0 +1,27 @@
+{
+  "name": "invalid-one-bad-rule-among-good",
+  "category": "require-anchor",
+  "description": "The second of two rules is malformed: the whole policy is refused, never partly applied.",
+  "cbor_file": "invalid-one-bad-rule-among-good.cbor",
+  "cbor_sha256": "ffcc7caf8d401863003183c25b943cce625e7a7f83da8743508068bc5a7c1190",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 1
+        },
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor"
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

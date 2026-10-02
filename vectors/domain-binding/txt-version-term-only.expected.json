@@ -1,0 +1,40 @@
+{
+  "name": "txt-version-term-only",
+  "category": "domain-binding",
+  "description": "`v=atep1` with no `id=` term authorizes nobody: a valid record that does not list the Agent ID.",
+  "cbor_file": "txt-version-term-only.cbor",
+  "cbor_sha256": "ff26a3adc79b9603de8276a29581f39747adbc79dfedc9cdf669a7a90c50ae83",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "not-listed",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

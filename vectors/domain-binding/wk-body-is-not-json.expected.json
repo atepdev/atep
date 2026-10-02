@@ -1,0 +1,40 @@
+{
+  "name": "wk-body-is-not-json",
+  "category": "domain-binding",
+  "description": "The body is not JSON.",
+  "cbor_file": "wk-body-is-not-json.cbor",
+  "cbor_sha256": "c4472962d47811fb36e4ff59f3e7f5bc879ca330f7c1e1061a5c93d191a21268",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "agents: nobody"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

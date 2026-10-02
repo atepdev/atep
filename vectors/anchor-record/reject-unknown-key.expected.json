@@ -1,0 +1,14 @@
+{
+  "name": "reject-unknown-key",
+  "category": "anchor-record",
+  "description": "A sixth key, `note`: a record has no other keys than the five.",
+  "cbor_file": "reject-unknown-key.cbor",
+  "cbor_sha256": "07eca9cb12afc989c1cfa4506e9699115a5d20529a24c6dfb715497ec2e98196",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

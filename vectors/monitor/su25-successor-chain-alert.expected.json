@@ -1,0 +1,21 @@
+{
+  "name": "su25-successor-chain-alert",
+  "category": "monitor",
+  "description": "SU25. The log holds SUC1 (issuer O0, subject O) at entry 0 and SUC (issuer O, subject S) at entry 1. The monitor raises successor_chain for the entry of SUC only; a single hop is not an alert.",
+  "cbor_file": "su25-successor-chain-alert.cbor",
+  "cbor_sha256": "92f7289ad348478dcb84f91db1703183234f1364904fc27c775b149292c2611e",
+  "inputs": {
+    "now": 1800000000,
+    "check": "alerts"
+  },
+  "expected": {
+    "alerts": [
+      {
+        "alert": "successor_chain",
+        "entry": 1,
+        "issuer": "atep:mclbu4u3b7q73a5r6jvcbwfllea2y75proinuw4ft2zlf2b3tsoa",
+        "subject": "atep:wpscw3ucusof65tuqmsfaxialjwnquvlvmc3oute2asgowptv2dq"
+      }
+    ]
+  }
+}

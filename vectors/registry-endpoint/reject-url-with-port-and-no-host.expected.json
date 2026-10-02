@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-with-port-and-no-host",
+  "category": "registry-endpoint",
+  "description": "`url` is `https://:8443/`: a port and no host.",
+  "cbor_file": "reject-url-with-port-and-no-host.cbor",
+  "cbor_sha256": "fd2b08eebba512f46374715d87f872d668af68f0d7cf4dd78f3f53cf8ed8a4f4",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

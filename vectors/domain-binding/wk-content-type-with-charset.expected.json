@@ -1,0 +1,40 @@
+{
+  "name": "wk-content-type-with-charset",
+  "category": "domain-binding",
+  "description": "`application/json; charset=utf-8`: parameters are allowed.",
+  "cbor_file": "wk-content-type-with-charset.cbor",
+  "cbor_sha256": "31a9c5678a571eb8b689b7bcc5866ebdefd801f0eb44bb117dbed0bbbcf2b309",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json; charset=utf-8",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

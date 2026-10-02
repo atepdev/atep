@@ -1,0 +1,14 @@
+{
+  "name": "invalid-unregistered-prefix-of-registered",
+  "category": "chain-id",
+  "description": "A prefix of a registered id is not registered.",
+  "cbor_file": "invalid-unregistered-prefix-of-registered.cbor",
+  "cbor_sha256": "d3d25f8341d20312589b002628bc9927d5c5c200c45896c71b38b9a28ad668fb",
+  "inputs": {
+    "check": "chain-id",
+    "id": "solana"
+  },
+  "expected": {
+    "ok": false
+  }
+}

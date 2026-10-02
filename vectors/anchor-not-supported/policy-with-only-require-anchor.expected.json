@@ -1,0 +1,36 @@
+{
+  "name": "policy-with-only-require-anchor",
+  "category": "anchor-not-supported",
+  "description": "The policy has a require_anchor rule and nothing else. A verifier that cannot evaluate anchors fails closed: step 9 anchor_not_supported, although there is no other rule and the envelope would otherwise be accepted.",
+  "cbor_file": "policy-with-only-require-anchor.cbor",
+  "cbor_sha256": "27eab6306e7f8675f5f4c9482c10ef71b61f28d8582ad41b9b4a1f7d3abc6aa6",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "require_anchor": [
+          {
+            "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+            "chain": "solana-mainnet",
+            "max_age_hours": 6
+          }
+        ]
+      }
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "anchor_not_supported"
+  }
+}

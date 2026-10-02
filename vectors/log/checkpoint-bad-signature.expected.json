@@ -1,0 +1,23 @@
+{
+  "name": "checkpoint-bad-signature",
+  "category": "log",
+  "description": "Checkpoint with the ML-DSA-65 signature altered. Expect step 9 wrapping step 4.",
+  "cbor_file": "checkpoint-bad-signature.cbor",
+  "cbor_sha256": "72d323a2b9a1da6839f4701667800e03a5121b478011b6a500d028be602fc65b",
+  "inputs": {
+    "now": 1800000000,
+    "check": "checkpoint",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "inclusion_proof_invalid",
+    "cause": {
+      "step": 4,
+      "error": "mldsa_signature_invalid"
+    }
+  }
+}

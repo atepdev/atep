@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-not-text",
+  "category": "registry-endpoint",
+  "description": "`url` is the integer 7.",
+  "cbor_file": "reject-url-not-text.cbor",
+  "cbor_sha256": "7c62c9ac447c5e0a74ec84553769588cf89f0c26f92bed7aeb1b27fb457b2bfa",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

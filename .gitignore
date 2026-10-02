@@ -1,0 +1,11 @@
+# Rust
+rust/target/
+# Node (demo/vendor is committed on purpose: it is the built @atep/core copy the demo serves)
+node_modules/
+# Python
+__pycache__/
+*.pyc
+# Scratch and local state
+scratch/
+*.log
+.DS_Store

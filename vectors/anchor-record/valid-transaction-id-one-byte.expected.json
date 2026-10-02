@@ -1,0 +1,20 @@
+{
+  "name": "valid-transaction-id-one-byte",
+  "category": "anchor-record",
+  "description": "The shortest `transaction-id`, one byte.",
+  "cbor_file": "valid-transaction-id-one-byte.cbor",
+  "cbor_sha256": "b08cbac48eb30965259e3a545171b6e26516d80307c7c7c9d06215acfdf8e505",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "rekor",
+      "transaction_id": "a",
+      "block_height": null,
+      "anchored_at": 1799997000
+    }
+  }
+}

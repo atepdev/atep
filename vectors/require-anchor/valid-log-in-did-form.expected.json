@@ -1,0 +1,29 @@
+{
+  "name": "valid-log-in-did-form",
+  "category": "require-anchor",
+  "description": "`log` in the `did:atep:` form is accepted and reported in the canonical `atep:` form.",
+  "cbor_file": "valid-log-in-did-form.cbor",
+  "cbor_sha256": "9da5115538df3b705c7d5b6c4e7d0e9cde46815039828d9cecb5a020c3718d2e",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "did:atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "rekor",
+        "max_age_days": 1
+      }
+    ]
+  }
+}

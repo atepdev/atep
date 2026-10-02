@@ -1,0 +1,23 @@
+{
+  "name": "invalid-chain-not-text",
+  "category": "require-anchor",
+  "description": "`chain` is the integer 1.",
+  "cbor_file": "invalid-chain-not-text.cbor",
+  "cbor_sha256": "3f4082bddfcd1b5e326a094b35869c5d4b308874cdbcbc6fe5d55c06085c0d1b",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": 1,
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

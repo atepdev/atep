@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-space",
+  "category": "chain-id",
+  "description": "The name has a space.",
+  "cbor_file": "invalid-extension-space.cbor",
+  "cbor_sha256": "0b64b7b6c925bd18219663025c63b8f1bf55c6bdda6dc3cd58424e21664d1fca",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-acme ledger"
+  },
+  "expected": {
+    "ok": false
+  }
+}

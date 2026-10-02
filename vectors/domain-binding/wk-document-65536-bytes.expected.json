@@ -1,0 +1,45 @@
+{
+  "name": "wk-document-65536-bytes",
+  "category": "domain-binding",
+  "description": "A document of exactly 65536 bytes (the maximum) that lists the Agent ID: accepted. The body is built from `body_filler`: prefix, then the fill character repeated so that the whole is `total_bytes` bytes, then suffix.",
+  "cbor_file": "wk-document-65536-bytes.cbor",
+  "cbor_sha256": "af488a41b93fcf039df169de8bec463bb55a23711b6b98d962a4d9264d680466",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body_filler": {
+            "prefix": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"],\"pad\":\"",
+            "fill": "a",
+            "suffix": "\"}",
+            "total_bytes": 65536
+          }
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

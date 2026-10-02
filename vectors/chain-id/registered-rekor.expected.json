@@ -1,0 +1,15 @@
+{
+  "name": "registered-rekor",
+  "category": "chain-id",
+  "description": "Registered: Sigstore Rekor.",
+  "cbor_file": "registered-rekor.cbor",
+  "cbor_sha256": "367c746fd46ac94bb8e1e7f4e1b72ef17dc6dbf0dbe7cefa650c48921a83c4f4",
+  "inputs": {
+    "check": "chain-id",
+    "id": "rekor"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "registered"
+  }
+}

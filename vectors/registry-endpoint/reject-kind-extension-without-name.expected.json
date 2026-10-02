@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-extension-without-name",
+  "category": "registry-endpoint",
+  "description": "`kind` is `x-`: an extension needs a name.",
+  "cbor_file": "reject-kind-extension-without-name.cbor",
+  "cbor_sha256": "ce67a340c090878ee01bd7e15752cb4d9c5607f20c8b186622895e566f7b74ef",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

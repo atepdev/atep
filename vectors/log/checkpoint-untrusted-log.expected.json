@@ -1,0 +1,19 @@
+{
+  "name": "checkpoint-untrusted-log",
+  "category": "log",
+  "description": "A well formed checkpoint signed by a log that is not trusted. Expect step 9.",
+  "cbor_file": "checkpoint-untrusted-log.cbor",
+  "cbor_sha256": "ac11751ce6bfc5010c3bd3ceef5e9f37f0c78676e242299fec549baef047d122",
+  "inputs": {
+    "now": 1800000000,
+    "check": "checkpoint",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "checkpoint_untrusted"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "require-both-the-other-source-unavailable",
+  "category": "domain-binding",
+  "description": "`require_both`; the document lists the Agent ID and the DNS lookup failed: not decided, indeterminate.",
+  "cbor_file": "require-both-the-other-source-unavailable.cbor",
+  "cbor_sha256": "24f7c071c71bb19c7feec4540e2eb1c54214621c48b20ffe55e532824699cb2e",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": true,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "unavailable": "SERVFAIL"
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "unavailable",
+    "outcome": "indeterminate",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

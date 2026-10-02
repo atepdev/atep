@@ -1,0 +1,27 @@
+{
+  "name": "trust-doc-inline-bundle",
+  "category": "signing",
+  "description": "Attestation-typed document, attached payload, public bundle in the unprotected header.",
+  "cbor_file": "trust-doc-inline-bundle.cbor",
+  "cbor_sha256": "b33d4d8b4adcec7b964a6807d53841c56133cbf1c813203a2ea44ecb809457bf",
+  "inputs": {
+    "signer_seeds": {
+      "ed25519": "77227357f0539a0c7665a037e23c3560d5248b0edf195893b21b08ba53509dae",
+      "mldsa65": "c2aab893967f0123f14e89553c327068fafd622e6386e11d26977271ad07ad2b"
+    },
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f727774727573742d646f632d696e6c696e652d62756e646c65",
+    "content_type": "application/atep-attestation+cbor",
+    "nonce_hex": "548b268c992fafd1ee7a08296b56e20e",
+    "issued_at": 1799999940,
+    "expires_at": 1807776000,
+    "detached": false,
+    "include_bundle": true,
+    "mode": "deterministic"
+  },
+  "expected": {
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "payload_digest_hex": "aa5231ba8d56b94a63fe33c3949681bd7e686b94681ddc7a54d0c485d58d146b",
+    "envelope_len": 5712,
+    "envelope_sha256": "b33d4d8b4adcec7b964a6807d53841c56133cbf1c813203a2ea44ecb809457bf"
+  }
+}

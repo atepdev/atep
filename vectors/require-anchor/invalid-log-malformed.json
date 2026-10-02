@@ -1,0 +1,9 @@
+{
+  "require_anchor": [
+    {
+      "log": "nope",
+      "chain": "rekor",
+      "max_age_days": 1
+    }
+  ]
+}

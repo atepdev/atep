@@ -1,0 +1,40 @@
+{
+  "name": "wk-redirect-same-host-other-path",
+  "category": "domain-binding",
+  "description": "The fetcher followed a redirect that stayed on https and on the host: the document is read.",
+  "cbor_file": "wk-redirect-same-host-other-path.cbor",
+  "cbor_sha256": "b5f99ab282eed61cb050032d92bf0482460c6d02cd519f2e0cdd9afddd334797",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/other/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

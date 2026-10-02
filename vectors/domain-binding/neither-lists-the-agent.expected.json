@@ -1,0 +1,47 @@
+{
+  "name": "neither-lists-the-agent",
+  "category": "domain-binding",
+  "description": "Both sources are valid and name only another Agent ID.",
+  "cbor_file": "neither-lists-the-agent.cbor",
+  "cbor_sha256": "73a7269ee48ee0bd0a290fd6f028e3a9884acec21c1d386e918075ec178df878",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            "v=atep1 id=atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra"
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "not-listed",
+    "dns": "not-listed",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "issued-in-the-future",
+  "category": "anchor-envelope",
+  "description": "A record whose envelope has issued-at an hour after now: it fails step 5 like any envelope. Expect step 5 issued_in_future.",
+  "cbor_file": "issued-in-the-future.cbor",
+  "cbor_sha256": "4aaeaa261cabfeb8c464106cf06a5fadb575fe3072c5111f035e8dabf742d2b2",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "b7fe411f9630e58a3ff8bfa9999ddf73f5ce02493b6201f6cb7001a231f56182"
+  },
+  "expected": {
+    "ok": false,
+    "step": 5,
+    "error": "issued_in_future"
+  }
+}

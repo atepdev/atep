@@ -1,0 +1,14 @@
+{
+  "name": "reject-not-a-map",
+  "category": "anchor-record",
+  "description": "The document is an array of one integer, not a map.",
+  "cbor_file": "reject-not-a-map.cbor",
+  "cbor_sha256": "ac38783f6a3b2fe3b579718d6ba8493a456d800665b4433a0e7c823cff90a603",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "signed-trust-doc-detached-payload",
+  "category": "verify-positive",
+  "description": "Detached payload supplied by the caller.",
+  "cbor_file": "signed-trust-doc-detached-payload.cbor",
+  "cbor_sha256": "86038af8d21ff6a74dc43be678e390912ff9518ad0db82ef374f949cf2d2a220",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "detached_payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72627033"
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep-attestation+cbor",
+    "issued_at": 1799996400,
+    "expires_at": 1802592000,
+    "nonce_hex": "44462918a4c5d8aff9898783ea3d6143",
+    "encrypted": false,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72627033"
+  }
+}

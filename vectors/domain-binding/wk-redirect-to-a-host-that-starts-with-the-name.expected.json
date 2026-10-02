@@ -1,0 +1,40 @@
+{
+  "name": "wk-redirect-to-a-host-that-starts-with-the-name",
+  "category": "domain-binding",
+  "description": "The document came from `example.com.evil.example`: a longer host name that begins with the domain.",
+  "cbor_file": "wk-redirect-to-a-host-that-starts-with-the-name.cbor",
+  "cbor_sha256": "b2d0633a7b444b118ea3a9407d4ca3abe566c06aa3f169bae4fe2c608141d2f8",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com.evil.example/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "invalid",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

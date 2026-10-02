@@ -1,0 +1,14 @@
+{
+  "name": "reject-missing-transaction-id",
+  "category": "anchor-record",
+  "description": "`transaction-id` is absent.",
+  "cbor_file": "reject-missing-transaction-id.cbor",
+  "cbor_sha256": "ef1b258c1272f58b3d935d7ed2beabec5d1f41de309ec4c0b524ed5b041e7980",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

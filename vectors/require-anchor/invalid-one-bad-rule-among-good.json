@@ -1,0 +1,13 @@
+{
+  "require_anchor": [
+    {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "chain": "rekor",
+      "max_age_days": 1
+    },
+    {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "chain": "rekor"
+    }
+  ]
+}

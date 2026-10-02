@@ -1,0 +1,9 @@
+# Secret scanner configuration. The vectors contain deterministic public test keys
+# derived from fixed, documented seeds (see vectors/README.md, "Fixed seeds"); they
+# protect nothing and must never be used for anything real.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Deterministic public test keys in the shared vectors"
+paths = ['''^vectors/.*\.json$''']

@@ -1,0 +1,22 @@
+{
+  "name": "invalid-missing-chain",
+  "category": "require-anchor",
+  "description": "A rule without `chain`.",
+  "cbor_file": "invalid-missing-chain.cbor",
+  "cbor_sha256": "293d7f1d448f83769fb564f4cdb0c9c9fb3bd758dabcbbb054920908083b1f00",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

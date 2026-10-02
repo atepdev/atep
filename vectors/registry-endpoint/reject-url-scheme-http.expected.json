@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-scheme-http",
+  "category": "registry-endpoint",
+  "description": "`url` is an `http` URL: only `https` is allowed.",
+  "cbor_file": "reject-url-scheme-http.cbor",
+  "cbor_sha256": "33a8b34065b910764b2ca41ecaaef67fd5cac7748ef0279a07f5804207d60324",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

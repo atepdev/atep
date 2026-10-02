@@ -1,0 +1,21 @@
+{
+  "name": "unsupported-version",
+  "category": "verify-negative",
+  "description": "atep-version is 2. Expect step 1.",
+  "cbor_file": "unsupported-version.cbor",
+  "cbor_sha256": "eb48bcc1423e954952e8af6065fd128a365c635b04bb0709fcbe8503e2d8732a",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "unsupported_version"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "reject-chain-id-not-text",
+  "category": "anchor-record",
+  "description": "`chain-id` is the integer 7.",
+  "cbor_file": "reject-chain-id-not-text.cbor",
+  "cbor_sha256": "3e4ee07fae5cf028e3375d241820a16ad0e0ca360ec4d1b0b007366e9135e61a",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

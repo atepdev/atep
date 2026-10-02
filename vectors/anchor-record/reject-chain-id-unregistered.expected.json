@@ -1,0 +1,14 @@
+{
+  "name": "reject-chain-id-unregistered",
+  "category": "anchor-record",
+  "description": "`chain-id` is `dogecoin`: neither registered nor an `x-` extension id.",
+  "cbor_file": "reject-chain-id-unregistered.cbor",
+  "cbor_sha256": "31e622cae5ec4e9f12a932323076db24ab82ca6680b06f141d95c7e01c1c5c8c",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

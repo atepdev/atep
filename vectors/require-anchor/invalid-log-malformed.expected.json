@@ -1,0 +1,23 @@
+{
+  "name": "invalid-log-malformed",
+  "category": "require-anchor",
+  "description": "`log` is `nope`, not an Agent ID.",
+  "cbor_file": "invalid-log-malformed.cbor",
+  "cbor_sha256": "d92e5ed375eaa6923da5edf2fd0942435bf87f61f12fc82e01cf7f764cfaa209",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "nope",
+          "chain": "rekor",
+          "max_age_days": 1
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

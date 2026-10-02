@@ -1,0 +1,21 @@
+{
+  "name": "lookalike-media-type-rejected",
+  "category": "anchor-media-type",
+  "description": "A bare envelope with content type application/atep-anchor+json: only the four listed media types may travel unencrypted, so this is not a trust document. Expect step 1 unencrypted_non_trust_document.",
+  "cbor_file": "lookalike-media-type-rejected.cbor",
+  "cbor_sha256": "94426a0316f4daeddc8c655c68f9957428118ceab7c67ca28366a80835ae928d",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "unencrypted_non_trust_document"
+  }
+}

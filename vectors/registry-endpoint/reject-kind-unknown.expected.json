@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-unknown",
+  "category": "registry-endpoint",
+  "description": "`kind` is `ftp`: not a defined kind and not an `x-` extension.",
+  "cbor_file": "reject-kind-unknown.cbor",
+  "cbor_sha256": "f957ec2ce6128668373f65d0d632a80c9bb9745b2a3e91f060266007c5774e74",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

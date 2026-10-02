@@ -1,0 +1,17 @@
+{
+  "name": "valid-mcp",
+  "category": "registry-endpoint",
+  "description": "Kind `mcp`.",
+  "cbor_file": "valid-mcp.cbor",
+  "cbor_sha256": "b9ef9843b77edffc3cc80a0c9b26a08ddb9c2b0e812080dfcfd954ddee686a14",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": true,
+    "document": "attestation"
+  }
+}

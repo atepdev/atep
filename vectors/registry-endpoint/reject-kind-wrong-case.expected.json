@@ -1,0 +1,17 @@
+{
+  "name": "reject-kind-wrong-case",
+  "category": "registry-endpoint",
+  "description": "`kind` is `Registry`: kinds are lowercase.",
+  "cbor_file": "reject-kind-wrong-case.cbor",
+  "cbor_sha256": "61b81f4514d87056c51a2482ddcd6eb4fb61bc55b1f220d24bb558186d50d053",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "extension-inner-hyphens-and-digits",
+  "category": "chain-id",
+  "description": "Extension id with inner hyphens and a digit.",
+  "cbor_file": "extension-inner-hyphens-and-digits.cbor",
+  "cbor_sha256": "5056e0477c9ff935b8528262430cee71220d1de6f84d328edb7bcfb4bbc51d11",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-acme-ledger-2"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "extension"
+  }
+}

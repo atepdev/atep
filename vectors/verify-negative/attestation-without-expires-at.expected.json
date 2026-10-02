@@ -1,0 +1,21 @@
+{
+  "name": "attestation-without-expires-at",
+  "category": "verify-negative",
+  "description": "Attestation content type but no expires-at, which is REQUIRED. Expect step 1.",
+  "cbor_file": "attestation-without-expires-at.cbor",
+  "cbor_sha256": "66df881efc4833ef34000e1b0d6cd09aaa00d9208cba9bb99068a5ee6a525673",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 1,
+    "error": "missing_expires_at"
+  }
+}

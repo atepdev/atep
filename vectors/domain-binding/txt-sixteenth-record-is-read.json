@@ -1,0 +1,32 @@
+{
+  "txt": {
+    "_atep.example.com": {
+      "records": [
+        "unrelated-record-0",
+        "unrelated-record-1",
+        "unrelated-record-2",
+        "unrelated-record-3",
+        "unrelated-record-4",
+        "unrelated-record-5",
+        "unrelated-record-6",
+        "unrelated-record-7",
+        "unrelated-record-8",
+        "unrelated-record-9",
+        "unrelated-record-10",
+        "unrelated-record-11",
+        "unrelated-record-12",
+        "unrelated-record-13",
+        "unrelated-record-14",
+        "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a"
+      ],
+      "dnssec_validated": true
+    }
+  },
+  "domain": "example.com",
+  "options": {
+    "require_both": false,
+    "require_dnssec": false
+  },
+  "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+  "well_known": {}
+}

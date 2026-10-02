@@ -1,0 +1,7 @@
+[workspace]
+resolver = "2"
+members = ["atep-core", "atep-cli", "atep-log", "atep-monitor", "atep-wasm"]
+
+# Keep the crypto dependencies fast in debug test runs.
+[profile.dev.package."*"]
+opt-level = 3

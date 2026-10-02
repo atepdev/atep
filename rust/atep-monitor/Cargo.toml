@@ -1,0 +1,22 @@
+[package]
+name = "atep-monitor"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "ATEP log monitor (ATEP Draft 07)"
+
+[lib]
+name = "atep_monitor"
+path = "src/lib.rs"
+
+[[bin]]
+name = "atep-monitor"
+path = "src/main.rs"
+
+[dependencies]
+atep-core = { path = "../atep-core" }
+atep-log = { path = "../atep-log" }
+clap = { version = "4.6.7", features = ["derive"] }
+hex = "0.4.3"
+base64 = "0.23.1"
+serde_json = { version = "1", features = ["preserve_order"] }

@@ -1,0 +1,15 @@
+{
+  "name": "registered-solana-mainnet",
+  "category": "chain-id",
+  "description": "Registered: Solana mainnet-beta.",
+  "cbor_file": "registered-solana-mainnet.cbor",
+  "cbor_sha256": "b64ee82e37dd825617520f3248a7f2fd6656d05a428626f003c5048ade08e05b",
+  "inputs": {
+    "check": "chain-id",
+    "id": "solana-mainnet"
+  },
+  "expected": {
+    "ok": true,
+    "kind": "registered"
+  }
+}

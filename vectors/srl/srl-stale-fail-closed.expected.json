@@ -1,0 +1,20 @@
+{
+  "name": "srl-stale-fail-closed",
+  "category": "srl",
+  "description": "The same stale SRL with on_stale fail-closed. Expect step 9.",
+  "cbor_file": "srl-stale-fail-closed.cbor",
+  "cbor_sha256": "6bfe69e5b2b014b2a3464feda5a55ac3b39ef1a4d2cbc323ba6982a31c29292c",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-closed"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "srl_stale"
+  }
+}

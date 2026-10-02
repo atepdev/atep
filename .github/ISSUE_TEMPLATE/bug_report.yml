@@ -1,0 +1,48 @@
+name: Bug report
+description: A reference implementation (Rust, JavaScript, Python, MCP server, demo or examples) does something it should not.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Not for vulnerabilities: use the private channel in SECURITY.md. This form is for ordinary bugs.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - rust (atep-core, atep-cli, atep-log, atep-monitor)
+        - js (@atep/core)
+        - python (atep_py)
+        - mcp (@atep/mcp)
+        - examples
+        - demo
+        - site
+        - other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Commit or version
+      description: Output of `git rev-parse --short HEAD`, or the version you use.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Commands, input bytes or a test vector name. A failing vector is the best report.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Rust, Node and Python versions as relevant.

@@ -1,0 +1,17 @@
+{
+  "txt": {},
+  "domain": "example.com",
+  "options": {
+    "require_both": false,
+    "require_dnssec": false
+  },
+  "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+  "well_known": {
+    "example.com": {
+      "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}",
+      "status": 200,
+      "final_url": "https://evil.example.net/.well-known/atep.json",
+      "content_type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "invalid-age-hours-zero",
+  "category": "require-anchor",
+  "description": "`max_age_hours` 0.",
+  "cbor_file": "invalid-age-hours-zero.cbor",
+  "cbor_sha256": "185e5fb871bd03f64b356f8173f6ceeeb5edfb0bf663491eba9f39bf7d010288",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "rekor",
+          "max_age_hours": 0
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": false,
+    "error": "policy_invalid"
+  }
+}

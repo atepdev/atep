@@ -1,0 +1,36 @@
+{
+  "name": "step-2-failure-is-reported-first",
+  "category": "anchor-not-supported",
+  "description": "The envelope is encrypted to bob but the verifier holds carol's keys, and the policy has a require_anchor rule. Step 2 not_addressed_to_recipient is reported, not the anchor refusal.",
+  "cbor_file": "step-2-failure-is-reported-first.cbor",
+  "cbor_sha256": "bf6a796f8f9aafb1cbbaf5326bb3573a53799bd3e6c3216bfcf1af076ab7f775",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "0139149fabd5445396e1e9405b95b741ae821bf086d4adfa2c89cc7250e2059e",
+        "mldsa65": "d73a571237ebb30cbed749cdb22dc40fd0dfebb387a467893eb6794eb388c72f",
+        "x25519": "76448f2b930503dfffbdee25c5606becbb6e22e15ac156b4322c6b37c71f8cb5",
+        "mlkem768": "7eaefb7c26dd874fde358a9e40abc7ef689a16a0967d414bb5afdb67073760e15dc419e65414bdf318ff1ab8f197d05fb2b13d10d7f119867bdbee9498eebcc9"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "require_anchor": [
+          {
+            "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+            "chain": "solana-mainnet",
+            "max_age_hours": 6
+          }
+        ]
+      }
+    }
+  },
+  "expected": {
+    "ok": false,
+    "step": 2,
+    "error": "not_addressed_to_recipient"
+  }
+}

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIRAD LABS Products</title>
+<meta name="description" content="Planned AIRAD LABS offerings around ATEP: certification, a hosted registry and log, and the ATEP Fleet Console. None is generally available yet.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "ATEP Fleet Console",
+  "description": "Planned operator console for setting robot fleet trust policy, revoking compromised units and reviewing incidents. Not yet available.",
+  "brand": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "category": "Robot fleet trust",
+  "url": "https://airadlabs.com/products.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "ATEP certification program",
+  "description": "Planned audit and attestation program producing ATEP safety and operator claims. Not operating; no certificates issued.",
+  "brand": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "category": "Robot fleet trust",
+  "url": "https://airadlabs.com/products.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "ATEP hosted registry and transparency log",
+  "description": "Planned hosted log, issuer directory and monitoring service. The open source reference log exists; the hosted service does not.",
+  "brand": {
+    "@type": "Organization",
+    "name": "AIRAD LABS"
+  },
+  "category": "Robot fleet trust",
+  "url": "https://airadlabs.com/products.html"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site">
+  <a class="brand" href="index.html">AIRAD LABS</a>
+  <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="why-atep.html">Why ATEP</a>
+      <a href="products.html" aria-current="page">Products</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="../../demo/index.html">Demo</a>
+      <a href="llms.txt">llms.txt</a>
+  </nav>
+  <button id="theme" type="button">Use dark theme</button>
+</header>
+<main id="main">
+
+<h1>Products</h1>
+<p class="lead">AIRAD LABS plans services around the free, open protocol. These three offerings are planned. None is generally available, no certification has been issued, and there are no customers yet. What exists today is the open protocol, its reference implementations and a <a href="../../demo/index.html">working demo</a>.</p>
+<div class="grid">
+<section class="card"><h2>ATEP Fleet Console (planned, not available)</h2><p>Operators define a trust policy once and every robot verifies against it; revoke a compromised unit in one action; dashboards, alerts and an audit trail for incident review. The demo shows the behavior this console would drive (policy, revocation, named rejections) with simulated robots.</p></section>
+<section class="card"><h2>Certification (planned)</h2><p>An audit by AIRAD LABS or a partner safety certifier, resulting in an attestation under a published root, with short lifetimes and renewal. No program is operating and no certifier partner has been announced.</p></section>
+<section class="card"><h2>Hosted registry and transparency log (planned)</h2><p>A public log with inclusion proofs and monitoring for issuers. The log and monitor software already exists as open source in the reference implementation (plain HTTP, file storage); a hosted, operated service does not.</p></section>
+</div>
+<h2>Available today, free and open</h2>
+<ul>
+<li>The <a href="https://atep.dev/specification.html">specification</a> (Draft 07) and 436 test vectors.</li>
+<li>Reference implementations in Rust, JavaScript (WebAssembly) and Python, and carrier examples for MCP, A2A, MQTT and HTTP. No functional package is published to npm, crates.io or PyPI yet (placeholder names with no code are reserved at 0.0.1: crates.io <code>atep</code>, <code>atep-core</code> and <code>atep-cli</code>; npm <code>@atep/core</code> and <code>@atep/mcp</code>; PyPI <code>atep</code>).</li>
+<li><a href="../../demo/index.html">The ATEP-R fleet demo</a>, which runs in a browser from a local web server (see the demo README in the repository).</li>
+</ul>
+
+</main>
+<footer class="site">
+  <p>AIRAD LABS creates and stewards the open protocol ATEP (<a href="https://atep.dev/">atep.dev</a>). No customer, certification or hosted service is claimed on this site; everything under Products is planned unless it says otherwise.</p>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

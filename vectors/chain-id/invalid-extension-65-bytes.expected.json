@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-65-bytes",
+  "category": "chain-id",
+  "description": "Extension id of 65 bytes: too long.",
+  "cbor_file": "invalid-extension-65-bytes.cbor",
+  "cbor_sha256": "1ea439cc91f9e19a05c695825f1773d8b93d4f15f77d67afe1ade45dd882bde8",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "expected": {
+    "ok": false
+  }
+}

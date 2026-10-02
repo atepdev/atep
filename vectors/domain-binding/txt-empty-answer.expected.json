@@ -1,0 +1,38 @@
+{
+  "name": "txt-empty-answer",
+  "category": "domain-binding",
+  "description": "An answer with no records.",
+  "cbor_file": "txt-empty-answer.cbor",
+  "cbor_sha256": "245b543504a5c5ef3396b8d579322f642e954f3e31bf95a4cd9450e2b11c563b",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

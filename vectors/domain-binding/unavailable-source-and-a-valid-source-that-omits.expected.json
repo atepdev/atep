@@ -1,0 +1,44 @@
+{
+  "name": "unavailable-source-and-a-valid-source-that-omits",
+  "category": "domain-binding",
+  "description": "The DNS lookup failed and the document is valid but does not list the Agent ID: indeterminate (do not issue now, retry), not a plain not bound.",
+  "cbor_file": "unavailable-source-and-a-valid-source-that-omits.cbor",
+  "cbor_sha256": "ae20d78be943370c68320f9b403023b6341d84ecce6ed06ba1843f9a85fa8e0a",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:dvfnmd6cvmhp6ywwhsgmgypyqi2kqbvnma77n36ybswo32qmyrra\"]}"
+        }
+      },
+      "txt": {
+        "_atep.example.com": {
+          "unavailable": "SERVFAIL"
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "not-listed",
+    "dns": "unavailable",
+    "outcome": "indeterminate",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

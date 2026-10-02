@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-prefix-uppercase",
+  "category": "chain-id",
+  "description": "The prefix is `X-`: the extension prefix is lowercase `x-`.",
+  "cbor_file": "invalid-extension-prefix-uppercase.cbor",
+  "cbor_sha256": "31d4a995a8c96221fe5cd940b0f025f3f82148c2a0b4c0c82cb6c769a30bcd1d",
+  "inputs": {
+    "check": "chain-id",
+    "id": "X-acme"
+  },
+  "expected": {
+    "ok": false
+  }
+}

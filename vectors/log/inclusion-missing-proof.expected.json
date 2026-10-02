@@ -1,0 +1,19 @@
+{
+  "name": "inclusion-missing-proof",
+  "category": "log",
+  "description": "An attestation with no -70012 header. Expect step 9.",
+  "cbor_file": "inclusion-missing-proof.cbor",
+  "cbor_sha256": "e34aa811729a083641769e3f881af5bec2e216435e2086660119afe73e85b163",
+  "inputs": {
+    "now": 1800000000,
+    "check": "inclusion",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "inclusion_proof_missing"
+  }
+}

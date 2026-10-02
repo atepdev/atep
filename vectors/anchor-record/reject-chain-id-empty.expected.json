@@ -1,0 +1,14 @@
+{
+  "name": "reject-chain-id-empty",
+  "category": "anchor-record",
+  "description": "`chain-id` is the empty string.",
+  "cbor_file": "reject-chain-id-empty.cbor",
+  "cbor_sha256": "5477a41a50d0855be9ebb36b607f29e0be40f257d9994feba5fae2de4a5648f9",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

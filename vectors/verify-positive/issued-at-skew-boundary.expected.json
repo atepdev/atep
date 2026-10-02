@@ -1,0 +1,28 @@
+{
+  "name": "issued-at-skew-boundary",
+  "category": "verify-positive",
+  "description": "issued-at exactly 300 s in the future is accepted.",
+  "cbor_file": "issued-at-skew-boundary.cbor",
+  "cbor_sha256": "6f85622f06e82781d5635f3fcff60b10307689288ffe81948f07e87efa535942",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep-checkpoint+cbor",
+    "issued_at": 1800000300,
+    "expires_at": null,
+    "nonce_hex": "9d7a6e3e8cdcb523a527018497739223",
+    "encrypted": false,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72627035"
+  }
+}

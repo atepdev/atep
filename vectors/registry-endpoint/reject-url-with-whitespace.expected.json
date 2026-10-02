@@ -1,0 +1,17 @@
+{
+  "name": "reject-url-with-whitespace",
+  "category": "registry-endpoint",
+  "description": "`url` contains a space.",
+  "cbor_file": "reject-url-with-whitespace.cbor",
+  "cbor_sha256": "9a49fe26c2855ca95113f44f746974a00e76333361072edcb815dcca45dd1a5c",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

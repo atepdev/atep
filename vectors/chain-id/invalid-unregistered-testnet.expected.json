@@ -1,0 +1,14 @@
+{
+  "name": "invalid-unregistered-testnet",
+  "category": "chain-id",
+  "description": "A plausible chain that is not in the table.",
+  "cbor_file": "invalid-unregistered-testnet.cbor",
+  "cbor_sha256": "772147ceec0f9ab4b97b446aabd1d6edb77e107374838b72a999fba4f017ec19",
+  "inputs": {
+    "check": "chain-id",
+    "id": "bitcoin-testnet"
+  },
+  "expected": {
+    "ok": false
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "signed-srl-no-expiry",
+  "category": "verify-positive",
+  "description": "SRL-typed trust document without expires-at (optional outside attestations).",
+  "cbor_file": "signed-srl-no-expiry.cbor",
+  "cbor_sha256": "f28c8c43c95fced399b84d4cf361090bdcb9a4bc6f940be1f0ec49a81983bc94",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": []
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep-srl+cbor",
+    "issued_at": 1799999990,
+    "expires_at": null,
+    "nonce_hex": "4125a4453c5b44dc34ae1b768a9be6c3",
+    "encrypted": false,
+    "claims": [],
+    "checkpoint": null,
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f72627034"
+  }
+}

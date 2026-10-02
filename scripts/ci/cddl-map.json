@@ -1,0 +1,2863 @@
+{
+  "validator": {
+    "crate": "cddl",
+    "version": "0.10.7"
+  },
+  "envelope_rules": {
+    "96": "encrypted-envelope",
+    "98": "signed-envelope"
+  },
+  "payload_rules": {
+    "application/atep-attestation+cbor": "attestation",
+    "application/atep-srl+cbor": "srl",
+    "application/atep-checkpoint+cbor": "checkpoint",
+    "application/atep-anchor+cbor": "anchor-record"
+  },
+  "cases": [
+    {
+      "select": "identity/*",
+      "check": "file",
+      "rule": "key-bundle"
+    },
+    {
+      "select": "signing/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "verify-*/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "encryption/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "attestation/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "attestation/*",
+      "check": "payload"
+    },
+    {
+      "select": [
+        "chain-positive/*",
+        "chain-negative/*"
+      ],
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "srl/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "srl/*",
+      "check": "payload"
+    },
+    {
+      "select": "atep-r-*/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "retired-*/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "successor-*/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "srl-context/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "log-admission/*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "retired-*/*",
+      "check": "payload"
+    },
+    {
+      "select": "srl-context/*",
+      "check": "payload"
+    },
+    {
+      "select": "log-admission/*",
+      "check": "payload"
+    },
+    {
+      "select": "log/checkpoint-*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "log/checkpoint-*",
+      "check": "payload"
+    },
+    {
+      "select": "log/inclusion-*",
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": "log/inclusion-*",
+      "check": "payload"
+    },
+    {
+      "select": "log/consistency-*",
+      "check": "file",
+      "rule": "consistency-evidence"
+    },
+    {
+      "select": "log/split-view-*",
+      "check": "file",
+      "rule": "split-view-evidence"
+    },
+    {
+      "select": "monitor/*",
+      "check": "file",
+      "rule": "monitor-input"
+    },
+    {
+      "select": "monitor/*",
+      "check": "json",
+      "path": "expected",
+      "rule": "monitor-expected"
+    },
+    {
+      "select": "*/*",
+      "check": "input-envelopes",
+      "path": "inputs.policy.attestations[]"
+    },
+    {
+      "select": "*/*",
+      "check": "input-envelopes",
+      "path": "inputs.policy.srls[]"
+    },
+    {
+      "select": "*/*",
+      "check": "input-envelopes",
+      "path": "inputs.attestations[]"
+    },
+    {
+      "select": "*/*",
+      "check": "input-envelopes",
+      "path": "inputs.logged[]"
+    },
+    {
+      "select": "*/*",
+      "check": "input-envelopes",
+      "path": "inputs.cached_srl_hex"
+    },
+    {
+      "select": [
+        "chain-positive/*",
+        "chain-negative/*",
+        "atep-r-*/*",
+        "retired-*/*",
+        "successor-*/*",
+        "anchor-not-supported/*"
+      ],
+      "check": "json",
+      "path": "inputs.policy.trust",
+      "rule": "trust-policy"
+    },
+    {
+      "select": [
+        "verify-*/*",
+        "chain-positive/*",
+        "chain-negative/*",
+        "atep-r-*/*",
+        "retired-*/*",
+        "successor-*/*",
+        "anchor-media-type/*",
+        "anchor-not-supported/*"
+      ],
+      "check": "json",
+      "path": "expected",
+      "rule": "@result"
+    },
+    {
+      "select": [
+        "anchor-media-type/*",
+        "anchor-not-supported/*",
+        "anchor-envelope/*",
+        "checkpoint-hash/*",
+        "registry-endpoint/*"
+      ],
+      "check": "file",
+      "rule": "@envelope"
+    },
+    {
+      "select": [
+        "anchor-media-type/*",
+        "anchor-envelope/*",
+        "checkpoint-hash/*",
+        "registry-endpoint/*"
+      ],
+      "check": "payload"
+    },
+    {
+      "select": "require-anchor/*",
+      "check": "file",
+      "rule": "trust-policy",
+      "expect": "@ok"
+    },
+    {
+      "select": "require-anchor/*",
+      "check": "json",
+      "path": "inputs.policy",
+      "rule": "trust-policy",
+      "expect": "@ok"
+    },
+    {
+      "select": "chain-id/*",
+      "check": "file",
+      "rule": "chain-id",
+      "expect": "@ok"
+    },
+    {
+      "select": "chain-id/*",
+      "check": "json",
+      "path": "inputs.id",
+      "rule": "chain-id",
+      "expect": "@ok"
+    },
+    {
+      "select": "anchor-record/*",
+      "check": "file",
+      "rule": "anchor-record",
+      "expect": "@ok"
+    },
+    {
+      "select": "domain-binding/*",
+      "check": "wk-body"
+    },
+    {
+      "select": "verify-negative/missing-pq-signature",
+      "check": "file",
+      "rule": "@envelope",
+      "only_label": "file:envelope",
+      "expect": "fail",
+      "reason": "the signatures array holds one entry, the schema requires one of each (step 1 signature_count_invalid)"
+    },
+    {
+      "select": "verify-negative/missing-classical-signature",
+      "check": "file",
+      "rule": "@envelope",
+      "only_label": "file:envelope",
+      "expect": "fail",
+      "reason": "the signatures array holds one entry, the schema requires one of each (step 1 signature_count_invalid)"
+    },
+    {
+      "select": "verify-negative/unknown-suite",
+      "check": "file",
+      "rule": "@envelope",
+      "only_label": "file:envelope",
+      "expect": "fail",
+      "reason": "suite is \"ATEP-9\", the schema allows only \"ATEP-1\" (step 1 unsupported_suite)"
+    },
+    {
+      "select": "verify-negative/unsupported-version",
+      "check": "file",
+      "rule": "@envelope",
+      "only_label": "file:envelope",
+      "expect": "fail",
+      "reason": "atep-version is 2, the schema allows only 1 (step 1 unsupported_version)"
+    },
+    {
+      "select": "srl/srl-schema-invalid",
+      "check": "payload",
+      "expect": "fail",
+      "reason": "SRL payload lacks next-update (step 9 srl_schema_invalid), signed validly so the envelope itself is schema-valid"
+    },
+    {
+      "select": "log/checkpoint-schema-invalid",
+      "check": "payload",
+      "expect": "fail",
+      "reason": "checkpoint payload lacks root-hash (step 9 checkpoint_schema_invalid), signed validly so the envelope itself is schema-valid"
+    },
+    {
+      "select": "retired-positive/rt08-non-text-reason-retirement-is-ignored",
+      "check": "input-envelopes",
+      "path": "inputs.policy.attestations[]",
+      "only_label": "*:data(*)",
+      "expect": "fail",
+      "reason": "retired data is {\"reason\": 5}, a layout failure; the retirement is therefore ignored by the verifier (RT8), and the vector is accepted"
+    },
+    {
+      "select": "registry-endpoint/*",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "expect": "@ok"
+    },
+    {
+      "select": "anchor-envelope/payload-unknown-key",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "anchor payload has an unknown key (step 9 anchor_schema_invalid); the envelope is valid"
+    },
+    {
+      "select": "anchor-envelope/payload-unregistered-chain-id",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "anchor payload has an unregistered chain-id (anchor_schema_invalid)"
+    },
+    {
+      "select": "anchor-envelope/payload-not-a-map",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "anchor payload is not a map (anchor_schema_invalid)"
+    },
+    {
+      "select": "anchor-envelope/wrong-content-type",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "a valid anchor record under the checkpoint content type, so the payload is not a checkpoint (anchor_content_type_invalid)"
+    },
+    {
+      "select": "anchor-media-type/bare-anchor-envelope-garbage-payload-accepted",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "the payload is a text string: the core verifier checks the media type only, so the vector is accepted although the payload is not an anchor record"
+    },
+    {
+      "select": "checkpoint-hash/reject-missing-root-hash",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "checkpoint payload lacks root-hash (checkpoint_schema_invalid)"
+    },
+    {
+      "select": "checkpoint-hash/reject-unknown-payload-key",
+      "check": "payload",
+      "only_label": "file:payload",
+      "expect": "fail",
+      "reason": "checkpoint payload has an unknown key (checkpoint_schema_invalid)"
+    },
+    {
+      "select": "require-anchor/invalid-log-malformed",
+      "check": "file",
+      "expect": "pass",
+      "reason": "log is a malformed Agent ID text; the schema types it as tstr and cannot express the Agent ID text form, so the schema accepts what the policy parser refuses",
+      "rule": "trust-policy"
+    },
+    {
+      "select": "require-anchor/invalid-log-malformed",
+      "check": "json",
+      "path": "inputs.policy",
+      "expect": "pass",
+      "reason": "same: malformed Agent ID text is schema-valid text",
+      "rule": "trust-policy"
+    },
+    {
+      "select": "anchor-record/reject-map-keys-not-sorted",
+      "check": "file",
+      "expect": "pass",
+      "reason": "not strict deterministic CBOR on purpose; the decoded value matches the schema, and encoding rules are outside CDDL (spec section 5)",
+      "rule": "anchor-record"
+    },
+    {
+      "select": "anchor-record/reject-duplicate-key",
+      "check": "file",
+      "expect": "pass",
+      "reason": "not strict deterministic CBOR on purpose; the decoded value matches the schema, and encoding rules are outside CDDL (spec section 5)",
+      "rule": "anchor-record"
+    },
+    {
+      "select": "anchor-record/reject-integer-not-shortest-form",
+      "check": "file",
+      "expect": "pass",
+      "reason": "not strict deterministic CBOR on purpose; the decoded value matches the schema, and encoding rules are outside CDDL (spec section 5)",
+      "rule": "anchor-record"
+    },
+    {
+      "select": "anchor-record/reject-indefinite-length-map",
+      "check": "file",
+      "expect": "pass",
+      "reason": "not strict deterministic CBOR on purpose; the decoded value matches the schema, and encoding rules are outside CDDL (spec section 5)",
+      "rule": "anchor-record"
+    },
+    {
+      "select": "anchor-record/reject-trailing-bytes",
+      "check": "file",
+      "expect": "pass",
+      "reason": "not strict deterministic CBOR on purpose; the decoded value matches the schema, and encoding rules are outside CDDL (spec section 5)",
+      "rule": "anchor-record"
+    },
+    {
+      "select": "registry-endpoint/reject-url-scheme-http",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-scheme-ftp",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-without-scheme",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-with-credentials",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-with-whitespace",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-without-host",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-with-port-and-no-host",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    },
+    {
+      "select": "registry-endpoint/reject-url-2049-characters",
+      "check": "payload",
+      "only_label": "*:data(*)",
+      "rule": "registry-endpoint-data",
+      "expect": "pass",
+      "reason": "refused by the URL rules of section 7 (https, host, no credentials or whitespace, 2048 characters), which the schema states in a comment and types only as text; the layout itself is valid"
+    }
+  ],
+  "tool_workarounds": [
+    {
+      "from": "* (int / tstr) => any",
+      "to": "* any => any",
+      "count": 2,
+      "reason": "cddl 0.10.7 rejects every entry matched by a wildcard member whose key is a type choice, e.g. { * (int / tstr) => any }, with 'unexpected key'. It also cannot combine two wildcard members (* int => any, * tstr => any). The schema keeps the RFC 8610 form; the validator is given the looser any key, which differs only by also admitting byte string, boolean and null keys in the two header maps that allow unknown labels."
+    },
+    {
+      "from": ".regexp \"x-[a-z0-9]([a-z0-9-]{0,60}[a-z0-9])?\"",
+      "to": ".regexp \"x-[a-z0-9]([a-z0-9-]{0,60}[a-z0-9])?$\"",
+      "count": 1,
+      "reason": "cddl 0.10.7 matches .regexp at the start of the string only (a prefix match), so 'x-acme_ledger' would pass; RFC 8610 says the pattern must match the whole string. The validator is given an explicit end anchor."
+    },
+    {
+      "from": ".regexp \"x-[a-z0-9-]+\"",
+      "to": ".regexp \"x-[a-z0-9-]+$\"",
+      "count": 1,
+      "reason": "same prefix-match defect, for endpoint-kind."
+    }
+  ],
+  "claim_data_rules": {
+    "https://atep.dev/claims/issuer-authority": "issuer-authority-data",
+    "https://atep.dev/claims/domain-control": "domain-control-data",
+    "https://atep.dev/claims/retired": "retired-data",
+    "https://atep.dev/claims/successor": "successor-data",
+    "https://atep.dev/claims/registry-endpoint": "registry-endpoint-data",
+    "https://atep.dev/claims/robotics/peer-motion": "peer-motion-data"
+  },
+  "mutations": [
+    {
+      "id": "env-retag-97",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "tag other than 98",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [],
+          "op": "retag",
+          "tag": 97
+        }
+      ]
+    },
+    {
+      "id": "env-one-signature",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "one signature",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3
+          ],
+          "op": "delete",
+          "key": 1
+        }
+      ]
+    },
+    {
+      "id": "env-three-signatures",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "three signatures",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3
+          ],
+          "op": "append",
+          "value": {
+            "bstr": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-signatures-reversed",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "verifiers accept either order (section 5)",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3
+          ],
+          "op": "reverse"
+        }
+      ]
+    },
+    {
+      "id": "env-eddsa-signature-63",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "EdDSA signature 63 bytes",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0
+          ],
+          "op": "set",
+          "key": 2,
+          "value": {
+            "bstr": 63
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-mldsa-signature-3308",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "ML-DSA signature 3308 bytes",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            1
+          ],
+          "op": "set",
+          "key": 2,
+          "value": {
+            "bstr": 3308
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-detached-payload",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "payload nil",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag"
+          ],
+          "op": "set",
+          "key": 2,
+          "value": {
+            "null": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-payload-text",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "payload is a text string",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag"
+          ],
+          "op": "set",
+          "key": 2,
+          "value": {
+            "tstr": "x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-no-signer",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "protected header without signer",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "delete",
+          "key": -70002
+        }
+      ]
+    },
+    {
+      "id": "env-no-nonce",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "protected header without nonce",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "delete",
+          "key": -70005
+        }
+      ]
+    },
+    {
+      "id": "env-no-suite",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "protected header without suite",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "delete",
+          "key": -70007
+        }
+      ]
+    },
+    {
+      "id": "env-nonce-15",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "nonce 15 bytes",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": -70005,
+          "value": {
+            "bstr": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-digest-31",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "payload-digest 31 bytes",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": -70006,
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-signer-31",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "signer 31 bytes",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": -70002,
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-issued-at-text",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "issued-at is text",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": -70003,
+          "value": {
+            "tstr": "x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-expires-at-text",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "expires-at is text",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": -70004,
+          "value": {
+            "tstr": "x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-content-type-int",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "content type is an integer",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": 3,
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-unknown-protected-label",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "unknown protected labels are ignored but signed",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "add",
+          "key": -70099,
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-unknown-protected-text-label",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "unknown text label in the protected header",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "add",
+          "key": "x",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-command-class-motion",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "ATEP-R command class",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "add",
+          "key": -70014,
+          "value": {
+            "tstr": "motion"
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-command-class-bogus",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "unknown command class",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "add",
+          "key": -70014,
+          "value": {
+            "tstr": "bogus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-unknown-unprotected-label",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "unknown unprotected labels are ignored",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1
+          ],
+          "op": "add",
+          "key": -70099,
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-attestations-not-envelopes",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "-70009 holds a non-envelope",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1
+          ],
+          "op": "add",
+          "key": -70009,
+          "value": {
+            "array": [
+              {
+                "bstr": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-attestations-empty",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "-70009 empty array",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1
+          ],
+          "op": "add",
+          "key": -70009,
+          "value": {
+            "array": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-bundle-empty-array",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "-70008 is an empty array",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1
+          ],
+          "op": "set",
+          "key": -70008,
+          "value": {
+            "array": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-sig-kid-31",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "signature kid 31 bytes",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0,
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": 4,
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-sig-alg-wrong",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "classical signature alg -7",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0,
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": 1,
+          "value": {
+            "int": -7
+          }
+        }
+      ]
+    },
+    {
+      "id": "env-sig-unprotected-nonempty",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "signature unprotected header not empty (signers emit {}, section 5)",
+      "base": "signing/trust-doc-inline-bundle",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0
+          ],
+          "op": "set",
+          "key": 1,
+          "value": {
+            "map": [
+              [
+                1,
+                {
+                  "uint": 1
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "bundle-ed25519-x-31",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "Ed25519 x 31 bytes",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            0
+          ],
+          "op": "set",
+          "key": -2,
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "bundle-mldsa-pub-1951",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "ML-DSA pub 1951 bytes",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            1
+          ],
+          "op": "set",
+          "key": -1,
+          "value": {
+            "bstr": 1951
+          }
+        }
+      ]
+    },
+    {
+      "id": "bundle-x25519-crv-5",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "X25519 crv 5",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            2,
+            0
+          ],
+          "op": "set",
+          "key": -1,
+          "value": {
+            "uint": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "bundle-mlkem-pub-1183",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "ML-KEM pub 1183 bytes",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            2,
+            1
+          ],
+          "op": "set",
+          "key": -1,
+          "value": {
+            "bstr": 1183
+          }
+        }
+      ]
+    },
+    {
+      "id": "bundle-third-null",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "omitted, never null",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": 2,
+          "value": {
+            "null": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "bundle-one-element",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "only one signing key",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": 1
+        },
+        {
+          "at": [],
+          "op": "delete",
+          "key": 1
+        }
+      ]
+    },
+    {
+      "id": "bundle-enc-keys-one",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "enc-keys with one element",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            2
+          ],
+          "op": "delete",
+          "key": 1
+        }
+      ]
+    },
+    {
+      "id": "bundle-mldsa-no-alg",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "ML-DSA key without alg",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            1
+          ],
+          "op": "delete",
+          "key": 3
+        }
+      ]
+    },
+    {
+      "id": "bundle-ed25519-extra-member",
+      "rule": "key-bundle",
+      "expect": "fail",
+      "why": "extra COSE_Key member",
+      "base": "identity/bob",
+      "steps": [
+        {
+          "at": [
+            0
+          ],
+          "op": "add",
+          "key": -3,
+          "value": {
+            "bstr": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-retag-98",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "tag 96 expected",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [],
+          "op": "retag",
+          "tag": 98
+        }
+      ]
+    },
+    {
+      "id": "enc-iv-11",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "iv 11 bytes",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1
+          ],
+          "op": "set",
+          "key": 5,
+          "value": {
+            "bstr": 11
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-kem-ct-1087",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "ML-KEM ciphertext 1087 bytes",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0,
+            1
+          ],
+          "op": "set",
+          "key": -70013,
+          "value": {
+            "bstr": 1087
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-two-recipients",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "exactly one recipient",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3
+          ],
+          "op": "append",
+          "value": {
+            "bstr": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-recipient-ciphertext-nonempty",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "recipient ciphertext must be h''",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0
+          ],
+          "op": "set",
+          "key": 2,
+          "value": {
+            "bstr": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-suite-atep-2",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "suite other than ATEP-1",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            0,
+            "~"
+          ],
+          "op": "set",
+          "key": -70007,
+          "value": {
+            "tstr": "ATEP-2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-eph-x-31",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "ephemeral key 31 bytes",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0,
+            1,
+            -1
+          ],
+          "op": "set",
+          "key": -2,
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "enc-kid-31",
+      "rule": "encrypted-envelope",
+      "expect": "fail",
+      "why": "recipient kid 31 bytes",
+      "base": "encryption/alice-to-bob",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            3,
+            0,
+            1
+          ],
+          "op": "set",
+          "key": 4,
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-no-subject",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "subject missing",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "subject"
+        }
+      ]
+    },
+    {
+      "id": "att-no-id",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "id missing",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "id"
+        }
+      ]
+    },
+    {
+      "id": "att-no-data",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "data missing",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "data"
+        }
+      ]
+    },
+    {
+      "id": "att-subject-31",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "subject 31 bytes",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "subject",
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-issuer-text",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "issuer is text",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "issuer",
+          "value": {
+            "tstr": "atep:x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-id-15",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "id 15 bytes",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "id",
+          "value": {
+            "bstr": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-extra-key",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "no other keys allowed",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "extra",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-claim-bytes",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "claim is bytes",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "claim",
+          "value": {
+            "bstr": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-data-array",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "data is an array",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "data",
+          "value": {
+            "array": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-data-int-key",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "data keys are text",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "data",
+          "value": {
+            "map": [
+              [
+                1,
+                {
+                  "uint": 1
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-evidence-32",
+      "rule": "attestation",
+      "expect": "pass",
+      "why": "optional evidence",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "evidence",
+          "value": {
+            "bstr": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-evidence-31",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "evidence 31 bytes",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "evidence",
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-evidence-uri",
+      "rule": "attestation",
+      "expect": "pass",
+      "why": "optional evidence-uri",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "evidence-uri",
+          "value": {
+            "tstr": "https://example.com/audit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "att-evidence-uri-int",
+      "rule": "attestation",
+      "expect": "fail",
+      "why": "evidence-uri is an integer",
+      "base": "attestation/operator-90-days",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "evidence-uri",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-no-sequence",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "sequence missing",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "sequence"
+        }
+      ]
+    },
+    {
+      "id": "srl-sequence-negative",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "sequence is negative",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "sequence",
+          "value": {
+            "int": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-next-update-negative",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "next-update is negative",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "next-update",
+          "value": {
+            "int": -5
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-extra-key",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "no other keys allowed",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "extra",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-entry-id-17",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "revocation id 17 bytes",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [
+            "revoked",
+            0
+          ],
+          "op": "set",
+          "key": "id",
+          "value": {
+            "bstr": 17
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-entry-id-32",
+      "rule": "srl",
+      "expect": "pass",
+      "why": "32 byte id is an identity revocation",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [
+            "revoked",
+            0
+          ],
+          "op": "set",
+          "key": "id",
+          "value": {
+            "bstr": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-entry-reason-int",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "reason is an integer",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [
+            "revoked",
+            0
+          ],
+          "op": "set",
+          "key": "reason",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-entry-reason-custom",
+      "rule": "srl",
+      "expect": "pass",
+      "why": "reason may be any text",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [
+            "revoked",
+            0
+          ],
+          "op": "set",
+          "key": "reason",
+          "value": {
+            "tstr": "custom"
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-entry-revoked-at-text",
+      "rule": "srl",
+      "expect": "fail",
+      "why": "revoked-at is text",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [
+            "revoked",
+            0
+          ],
+          "op": "set",
+          "key": "revoked-at",
+          "value": {
+            "tstr": "x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "srl-empty-revoked",
+      "rule": "srl",
+      "expect": "pass",
+      "why": "empty revoked list",
+      "base": "srl/srl-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "revoked",
+          "value": {
+            "array": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "cp-root-hash-31",
+      "rule": "checkpoint",
+      "expect": "fail",
+      "why": "root-hash 31 bytes",
+      "base": "log/checkpoint-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "root-hash",
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "cp-tree-size-negative",
+      "rule": "checkpoint",
+      "expect": "fail",
+      "why": "tree-size negative",
+      "base": "log/checkpoint-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "tree-size",
+          "value": {
+            "int": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "cp-extra-key",
+      "rule": "checkpoint",
+      "expect": "fail",
+      "why": "no other keys allowed",
+      "base": "log/checkpoint-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "extra",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "cp-timestamp-text",
+      "rule": "checkpoint",
+      "expect": "fail",
+      "why": "timestamp is text",
+      "base": "log/checkpoint-valid",
+      "from": "payload",
+      "steps": [
+        {
+          "at": [],
+          "op": "set",
+          "key": "timestamp",
+          "value": {
+            "tstr": "x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cons-no-proof",
+      "rule": "consistency-evidence",
+      "expect": "fail",
+      "why": "proof missing",
+      "base": "log/consistency-valid",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "proof"
+        }
+      ]
+    },
+    {
+      "id": "cons-path-hash-31",
+      "rule": "consistency-evidence",
+      "expect": "fail",
+      "why": "path element 31 bytes",
+      "base": "log/consistency-valid",
+      "steps": [
+        {
+          "at": [
+            "proof",
+            "path"
+          ],
+          "op": "append",
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "cons-from-negative",
+      "rule": "consistency-evidence",
+      "expect": "fail",
+      "why": "from negative",
+      "base": "log/consistency-valid",
+      "steps": [
+        {
+          "at": [
+            "proof"
+          ],
+          "op": "set",
+          "key": "from",
+          "value": {
+            "int": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "cons-extra-key",
+      "rule": "consistency-evidence",
+      "expect": "fail",
+      "why": "no other keys",
+      "base": "log/consistency-valid",
+      "steps": [
+        {
+          "at": [],
+          "op": "add",
+          "key": "extra",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "split-no-proof",
+      "rule": "split-view-evidence",
+      "expect": "pass",
+      "why": "proof is optional",
+      "base": "log/split-view-none",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "proof"
+        }
+      ]
+    },
+    {
+      "id": "split-no-b",
+      "rule": "split-view-evidence",
+      "expect": "fail",
+      "why": "b missing",
+      "base": "log/split-view-none",
+      "steps": [
+        {
+          "at": [],
+          "op": "delete",
+          "key": "b"
+        }
+      ]
+    },
+    {
+      "id": "incl-no-leaf-index",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "leaf-index missing",
+      "base": "log/inclusion-valid",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1,
+            -70012
+          ],
+          "op": "delete",
+          "key": "leaf-index"
+        }
+      ]
+    },
+    {
+      "id": "incl-path-hash-31",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "audit-path element 31 bytes",
+      "base": "log/inclusion-valid",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1,
+            -70012,
+            "audit-path"
+          ],
+          "op": "append",
+          "value": {
+            "bstr": 31
+          }
+        }
+      ]
+    },
+    {
+      "id": "incl-path-hash-32",
+      "rule": "signed-envelope",
+      "expect": "pass",
+      "why": "audit-path element 32 bytes",
+      "base": "log/inclusion-valid",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1,
+            -70012,
+            "audit-path"
+          ],
+          "op": "append",
+          "value": {
+            "bstr": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "incl-no-checkpoint",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "checkpoint missing",
+      "base": "log/inclusion-valid",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1,
+            -70012
+          ],
+          "op": "delete",
+          "key": "checkpoint"
+        }
+      ]
+    },
+    {
+      "id": "incl-extra-key",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "no other keys",
+      "base": "log/inclusion-valid",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1,
+            -70012
+          ],
+          "op": "add",
+          "key": "extra",
+          "value": {
+            "uint": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "incl-checkpoint-not-envelope",
+      "rule": "signed-envelope",
+      "expect": "fail",
+      "why": "checkpoint must be a tag 98 envelope",
+      "base": "log/inclusion-valid",
+      "steps": [
+        {
+          "at": [
+            "tag",
+            1,
+            -70012
+          ],
+          "op": "set",
+          "key": "checkpoint",
+          "value": {
+            "bstr": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "retired-data-ok",
+      "rule": "retired-data",
+      "expect": "pass",
+      "why": "reason text and extra members",
+      "doc": {
+        "map": [
+          [
+            "reason",
+            {
+              "tstr": "x"
+            }
+          ],
+          [
+            "other",
+            {
+              "uint": 1
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "retired-data-empty",
+      "rule": "retired-data",
+      "expect": "pass",
+      "why": "reason optional",
+      "doc": {
+        "map": []
+      }
+    },
+    {
+      "id": "retired-data-reason-int",
+      "rule": "retired-data",
+      "expect": "fail",
+      "why": "reason is not text",
+      "doc": {
+        "map": [
+          [
+            "reason",
+            {
+              "uint": 5
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "successor-data-reason-int",
+      "rule": "successor-data",
+      "expect": "fail",
+      "why": "reason is not text",
+      "doc": {
+        "map": [
+          [
+            "reason",
+            {
+              "uint": 5
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "issuer-authority-ok",
+      "rule": "issuer-authority-data",
+      "expect": "pass",
+      "why": "claims list",
+      "doc": {
+        "map": [
+          [
+            "claims",
+            {
+              "array": [
+                {
+                  "tstr": "https://atep.dev/claims/operator"
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "issuer-authority-no-claims",
+      "rule": "issuer-authority-data",
+      "expect": "fail",
+      "why": "claims missing",
+      "doc": {
+        "map": []
+      }
+    },
+    {
+      "id": "issuer-authority-claims-int",
+      "rule": "issuer-authority-data",
+      "expect": "fail",
+      "why": "claims entries are text",
+      "doc": {
+        "map": [
+          [
+            "claims",
+            {
+              "array": [
+                {
+                  "uint": 1
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "domain-control-ok",
+      "rule": "domain-control-data",
+      "expect": "pass",
+      "why": "domain",
+      "doc": {
+        "map": [
+          [
+            "domain",
+            {
+              "tstr": "example.com"
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "domain-control-no-domain",
+      "rule": "domain-control-data",
+      "expect": "fail",
+      "why": "domain missing",
+      "doc": {
+        "map": []
+      }
+    },
+    {
+      "id": "peer-motion-ok",
+      "rule": "peer-motion-data",
+      "expect": "pass",
+      "why": "peers of 32 bytes",
+      "doc": {
+        "map": [
+          [
+            "peers",
+            {
+              "array": [
+                {
+                  "bstr": 32
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "peer-motion-peer-31",
+      "rule": "peer-motion-data",
+      "expect": "fail",
+      "why": "peer of 31 bytes",
+      "doc": {
+        "map": [
+          [
+            "peers",
+            {
+              "array": [
+                {
+                  "bstr": 31
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "log-policy-ok",
+      "rule": "log-policy-data",
+      "expect": "pass",
+      "why": "log policy data (no vector exists)",
+      "doc": {
+        "map": [
+          [
+            "version",
+            {
+              "uint": 1
+            }
+          ],
+          [
+            "log",
+            {
+              "tstr": "atep:x"
+            }
+          ],
+          [
+            "operator",
+            {
+              "tstr": "o"
+            }
+          ],
+          [
+            "admission",
+            {
+              "array": [
+                {
+                  "tstr": "open"
+                }
+              ]
+            }
+          ],
+          [
+            "retention",
+            {
+              "tstr": "r"
+            }
+          ],
+          [
+            "availability",
+            {
+              "tstr": "a"
+            }
+          ],
+          [
+            "checkpoint-interval-seconds",
+            {
+              "uint": 3600
+            }
+          ],
+          [
+            "checkpoint-media-type",
+            {
+              "tstr": "application/atep-checkpoint+cbor"
+            }
+          ],
+          [
+            "max-envelope-bytes",
+            {
+              "uint": 65536
+            }
+          ],
+          [
+            "key-custody",
+            {
+              "tstr": "k"
+            }
+          ],
+          [
+            "core-namespace",
+            {
+              "tstr": "https://atep.dev/claims/"
+            }
+          ],
+          [
+            "core-claims",
+            {
+              "array": []
+            }
+          ],
+          [
+            "commitments",
+            {
+              "array": []
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "log-policy-version-2",
+      "rule": "log-policy-data",
+      "expect": "fail",
+      "why": "version other than 1",
+      "doc": {
+        "map": [
+          [
+            "version",
+            {
+              "uint": 2
+            }
+          ],
+          [
+            "log",
+            {
+              "tstr": "atep:x"
+            }
+          ],
+          [
+            "operator",
+            {
+              "tstr": "o"
+            }
+          ],
+          [
+            "admission",
+            {
+              "array": [
+                {
+                  "tstr": "open"
+                }
+              ]
+            }
+          ],
+          [
+            "retention",
+            {
+              "tstr": "r"
+            }
+          ],
+          [
+            "availability",
+            {
+              "tstr": "a"
+            }
+          ],
+          [
+            "checkpoint-interval-seconds",
+            {
+              "uint": 3600
+            }
+          ],
+          [
+            "checkpoint-media-type",
+            {
+              "tstr": "application/atep-checkpoint+cbor"
+            }
+          ],
+          [
+            "max-envelope-bytes",
+            {
+              "uint": 65536
+            }
+          ],
+          [
+            "key-custody",
+            {
+              "tstr": "k"
+            }
+          ],
+          [
+            "core-namespace",
+            {
+              "tstr": "https://atep.dev/claims/"
+            }
+          ],
+          [
+            "core-claims",
+            {
+              "array": []
+            }
+          ],
+          [
+            "commitments",
+            {
+              "array": []
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "log-policy-bad-media-type",
+      "rule": "log-policy-data",
+      "expect": "fail",
+      "why": "wrong checkpoint media type",
+      "doc": {
+        "map": [
+          [
+            "version",
+            {
+              "uint": 1
+            }
+          ],
+          [
+            "log",
+            {
+              "tstr": "atep:x"
+            }
+          ],
+          [
+            "operator",
+            {
+              "tstr": "o"
+            }
+          ],
+          [
+            "admission",
+            {
+              "array": [
+                {
+                  "tstr": "open"
+                }
+              ]
+            }
+          ],
+          [
+            "retention",
+            {
+              "tstr": "r"
+            }
+          ],
+          [
+            "availability",
+            {
+              "tstr": "a"
+            }
+          ],
+          [
+            "checkpoint-interval-seconds",
+            {
+              "uint": 3600
+            }
+          ],
+          [
+            "checkpoint-media-type",
+            {
+              "tstr": "text/plain"
+            }
+          ],
+          [
+            "max-envelope-bytes",
+            {
+              "uint": 65536
+            }
+          ],
+          [
+            "key-custody",
+            {
+              "tstr": "k"
+            }
+          ],
+          [
+            "core-namespace",
+            {
+              "tstr": "https://atep.dev/claims/"
+            }
+          ],
+          [
+            "core-claims",
+            {
+              "array": []
+            }
+          ],
+          [
+            "commitments",
+            {
+              "array": []
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "log-policy-no-operator",
+      "rule": "log-policy-data",
+      "expect": "fail",
+      "why": "operator missing",
+      "doc": {
+        "map": [
+          [
+            "version",
+            {
+              "uint": 1
+            }
+          ],
+          [
+            "log",
+            {
+              "tstr": "atep:x"
+            }
+          ],
+          [
+            "admission",
+            {
+              "array": [
+                {
+                  "tstr": "open"
+                }
+              ]
+            }
+          ],
+          [
+            "retention",
+            {
+              "tstr": "r"
+            }
+          ],
+          [
+            "availability",
+            {
+              "tstr": "a"
+            }
+          ],
+          [
+            "checkpoint-interval-seconds",
+            {
+              "uint": 3600
+            }
+          ],
+          [
+            "checkpoint-media-type",
+            {
+              "tstr": "application/atep-checkpoint+cbor"
+            }
+          ],
+          [
+            "max-envelope-bytes",
+            {
+              "uint": 65536
+            }
+          ],
+          [
+            "key-custody",
+            {
+              "tstr": "k"
+            }
+          ],
+          [
+            "core-namespace",
+            {
+              "tstr": "https://atep.dev/claims/"
+            }
+          ],
+          [
+            "core-claims",
+            {
+              "array": []
+            }
+          ],
+          [
+            "commitments",
+            {
+              "array": []
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "id": "trust-empty",
+      "rule": "trust-policy",
+      "expect": "pass",
+      "why": "every member optional",
+      "json": {}
+    },
+    {
+      "id": "trust-unknown-member",
+      "rule": "trust-policy",
+      "expect": "fail",
+      "why": "an unknown member is an error",
+      "json": {
+        "foo": 1
+      }
+    },
+    {
+      "id": "trust-max-depth-0",
+      "rule": "trust-policy",
+      "expect": "fail",
+      "why": "max_depth at least 1",
+      "json": {
+        "max_depth": 0
+      }
+    },
+    {
+      "id": "trust-stale-mode-bad",
+      "rule": "trust-policy",
+      "expect": "fail",
+      "why": "on_stale is fail-closed or fail-open",
+      "json": {
+        "srl": {
+          "on_stale": "maybe"
+        }
+      }
+    },
+    {
+      "id": "trust-rule-unknown-member",
+      "rule": "trust-policy",
+      "expect": "fail",
+      "why": "unknown member of a rule",
+      "json": {
+        "rules": [
+          {
+            "claim": "operator",
+            "bar": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "trust-roots-not-array",
+      "rule": "trust-policy",
+      "expect": "fail",
+      "why": "roots is an array",
+      "json": {
+        "roots": "atep:x"
+      }
+    },
+    {
+      "id": "trust-rule-ok",
+      "rule": "trust-policy",
+      "expect": "pass",
+      "why": "rule with root and age",
+      "json": {
+        "roots": [
+          "atep:x"
+        ],
+        "rules": [
+          {
+            "claim": "operator",
+            "root": "atep:x",
+            "max_age_days": 30
+          }
+        ],
+        "atep_r": true,
+        "require_inclusion": true,
+        "trusted_logs": [],
+        "srl": {
+          "on_stale": "fail-open",
+          "on_missing": "fail-closed"
+        }
+      }
+    },
+    {
+      "id": "result-rejected-ok",
+      "rule": "verify-rejected",
+      "expect": "pass",
+      "why": "rejected with cause",
+      "json": {
+        "ok": false,
+        "step": 9,
+        "error": "attestation_invalid",
+        "cause": {
+          "step": 4,
+          "error": "x"
+        }
+      }
+    },
+    {
+      "id": "result-rejected-step-10",
+      "rule": "verify-rejected",
+      "expect": "fail",
+      "why": "step is 1 to 9",
+      "json": {
+        "ok": false,
+        "step": 10,
+        "error": "x"
+      }
+    },
+    {
+      "id": "result-rejected-no-error",
+      "rule": "verify-rejected",
+      "expect": "fail",
+      "why": "error missing",
+      "json": {
+        "ok": false,
+        "step": 1
+      }
+    },
+    {
+      "id": "monitor-alert-ok",
+      "rule": "monitor-expected",
+      "expect": "pass",
+      "why": "alert of a successor chain",
+      "json": {
+        "alerts": [
+          {
+            "alert": "successor_chain",
+            "entry": 1,
+            "issuer": "a",
+            "subject": "b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "monitor-alert-unknown",
+      "rule": "monitor-expected",
+      "expect": "fail",
+      "why": "unknown alert name",
+      "json": {
+        "alerts": [
+          {
+            "alert": "other",
+            "entry": 1,
+            "issuer": "a",
+            "subject": "b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wk-ok",
+      "rule": "well-known-document",
+      "expect": "pass",
+      "why": "well-known document with a junk agents entry and unknown member",
+      "json": {
+        "version": 1,
+        "agents": [
+          "atep:x",
+          7
+        ],
+        "domain": "example.com",
+        "srl-url": "https://e/srl",
+        "updated": 5,
+        "extra": 1
+      }
+    },
+    {
+      "id": "wk-version-2",
+      "rule": "well-known-document",
+      "expect": "fail",
+      "why": "version must be 1",
+      "json": {
+        "version": 2,
+        "agents": []
+      }
+    },
+    {
+      "id": "wk-no-agents",
+      "rule": "well-known-document",
+      "expect": "fail",
+      "why": "agents missing",
+      "json": {
+        "version": 1
+      }
+    },
+    {
+      "id": "wk-agents-not-array",
+      "rule": "well-known-document",
+      "expect": "fail",
+      "why": "agents is an array",
+      "json": {
+        "version": 1,
+        "agents": "x"
+      }
+    }
+  ]
+}

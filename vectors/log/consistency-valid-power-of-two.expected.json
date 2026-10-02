@@ -1,0 +1,29 @@
+{
+  "name": "consistency-valid-power-of-two",
+  "category": "log",
+  "description": "Old tree size 4 (a power of two, so the old root is the first proof node) to size 7.",
+  "cbor_file": "consistency-valid-power-of-two.cbor",
+  "cbor_sha256": "77e53349b7c96d9556f9f81a15281e74c2698a9748b6ed5988e5308e33ff0f4f",
+  "inputs": {
+    "now": 1800000000,
+    "check": "consistency",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": true,
+    "old": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 4,
+      "root_hash": "8fd9f9892c4bd4f983119d14d91724b68e86a6514b81bdb54b914f1e24639aa9",
+      "timestamp": 1799992200
+    },
+    "new": {
+      "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+      "tree_size": 7,
+      "root_hash": "e4fea41593603b0ceba8c06a907d5e8212cbdc964bffb1a882136fdcb8614514",
+      "timestamp": 1799999400
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "valid-ethereum-with-block-height",
+  "category": "anchor-record",
+  "description": "A record on `ethereum-mainnet` with a 0x transaction hash.",
+  "cbor_file": "valid-ethereum-with-block-height.cbor",
+  "cbor_sha256": "2dc53a1043a550cde98a0af02716aad933210d6894562e942b8bf1e77f5c5d85",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": true,
+    "record": {
+      "checkpoint_hash": "cc69c6e49da6653d1dd9ba6d71dbaf4dbe92abf80e6f8abf22358450e09c39f9",
+      "chain_id": "ethereum-mainnet",
+      "transaction_id": "0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b",
+      "block_height": 19000000,
+      "anchored_at": 1799997000
+    }
+  }
+}

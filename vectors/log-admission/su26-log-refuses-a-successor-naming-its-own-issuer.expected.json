@@ -1,0 +1,17 @@
+{
+  "name": "su26-log-refuses-a-successor-naming-its-own-issuer",
+  "category": "log-admission",
+  "description": "SU26. A `successor` attestation with subject equal to issuer is submitted to a log that holds nothing. Refused schema_invalid.",
+  "cbor_file": "su26-log-refuses-a-successor-naming-its-own-issuer.cbor",
+  "cbor_sha256": "e03974463df7f21a6c85cb6318955cc6dd343c154f84fb5f9b79b1dc001a1448",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "max_envelope_bytes": 65536,
+    "logged": []
+  },
+  "expected": {
+    "ok": false,
+    "refusal": "schema_invalid"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "unknown-checkpoint",
+  "category": "anchor-envelope",
+  "description": "valid-solana, looked at by a verifier that is examining another checkpoint of the same log: the record's checkpoint-hash is not the hash of that checkpoint. Expect step 9 anchor_checkpoint_mismatch.",
+  "cbor_file": "unknown-checkpoint.cbor",
+  "cbor_sha256": "87b942305e46e45d717726067fb575bbfc1cc648483a0ad5bb4ef208fce909fc",
+  "inputs": {
+    "now": 1800000000,
+    "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+    "checkpoint_hash_hex": "7e05eb667c06bea875f5a63464b22708de1f2369ec0244f171f35099c4c83680"
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "anchor_checkpoint_mismatch"
+  }
+}

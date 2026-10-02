@@ -1,0 +1,2185 @@
+{
+  "now": 1800000000,
+  "vectors": [
+    {
+      "category": "identity",
+      "name": "alice",
+      "cbor_sha256": "3809c693c268e9c09e1bd6524e19fa718528d2aad0bfad151696b337f900cc3c"
+    },
+    {
+      "category": "identity",
+      "name": "bob",
+      "cbor_sha256": "1d4ad60fc2ab0eff62d63c8cc361f88234a806ad603ff6efd80cacedea0cc462"
+    },
+    {
+      "category": "identity",
+      "name": "carol",
+      "cbor_sha256": "e958133f35a877a7566bddfc450a2ea0e864a503fc933397a8b89d42b157aa10"
+    },
+    {
+      "category": "identity",
+      "name": "mallory",
+      "cbor_sha256": "de39e64905f6925960f99395d1b1712fae38c64a6c79d77166a3ba6d3f6bfa33"
+    },
+    {
+      "category": "signing",
+      "name": "trust-doc-inline-bundle",
+      "cbor_sha256": "b33d4d8b4adcec7b964a6807d53841c56133cbf1c813203a2ea44ecb809457bf"
+    },
+    {
+      "category": "signing",
+      "name": "trust-doc-no-bundle",
+      "cbor_sha256": "310cd3142f089ca6c97c4b23a016f60ce705ddddec921a42e626cc7825a5e2f8"
+    },
+    {
+      "category": "signing",
+      "name": "trust-doc-detached-payload",
+      "cbor_sha256": "2781a2cf165b46bd5727fa71c2d3572a086318f5cd85eb6806b00e0d5b3768c3"
+    },
+    {
+      "category": "signing",
+      "name": "data-no-expiry",
+      "cbor_sha256": "1e8bc97a41b14cd7b42449aa6c70a1e36a101ea3e9a0467a3d25f212358c7ba5"
+    },
+    {
+      "category": "signing",
+      "name": "data-with-expiry",
+      "cbor_sha256": "7a69fbb5893d6f43bbd97e85b81847ec78b876de20327959a12c74d2bbdc918b"
+    },
+    {
+      "category": "verify-positive",
+      "name": "signed-trust-doc-inline-bundle",
+      "cbor_sha256": "8562681f993bc7986d874584503f9d7346e862d92a5026770a5b2568213d2b0a"
+    },
+    {
+      "category": "verify-positive",
+      "name": "signed-trust-doc-cached-bundle",
+      "cbor_sha256": "650e557e8dd09b21d8c6cdc0383056259e294fa493c3094deef26bd846ad2a29"
+    },
+    {
+      "category": "verify-positive",
+      "name": "signed-trust-doc-detached-payload",
+      "cbor_sha256": "86038af8d21ff6a74dc43be678e390912ff9518ad0db82ef374f949cf2d2a220"
+    },
+    {
+      "category": "verify-positive",
+      "name": "signed-srl-no-expiry",
+      "cbor_sha256": "f28c8c43c95fced399b84d4cf361090bdcb9a4bc6f940be1f0ec49a81983bc94"
+    },
+    {
+      "category": "verify-positive",
+      "name": "issued-at-skew-boundary",
+      "cbor_sha256": "6f85622f06e82781d5635f3fcff60b10307689288ffe81948f07e87efa535942"
+    },
+    {
+      "category": "verify-positive",
+      "name": "revocation-after-issuance-ignored",
+      "cbor_sha256": "2924b65afd8f6be47f470c4cff4aba9879267839912ba93bee639e13110a1c70"
+    },
+    {
+      "category": "verify-positive",
+      "name": "encrypted-data-envelope",
+      "cbor_sha256": "9f8f2a4e9b23cc8c2218c5dfd76ed136fec2c967d9b08a4215a0a3b94d11b388"
+    },
+    {
+      "category": "verify-positive",
+      "name": "encrypted-data-envelope-with-expiry",
+      "cbor_sha256": "7d07a129fdb603c49b212f3f5fe86eacfff54d201eb25e6f86eacdba400f6c42"
+    },
+    {
+      "category": "verify-negative",
+      "name": "missing-pq-signature",
+      "cbor_sha256": "9c0d3d82debcc5b5364dfd4a8f2dee756aa8f7a0a93371112fb54beaaef861df"
+    },
+    {
+      "category": "verify-negative",
+      "name": "missing-classical-signature",
+      "cbor_sha256": "053c8cf997822825075f7fa93f90eac378fdb7759efea6a86e168ca17c4a969f"
+    },
+    {
+      "category": "verify-negative",
+      "name": "swapped-key",
+      "cbor_sha256": "4aff60dd216f2714f3b93892c496bada73b9e889d8d7dbf21935fd9a15bdbc81"
+    },
+    {
+      "category": "verify-negative",
+      "name": "expired",
+      "cbor_sha256": "ee37087d038813d96f813529ed22b8cf574bc45ac764b8cdc0669080bd91da24"
+    },
+    {
+      "category": "verify-negative",
+      "name": "expires-exactly-now",
+      "cbor_sha256": "5c855a4285c1604c391e9bb10ce134983b464a019b6a9f2a57c8d83a0211a5f1"
+    },
+    {
+      "category": "verify-negative",
+      "name": "future-dated",
+      "cbor_sha256": "951838ecb6f7b608386cb8eb4cf2c8cb8f29d7c2bd77f509ec93beec99c2b227"
+    },
+    {
+      "category": "verify-negative",
+      "name": "future-dated-just-over-skew",
+      "cbor_sha256": "43f912208374874fa80088d69b1833081cedf8c52584f80d5d4a7543f6b33f24"
+    },
+    {
+      "category": "verify-negative",
+      "name": "bad-digest",
+      "cbor_sha256": "ce073689ed69ba068ac6922803d52ee506d4b0ea1a0e22a16b9571d125ae949d"
+    },
+    {
+      "category": "verify-negative",
+      "name": "unknown-suite",
+      "cbor_sha256": "c3ea4431c34564b0035b74f09be2c682a69e2c55a5c88b783d5b4cd056a01f6e"
+    },
+    {
+      "category": "verify-negative",
+      "name": "unsupported-version",
+      "cbor_sha256": "eb48bcc1423e954952e8af6065fd128a365c635b04bb0709fcbe8503e2d8732a"
+    },
+    {
+      "category": "verify-negative",
+      "name": "signer-mismatch",
+      "cbor_sha256": "4ac906dec49de5ccbaac7c5f0913cceb844f2dbc562f46725993c2eb9d3a117b"
+    },
+    {
+      "category": "verify-negative",
+      "name": "signer-bundle-unavailable",
+      "cbor_sha256": "c85f8bb9e4d96ca53baff3313942b3fd2e65e08cb6a7a067eb05bacda471f84a"
+    },
+    {
+      "category": "verify-negative",
+      "name": "unencrypted-non-trust-doc",
+      "cbor_sha256": "8ed365b459f74eabecfe30f745fae6f0976b2cf9c8bf6b29237af1dd30d7312a"
+    },
+    {
+      "category": "verify-negative",
+      "name": "attestation-without-expires-at",
+      "cbor_sha256": "66df881efc4833ef34000e1b0d6cd09aaa00d9208cba9bb99068a5ee6a525673"
+    },
+    {
+      "category": "verify-negative",
+      "name": "tampered-payload",
+      "cbor_sha256": "88d87e5ec12707c24ef774f4f93e8d5d3c5a095684411f25374db0f189301b42"
+    },
+    {
+      "category": "verify-negative",
+      "name": "bad-eddsa-signature",
+      "cbor_sha256": "54623fb78e05502acf2ef6760231268cdc63f4d426842229a4d6cc7eeeb53302"
+    },
+    {
+      "category": "verify-negative",
+      "name": "bad-mldsa-signature",
+      "cbor_sha256": "79941f3035e425f59c881b9b0b7ba390e45e8cc121073d3a7c0e66105518a25f"
+    },
+    {
+      "category": "verify-negative",
+      "name": "replayed-nonce",
+      "cbor_sha256": "e439bc6d31831bb1c091fde2cc42783701da894dcef7f431c82aa415700bb190"
+    },
+    {
+      "category": "verify-negative",
+      "name": "revoked-signer",
+      "cbor_sha256": "eb3f370d38656643277f0d7a65cc937acc6c096441486ab15365db3b0587124c"
+    },
+    {
+      "category": "verify-negative",
+      "name": "aead-tampered-ciphertext",
+      "cbor_sha256": "d52d16a0742e4a50459bce1043621ce1f2e4f7ad6697834a3fb6f1bea77a49b7"
+    },
+    {
+      "category": "verify-negative",
+      "name": "wrong-recipient",
+      "cbor_sha256": "9f8f2a4e9b23cc8c2218c5dfd76ed136fec2c967d9b08a4215a0a3b94d11b388"
+    },
+    {
+      "category": "verify-negative",
+      "name": "encrypted-without-recipient-key",
+      "cbor_sha256": "9f8f2a4e9b23cc8c2218c5dfd76ed136fec2c967d9b08a4215a0a3b94d11b388"
+    },
+    {
+      "category": "encryption",
+      "name": "alice-to-bob",
+      "cbor_sha256": "9f8f2a4e9b23cc8c2218c5dfd76ed136fec2c967d9b08a4215a0a3b94d11b388"
+    },
+    {
+      "category": "encryption",
+      "name": "alice-to-bob-with-expiry",
+      "cbor_sha256": "7d07a129fdb603c49b212f3f5fe86eacfff54d201eb25e6f86eacdba400f6c42"
+    },
+    {
+      "category": "identity",
+      "name": "root",
+      "cbor_sha256": "ceb6937afb117ac9b6d5400ab9c295001ffeeb92b8616db518b406fbca5906ff"
+    },
+    {
+      "category": "identity",
+      "name": "ca1",
+      "cbor_sha256": "682ec97eafad687bc07ee0e941a9a1636936fb94b0db07cc4d14865a71c7f029"
+    },
+    {
+      "category": "identity",
+      "name": "ca2",
+      "cbor_sha256": "0bf1c521ad1b72e2d2a808ae0bf5fc93e999408a96088ba9641afd9ab844f2f8"
+    },
+    {
+      "category": "identity",
+      "name": "log",
+      "cbor_sha256": "8d4d7a0be28923af4daf5e8316faf6e3535881750daa615f3708e30dee1a9bd0"
+    },
+    {
+      "category": "identity",
+      "name": "controller",
+      "cbor_sha256": "25d59e9b3241fdbbea1f5980e4e8dd31d8c4b70a88c4479f6166cc6230c46c50"
+    },
+    {
+      "category": "identity",
+      "name": "certifier",
+      "cbor_sha256": "fc828706db72b6d6b7bc504fad17ade1613503b28faf40080a71a2fb501b9328"
+    },
+    {
+      "category": "attestation",
+      "name": "operator-90-days",
+      "cbor_sha256": "010b5a2645fa0e9c051c121298099f64bc3586df9f7a80461422f473777f3a89"
+    },
+    {
+      "category": "attestation",
+      "name": "issuer-authority-delegation",
+      "cbor_sha256": "94576c05883f95556225fc9abaacf948190453f5da3f09cc0672609e0abad229"
+    },
+    {
+      "category": "attestation",
+      "name": "audited-400-days-with-evidence",
+      "cbor_sha256": "ece5a23c1ae2f19b4df6e2a4455bcf60d6e783ae91939a4d239b3fe381e3ff66"
+    },
+    {
+      "category": "attestation",
+      "name": "fleet-member",
+      "cbor_sha256": "30e86d7b1f571dd0d213d05d2370a4a3cb2f799a0729af48bd717d604a1922a0"
+    },
+    {
+      "category": "attestation",
+      "name": "safety-certified",
+      "cbor_sha256": "fe13bf5a9535cd58c1843b78802605395d66bafd2ed0f7ba3d84d21f7e21ec4b"
+    },
+    {
+      "category": "chain-positive",
+      "name": "three-level-chain",
+      "cbor_sha256": "02606ea3c32cdf6b5ab4b7ea84675deebd64e12f8fa2f37a3630cfeb66165654"
+    },
+    {
+      "category": "chain-positive",
+      "name": "root-direct-claim",
+      "cbor_sha256": "9e5a91bad0577bb12a8e205be613dd5a4f3478079b5eed27d104ab5390d4eb98"
+    },
+    {
+      "category": "chain-positive",
+      "name": "chain-out-of-band-attestations",
+      "cbor_sha256": "796b66d474065229b2c606ebc1f3ad3aaede697240dc6f38b2dc60e02ec8b251"
+    },
+    {
+      "category": "chain-positive",
+      "name": "claim-age-boundary",
+      "cbor_sha256": "261ddd0b1014e51d9228b2ec48a116c97dc954311f84a7ef991032fda91613c0"
+    },
+    {
+      "category": "chain-positive",
+      "name": "two-rules-two-roots",
+      "cbor_sha256": "21bc09ed9c62c8907ef93b87c0e51361fbdcb7743c685373f81adc610effd8f1"
+    },
+    {
+      "category": "chain-positive",
+      "name": "chain-with-fresh-srls",
+      "cbor_sha256": "2f8c73065a4f7cb53183e81b31bef1642ae502c90499b984ccebb91e3b83cbd3"
+    },
+    {
+      "category": "chain-positive",
+      "name": "stale-srl-fail-open",
+      "cbor_sha256": "393d96624bac5e353909bf4f1ab1abb5039454388f1be0cbb5240f4731ec006b"
+    },
+    {
+      "category": "chain-positive",
+      "name": "valid-inclusion-proof",
+      "cbor_sha256": "8beb5a5b693dec67232a97168722cb0be624f4b360b6709d51824b87ca5aa83a"
+    },
+    {
+      "category": "chain-negative",
+      "name": "broken-chain",
+      "cbor_sha256": "94f9c5170b355d3320dae2a189a4bf33f13623daaa87529e9d8a2df43954828a"
+    },
+    {
+      "category": "chain-negative",
+      "name": "unauthorized-issuer",
+      "cbor_sha256": "dccdab5e7f54a30b20aebb7b81c11a3575e5528058d2fa0da00da7b1b969038c"
+    },
+    {
+      "category": "chain-negative",
+      "name": "delegation-exceeds-delegator",
+      "cbor_sha256": "036a291f2b73f725760d3371526fe27a1eb85c0475b5e357bff5df897d80f29d"
+    },
+    {
+      "category": "chain-negative",
+      "name": "expired-attestation",
+      "cbor_sha256": "8d2a346b94c60469bb6f3104cb0114f61b63c819ca672051cf933935340b3cc2"
+    },
+    {
+      "category": "chain-negative",
+      "name": "attestation-lifetime-over-400-days",
+      "cbor_sha256": "5bbcbf31995fce56770187102662cbf2acfb1d622f2ea9b811eaaa4efc906936"
+    },
+    {
+      "category": "chain-negative",
+      "name": "attestation-on-issuer-srl",
+      "cbor_sha256": "4c32e598c80204f186ffdcd6e93ff7786a74194974106a25a5f472fd524acfc9"
+    },
+    {
+      "category": "chain-negative",
+      "name": "issuer-compromised-on-srl",
+      "cbor_sha256": "13ad98f8736b0dab8a1d227e5f4145e5f3309f4f67256ccd11460e61fa09c89b"
+    },
+    {
+      "category": "chain-negative",
+      "name": "subject-compromised-on-srl",
+      "cbor_sha256": "d8e5b263964adae457ccf7b24b956ca907774b896d8163d8a29e3aefe9da7435"
+    },
+    {
+      "category": "chain-negative",
+      "name": "depth-exceeded",
+      "cbor_sha256": "448b2e03aa1c38cb722c9e61fe9998a33a470a0e073e590f551498b82ffdfca2"
+    },
+    {
+      "category": "chain-negative",
+      "name": "chain-cycle",
+      "cbor_sha256": "1731b5029624bfcf5e6762a59da9c1ab1c8a2b0771562a4f67b9417021e292da"
+    },
+    {
+      "category": "chain-negative",
+      "name": "rule-claim-missing",
+      "cbor_sha256": "fcbcde654e40c64c9d1cf80742e35e98150df24c4e352ddfd17ebb9a6d018c64"
+    },
+    {
+      "category": "chain-negative",
+      "name": "claim-too-old",
+      "cbor_sha256": "fea4266cfe087801ce4a1eba86a5d837a4131675a0e1177c8581f12bddf214af"
+    },
+    {
+      "category": "chain-negative",
+      "name": "rule-root-restriction",
+      "cbor_sha256": "d207c21e00442ca893fe61a05629c291acf31517a2eda97c0fbeaadc491ee730"
+    },
+    {
+      "category": "chain-negative",
+      "name": "bad-inclusion-proof",
+      "cbor_sha256": "bf749e3087abc825ad90b80fc86d642142a9bb64b0bc8ab9d60ce497bfc2dc5b"
+    },
+    {
+      "category": "chain-negative",
+      "name": "inclusion-proof-missing",
+      "cbor_sha256": "216ee02d48c66698498346b39c5d06005318ac8ada933298a6346e2c8095b576"
+    },
+    {
+      "category": "chain-negative",
+      "name": "inclusion-proof-untrusted-log",
+      "cbor_sha256": "5de2337d9ad53d2abea9c28dd9fb07ce7a794a1970d846c115416033293accef"
+    },
+    {
+      "category": "chain-negative",
+      "name": "srl-stale-fail-closed",
+      "cbor_sha256": "baae652ff32c56ce25a75fa5384466e248393dd65b141ba739722191902b08fb"
+    },
+    {
+      "category": "chain-negative",
+      "name": "srl-missing-fail-closed",
+      "cbor_sha256": "7f12d84d75bac92c497c24d4bf3181998400f83701555ba4bc8aed910d795a9c"
+    },
+    {
+      "category": "chain-negative",
+      "name": "attestation-schema-invalid",
+      "cbor_sha256": "a9c831b3c26a59e09a1bf0b7f9da0fa3c274ca64e307ac17946dc762c7963d23"
+    },
+    {
+      "category": "chain-negative",
+      "name": "attestation-issuer-mismatch",
+      "cbor_sha256": "acd81a191c6c38a33802e437889a90117424b34c38cc77b752eb2077e6cba689"
+    },
+    {
+      "category": "chain-negative",
+      "name": "audited-without-evidence",
+      "cbor_sha256": "6a7163c15ed917cfc9004989d9ea81cecfcab7ba12fc9691adb9731f0f31cb03"
+    },
+    {
+      "category": "chain-negative",
+      "name": "attestation-bad-signature",
+      "cbor_sha256": "3bfc85c8819f3be533e24663d0597c3f3600dcb2019863301fd14a0ed82a8c63"
+    },
+    {
+      "category": "srl",
+      "name": "srl-valid",
+      "cbor_sha256": "0c5db375b89837d2aca3fe16f1ba4e9af1bca989737b7df165e6b6babc780950"
+    },
+    {
+      "category": "srl",
+      "name": "srl-stale-fail-open",
+      "cbor_sha256": "6bfe69e5b2b014b2a3464feda5a55ac3b39ef1a4d2cbc323ba6982a31c29292c"
+    },
+    {
+      "category": "srl",
+      "name": "srl-stale-fail-closed",
+      "cbor_sha256": "6bfe69e5b2b014b2a3464feda5a55ac3b39ef1a4d2cbc323ba6982a31c29292c"
+    },
+    {
+      "category": "srl",
+      "name": "srl-bad-signature",
+      "cbor_sha256": "1faeeaa714d35be9cab87974b6320a1053b1473ae8ede7706bae2d52549db603"
+    },
+    {
+      "category": "srl",
+      "name": "srl-issuer-mismatch",
+      "cbor_sha256": "b66a0a1f236de2c077ae893383eb4a5bb1e7480c0f5da99affec4713ea4d8d46"
+    },
+    {
+      "category": "srl",
+      "name": "srl-schema-invalid",
+      "cbor_sha256": "1be2401ccd7367ee128ed40a0e6dd3188e781ee3bae0e7ce13f5a3105430a460"
+    },
+    {
+      "category": "srl",
+      "name": "srl-sequence-rollback",
+      "cbor_sha256": "87e3a4adc2d49e8a51ba7511e0f1956d0f755c743c1ca299d09a7e59014f6ba1"
+    },
+    {
+      "category": "srl",
+      "name": "srl-sequence-conflict",
+      "cbor_sha256": "2be838266a579c298357b4d5cdc820c10d5253da19f96e831c2b3851f0abf454"
+    },
+    {
+      "category": "log",
+      "name": "checkpoint-valid",
+      "cbor_sha256": "e90ffb602dc4b874b8bf8076046da4a0d911018c13351c1f38ce79c2c1d1f843"
+    },
+    {
+      "category": "log",
+      "name": "checkpoint-untrusted-log",
+      "cbor_sha256": "ac11751ce6bfc5010c3bd3ceef5e9f37f0c78676e242299fec549baef047d122"
+    },
+    {
+      "category": "log",
+      "name": "checkpoint-bad-signature",
+      "cbor_sha256": "72d323a2b9a1da6839f4701667800e03a5121b478011b6a500d028be602fc65b"
+    },
+    {
+      "category": "log",
+      "name": "inclusion-valid",
+      "cbor_sha256": "77c8b708364185b634bb9c7c9c3affa46353c0720aa523ed947ad1b9ebf4762a"
+    },
+    {
+      "category": "log",
+      "name": "inclusion-valid-odd-tree",
+      "cbor_sha256": "c827fda9073814434a251d4e4f572f506f65ed3a15804bcb337afc0a6c9292e2"
+    },
+    {
+      "category": "log",
+      "name": "inclusion-wrong-audit-path",
+      "cbor_sha256": "7820a478e9feed46711308d4144b16b15eb0e29b8f61cb1b7efdb4cd5e8d8695"
+    },
+    {
+      "category": "log",
+      "name": "inclusion-altered-envelope",
+      "cbor_sha256": "082344e029204fcdd613e93c8973f5c911dd0c8b8d0742c4e1d6c3906e0b4f6d"
+    },
+    {
+      "category": "log",
+      "name": "inclusion-missing-proof",
+      "cbor_sha256": "e34aa811729a083641769e3f881af5bec2e216435e2086660119afe73e85b163"
+    },
+    {
+      "category": "log",
+      "name": "inclusion-untrusted-log",
+      "cbor_sha256": "6a02e55d95ef0b698bb8e780850b92f6f4855c93276385a74f4e5114f34ccda0"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "telemetry-fleet-member",
+      "cbor_sha256": "9a78f319359d9c655be77dd02b337681a295ff62bbdd671d3b4bb95a387a71f4"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "telemetry-no-fleet-member",
+      "cbor_sha256": "dcedbd1388c9e91005a1ec5cdee891d01b9535a7a1cd234d2c3cb951d09a4f98"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "telemetry-stale-srl-continues",
+      "cbor_sha256": "017dbf1aed4f4a8aab6851df634ffaeebf2e309e38935889607b50ad299b8b57"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "sensor-fleet-member-and-sensor-source",
+      "cbor_sha256": "5226cffbc980abfe4f1171a92d4490c0564a0bc5f48ff7229c9a8a17ac2ad81a"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "sensor-missing-sensor-source",
+      "cbor_sha256": "83b6e97f062734166429936ae0d853dbc0ad26cb8f53b838f7343c857f98712b"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "coordination-fleet-member",
+      "cbor_sha256": "bb2997e0059385e0ab0d7b0928483fb6ec16758a73ba06faf932699532835990"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "coordination-expired-fleet-member",
+      "cbor_sha256": "0449ae0f7f893491c7be30ce413d191a53b7f6edaae36f304785512f16131319"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "motion-from-fleet-controller",
+      "cbor_sha256": "5458076d2e37064490a79117eb45b09fce6921d7aeed188de1562ee7d76b5e74"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "motion-from-member-with-peer-motion",
+      "cbor_sha256": "8320f21904f61cacbb4cf59b30f882e96ed9eccfcb717ae75f1b5d241a78c713"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "motion-member-without-peer-motion",
+      "cbor_sha256": "f1d8e8bec6e33d800540429163ca23dffcae9ff22c7253a4bb76827c40a37e32"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "motion-peer-motion-lists-other-peer",
+      "cbor_sha256": "6e1892780e0618eb741db9474fdb65b75a159e2c095e5c48966b53fceed08f40"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "motion-stale-srl-fails-closed",
+      "cbor_sha256": "35a1fed0138188b135da2f983f8d63cabd32d664f061c6df4ad67fb7d9ef72d8"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "motion-sender-compromised",
+      "cbor_sha256": "5d24b64d11ca8fa281602c42d3e5446cfe9e215e206be3bfaf70f162242eaa92"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "motion-fleet-controller-revoked",
+      "cbor_sha256": "fa0190b533f76ada4739195634a38a701513341d04ffda70bcf77fae1010ace5"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "actuation-controller-and-safety-certified",
+      "cbor_sha256": "d15a40898395b4371a9df09e0b7992b7adab90fd8675966c4e74d5df3e134a8b"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "actuation-without-safety-certified",
+      "cbor_sha256": "fd03a624cb5b45cbee8ff44ea25301667fcb007fc179c03a6679aefcd50830c8"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "safety-geofence-from-safety-authority",
+      "cbor_sha256": "55b639afb35f24902023d4e5089266199b7a67c80e1c1a7f07823a2a76fc00ce"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "safety-geofence-from-certified-member",
+      "cbor_sha256": "6761810a6350b14eee580a0b5154ed7cb7c9fa581a0921494f12e935c6bfdead"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "estop-from-certified-fleet-member",
+      "cbor_sha256": "a655839a348383ab2200278ca5dadc00719f006d98c5f1a637d4f46984791b80"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "estop-with-expired-claims",
+      "cbor_sha256": "af8da2c21c3e9767c0643afdf83952a899c5e70bd5d3e2fa23261f2d4c92bace"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "estop-stale-srl-continues",
+      "cbor_sha256": "d419213b9bf3138ab0fe080a78a588739b987f68c40b99f020ac2b06b0738679"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "estop-from-uncertified-fleet-member",
+      "cbor_sha256": "56a3b3638dc339eae93c07fa790372e225f67917561552ab063b6ce7a5413328"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "estop-safety-certified-revoked",
+      "cbor_sha256": "bba1aa845039032d2bd2479561d9f33caad26d73a9644077999a01465a1719d0"
+    },
+    {
+      "category": "atep-r-positive",
+      "name": "maintenance-from-maintenance-authority",
+      "cbor_sha256": "97ad6905d73a40a93caa31a095be22ecbcb904e407005b2efd8d89085a9bb1ad"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "maintenance-from-fleet-member",
+      "cbor_sha256": "58b96124fe7c8bbf9760677676135a378d6b00f84358da0872d5afb9d3cda97f"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "missing-command-class",
+      "cbor_sha256": "a4522ecc137d337a91fdb6dd3d2f7ca74b0931a832ae6caa9f0ebae9b347ea65"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "unknown-command-class",
+      "cbor_sha256": "efc89e3716883749b1035e042f6619c47ff67869e94aa6ff3402d8e4cf56d62e"
+    },
+    {
+      "category": "atep-r-negative",
+      "name": "unencrypted-atep-r-envelope",
+      "cbor_sha256": "44189d1d887c769c7a4551c8a8050523f8824779815bbc4be92f78aaa7c51932"
+    },
+    {
+      "category": "log",
+      "name": "consistency-valid",
+      "cbor_sha256": "2e36c0bbb940ab5f44b59bf513e604249666c5e39e6195bdf28389db40e68780"
+    },
+    {
+      "category": "log",
+      "name": "consistency-valid-power-of-two",
+      "cbor_sha256": "77e53349b7c96d9556f9f81a15281e74c2698a9748b6ed5988e5308e33ff0f4f"
+    },
+    {
+      "category": "log",
+      "name": "consistency-same-size",
+      "cbor_sha256": "fb187b33b1fb8e4891da514a6e204bfe83e45a0aff6349f7a9e6cc0d6c5612cc"
+    },
+    {
+      "category": "log",
+      "name": "consistency-invalid-path",
+      "cbor_sha256": "3de44905990be754fcdd9d037dd5dbe93d2cff502624fc846d2997808f683a00"
+    },
+    {
+      "category": "log",
+      "name": "consistency-truncated-path",
+      "cbor_sha256": "2f8cbb1a75e2c894933b0573d46c9f5986257ace0a1841f61a54277a24b1059b"
+    },
+    {
+      "category": "log",
+      "name": "consistency-rewritten-history",
+      "cbor_sha256": "bc34740a588930d4945618564506925936a9b2f76011ddb22cef2c8dd60419f8"
+    },
+    {
+      "category": "log",
+      "name": "consistency-shrinking-tree",
+      "cbor_sha256": "ab0f40211cc963c0d1130193722437cfd62ee511f4d8b34c9f150c02e0fe1f1e"
+    },
+    {
+      "category": "log",
+      "name": "consistency-untrusted-log",
+      "cbor_sha256": "a5859ffdc371135f948c9bd88566681de402e04cc6d3d894e491ea26324b27ef"
+    },
+    {
+      "category": "log",
+      "name": "checkpoint-schema-invalid",
+      "cbor_sha256": "59f8ca1541ed2a705d9f8495c69af0947fb25a1cb5d9ea10cc272aa2d31bf888"
+    },
+    {
+      "category": "log",
+      "name": "split-view-none",
+      "cbor_sha256": "68e1184f85d772955afe949441b82813e2f587c1cd40d2c754c09e9977462634"
+    },
+    {
+      "category": "log",
+      "name": "split-view-same-size",
+      "cbor_sha256": "a9218712fe1ac5d65aabc4228f3184cfed520136eda6b587d0d26d4a211d854f"
+    },
+    {
+      "category": "log",
+      "name": "split-view-failed-consistency",
+      "cbor_sha256": "00f0ce11c71f59c4565690f7d75cd3c671a214553920ad94fd0032ce19d33e75"
+    },
+    {
+      "category": "log",
+      "name": "split-view-missing-proof",
+      "cbor_sha256": "5e5b1a8ec2acd27906a00f595cc44e637b336db54721e1affe9637333be7c30b"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt01-envelope-before-retirement",
+      "cbor_sha256": "3db3c57db2983410017b5ac5a5c5e83acfe93fed2c13e7ebb234439a7d229ae8"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt02-boundary-is-inclusive",
+      "cbor_sha256": "e09801f30ac9fde705fcb89f03898f7ea7d82448fb263c30890e734dababd521"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt03-envelope-after-retirement",
+      "cbor_sha256": "3857355721046216e6ed04170d43c8f0e3cb979ee77c6b89f92f06a849a9324a"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt04-expired-retirement-still-counts",
+      "cbor_sha256": "ef8c8efac06e6d78bb78a4a766c71346cd6b0b726311ddd595dbbc99c6598d69"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt05-inline-retirement-is-ignored",
+      "cbor_sha256": "f969abd1004cf3562e904a0d98d8a35e4044d106ad3ba355880fa6414ef1239c"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt06a-retired-for-another-subject-is-ignored",
+      "cbor_sha256": "59194a9feca496e1d7f5fbf554e92bfc51ffe6af709625f730a032a0c8527cba"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt06b-retired-for-another-subject-as-candidate",
+      "cbor_sha256": "a8a843955c0db51c156b0e97e408faa1375b7dcc5764128f4eb4a47e31403dd1"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt07-bad-signature-retirement-is-ignored",
+      "cbor_sha256": "83a160da789a4621118e7a15d2022642827bfd53a75f1024b1867068d5c475c7"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt08-non-text-reason-retirement-is-ignored",
+      "cbor_sha256": "89ef5957df0511239ad52bddda841d7f7fe4b2aafedc60908befecfab44a7dda"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt09-401-day-retirement-is-ignored",
+      "cbor_sha256": "ceb9f4aadce9a5f2017c57f10c70196afbe03cb3f489181dcf4240271dd370d8"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt10-srl-cannot-lift-a-retirement",
+      "cbor_sha256": "0167cd2862ed3949d46c73c25194c46d3687bf9f4bea445333f84b20663ac24d"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt11-srl-entry-retired-boundary",
+      "cbor_sha256": "37f5e29a92268893a181885408ce011bf469790d71165e24a718f2e16c844a50"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt12-srl-entry-retired-before",
+      "cbor_sha256": "0eb2a9e2914195bde771b6fb195fa1568b4dfeb345422b256119285474dc038e"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt13-direct-revocation-retired",
+      "cbor_sha256": "dbceb38b59ea813d2fbc34e8e6dae3984f9ebc9ae44246637eb6a7ed38bbe3ee"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt14-earlier-compromised-instant-wins",
+      "cbor_sha256": "93f50d61288de474af791724c96f7ee893ea1bec9a07fa5f2223a131e4148f32"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt15-before-earlier-compromised-instant",
+      "cbor_sha256": "f62a66a6be31c56bced09de6097aca6c828bfc9a27d34c73b003040101e7f29a"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt16-retirement-applies-before-later-compromised-entry",
+      "cbor_sha256": "61a76b9dff13535bfad0b0d137ca62b81ee0fcf993b3717495a357d15cffef52"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt17-before-retirement-and-later-compromised-entry",
+      "cbor_sha256": "27043e8b52fdfab7cd64ba89cc998a4bf31326453ae00085135ccc591d797fa6"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt18-retirement-itself-is-exempt",
+      "cbor_sha256": "e0325206d3ded092b0368e3b6ef5786060b397f6f01f3f4e9a282d8b4b50b194"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt19-second-retirement-is-exempt",
+      "cbor_sha256": "28070f60aafa59d2b3fe65acaaaa598eae595bcf9a07dfa3b596cc5bde7c83f5"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt20-exemption-does-not-cover-an-srl-entry",
+      "cbor_sha256": "e0325206d3ded092b0368e3b6ef5786060b397f6f01f3f4e9a282d8b4b50b194"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt21-claim-issued-before-the-retirement",
+      "cbor_sha256": "46cdcb8e67dc0290be6c80bf8e45abe8b09e9d99ceb9abd015412da65f55f80b"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt22-claim-issued-at-the-retirement",
+      "cbor_sha256": "0349f1aa2261f98350178f9fc98dfdfc87004a9c1a1d11a748646fd70ff95fa5"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt23-delegation-by-the-retired-identity",
+      "cbor_sha256": "9928dc48cd0ae421d68e642fc664fda2532b2661c1fec89b0810c9eb482af1c3"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt26-estop-from-a-retired-identity",
+      "cbor_sha256": "fe09ce336394d93211e31c48a05f42d1a03f45dc7be1f7dcd57f631ae5131aac"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt27-estop-before-the-retirement",
+      "cbor_sha256": "e4351d47478f441dac59cb3e75a916778b98bddfd08f43d9a1df947c8c1ff33a"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt28-motion-stale-srl-of-retired-issuer",
+      "cbor_sha256": "671750611e95217184babc8a09855b0a72e0c2b254e3cbd592f3101ef74f23e2"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt29-estop-stale-srl-of-retired-issuer-warns",
+      "cbor_sha256": "5f88c61f6dbdf5204eecb1127eabd00e90ce5c3f92ad24c01bafa3213a5e05f5"
+    },
+    {
+      "category": "srl-context",
+      "name": "rt24-retired-issuer-cannot-publish-an-srl",
+      "cbor_sha256": "162a7b5f054b830421e5261f11b257362a752c2a2abd3fe734c82ddcd32ac136"
+    },
+    {
+      "category": "srl-context",
+      "name": "rt25-final-srl-naming-its-own-issuer",
+      "cbor_sha256": "874242126a31445bb63ef574762e52ad5f10629d5ad76b7c33dbec6e8a3284f2"
+    },
+    {
+      "category": "log-admission",
+      "name": "rt30-log-refuses-a-document-after-a-retirement",
+      "cbor_sha256": "990e072ea7e97ae0e9a5b1874dc85ad6de906148c8a5a3945caba743c9c3e02b"
+    },
+    {
+      "category": "log-admission",
+      "name": "rt31a-log-admits-a-second-retirement",
+      "cbor_sha256": "28070f60aafa59d2b3fe65acaaaa598eae595bcf9a07dfa3b596cc5bde7c83f5"
+    },
+    {
+      "category": "log-admission",
+      "name": "rt31b-log-refuses-a-retirement-for-another-subject",
+      "cbor_sha256": "12c50e041ad3628c0bd1e190ab670c455f661d9f3de4d07125b54c2fa6801cc6"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su01-claim-inherited-through-succession",
+      "cbor_sha256": "afa6b0814e0af3086839198c5be8dfcc6760081f5011a69bb4eae46dfaf12bb0"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su02-follow-succession-absent",
+      "cbor_sha256": "ed0f8cfe98717a5f96fddd9a3202133dcf70e08f12c4e680aa7580423f0bf6d5"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su03-successor-without-claim",
+      "cbor_sha256": "f99f0769772028e787f779d925e5659c2d91a529e58324b16d7bcdbd87a8bac0"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su04-claim-without-successor",
+      "cbor_sha256": "c3f80d5745e5388f88a3e088bbd3526fe0a7896c5c6b1646ee141f5cfee4fd6d"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su05-own-claim-is-used",
+      "cbor_sha256": "9fcf8048f80a611d900e19e52b754581d5d515b6f1171899e9262e83699c1995"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su06-own-claim-revoked-is-final",
+      "cbor_sha256": "33b4aa8facfa4a3edec68b7630f723cc20b225a202d23240c1fabd132eb652f9"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su07-own-claim-too-old-is-final",
+      "cbor_sha256": "24490327932b8f953132859ba57ba9f554bd966c531c3268785e3004bcb194b0"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su08-second-hop-is-not-followed",
+      "cbor_sha256": "23c22ebb08652661a048ef405d0389d852c460f7ede991c63d6799383897eb69"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su09-old-identity-retired-at-the-successor-instant",
+      "cbor_sha256": "523dbcef64a77752e19cd5064ad706620eaa6e87ca1199f7faef40d1fac42012"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su10-old-identity-retired-one-second-later",
+      "cbor_sha256": "8847b347420b86cee59f3d2d241dcccdfcea4c425f5b4163787d25ab480ae396"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su11-old-identity-compromised-at-the-successor-instant",
+      "cbor_sha256": "3e1d5fc2d5e258132babb59a3cc155dd9f421cc59536c58010d00a94fb6871cf"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su12-successor-predates-the-compromise",
+      "cbor_sha256": "bf855813757b88f7d38be6f89c8163b6dd1256e814a3e9b66f4a8bcd2187c68f"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su13-successor-attestation-expired",
+      "cbor_sha256": "2c9733a842146f9c9e69387009173478fdab9ca2158d6a44e0575164cfe350d6"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su14a-successor-naming-its-own-issuer",
+      "cbor_sha256": "7f973b9f0c55ca3527091421f8cddfd00504a6b8711f12c68969a0fc1e0150f1"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su14b-successor-with-non-text-reason",
+      "cbor_sha256": "847affaba44b7163a7a007a23836ac875a8f785c83fad0de601cfafee36e7623"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su15-srl-of-the-old-identity-withdraws-the-successor",
+      "cbor_sha256": "94d28cd1057fb0b5fecb0a8396503de589310b0a5966b3b0016174ac0f9eeb90"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su16-stale-srl-of-the-old-identity-fail-closed",
+      "cbor_sha256": "90b81fa05ca5393abad9108f517f6f7b06a2ea72fa7ac489b0ecbff7934ff411"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su17-stale-srl-of-the-old-identity-fail-open",
+      "cbor_sha256": "5538ebb8abf1d42f9f73250dc8d0d8aa6cbbb5f5adf99d587eae136679afc064"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su18-inherited-claim-too-old",
+      "cbor_sha256": "66e9150ee5fd3889047b9f4290ce2b98bf0130aba07c7df508392196036c670e"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su19-succession-with-a-delegation-at-max-depth-3",
+      "cbor_sha256": "ac65e55a8951bf1e3f18dc83e582d09c4e00487ea8d569bed9cd5c172c721775"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su20-succession-is-one-deeper-than-the-direct-chain",
+      "cbor_sha256": "cbd784f7e42eced19437e788ff6967f8374d16b50419ec1fb1a56c14ff3f41c2"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su21-atep-r-class-requirement-through-succession",
+      "cbor_sha256": "6183cc293925162237e5c6d9a0153f9d619dea8c112195542361f3ded3f70138"
+    },
+    {
+      "category": "successor-negative",
+      "name": "su22-atep-r-without-follow-succession",
+      "cbor_sha256": "bb9a755b92754e8bf33b932f83ef862cf8368ba493144b10320027860f308003"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su23-successor-from-the-local-store",
+      "cbor_sha256": "284927a8e85797f185b819ca5896eee85af03bf64e8303726d4567cf6d6cded6"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su24-retirement-of-the-old-identity-does-not-retire-the-successor",
+      "cbor_sha256": "410722e93ac3602cb3bd016ee1ff0373f14f6b4103583721064a524359c7c765"
+    },
+    {
+      "category": "monitor",
+      "name": "su25-successor-chain-alert",
+      "cbor_sha256": "92f7289ad348478dcb84f91db1703183234f1364904fc27c775b149292c2611e"
+    },
+    {
+      "category": "log-admission",
+      "name": "su26-log-refuses-a-successor-naming-its-own-issuer",
+      "cbor_sha256": "e03974463df7f21a6c85cb6318955cc6dd343c154f84fb5f9b79b1dc001a1448"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "hash-of-checkpoint",
+      "cbor_sha256": "a6d2b58708d1827b6a194c446402e36c9507e2a9425859232daa8da85467283d"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "hash-of-empty-tree",
+      "cbor_sha256": "d783cb83b139e0a557626ede641dde791f3f535e1bb88f722e9cc4943c5cade0"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "hash-large-tree-size",
+      "cbor_sha256": "3f65b75cc560fae92d521ee72939de31fd4a84283e5a71a26d8761daac67db90"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "hash-same-payload-envelope-a",
+      "cbor_sha256": "4bed28292f582379683ab5c379ae4ca28e0e6bd5a157ae9c74951aae7deb644d"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "hash-same-payload-envelope-b",
+      "cbor_sha256": "719a36e45bd04851585cc82f5b4eb4833590a7f7145ef76dbb9d099a23c63f05"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "reject-untrusted-log",
+      "cbor_sha256": "561599b6da1aeb190248225257a2b3f0b15604c62640c7924f7fd1efa8573cee"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "reject-bad-signature",
+      "cbor_sha256": "352e3e0d7b339cd64c17988d8b7cb79ae65a8b3f4da9a7cc0f5ec771823caebe"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "reject-missing-root-hash",
+      "cbor_sha256": "3aa38b59bb2bb893d6daf87068a260a58f61748c0e067769ea0574824d80abd4"
+    },
+    {
+      "category": "checkpoint-hash",
+      "name": "reject-unknown-payload-key",
+      "cbor_sha256": "eee3fabcd742b6a4349f2c8dc5f30bc93e1a54ef20d8b59c261e464decd66f25"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-solana-with-block-height",
+      "cbor_sha256": "a3963340127f51435ace67e35a1a90490aac8eb4a81dc54c046061dc53948392"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-ethereum-with-block-height",
+      "cbor_sha256": "2dc53a1043a550cde98a0af02716aad933210d6894562e942b8bf1e77f5c5d85"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-bitcoin-with-block-height",
+      "cbor_sha256": "f5620229c772eff7c10d738db19b7d79c7540a812bc0728f1f6f3e83fe43b025"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-opentimestamps-without-block-height",
+      "cbor_sha256": "1d1993c71adbb8ac7213c5fe93cf9a3c51a8465f53be729c773d0fc4c8cc2c38"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-rekor-without-block-height",
+      "cbor_sha256": "07b31616a8e45d6202b71f5930337b8ed87a6e6e601a4614b28bfcd4b54a382c"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-extension-chain-id",
+      "cbor_sha256": "8e18825312894d01df2dbb9d7f9e98420d212e5d9042196522f6fa47a996b9b8"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-block-height-zero",
+      "cbor_sha256": "34211bdd85cb4191996fbc4c94e905b13c6b3dffbb1e6ce3427243c5d0ac5895"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-transaction-id-one-byte",
+      "cbor_sha256": "b08cbac48eb30965259e3a545171b6e26516d80307c7c7c9d06215acfdf8e505"
+    },
+    {
+      "category": "anchor-record",
+      "name": "valid-transaction-id-512-bytes",
+      "cbor_sha256": "1f3f0cc9cc757f840e66a4345d2c3841b4e87cd9149c6e36af6bc6118d6a75f4"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-unknown-key",
+      "cbor_sha256": "07eca9cb12afc989c1cfa4506e9699115a5d20529a24c6dfb715497ec2e98196"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-missing-checkpoint-hash",
+      "cbor_sha256": "cfdf2c43e78dd865932937ea193be988a665545e5ac28ce61f9a1e1dfcc4f835"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-missing-chain-id",
+      "cbor_sha256": "842e2973e37031d09b809ee29b25ee2948cb5d156e2665435f12873eba109b88"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-missing-transaction-id",
+      "cbor_sha256": "ef1b258c1272f58b3d935d7ed2beabec5d1f41de309ec4c0b524ed5b041e7980"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-missing-anchored-at",
+      "cbor_sha256": "1e65cfc867a5d84ef7aa067fa8b6c7c372224a0bcb0cf5a99600ad96e3a6fe57"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-checkpoint-hash-31-bytes",
+      "cbor_sha256": "809f3e1c150b357b508433346fe0f461f2920444ef221466eda0feebc05fe697"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-checkpoint-hash-33-bytes",
+      "cbor_sha256": "527f634790edc82205f2b7875aabf998cb8accb5d1618549e2d745bf3db58c5b"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-checkpoint-hash-as-text",
+      "cbor_sha256": "c8ddba6d213787b79886d50897f3addd3649d9fb244b2d98d339ccfa1aeaba2a"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-chain-id-unregistered",
+      "cbor_sha256": "31e622cae5ec4e9f12a932323076db24ab82ca6680b06f141d95c7e01c1c5c8c"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-chain-id-wrong-case",
+      "cbor_sha256": "f649a8743433b82a43b179e2afa0cc0340dbdbf8d7f5b026e28ff79a3fffa914"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-chain-id-empty",
+      "cbor_sha256": "5477a41a50d0855be9ebb36b607f29e0be40f257d9994feba5fae2de4a5648f9"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-chain-id-not-text",
+      "cbor_sha256": "3e4ee07fae5cf028e3375d241820a16ad0e0ca360ec4d1b0b007366e9135e61a"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-transaction-id-empty",
+      "cbor_sha256": "78e9de75d19d92766aeea3d78e338f96f5574d7afa02a35289f9863d6d0ae9b3"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-transaction-id-513-bytes",
+      "cbor_sha256": "5d580f01fcb76244c15f04896d2bf8db0222dcfaaad823cae5554a5ce7f288a6"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-transaction-id-as-bytes",
+      "cbor_sha256": "fdf949af63043f07b4d8461c506de2055915b4009e68dd530211ac6e4e8ab3fb"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-block-height-negative",
+      "cbor_sha256": "9f0aa33c7248ac109b294d00c44c48a9a4cc26c3fceacf661b9c7418c7152d47"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-block-height-as-text",
+      "cbor_sha256": "6717883065b004b98bed60255c2a9ff6ce52d7edf6a0b2082dfebeaca9732ab6"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-block-height-null",
+      "cbor_sha256": "9d320ac0fb5cec3c22e76179735a248b1d970a88d86fe5dc540eb5d789ef36ed"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-anchored-at-negative",
+      "cbor_sha256": "2a13f1885eabb5c916bc3f734d65346e3b4dfe99d7e4465f21898d427b16f786"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-anchored-at-as-text",
+      "cbor_sha256": "c6855334e57ba665b8b152c061d7ab94e6a3ab84d8f71f97ec13f99bbad8cdd4"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-not-a-map",
+      "cbor_sha256": "ac38783f6a3b2fe3b579718d6ba8493a456d800665b4433a0e7c823cff90a603"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-non-text-key",
+      "cbor_sha256": "da069c622e899cdf78a569fa0454fce3790e5b5d0e7b175e545bbcca58df0911"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-map-keys-not-sorted",
+      "cbor_sha256": "c32c71e5001ad1e87a66d94f782744cd5da26ef7a29b23ddec0d4a38c33094d9"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-duplicate-key",
+      "cbor_sha256": "72e396097cd4b9fb1ce97f9137aa110c105ceb85b10ba94db068b1757d8eb2c4"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-integer-not-shortest-form",
+      "cbor_sha256": "8971c31090e588f80c5d68bee283a170f0e2b5f8d670f91a971f76235facd7c8"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-indefinite-length-map",
+      "cbor_sha256": "5554b04b55f64269a949b64e0bd2b5f659f13bf02b454d57041197b18097407c"
+    },
+    {
+      "category": "anchor-record",
+      "name": "reject-trailing-bytes",
+      "cbor_sha256": "10504450241c441366d5ea8fcac155d43ca33afc3a9ad6cbd195d7929591b93e"
+    },
+    {
+      "category": "chain-id",
+      "name": "registered-solana-mainnet",
+      "cbor_sha256": "b64ee82e37dd825617520f3248a7f2fd6656d05a428626f003c5048ade08e05b"
+    },
+    {
+      "category": "chain-id",
+      "name": "registered-ethereum-mainnet",
+      "cbor_sha256": "ea8074af318df8255ccddd30a376448529f0fff5234e29e4951f6466211ae370"
+    },
+    {
+      "category": "chain-id",
+      "name": "registered-bitcoin-mainnet",
+      "cbor_sha256": "5347bbbc4af003be9b5f32035e830c7ce5f063e4d7f66248a9aa7588cc9466fb"
+    },
+    {
+      "category": "chain-id",
+      "name": "registered-opentimestamps",
+      "cbor_sha256": "44813fe088eebb615e3d67780672d818f8a4842f76a0170fbef93f585a32d664"
+    },
+    {
+      "category": "chain-id",
+      "name": "registered-rekor",
+      "cbor_sha256": "367c746fd46ac94bb8e1e7f4e1b72ef17dc6dbf0dbe7cefa650c48921a83c4f4"
+    },
+    {
+      "category": "chain-id",
+      "name": "extension-one-letter",
+      "cbor_sha256": "ba2194bf4886d795877b6e1c91e723752062283aeb58a0f704217781a60f8d79"
+    },
+    {
+      "category": "chain-id",
+      "name": "extension-name",
+      "cbor_sha256": "c50cdd1af9c4d0a63778fe820f1aeec991ed7c08063981969daad766e914a431"
+    },
+    {
+      "category": "chain-id",
+      "name": "extension-inner-hyphens-and-digits",
+      "cbor_sha256": "5056e0477c9ff935b8528262430cee71220d1de6f84d328edb7bcfb4bbc51d11"
+    },
+    {
+      "category": "chain-id",
+      "name": "extension-digit-first",
+      "cbor_sha256": "882deff38d7a10de861a0756438808c0f8bef5d1c5bdffd549a838aedc780003"
+    },
+    {
+      "category": "chain-id",
+      "name": "extension-64-bytes",
+      "cbor_sha256": "9de5e7fb1f96aebcb5d4c1a1ccb39e711841fc699e35223a7c272301c219d544"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-65-bytes",
+      "cbor_sha256": "1ea439cc91f9e19a05c695825f1773d8b93d4f15f77d67afe1ade45dd882bde8"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-empty",
+      "cbor_sha256": "8d33f520a3c4cef80d2453aef81b612bfe1cb44c8b2025630ad38662763f13d3"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-prefix-only",
+      "cbor_sha256": "5d8c932142f519f431d6467c9dbcd67532ad768dbae0ebe2d6391825e28240ea"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-hyphen-only-name",
+      "cbor_sha256": "1eb8cf93ded4d279b825f29f6c498ab8fa4a61b8490e7f6eff2e09cb9d304154"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-trailing-hyphen",
+      "cbor_sha256": "1b330082742cba367f170af8845154cdd17c4f715f6842b29c31fffc3eb03403"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-leading-hyphen",
+      "cbor_sha256": "1dfa377fd187e211df50f9585b5c796f980a92436381b87e15aecfc1f2230150"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-uppercase",
+      "cbor_sha256": "3f036468540a41d6c9d78b636219be479cc484297156d8943f552b81c8fd58e5"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-underscore",
+      "cbor_sha256": "d1d143d6e1ca346954b43cb1582998a0a3fa2c9785fcfbb579034c9adb4fa6ce"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-dot",
+      "cbor_sha256": "abc1f250e3f37b2128cb1361ce0de803830e08c0b5c3db5de7e9d767177712ed"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-space",
+      "cbor_sha256": "0b64b7b6c925bd18219663025c63b8f1bf55c6bdda6dc3cd58424e21664d1fca"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-non-ascii",
+      "cbor_sha256": "81f11b47f8d17b50295988a7355290734993717c69234ad02150f6907f872347"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-prefix-uppercase",
+      "cbor_sha256": "31d4a995a8c96221fe5cd940b0f025f3f82148c2a0b4c0c82cb6c769a30bcd1d"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-prefix-underscore",
+      "cbor_sha256": "4124287679bb116bafbc0942009e417864f1c5a3956de5a1af0aacdddb11819b"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-extension-prefix-missing-hyphen",
+      "cbor_sha256": "79f46f434397e59fd1575984ac2c5406b73f0077dfaf8174b1819342702b7f8d"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-unregistered-dogecoin",
+      "cbor_sha256": "d904ac32ef9b50251660c499b1a5f9c1508f92c68519087d82f306b85df82dde"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-unregistered-prefix-of-registered",
+      "cbor_sha256": "d3d25f8341d20312589b002628bc9927d5c5c200c45896c71b38b9a28ad668fb"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-registered-wrong-case",
+      "cbor_sha256": "612db8a741fb4a76a44dadd5f163b5d6e52d7936cb638f0377a81e2629de80ff"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-registered-trailing-space",
+      "cbor_sha256": "e7e2df850401fcfc0ac9f856455691c988289a4bb15606582163df52a4933b04"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-registered-with-suffix",
+      "cbor_sha256": "98117f2bc13c33a49e9dd5b1021a5450079cadf0c35e245e17699b62fe71157f"
+    },
+    {
+      "category": "chain-id",
+      "name": "invalid-unregistered-testnet",
+      "cbor_sha256": "772147ceec0f9ab4b97b446aabd1d6edb77e107374838b72a999fba4f017ec19"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "valid-solana",
+      "cbor_sha256": "87b942305e46e45d717726067fb575bbfc1cc648483a0ad5bb4ef208fce909fc"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "valid-rekor-without-block-height",
+      "cbor_sha256": "1032a9d8cae078fd7f813aac2dbf6aa7e4a61bd931d79661b571be472dfb9c1c"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "valid-extension-chain-id",
+      "cbor_sha256": "b69015435b7bdcc0717095a80a5351255b935c2117b6753af6bbec47494122af"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "forged-eddsa-signature",
+      "cbor_sha256": "dc38288c7e42f0479d735e0e1f4168b5eb63277ef10e2644e1b49d0452506e66"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "forged-mldsa-signature",
+      "cbor_sha256": "5b2fbcb47d776c1502b81ca6b0ec397412a7c1ac0a12d46fb381079ab162f5df"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "forged-payload-altered-after-signing",
+      "cbor_sha256": "e9eb89c99fd340d3f3679316b3372068278ee1f6e0668ca7f00198717e7f32eb"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "signed-by-another-identity",
+      "cbor_sha256": "6179b601271ed65e2716d0d31357c5bdfb2a70f88346de1aed51a4f14ce37cab"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "unknown-checkpoint",
+      "cbor_sha256": "87b942305e46e45d717726067fb575bbfc1cc648483a0ad5bb4ef208fce909fc"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "wrong-content-type",
+      "cbor_sha256": "67391f25b82d4ef12a56eb556dcaa11ff7233225bdc585732021c205b3353ec2"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "payload-unknown-key",
+      "cbor_sha256": "5712d753ecbf0f7a4f89d3f845f3f4df81778a5464a5a67f7da1b691ce2a7609"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "payload-unregistered-chain-id",
+      "cbor_sha256": "45234b57bfe0efff4bf7bedf0388a855fc725d416d5bbd1688c31142946cff7b"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "payload-not-a-map",
+      "cbor_sha256": "188298073bfd0e3da06dd63d4ece34a8d9df0e52fff0db4b32212b76072be3fb"
+    },
+    {
+      "category": "anchor-envelope",
+      "name": "issued-in-the-future",
+      "cbor_sha256": "4aaeaa261cabfeb8c464106cf06a5fadb575fe3072c5111f035e8dabf742d2b2"
+    },
+    {
+      "category": "anchor-media-type",
+      "name": "bare-anchor-envelope-accepted",
+      "cbor_sha256": "aca53dd9823f47dbde457682e4dafd534cc0c980ebf32b87f6f079f781e58b5d"
+    },
+    {
+      "category": "anchor-media-type",
+      "name": "bare-anchor-envelope-garbage-payload-accepted",
+      "cbor_sha256": "d069de890752b93ad1755b8fd88671cd06278121a97326bcd18d490ea058c0c3"
+    },
+    {
+      "category": "anchor-media-type",
+      "name": "lookalike-media-type-rejected",
+      "cbor_sha256": "94426a0316f4daeddc8c655c68f9957428118ceab7c67ca28366a80835ae928d"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-max-age-days",
+      "cbor_sha256": "8f7743b70e20e837eb4f387598bb1485e620c75939c3e5abefb2c1b83c5e0643"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-max-age-hours",
+      "cbor_sha256": "9743f1fba70c2bb7bfb7fc6279d99aa71adfdc0677f0c0e37b928c582a2681c7"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-minimum-age-of-one",
+      "cbor_sha256": "6a7b257511df5d095af62501436478f7bc8667cdee065aef9871a284f0fe623c"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-two-rules-conjunction",
+      "cbor_sha256": "05ab4affede0b060944faad1cc0550a5c959b807bbb9740ba4ef04f65ee88a03"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-extension-chain",
+      "cbor_sha256": "da7216608501c4be7739b8be0b9dda869172555e9ed7496394df9f021bd21a7e"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-empty-array",
+      "cbor_sha256": "b375ee4b21f68e9508074a603302bfe5fb3c0b4cdd88ebb1710276250e368442"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-log-in-did-form",
+      "cbor_sha256": "9da5115538df3b705c7d5b6c4e7d0e9cde46815039828d9cecb5a020c3718d2e"
+    },
+    {
+      "category": "require-anchor",
+      "name": "valid-with-other-members",
+      "cbor_sha256": "241a3865f44dc1a328811a0356fbadc9a7b24537a2bd2e81ae00be3ccb7a81be"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-missing-log",
+      "cbor_sha256": "de3da800e1d6fd7eed5e947be1b3d4667f63f957257e9581a3dae48ef56e31cd"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-missing-chain",
+      "cbor_sha256": "293d7f1d448f83769fb564f4cdb0c9c9fb3bd758dabcbbb054920908083b1f00"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-missing-age",
+      "cbor_sha256": "da7dec28c1ea6ddfacce32f7ba9a1478185dc1adfc960644dc6c92ab4b82bf2b"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-both-ages",
+      "cbor_sha256": "08a07e58abe33e244492b525bf6b04a63913c516d1e0559dba5478c8d974ad09"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-unknown-rule-member",
+      "cbor_sha256": "66dc9b7a8b685866579cf3dbd152b4e9e2524d23d547c882f6a42b911ffd7ba6"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-age-days-zero",
+      "cbor_sha256": "ae48e2e30ed9833016e4dd94a3447045ef15f8128897465e47e30bf180bddd90"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-age-hours-zero",
+      "cbor_sha256": "185e5fb871bd03f64b356f8173f6ceeeb5edfb0bf663491eba9f39bf7d010288"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-age-negative",
+      "cbor_sha256": "674ebfe86ea40f937e02c1ae225df67eeae66568f3551da8c28ffbb42bad4203"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-age-as-text",
+      "cbor_sha256": "10e416814e1c3041357fac9a48b4fa605770698c5bd3ef3e77c1d4dd27492d5d"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-chain-unregistered",
+      "cbor_sha256": "06a1964052dba70c32b129cd59faf3609453a9d165df716e71ab938937f44252"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-chain-malformed-extension",
+      "cbor_sha256": "698cf1c0ccf7e13d4a0fa738da0566ba34b4af184bbb2511a31590dabd981127"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-chain-not-text",
+      "cbor_sha256": "3f4082bddfcd1b5e326a094b35869c5d4b308874cdbcbc6fe5d55c06085c0d1b"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-log-malformed",
+      "cbor_sha256": "d92e5ed375eaa6923da5edf2fd0942435bf87f61f12fc82e01cf7f764cfaa209"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-log-not-text",
+      "cbor_sha256": "1d94d1d80c52cc71359a36275c721d231fe1264cf61a5bf3a30f6b55297eda2c"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-rule-not-an-object",
+      "cbor_sha256": "5400ce962cb2b1474b6e4aec091894166352fd69810092670b7b66967f6e2210"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-one-bad-rule-among-good",
+      "cbor_sha256": "ffcc7caf8d401863003183c25b943cce625e7a7f83da8743508068bc5a7c1190"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-member-is-an-object",
+      "cbor_sha256": "0d83defd799ebd5742fa5a12f50aa57c29f3602f78cfedb72f1c293d9b66ed1b"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-member-is-null",
+      "cbor_sha256": "3fcb5d5474f25123d1c25cd529afd895e76d24106ac8436b417086a7e5e2427e"
+    },
+    {
+      "category": "require-anchor",
+      "name": "invalid-member-spelled-with-hyphen",
+      "cbor_sha256": "563d9c848d505db82278b3497b208d34fbaeb60680cac37029b4dff489ea6e1e"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "policy-with-only-require-anchor",
+      "cbor_sha256": "27eab6306e7f8675f5f4c9482c10ef71b61f28d8582ad41b9b4a1f7d3abc6aa6"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "with-a-rule-that-would-pass",
+      "cbor_sha256": "f07f1755d514a8d8125ebff3274f5422627fa84be7b2c9ac0f68d7bbc46b72da"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "with-a-rule-that-would-fail",
+      "cbor_sha256": "7a4d94fff6d79f4e305a0e2c19e4931b822be270147acb2d98714b8d2e76b427"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "two-require-anchor-rules",
+      "cbor_sha256": "f8ab1be8122499609f1f017a57d15c38f68f22cd2e7196fd327715e8785987c1"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "before-the-atep-r-class-requirement",
+      "cbor_sha256": "e697bca0380ca5ca90cacfed09c322fbbbc9b67e7c2426ca40ed344f051675d8"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "empty-array-is-no-rule",
+      "cbor_sha256": "c65fcd067b9b70d76a21774f7b546316f016a4b9c8bbdd674303c4e297c78ce4"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "empty-array-and-a-failing-rule",
+      "cbor_sha256": "518d3c95336faaaadfa866c0430815a88df36e244a9d2bc897f65cffd331ab39"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "step-8-failure-is-reported-first",
+      "cbor_sha256": "1e581af6503e675d45600f491ea8949d0460c5daea421c7cce2e3cd5ab98aed3"
+    },
+    {
+      "category": "anchor-not-supported",
+      "name": "step-2-failure-is-reported-first",
+      "cbor_sha256": "bf6a796f8f9aafb1cbbaf5326bb3573a53799bd3e6c3216bfcf1af076ab7f775"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-registry",
+      "cbor_sha256": "b45c149480b72e24aea2a705e9886e65cf9f16bd7e18685bf0f163f1d5c9b10b"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-verifier-with-port-path-and-query",
+      "cbor_sha256": "a7164716c374e93a093c32d56441a942e7d972444c21315582640d4fb5a77b6c"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-mcp",
+      "cbor_sha256": "b9ef9843b77edffc3cc80a0c9b26a08ddb9c2b0e812080dfcfd954ddee686a14"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-a2a-with-agent-card-digest",
+      "cbor_sha256": "45ab34a314acd68e3887bd1dee66d9b035667ea036197a30b6704731be130c87"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-extension-kind",
+      "cbor_sha256": "b1c757bfeb01a1c2557717f8b959e20ac950fe6c37870fe9777bef8adc1c8276"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-other-members-are-free",
+      "cbor_sha256": "5712e2dfb836cc1535596df0b30e6637db5a02bd708333d350dc279a837c5c28"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "valid-url-2048-characters",
+      "cbor_sha256": "6b6de52590862285dbf7acf822fcccfb1af2046b1cf577131c40fd1d1d8ff780"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-scheme-http",
+      "cbor_sha256": "33a8b34065b910764b2ca41ecaaef67fd5cac7748ef0279a07f5804207d60324"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-scheme-ftp",
+      "cbor_sha256": "d9f2a80e710735d218b19a900d9de7db60258525ebdd50ff6267b47571a2e90e"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-without-scheme",
+      "cbor_sha256": "199c9d2c0690bad9cf35a4d659ac6e89968098842f4d953101a847a13cf84614"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-with-credentials",
+      "cbor_sha256": "6351e8d84b9c2f29c6b92e1f61cf3acb3731a22669d6f14ad6d073370e132159"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-with-whitespace",
+      "cbor_sha256": "9a49fe26c2855ca95113f44f746974a00e76333361072edcb815dcca45dd1a5c"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-without-host",
+      "cbor_sha256": "17603aca77616ff1ef4c32dc6b7eb9501f6cd2cb2c531b84cce07d1e24066ede"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-with-port-and-no-host",
+      "cbor_sha256": "fd2b08eebba512f46374715d87f872d668af68f0d7cf4dd78f3f53cf8ed8a4f4"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-2049-characters",
+      "cbor_sha256": "6f139b8aa58932510fcfbe39bbe462146ee11155b673c7356b025e9d8b7d8f5d"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-not-text",
+      "cbor_sha256": "7c62c9ac447c5e0a74ec84553769588cf89f0c26f92bed7aeb1b27fb457b2bfa"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-url-missing",
+      "cbor_sha256": "2a5af7967f64be43ad849fe11c426d422f817d9cdf744497fd31ae0fde866331"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-unknown",
+      "cbor_sha256": "f957ec2ce6128668373f65d0d632a80c9bb9745b2a3e91f060266007c5774e74"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-wrong-case",
+      "cbor_sha256": "61b81f4514d87056c51a2482ddcd6eb4fb61bc55b1f220d24bb558186d50d053"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-empty",
+      "cbor_sha256": "44ed9c5a6bd0aa241ffbd9643088139e3c579ba74c45f06dcb8f323ab9caa6f3"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-extension-without-name",
+      "cbor_sha256": "ce67a340c090878ee01bd7e15752cb4d9c5607f20c8b186622895e566f7b74ef"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-extension-uppercase",
+      "cbor_sha256": "3582e68ca6b39ab47d89f9f2989660e8e2fb8cfacd27d07883c4416b45b0de3b"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-extension-underscore",
+      "cbor_sha256": "aacb2be6fe1b748e1edd3faa6f00bdfbfc15b44fdf7ae792cb32d3678b6c1194"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-not-text",
+      "cbor_sha256": "229a199034331229d4c4144a39adeab74cf1e975b783cedc655cbd603aa351e6"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-kind-missing",
+      "cbor_sha256": "5411f0f846b880bd1b688019e5de3da3aa90fc2d8245ff8e71965c8bfe158410"
+    },
+    {
+      "category": "registry-endpoint",
+      "name": "reject-lookalike-claim-uri",
+      "cbor_sha256": "6c1aa1a5680e0f85a74f5746f2968a6fbf7ec5bc2bcfc6acfc5593e54e6da656"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-lists-the-agent",
+      "cbor_sha256": "d5cc307acd401aba2a07b3b9082a4606cb6040f5884bccd4288969c6f4f5f161"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-lists-another-agent",
+      "cbor_sha256": "4f9a669ebf58bfec9522e0669c6f9086e4a6022f6354290ce3b0e0a41c03655f"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-lists-the-agent-in-did-form",
+      "cbor_sha256": "4e557fe3b178d1f8f5cc8a2099ed2675c2fdd81ce358581b2f245974d82a7255"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-junk-entries-are-ignored",
+      "cbor_sha256": "98b2fae4365d99513f13ba658e306163bc11e5edf4bfb38b7becaf6cb07e351f"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-only-junk-entries",
+      "cbor_sha256": "998f16f49e3596eca9a4f44383e92f28f954ea9f5f6110ac38bbda9a4e15fa7e"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-unknown-members-are-ignored",
+      "cbor_sha256": "bbc5c680626c3b85fd960652d1aa628ed5716bad8d109f5d0a79e946a2cc329c"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-1024-entries-agent-last",
+      "cbor_sha256": "33f0789a84f47b22a3cf638d0314d02751560b169c360bf112a7c1adefc7cf47"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-document-65536-bytes",
+      "cbor_sha256": "af488a41b93fcf039df169de8bec463bb55a23711b6b98d962a4d9264d680466"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-document-65537-bytes",
+      "cbor_sha256": "4c5d6cc3b4024837de85ff056e0de65fd04c63046b8236b61cb551c8865e9caf"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-version-2-is-not-read",
+      "cbor_sha256": "ee0dc51b81a21dfb20e3c2dea890b29cb968476dbddd2f08faa4eb83530b5737"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-version-missing",
+      "cbor_sha256": "d3e3d797ff90272d42fbc9412bfd2f0914c2b84881787bc3ae5a18b044199610"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-version-as-text",
+      "cbor_sha256": "b8eed0f0ca559f261d4f215a37a7c6f9c7c9913290036821b656dcb605da9ea1"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-agents-missing",
+      "cbor_sha256": "e8c65a48e12cbbd93cafd2d47038d35f542689c085a1772b4add533233d8c2a3"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-agents-not-an-array",
+      "cbor_sha256": "6d308156bf347213f476d5218776c71167d155c8ef70e3f28e2700387e6fb5aa"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-domain-member-names-another-host",
+      "cbor_sha256": "bcaa92838fdb4e4ebe0225cee8870ae96f326a6049b59c9b8dff8a20991cc3c7"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-domain-member-names-a-subdomain",
+      "cbor_sha256": "ea01d4bf9aa53f4296efd4aed5c50bf6bf8ad72cf2dec847fbde3ecd2905e915"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-domain-member-differs-in-case",
+      "cbor_sha256": "cd8a3aae4b1558679fc2dc60fc33725bd77bf43e61b5c6beac9611b0656f97e1"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-body-is-an-array",
+      "cbor_sha256": "98a34a274b2fe3bf99fba06c5cb563bcbd92c3ab24b021127fd50f2cfc52c1bd"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-body-is-not-json",
+      "cbor_sha256": "c4472962d47811fb36e4ff59f3e7f5bc879ca330f7c1e1061a5c93d191a21268"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-domain-member-matches",
+      "cbor_sha256": "60c82933b226789971dd422efb8ec9f63b3a263724c35eb59c2d4e97a3268eed"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-404",
+      "cbor_sha256": "0dee902bcab72179add6b73833261f4748203d51f7d940c2f4b0c83c25ef4119"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-410",
+      "cbor_sha256": "b2e963bd0a680f1597096d11621caa71c040510022acb3bbc48366e2785c49ad"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-429",
+      "cbor_sha256": "911710db20319b594120384037eaa3ecdefd6ace3ccc57eda8e38a4c9e13037f"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-500",
+      "cbor_sha256": "1f2cb5b5a5b15587346549a78f7705cc2edf8fd94e91ee02c8aee13ac962ecdb"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-503",
+      "cbor_sha256": "86b9ce420ff5a9f1b4c53a1973c9b9c2764822545c53233a61d9ecb654cea808"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-301-not-followed",
+      "cbor_sha256": "8ad9e84865b7846432d778e99ee8b7aee2febbf945752b4c47cb4360a7e12b13"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-403",
+      "cbor_sha256": "521708f0bd528957a055d06be9542b1d037f209400431193d724a4d91ec524b3"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-status-204",
+      "cbor_sha256": "e4f0048b0bcd14df66d4974bec1c316bbc5539867ddbfb22ae54042b689dd46b"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-content-type-with-charset",
+      "cbor_sha256": "31a9c5678a571eb8b689b7bcc5866ebdefd801f0eb44bb117dbed0bbbcf2b309"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-content-type-text-plain",
+      "cbor_sha256": "0b7cdab1dbd7b585bce7016ff895f01f47ec6c3c0cae759c9dcac6e63ff9d034"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-content-type-text-html",
+      "cbor_sha256": "ca30254a1293accc25f8d3ca389a331af0517d9ac87590ca2cb8392ad6b6f205"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-content-type-ld-json",
+      "cbor_sha256": "df3f34769fd89a9e34ab643b54d9df67514d1cd375e217e00caf0e9fe8407ec9"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-content-type-missing",
+      "cbor_sha256": "24fd935551e5166e96057fe96cb3428f2bcc37c1efbaf6d1411dedba0c2cf411"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-redirect-same-host-other-path",
+      "cbor_sha256": "b5f99ab282eed61cb050032d92bf0482460c6d02cd519f2e0cdd9afddd334797"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-redirect-to-another-host",
+      "cbor_sha256": "80c2c1da58041d56b320bbe677629c00d59405e0fbaf9dd7abb7bd011bb7ee76"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-redirect-to-a-subdomain",
+      "cbor_sha256": "fd8bed80e2923b7bc2bd1a5e07817e944bc20603f11ac0797e2c0504e7640505"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-redirect-to-http",
+      "cbor_sha256": "ff78e298ea70c155994b2ac3d030cdaeff08872868197925673be3f26cf6ee72"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-redirect-to-another-port",
+      "cbor_sha256": "6f85c4c8c0143da72d002653f949b187418a72561ea59d011fc9768fdf6c260f"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-redirect-to-a-host-that-starts-with-the-name",
+      "cbor_sha256": "b2d0633a7b444b118ea3a9407d4ca3abe566c06aa3f169bae4fe2c608141d2f8"
+    },
+    {
+      "category": "domain-binding",
+      "name": "wk-unavailable",
+      "cbor_sha256": "7c05814450e75aa46074dc659ea5d24edd0e2b1181f39abbf87d904ec1322e90"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-lists-the-agent",
+      "cbor_sha256": "2eae48687e86f0737882c5068696d92997614acd22aba8b0c3a2c4d84c8660ef"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-lists-the-agent-in-did-form",
+      "cbor_sha256": "39b55423bbd54e6496b2969803d566072bf2bf96d37070fb74ecbb70d324baa9"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-lists-another-agent",
+      "cbor_sha256": "5adcc3b28dc4f2a8250fdf81f2422d428c32306d31fa72e9770f72d0f367b402"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-union-of-records-and-terms",
+      "cbor_sha256": "f26d81dd5848a07c46031d8b9ad96b7fde7e09cbd5c41ab2a66281ee386adca0"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-only-unrelated-records",
+      "cbor_sha256": "1258c37bfcc7dddd8338a78f9890273dd9043eb7d09152faf485f05e1c396929"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-empty-answer",
+      "cbor_sha256": "245b543504a5c5ef3396b8d579322f642e954f3e31bf95a4cd9450e2b11c563b"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-version-term-only",
+      "cbor_sha256": "ff26a3adc79b9603de8276a29581f39747adbc79dfedc9cdf669a7a90c50ae83"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-unknown-terms-are-ignored",
+      "cbor_sha256": "e945440fcf00f87cfee9e9f7c24672aa923da1f3461ce04dde879cb8ad9f3b57"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-several-spaces-between-terms",
+      "cbor_sha256": "b673d2a9605aa91b7c417c7c4b0a41ff63005258dc3ceabff250e1921ca99010"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-malformed-id-term-is-ignored",
+      "cbor_sha256": "442f971425e551f94e8df9934dabff58044093e845be5df9855351bce6b041f4"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-uppercase-agent-id-is-not-an-agent-id",
+      "cbor_sha256": "e19ab1a7b5e86a38641eb1648c27bdf9f7b636991f4417d042536e66ccff9f4b"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-leading-space-is-not-the-version-term",
+      "cbor_sha256": "07be88dbd4d9060537fe622565ab1d14ce1295148c6b2d85c9ed1298e81dbf7c"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-version-term-must-be-exact",
+      "cbor_sha256": "a5f7825e9ea38af6a119dc8b24717ee2263d43e7cb129e47c6a1721a696f32d5"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-version-term-not-first",
+      "cbor_sha256": "29b3182b08b164b47b287a04c97e7ee06ef47bece10ec1e689e2a41e6e4eab96"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-character-strings-are-concatenated",
+      "cbor_sha256": "b87d46399ee6503baa936e6f59a3ef45203383af41cdf152edf39d29f8462279"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-record-of-1024-octets",
+      "cbor_sha256": "9b0e57d07f4c70397238b76ccf447c211fcca0ac12173dd660efcebd609360a3"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-record-of-1025-octets-is-ignored",
+      "cbor_sha256": "dfe8c9d9f895ba9a6fd3c43488c5c1a5cc4d0bb3fd3aa583679072bf3c772042"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-non-ascii-record-is-ignored",
+      "cbor_sha256": "ef2a2940317a1db5f948c49f8c6d4acbc3ace5db8bc69a36d3bd5c13d37fe231"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-sixteenth-record-is-read",
+      "cbor_sha256": "b72b7dc8e51553447f39090714d082e690f0873874f5fba604d64cf70c530fe7"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-not-dnssec-validated-still-counts",
+      "cbor_sha256": "fd8f9d7c05a340cf632a4f8c7d6804e4c1d4546c18ac0575345f8e89847672b5"
+    },
+    {
+      "category": "domain-binding",
+      "name": "txt-unavailable",
+      "cbor_sha256": "8a0274c69f25ec1ce7b58099977186747c12a45eb7191a20f6fea4f52b5df045"
+    },
+    {
+      "category": "domain-binding",
+      "name": "both-list-the-agent",
+      "cbor_sha256": "58aecaee9126e6cc4ca53d2634b2ef87bb860c0401249cfee90004971fe97fb1"
+    },
+    {
+      "category": "domain-binding",
+      "name": "stale-txt-contradicted-by-the-document",
+      "cbor_sha256": "4dc6bdbc95ccc1f0222fb62c88f09a9d862155282c8b77b4e79f86a9d58c311d"
+    },
+    {
+      "category": "domain-binding",
+      "name": "stale-document-contradicted-by-txt",
+      "cbor_sha256": "0427efa9648fca06de40818abd66e992b18a0168f0a0cdfd221e60bc4cbc3b7d"
+    },
+    {
+      "category": "domain-binding",
+      "name": "document-lists-txt-names-another-agent",
+      "cbor_sha256": "977a6632506cf073259f3b0e89889485b448a0376783854cc0324bf087c640d1"
+    },
+    {
+      "category": "domain-binding",
+      "name": "either-source-is-enough",
+      "cbor_sha256": "aa5543ab1281f0564654f1d92912e71da4a5c738ea5fd04c89474e17d6e24c1b"
+    },
+    {
+      "category": "domain-binding",
+      "name": "invalid-source-does-not-contradict",
+      "cbor_sha256": "26480598a6cbc7df7d142aa093f9596a86f654cbf41d076dbcb4a5b34812cd35"
+    },
+    {
+      "category": "domain-binding",
+      "name": "unavailable-source-does-not-block-a-listing",
+      "cbor_sha256": "bc22a82e9a6c379c3a0d5da3c0cddd22a5689c2560558c01908e15d673d35392"
+    },
+    {
+      "category": "domain-binding",
+      "name": "unavailable-source-and-a-valid-source-that-omits",
+      "cbor_sha256": "ae20d78be943370c68320f9b403023b6341d84ecce6ed06ba1843f9a85fa8e0a"
+    },
+    {
+      "category": "domain-binding",
+      "name": "neither-lists-the-agent",
+      "cbor_sha256": "73a7269ee48ee0bd0a290fd6f028e3a9884acec21c1d386e918075ec178df878"
+    },
+    {
+      "category": "domain-binding",
+      "name": "unavailable-and-absent",
+      "cbor_sha256": "b47737bac6416922132eeebf86ce40a1df0ec5ceaa56fa56cf39688a5734763b"
+    },
+    {
+      "category": "domain-binding",
+      "name": "require-both-both-list",
+      "cbor_sha256": "d05b877bfd1523cbf104e822ce10cce3520e640dc179f08fabb982779c661bba"
+    },
+    {
+      "category": "domain-binding",
+      "name": "require-both-only-the-document-lists",
+      "cbor_sha256": "a7e8eec46417633492d5b2a3d827bbd7152e1b46fb3013cfce29c635ee3c95c1"
+    },
+    {
+      "category": "domain-binding",
+      "name": "require-both-the-other-source-unavailable",
+      "cbor_sha256": "24f7c071c71bb19c7feec4540e2eb1c54214621c48b20ffe55e532824699cb2e"
+    },
+    {
+      "category": "domain-binding",
+      "name": "require-both-the-sources-disagree",
+      "cbor_sha256": "9c512fcab062e2c745369003d8ec1cc735cbf147b94239196cf094e94a5dd67a"
+    },
+    {
+      "category": "domain-binding",
+      "name": "subdomain-gets-no-record-from-its-parent",
+      "cbor_sha256": "ad060f85e0f1179e850176eb3d23280191110f52da48f4edaacf16ad706bdba2"
+    },
+    {
+      "category": "domain-binding",
+      "name": "parent-gets-no-record-from-a-subdomain",
+      "cbor_sha256": "0ee045bc04bcc30c4ac2ce6519f0ce9880ec85c9c7f08f8e8894a232d3710f49"
+    },
+    {
+      "category": "domain-binding",
+      "name": "subdomain-with-its-own-records",
+      "cbor_sha256": "d9bc7c0b82be284593d00003f79e2cae0527eb59144f104d90eb515cecfe773e"
+    },
+    {
+      "category": "domain-binding",
+      "name": "document-of-a-subdomain-names-the-parent",
+      "cbor_sha256": "d44f38bd7486beeb1045beba3d3213f231c9380ce3e632dd25884747a0e41d44"
+    },
+    {
+      "category": "domain-binding",
+      "name": "domain-uppercase-is-not-read",
+      "cbor_sha256": "b37fb0c369ecc8b727c4b1dc9f6995c793f8e3fc2329bc3262b167e4152c48d9"
+    },
+    {
+      "category": "domain-binding",
+      "name": "domain-trailing-dot-is-not-read",
+      "cbor_sha256": "6efba3415aad79102bafcfedc427d9a5609f94de9489875ba70717fdb4168c9d"
+    },
+    {
+      "category": "domain-binding",
+      "name": "domain-with-underscore-is-not-read",
+      "cbor_sha256": "45567c31715362d2b8bd7532d3f7ced73d5582dbc93a324965bbbb3af131d82f"
+    },
+    {
+      "category": "domain-binding",
+      "name": "domain-empty-label-is-not-read",
+      "cbor_sha256": "18181e39c90a8ba7e31864c9a05ed2e264d1099c3300e417156b4bc88ce13c17"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "valid-two-rules-conjunction",
+  "category": "require-anchor",
+  "description": "Two rules, two witnesses: the array is a conjunction, so both are kept in order.",
+  "cbor_file": "valid-two-rules-conjunction.cbor",
+  "cbor_sha256": "05ab4affede0b060944faad1cc0550a5c959b807bbb9740ba4ef04f65ee88a03",
+  "inputs": {
+    "check": "require-anchor",
+    "policy": {
+      "require_anchor": [
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "bitcoin-mainnet",
+          "max_age_days": 3
+        },
+        {
+          "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+          "chain": "opentimestamps",
+          "max_age_hours": 12
+        }
+      ]
+    }
+  },
+  "expected": {
+    "ok": true,
+    "require_anchor": [
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "bitcoin-mainnet",
+        "max_age_days": 3
+      },
+      {
+        "log": "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia",
+        "chain": "opentimestamps",
+        "max_age_hours": 12
+      }
+    ]
+  }
+}

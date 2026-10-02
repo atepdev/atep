@@ -1,0 +1,31 @@
+name: Specification issue
+description: The specification is ambiguous, incomplete, inconsistent with a vector, or contradicts itself.
+labels: ["spec"]
+body:
+  - type: input
+    id: draft
+    attributes:
+      label: Draft and section
+      description: For example "Draft 07, section 10, step 6".
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Quote the text. Say what two readings are possible, or which statements conflict.
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: Proposed fix
+      description: The rule you would write, and the vector (new or existing) that would pin it down.
+  - type: checkboxes
+    id: commitments
+    attributes:
+      label: Design commitments
+      description: See section 16 of the specification.
+      options:
+        - label: The proposal does not weaken any design commitment of section 16 (no global score, no mandatory root or log, no chain dependency, agents and organizations only).
+          required: true

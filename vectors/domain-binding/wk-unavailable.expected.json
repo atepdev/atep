@@ -1,0 +1,37 @@
+{
+  "name": "wk-unavailable",
+  "category": "domain-binding",
+  "description": "The fetch failed (timeout, TLS failure): unavailable, and with nothing else listing the Agent ID the result is indeterminate, never bound and never plain not bound.",
+  "cbor_file": "wk-unavailable.cbor",
+  "cbor_sha256": "7c05814450e75aa46074dc659ea5d24edd0e2b1181f39abbf87d904ec1322e90",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "unavailable": "timeout"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "unavailable",
+    "dns": "absent",
+    "outcome": "indeterminate",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

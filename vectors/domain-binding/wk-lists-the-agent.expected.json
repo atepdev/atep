@@ -1,0 +1,40 @@
+{
+  "name": "wk-lists-the-agent",
+  "category": "domain-binding",
+  "description": "Only the well-known document exists (the TXT name has no data) and it lists the Agent ID: the source is listed, the DNS source absent, the result bound. The checker reads exactly https://example.com/.well-known/atep.json and `_atep.example.com`.",
+  "cbor_file": "wk-lists-the-agent.cbor",
+  "cbor_sha256": "d5cc307acd401aba2a07b3b9082a4606cb6040f5884bccd4288969c6f4f5f161",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "listed",
+    "dns": "absent",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

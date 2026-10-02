@@ -1,0 +1,14 @@
+{
+  "name": "invalid-extension-non-ascii",
+  "category": "chain-id",
+  "description": "The name has a non ASCII letter.",
+  "cbor_file": "invalid-extension-non-ascii.cbor",
+  "cbor_sha256": "81f11b47f8d17b50295988a7355290734993717c69234ad02150f6907f872347",
+  "inputs": {
+    "check": "chain-id",
+    "id": "x-café"
+  },
+  "expected": {
+    "ok": false
+  }
+}

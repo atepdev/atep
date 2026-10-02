@@ -1,0 +1,21 @@
+{
+  "name": "controller",
+  "category": "identity",
+  "description": "Key bundle and Agent ID for `controller` (signing keys only), used by the M2 vectors.",
+  "cbor_file": "controller.cbor",
+  "cbor_sha256": "25d59e9b3241fdbbea1f5980e4e8dd31d8c4b70a88c4479f6166cc6230c46c50",
+  "inputs": {
+    "seeds": {
+      "ed25519": "967606d9db50416f48d2ab90e4fae5e57cd40c4827bb0332d5698e45e23d67dd",
+      "mldsa65": "6956477461e41e31d2be2812c100c77296ac79e6240de441a4b3a8625c07c252"
+    }
+  },
+  "expected": {
+    "agent_id": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+    "did": "did:atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+    "agent_id_hex": "25d59e9b3241fdbbea1f5980e4e8dd31d8c4b70a88c4479f6166cc6230c46c50",
+    "bundle_len": 2005,
+    "ed25519_public_hex": "bb8fcf4c97370d49b1157f4481549851f70fa0b6d1decafd9989cdeb5d63ca9b",
+    "mldsa65_public_sha256": "6f43ff44ce790be0f9cd13e81c8919e649e62ffc4e69d858561f05c79150d83c"
+  }
+}

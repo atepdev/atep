@@ -1,0 +1,19 @@
+{
+  "name": "split-view-missing-proof",
+  "category": "log",
+  "description": "Checkpoints of sizes 5 and 8 without a consistency proof cannot be compared. Expect step 9 consistency_proof_invalid.",
+  "cbor_file": "split-view-missing-proof.cbor",
+  "cbor_sha256": "5e5b1a8ec2acd27906a00f595cc44e637b336db54721e1affe9637333be7c30b",
+  "inputs": {
+    "now": 1800000000,
+    "check": "split-view",
+    "trusted_logs": [
+      "atep:rvgxuc7crer26tnpl2brn6xw4njvralvbwvgcxzxbdrq33q2tpia"
+    ]
+  },
+  "expected": {
+    "ok": false,
+    "step": 9,
+    "error": "consistency_proof_invalid"
+  }
+}

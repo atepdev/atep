@@ -1,0 +1,96 @@
+{
+  "name": "sensor-fleet-member-and-sensor-source",
+  "category": "atep-r-positive",
+  "description": "sensor data from a unit with `fleet-member` and `sensor-source`.",
+  "cbor_file": "sensor-fleet-member-and-sensor-source.cbor",
+  "cbor_sha256": "5226cffbc980abfe4f1171a92d4490c0564a0bc5f48ff7229c9a8a17ac2ad81a",
+  "inputs": {
+    "policy": {
+      "now": 1800000000,
+      "max_skew_secs": 300,
+      "recipient_seeds": {
+        "ed25519": "584dccc1cb54f194f1bdabae847af51d768c1ffa0a104443743e458e290c1c78",
+        "mldsa65": "48578462ed6c983658a6038a7d84ad28b55d848b673f2c93c163a1a8d7731fc9",
+        "x25519": "0e55aaaeb35622a10c3eb47829674cd61a50c51b6d4c0a2446e3142192119fb9",
+        "mlkem768": "b046824ad4b70ac9cd3c4cb349b39f005452fbf6e55fa2d2be2a52f737913abef307f23aaa0243442d80621a31709e921e6c749ea1ed9410ea25d5d026be1228"
+      },
+      "known_bundles": [],
+      "seen_nonces": [],
+      "revocations": [],
+      "trust": {
+        "roots": [
+          "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+          "atep:7sbiobw3ok3nnn54kbh22f5n4fqtka5sr6xuacakogrpwua3smua"
+        ],
+        "rules": [],
+        "atep_r": true
+      }
+    }
+  },
+  "expected": {
+    "ok": true,
+    "signer": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+    "content_type": "application/atep+cbor",
+    "issued_at": 1799999940,
+    "expires_at": 1800003600,
+    "nonce_hex": "96a19a18b03e6ba2a536b508db1bbf9a",
+    "encrypted": true,
+    "claims": [
+      {
+        "claim": "https://atep.dev/claims/robotics/fleet-member",
+        "issuer": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+        "root": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+        "expires_at": 1810368000,
+        "chain": [
+          {
+            "id": "6230262843eedd6ffbe79e363755f646",
+            "claim": "https://atep.dev/claims/robotics/fleet-member",
+            "subject": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+            "issuer": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          },
+          {
+            "id": "3e5bee5a3a5d397cd0c3458a5c6063f8",
+            "claim": "https://atep.dev/claims/issuer-authority",
+            "subject": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+            "issuer": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          }
+        ]
+      },
+      {
+        "claim": "https://atep.dev/claims/robotics/sensor-source",
+        "issuer": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+        "root": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+        "expires_at": 1810368000,
+        "chain": [
+          {
+            "id": "31c127e2236b5e042477feac27ec0f24",
+            "claim": "https://atep.dev/claims/robotics/sensor-source",
+            "subject": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+            "issuer": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          },
+          {
+            "id": "3e5bee5a3a5d397cd0c3458a5c6063f8",
+            "claim": "https://atep.dev/claims/issuer-authority",
+            "subject": "atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria",
+            "issuer": "atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q",
+            "issued_at": 1798272000,
+            "expires_at": 1810368000
+          }
+        ]
+      }
+    ],
+    "checkpoint": null,
+    "command_class": "sensor",
+    "warnings": [
+      "no SRL cached for issuer atep:exkz5gzsih63x2q7lgaoj2g5ghmmjnykrdceph3bm3ggemgenria; revocation status unknown",
+      "no SRL cached for issuer atep:z23jg6x3cf5mtnwviafltquvaap7524sxbqw3niywqdpxssza37q; revocation status unknown"
+    ],
+    "payload_hex": "a2646e6f746571415445502074657374207061796c6f616466766563746f726961722d73656e736f72"
+  }
+}

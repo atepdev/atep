@@ -1,0 +1,43 @@
+{
+  "name": "txt-character-strings-are-concatenated",
+  "category": "domain-binding",
+  "description": "One record given as two character-strings that split the Agent ID in the middle: the text of a record is its character-strings concatenated, with nothing between them.",
+  "cbor_file": "txt-character-strings-are-concatenated.cbor",
+  "cbor_sha256": "b87d46399ee6503baa936e6f59a3ef45203383af41cdf152edf39d29f8462279",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {},
+      "txt": {
+        "_atep.example.com": {
+          "records": [
+            [
+              "v=atep1 id=atep:hae4ne6cndu4bhq32zje4gp2o",
+              "gcsruvk2c722fiws2ztp6iazq6a"
+            ]
+          ],
+          "dnssec_validated": true
+        }
+      }
+    }
+  },
+  "expected": {
+    "well_known": "absent",
+    "dns": "listed",
+    "outcome": "bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}

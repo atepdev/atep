@@ -1,0 +1,14 @@
+{
+  "name": "reject-integer-not-shortest-form",
+  "category": "anchor-record",
+  "description": "`anchored-at` is encoded with a one byte argument head where the value fits in the initial byte: not shortest form.",
+  "cbor_file": "reject-integer-not-shortest-form.cbor",
+  "cbor_sha256": "8971c31090e588f80c5d68bee283a170f0e2b5f8d670f91a971f76235facd7c8",
+  "inputs": {
+    "check": "anchor-record"
+  },
+  "expected": {
+    "ok": false,
+    "error": "anchor_record_invalid"
+  }
+}

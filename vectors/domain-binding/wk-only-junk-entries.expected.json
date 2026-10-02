@@ -1,0 +1,40 @@
+{
+  "name": "wk-only-junk-entries",
+  "category": "domain-binding",
+  "description": "`agents` holds only entries that are not Agent IDs: a valid document that names nobody.",
+  "cbor_file": "wk-only-junk-entries.cbor",
+  "cbor_sha256": "998f16f49e3596eca9a4f44383e92f28f954ea9f5f6110ac38bbda9a4e15fa7e",
+  "inputs": {
+    "check": "domain-binding",
+    "fixture": {
+      "domain": "example.com",
+      "agent_id": "atep:hae4ne6cndu4bhq32zje4gp2ogcsruvk2c722fiws2ztp6iazq6a",
+      "options": {
+        "require_both": false,
+        "require_dnssec": false
+      },
+      "well_known": {
+        "example.com": {
+          "status": 200,
+          "final_url": "https://example.com/.well-known/atep.json",
+          "content_type": "application/json",
+          "body": "{\"version\":1,\"agents\":[\"nope\",7,\"atep:short\"]}"
+        }
+      },
+      "txt": {}
+    }
+  },
+  "expected": {
+    "well_known": "not-listed",
+    "dns": "absent",
+    "outcome": "not-bound",
+    "queried": {
+      "well_known": [
+        "example.com"
+      ],
+      "txt": [
+        "_atep.example.com"
+      ]
+    }
+  }
+}
