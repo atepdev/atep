@@ -106,7 +106,7 @@ python/                     atep_py, the independent implementation
 mcp/                        @atep/mcp read-only MCP server
 examples/                   mcp, a2a, files, http, mqtt, ros2, transport, common
 demo/                       ATEP-R fleet demo (plain HTML and ES modules)
-site/                       static sites for atep.dev and airadlabs.com
+site/                       static site for atep.dev
 scripts/ci/                 repository checks run in CI
 ```
 

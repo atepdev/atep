@@ -1,17 +1,16 @@
-# Deploying the sites on Heroku
+# Deploying the atep.dev site on Heroku
 
-Both sites are plain static files served by one small Node server, `site/server.mjs` (no dependencies). Each site is its own Heroku app built from this repository with two buildpacks: the monorepo buildpack, which keeps only the `site/` folder, and Heroku's standard `heroku/nodejs` buildpack, which runs the server from `site/Procfile`. Heroku's old static buildpack is deprecated and does not support the current Heroku-24 stack, so it is not used.
+The site is plain static files served by one small Node server, `site/server.mjs` (no dependencies). It is a Heroku app built from this repository with two buildpacks: the monorepo buildpack, which keeps only the `site/` folder, and Heroku's standard `heroku/nodejs` buildpack, which runs the server from `site/Procfile`. Heroku's old static buildpack is deprecated and does not support the current Heroku-24 stack, so it is not used.
 
 | App | Config var `SITE` | Config var `CANONICAL_HOST` | Domains |
 | --- | --- | --- | --- |
 | atep.dev | `atep.dev` | `atep.dev` | `atep.dev`, `www.atep.dev` |
-| airadlabs.com | `airadlabs.com` | not set | `airadlabs.com`, `www.airadlabs.com` |
 
-For both apps, `APP_BASE` is `site`.
+`APP_BASE` is `site`. The server can serve any folder under `site/` named by `SITE`; only `atep.dev` lives in this repository. The AIRAD LABS company site (airadlabs.com) is a separate project and is not part of this neutral protocol repository.
 
 `CANONICAL_HOST` is optional. When it is set (to `atep.dev` on the atep.dev app only), a request whose `Host` is `www.<CANONICAL_HOST>` gets one `301` to `https://<CANONICAL_HOST>/<same path and query>`, so search engines see one host. Other hosts (the `herokuapp.com` name, for example) are served as they are. When it is not set, nothing changes. `CLAIMS_DEFAULT` is a second optional variable: `https://atep.dev/claims/<name>` answers a client that sends no `Accept` header (or `*/*`) with JSON, as the specification says and the reference log does; set `CLAIMS_DEFAULT=html` to answer those with the HTML page instead (see "Claim pages" below).
 
-## In the Heroku dashboard (per app)
+## In the Heroku dashboard 
 
 1. **Settings, Buildpacks.** Remove `heroku-community/static` if present. Add, in this order: `https://github.com/lstoll/heroku-buildpack-monorepo`, then `heroku/nodejs`.
 2. **Settings, Config Vars.** Set `APP_BASE` to `site` and `SITE` to the site folder name from the table. On the atep.dev app also set `CANONICAL_HOST` to `atep.dev`.
@@ -25,7 +24,7 @@ For both apps, `APP_BASE` is `site`.
 
 `server.mjs` serves `site/<SITE>/` and reads that folder's `static.json` for response headers: a strict Content Security Policy (same-origin scripts and styles only, no inline code, no external requests), HSTS without `includeSubDomains`, `nosniff`, no framing, a strict referrer policy and a locked-down permissions policy. It redirects plain HTTP to HTTPS (Heroku reports the original scheme in `X-Forwarded-Proto`), answers only GET and HEAD, sends ETags and gzip, serves `.html` URLs as they are (the JSON-LD and `llms.txt` link to them), redirects a directory URL without a slash to the slash form, lists no directories, and never serves `static.json`, `.mjs` files, `README.md` files or dotfiles (except `.well-known`). `site/server.test.mjs` tests it for both sites (`cd site && npm test`).
 
-The atep.dev policy also allows Cloudflare Web Analytics (`https://static.cloudflareinsights.com` for the script, `https://cloudflareinsights.com` for its reports), because Cloudflare injects that script on the proxied domain and the owner wants adoption numbers; the About page says so. The airadlabs.com policy does not allow it. If a page ever needs an inline script or style or another external resource, the Content Security Policy in `static.json` must be changed deliberately.
+The atep.dev policy also allows Cloudflare Web Analytics (`https://static.cloudflareinsights.com` for the script, `https://cloudflareinsights.com` for its reports), because Cloudflare injects that script on the proxied domain and the owner wants adoption numbers; the About page says so. If a page ever needs an inline script or style or another external resource, the Content Security Policy in `static.json` must be changed deliberately.
 
 ## Claim pages
 
@@ -50,5 +49,4 @@ Add `CANONICAL_HOST=atep.dev` and send `Host: www.atep.dev` to see the redirect.
 
 ## Notes
 
-* The airadlabs.com pages link to the demo with a relative path (`../../demo/index.html`) that works from the repository but not on the live site. Decide where the demo is hosted before launch.
 * After deploy, check `https://atep.dev/llms.txt`, `https://atep.dev/claims/audited`, `https://atep.dev/sitemap.xml`, `https://atep.dev/.well-known/security.txt`, the `www` redirect (`curl -sI https://www.atep.dev/`) and the response headers with `curl -sI https://atep.dev/`.

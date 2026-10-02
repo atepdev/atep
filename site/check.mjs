@@ -9,7 +9,7 @@ import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const sites = { "atep.dev": path.join(here, "atep.dev"), "airadlabs.com": path.join(here, "airadlabs.com") };
+const sites = { "atep.dev": path.join(here, "atep.dev") };
 const errors = [];
 const err = (m) => errors.push(m);
 const read = (p) => fs.readFileSync(p, "utf8");

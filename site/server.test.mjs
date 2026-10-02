@@ -16,7 +16,7 @@ const get = (base, p, opts = {}) => fetch(base + p, { redirect: "manual", ...opt
 // fetch() would otherwise add its own accept-encoding and decompress; ask for identity unless testing gzip.
 const plain = { headers: { "accept-encoding": "identity", "x-forwarded-proto": "https" } };
 
-for (const site of ["atep.dev", "airadlabs.com"]) {
+for (const site of ["atep.dev"]) {
   test(`${site}: pages, headers and files`, async () => {
     const { s, base } = await start(site);
     try {
@@ -99,7 +99,7 @@ const raw = (base, p, headers = {}) =>
   });
 const H = { "x-forwarded-proto": "https", "accept-encoding": "identity" };
 
-for (const site of ["atep.dev", "airadlabs.com"]) {
+for (const site of ["atep.dev"]) {
   test(`${site}: 404 page has status 404 and the usual headers`, async () => {
     const { s, base } = await start(site);
     try {

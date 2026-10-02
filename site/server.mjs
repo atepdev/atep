@@ -2,7 +2,7 @@
 //
 //   SITE=atep.dev PORT=8080 node server.mjs
 //
-// SITE names the folder to serve (atep.dev or airadlabs.com). Response headers and the
+// SITE names the folder to serve (for example atep.dev). Response headers and the
 // HTTPS-only switch come from that folder's static.json. Only GET and HEAD are accepted.
 import http from "node:http";
 import fs from "node:fs";
