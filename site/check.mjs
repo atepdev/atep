@@ -58,7 +58,7 @@ const idsOf = (html) => new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((x) =>
 // The plain-language page: nav order, wording rules, the illustration disclaimer, diagram accessibility, no inline style or script.
 function checkInPractice(html, rel) {
   const nav = [...(/<nav aria-label="Main">([\s\S]*?)<\/nav>/.exec(html)?.[1] || "").matchAll(/>([^<]+)<\/a>/g)].map((m) => m[1]).join("|");
-  const want = "Overview|In practice|Specification|Claims|Demo|Quick start|Test vectors|Governance|Security|About|llms.txt";
+  const want = "Overview|In practice|Specification|Claims|Live simulator|Quick start|Test vectors|Governance|Security|About";
   if (nav !== want) err(`${rel}: nav order is ${nav}, expected ${want}`);
   if (!/<a [^>]*href="in-practice\.html" aria-current="page"/.test(html)) err(`${rel}: nav lacks aria-current on In practice`);
   const main = (/<main[\s\S]*<\/main>/.exec(html) || [""])[0];
@@ -111,7 +111,7 @@ function checkHtml(file, siteRoot) {
     else if (ou[1] !== (can[0] || want)) err(`${rel}: og:url ${ou[1]} differs from canonical`);
     const isDemo = relInSite === "demo/index.html";
     if (!isDemo && !/<a [^>]*href="(\/|)claims\/?"/.test(html)) err(`${rel}: no visible link to the claims directory in the nav`);
-    if (!isDemo && !/<a [^>]*href="(\/|)demo\/"[^>]*>Demo<\/a>/.test(html)) err(`${rel}: no Demo link in the nav`);
+    if (!isDemo && !/<a [^>]*href="(\/|)demo\/"[^>]*>Live simulator<\/a>/.test(html)) err(`${rel}: no Live simulator link in the nav`);
     if (!/<a [^>]*href="(\/|)in-practice\.html"[^>]*>In practice<\/a>/.test(html)) err(`${rel}: no In practice link in the nav`);
     if (/\sstyle=|<style/.test(html)) err(`${rel}: inline style (CSP)`);
   }

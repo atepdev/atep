@@ -9,7 +9,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 * In practice, in plain language: https://atep.dev/in-practice.html (what ATEP changes for robot fleets and AI agents, and what it does not do)
 * Specification: [`spec/ATEP-Specification-Draft-07.md`](spec/ATEP-Specification-Draft-07.md) (Draft 07, the first public draft)
 * Test vectors: [`vectors/`](vectors/README.md), 436 vectors in 28 categories
-* Interactive demo: https://atep.dev/demo/ (runs in your browser), four simulated units exchanging real encrypted envelopes, one revoked mid-run, with certified members verifying each other directly while the fleet controller is offline. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
+* Live simulator: https://atep.dev/demo/ (runs in your browser, real cryptography with simulated robots), four simulated units exchanging real encrypted envelopes, one revoked mid-run, with certified members verifying each other directly while the fleet controller is offline. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
 * Site: https://atep.dev (the site sources are in `site/`)
 
 ## Registry names are placeholders: do not install
@@ -20,7 +20,7 @@ The package names crates.io `atep`, `atep-core` and `atep-cli`, npm `@atep/core`
 
 Run all commands from the repository root. The examples below verify the same vector, `vectors/verify-positive/signed-trust-doc-inline-bundle.cbor`, at the reference time `now = 1800000000` that every vector uses.
 
-### The demo (Node 18 or later, no build, no install)
+### The live simulator (Node 18 or later, no build, no install)
 
 ```
 node demo/serve.mjs          # then open http://127.0.0.1:8088/
@@ -85,7 +85,7 @@ ATEP is a layer that composes with these, not a replacement for any of them. The
 | Python implementation | `python/` | Standard library only, written from the spec and vectors without the Rust code; 470 tests, 431 of 436 vectors (5 skipped by name). |
 | MCP server | `mcp/` | Read-only tools: verify, inspect, log lookups; 54 tests. |
 | Carrier examples | `examples/` | MCP, A2A, files, HTTP (25 tests), MQTT (5 tests, in-process broker), ROS 2 (not run on a ROS 2 install). |
-| Demo | `demo/` | Four simulated units, real envelopes, a controller-offline mode; 80 self-test assertions. |
+| Live simulator | `demo/` | Four simulated units, real envelopes, a controller-offline mode; 80 self-test assertions. |
 
 Honest limits:
 

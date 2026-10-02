@@ -106,8 +106,8 @@ const hasHex = (v) => JSON.stringify(v).includes('"$hex"');
 const SET_ID = NS; // https://atep.dev/claims/
 
 const NAV = [
-  ["/", "Overview"], ["/in-practice.html", "In practice"], ["/specification.html", "Specification"], ["/claims/", "Claims"], ["/demo/", "Demo"], ["/quickstart.html", "Quick start"],
-  ["/vectors.html", "Test vectors"], ["/governance.html", "Governance"], ["/security.html", "Security"], ["/about.html", "About"], ["/llms.txt", "llms.txt"],
+  ["/", "Overview"], ["/in-practice.html", "In practice"], ["/specification.html", "Specification"], ["/claims/", "Claims"], ["/demo/", "Live simulator"], ["/quickstart.html", "Quick start"],
+  ["/vectors.html", "Test vectors"], ["/governance.html", "Governance"], ["/security.html", "Security"], ["/about.html", "About"],
 ];
 
 function page({ title, description, canonical, jsonld, body, current, alternate }) {
@@ -156,7 +156,7 @@ ${nav}
 ${body}
 </main>
 <footer class="site">
-  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="/about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>.</p>
+  <p>ATEP is an open protocol. The specification is licensed CC BY 4.0 and the reference code Apache-2.0. Stewarded by AIRAD LABS (<a href="/about.html">about</a>). Source: <a href="https://github.com/atepdev/atep">github.com/atepdev/atep</a>. For language models: <a href="/llms.txt">llms.txt</a>.</p>
 </footer>
 <script src="/site.js"></script>
 </body>

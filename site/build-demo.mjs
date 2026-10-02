@@ -61,7 +61,7 @@ function transformHtml(html) {
   const icon = /<link rel="icon" href="data:[^"]*">\n/.exec(html);
   if (!icon) throw new Error("build-demo: demo/index.html has no data: icon link to replace");
   html = replaceOnce(html, icon[0], "", "the data: icon link");
-  const ogTitle = "ATEP-R reference demo";
+  const ogTitle = "ATEP-R live simulator";
   const head = `${BEGIN}
 <link rel="canonical" href="${CANONICAL}">
 <link rel="stylesheet" href="demo-site.css">
