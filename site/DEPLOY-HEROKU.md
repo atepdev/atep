@@ -25,7 +25,7 @@ For both apps, `APP_BASE` is `site`.
 
 `server.mjs` serves `site/<SITE>/` and reads that folder's `static.json` for response headers: a strict Content Security Policy (same-origin scripts and styles only, no inline code, no external requests), HSTS without `includeSubDomains`, `nosniff`, no framing, a strict referrer policy and a locked-down permissions policy. It redirects plain HTTP to HTTPS (Heroku reports the original scheme in `X-Forwarded-Proto`), answers only GET and HEAD, sends ETags and gzip, serves `.html` URLs as they are (the JSON-LD and `llms.txt` link to them), redirects a directory URL without a slash to the slash form, lists no directories, and never serves `static.json`, `.mjs` files, `README.md` files or dotfiles (except `.well-known`). `site/server.test.mjs` tests it for both sites (`cd site && npm test`).
 
-If a page ever needs an inline script or style or an external resource, the Content Security Policy in `static.json` must be changed deliberately.
+The atep.dev policy also allows Cloudflare Web Analytics (`https://static.cloudflareinsights.com` for the script, `https://cloudflareinsights.com` for its reports), because Cloudflare injects that script on the proxied domain and the owner wants adoption numbers; the About page says so. The airadlabs.com policy does not allow it. If a page ever needs an inline script or style or another external resource, the Content Security Policy in `static.json` must be changed deliberately.
 
 ## Claim pages
 
