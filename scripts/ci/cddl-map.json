@@ -139,7 +139,8 @@
     {
       "select": "*/*",
       "check": "input-envelopes",
-      "path": "inputs.policy.attestations[]"
+      "path": "inputs.policy.attestations[]",
+      "except": "retired-negative/rt35-other-store-entries-do-not-stop-the-scan"
     },
     {
       "select": "*/*",
@@ -288,6 +289,12 @@
       "check": "payload",
       "expect": "fail",
       "reason": "checkpoint payload lacks root-hash (step 9 checkpoint_schema_invalid), signed validly so the envelope itself is schema-valid"
+    },
+    {
+      "select": "retired-negative/rt35-other-store-entries-do-not-stop-the-scan",
+      "check": "input-envelopes",
+      "path": "inputs.policy.attestations[]",
+      "allow_non_envelope": true
     },
     {
       "select": "retired-positive/rt08-non-text-reason-retirement-is-ignored",

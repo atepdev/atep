@@ -169,7 +169,13 @@ function itemsFor(vec, c) {
   } else if (c.check === 'input-envelopes') {
     const exp = JSON.parse(fs.readFileSync(`${base}.expected.json`, 'utf8'));
     jsonPath(exp, c.path).forEach((h, i) => {
-      if (typeof h === 'string') addEnvelopeAndPayload(`${c.path}#${i}`, hex(h), ['envelope', 'payload']);
+      if (typeof h !== 'string') return;
+      if (c.allow_non_envelope) {
+        let ok = false;
+        try { ok = !!envelopeParts(hex(h)); } catch { ok = false; }
+        if (!ok) { out.push({ id, label: `${c.path}#${i}`, skip: 'not an envelope (an input the verifier must ignore)' }); return; }
+      }
+      addEnvelopeAndPayload(`${c.path}#${i}`, hex(h), ['envelope', 'payload']);
     });
   } else if (c.check === 'json') {
     const exp = JSON.parse(fs.readFileSync(`${base}.expected.json`, 'utf8'));
@@ -199,6 +205,7 @@ map.cases.forEach((c, ci) => {
   const ms = [].concat(c.select).map(re);
   for (const vec of manifest.vectors) {
     if (!ms.some((m) => m.test(`${vec.category}/${vec.name}`))) continue;
+    if (c.except && [].concat(c.except).some((x) => re(x).test(`${vec.category}/${vec.name}`))) continue;
     const items = itemsFor(vec, c);
     if (items.length) { caseHits[ci]++; covered.add(`${vec.category}/${vec.name}`); }
     for (const it of items) {

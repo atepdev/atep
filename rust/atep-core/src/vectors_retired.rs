@@ -598,10 +598,28 @@ pub(super) fn generate_gaps(out: &mut Vec<Vector>, n: &Net) -> R<()> {
     let ex = |label: &str, t: i64| env_at(n, &c.x, label, t, None, payload_for(label), &[]);
 
     // RT32: the reload of cached bytes, then a newer list of the same issuer.
-    let l1 = mk_srl(&c.x, "rt/srl-x-32a", 1, 1_799_985_000, NOW + 82_800,
-        vec![unrelated(), revoke_identity_as(&c.x, "retired", 1_799_980_000)])?;
-    let l2 = mk_srl(&c.x, "rt/srl-x-32b", 2, 1_799_986_000, NOW + 82_800,
-        vec![unrelated(), revoke_identity_as(&c.x, "retired", 1_799_980_000)])?;
+    let l1 = mk_srl(
+        &c.x,
+        "rt/srl-x-32a",
+        1,
+        1_799_985_000,
+        NOW + 82_800,
+        vec![
+            unrelated(),
+            revoke_identity_as(&c.x, "retired", 1_799_980_000),
+        ],
+    )?;
+    let l2 = mk_srl(
+        &c.x,
+        "rt/srl-x-32b",
+        2,
+        1_799_986_000,
+        NOW + 82_800,
+        vec![
+            unrelated(),
+            revoke_identity_as(&c.x, "retired", 1_799_980_000),
+        ],
+    )?;
     srl_vector(out, "rt32a-first-list-naming-its-issuer-from-before-its-issue",
         "RT32, first part. A list of X (sequence 1, issued-at 1799985000) that names X from 1799980000 is loaded into an empty cache.",
         l1.clone(), None, &[], &[])?;
