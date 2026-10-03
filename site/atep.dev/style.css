@@ -43,6 +43,17 @@ h3 { font-size: 1.1rem; margin: 1.25rem 0 0.4rem; }
 .card:hover { box-shadow: 0 0 0 1px var(--accent), 0 6px 28px -10px var(--glow); }
 .card > :first-child { margin-top: 0; }
 .card > :last-child { margin-bottom: 0; }
+/* Home page: two lists side by side, then the two short cards, so heights and edges line up. */
+.grid.home { grid-template-columns: 1fr; align-items: stretch; }
+.grid.home > .card { display: flex; flex-direction: column; }
+.grid.home .card ul { margin-bottom: 0; }
+@media (min-width: 52rem) {
+  .grid.home { grid-template-columns: 1fr 1fr; grid-template-areas: "defines start" "nodef commit"; }
+  .grid.home > .card:nth-child(1) { grid-area: defines; }
+  .grid.home > .card:nth-child(2) { grid-area: nodef; }
+  .grid.home > .card:nth-child(3) { grid-area: commit; }
+  .grid.home > .card:nth-child(4) { grid-area: start; }
+}
 .note { background: var(--warn-bg); border: 1px solid var(--border); border-left: 4px solid var(--warn-border); border-radius: 0.6rem; padding: 0.8rem 1.25rem; margin: 1.25rem 0; }
 code, pre { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.92em; background: var(--code-bg); border-radius: 0.3rem; }
 code { padding: 0.1em 0.35em; overflow-wrap: anywhere; color: var(--code-text); }
