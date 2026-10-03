@@ -184,7 +184,7 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
     let manifest: serde_json::Value =
         serde_json::from_slice(&fs::read(vectors_dir().join("manifest.json")).unwrap()).unwrap();
     let list = manifest["vectors"].as_array().unwrap();
-    assert_eq!(list.len(), 437);
+    assert_eq!(list.len(), 443);
     let digest_of = |r: std::ops::Range<usize>| -> String {
         let s: String = list[r]
             .iter()
@@ -241,6 +241,22 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
     // `motion` rejection whose cause is a stale list.
     assert_eq!(list[436]["category"], "atep-r-negative");
     assert_eq!(list[436]["name"], "motion-member-peer-motion-stale-srl");
+    // The first batch of known gaps follows: RT32 (two), RT34 (two), RT35, SU27.
+    let tail: Vec<&str> = list[437..]
+        .iter()
+        .map(|v| v["name"].as_str().unwrap())
+        .collect();
+    assert_eq!(
+        tail,
+        [
+            "rt32a-first-list-naming-its-issuer-from-before-its-issue",
+            "rt32b-newer-list-after-reload",
+            "rt34a-earliest-retirement-decides-after",
+            "rt34b-earliest-retirement-decides-before",
+            "rt35-other-store-entries-do-not-stop-the-scan",
+            "su27-root-claim-inherited-at-max-depth-1",
+        ]
+    );
 }
 
 fn digest_hex(data: &[u8]) -> String {
@@ -250,7 +266,7 @@ fn digest_hex(data: &[u8]) -> String {
         .collect()
 }
 
-/// Every case of the section 12 tables (RT1 to RT31, SU1 to SU26) has a vector
+/// Every case of the section 12 tables (RT1 to RT31, SU1 to SU26, and RT32, RT34, RT35, SU27) has a vector
 /// whose name begins with its number.
 #[test]
 fn every_retired_and_successor_case_has_a_vector() {
@@ -274,5 +290,8 @@ fn every_retired_and_successor_case_has_a_vector() {
         let p = format!("su{k:02}");
         assert!(all.iter().any(|n| n.starts_with(&p)), "no vector for SU{k}");
     }
-    assert_eq!(all.len(), 60);
+    for p in ["rt32a", "rt32b", "rt34a", "rt34b", "rt35", "su27"] {
+        assert!(all.iter().any(|n| n.starts_with(p)), "no vector for {p}");
+    }
+    assert_eq!(all.len(), 66);
 }

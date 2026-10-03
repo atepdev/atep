@@ -579,6 +579,91 @@ fn retired_vectors(out: &mut Vec<Vector>, n: &Net, c: &Cast) -> R<()> {
     Ok(())
 }
 
+/// Draft 09 batch: the cases RT34, RT35 and SU27 of the spec tables, which
+/// closed no vector before. Called after every other vector so that the
+/// manifest order of the earlier ones never moves.
+pub(super) fn generate_gaps(out: &mut Vec<Vector>, n: &Net) -> R<()> {
+    let c = cast()?;
+    let pos = "retired-positive";
+    let neg = "retired-negative";
+    let x = c.x.agent_id();
+    let ret = |label: &str, issued: i64, expires: i64| retired_att(&c.x, label, issued, expires);
+    let r = ret("rt/r", T_R, FAR)?;
+    let store = |list: &[&[u8]]| -> PolicySpec {
+        let mut p = pol(NOW);
+        p.recipient = Some(n.bob.seeds().clone());
+        p.attestations = list.iter().map(|a| a.to_vec()).collect();
+        p
+    };
+    let ex = |label: &str, t: i64| env_at(n, &c.x, label, t, None, payload_for(label), &[]);
+
+    // RT32: the reload of cached bytes, then a newer list of the same issuer.
+    let l1 = mk_srl(&c.x, "rt/srl-x-32a", 1, 1_799_985_000, NOW + 82_800,
+        vec![unrelated(), revoke_identity_as(&c.x, "retired", 1_799_980_000)])?;
+    let l2 = mk_srl(&c.x, "rt/srl-x-32b", 2, 1_799_986_000, NOW + 82_800,
+        vec![unrelated(), revoke_identity_as(&c.x, "retired", 1_799_980_000)])?;
+    srl_vector(out, "rt32a-first-list-naming-its-issuer-from-before-its-issue",
+        "RT32, first part. A list of X (sequence 1, issued-at 1799985000) that names X from 1799980000 is loaded into an empty cache.",
+        l1.clone(), None, &[], &[])?;
+    srl_vector(out, "rt32b-newer-list-after-reload",
+        "RT32, second part. The cache holds the list of the first part; a list of X (sequence 2, issued-at 1799986000) naming X from the same instant is loaded.",
+        l2, Some(l1), &[], &[])?;
+
+    // RT34: several valid retirements of one identity, the earliest decides.
+    let r2 = ret("rt/r-early", 1_799_980_000, FAR)?;
+    push(out, neg, "rt34a-earliest-retirement-decides-after",
+        "RT34, first part. The store holds R (issued 1799990000) and R', a second valid retirement of X issued at 1799980000; X signs a data envelope issued at 1799985000, after R' and before R. The earliest retirement decides. Expect step 8 signer_revoked.",
+        ex("rt/e34a", 1_799_985_000)?, store(&[&r, &r2]), Want::Reject(8, "signer_revoked"))?;
+    push(out, pos, "rt34b-earliest-retirement-decides-before",
+        "RT34, second part. The same store; X signs a data envelope issued at 1799979999, one second before R'. Accepted.",
+        ex("rt/e34b", 1_799_979_999)?, store(&[&r, &r2]), Want::Accept)?;
+
+    // RT35: entries of the store that are not retirements of X are ignored.
+    let junk = vec![0xffu8, 0x00, 0x01, 0x02];
+    let rnd = EncryptRandomness {
+        x25519_ephemeral: label_hash("rt/r-enc/x25519-ephemeral"),
+        mlkem_m: label_hash("rt/r-enc/mlkem-m"),
+        iv: label_hash("rt/r-enc/iv")[..12].try_into().unwrap(),
+    };
+    let r_enc = encrypt(&ret("rt/r-for-enc", T_R, FAR)?, n.bob.public(), &rnd)?;
+    let r_by_y = forge_att(
+        &A::std(&c.y, x, claims::RETIRED, "rt/r-by-y").window(T_R, FAR),
+        |_| {},
+    )?;
+    push(out, neg, "rt35-other-store-entries-do-not-stop-the-scan",
+        "RT35. The store holds, in order: bytes that are not an envelope, an encrypted retirement of X, a `retired` attestation about X signed by Y, then R. X signs a data envelope issued at 1799999000. The first three are ignored and do not stop the scan, so R applies. Expect step 8 signer_revoked.",
+        ex("rt/e35", T_E)?, store(&[&junk, &r_enc, &r_by_y, &r]), Want::Reject(8, "signer_revoked"))?;
+
+    // SU27: a root-issued claim inherited with max_depth 1.
+    let (o, s, i) = (c.o.agent_id(), c.s.agent_id(), c.i.agent_id());
+    let op = claims::OPERATOR;
+    let a_o = issue_att(
+        &A::std(&c.i, o, op, "su/a-o")
+            .data(operator_data())
+            .window(1_799_000_000, FAR),
+    )?;
+    let suc = successor_att(&c.o, s, "su/suc", 1_799_500_000, FAR)?;
+    let t = trust_json(
+        &[&c.i],
+        vec![json!({"claim": op, "root": i.to_text()})],
+        json!({"follow_succession": true, "max_depth": 1}),
+    );
+    let mut p = pol(NOW);
+    p.recipient = Some(n.bob.seeds().clone());
+    p.trust = Some(t);
+    p.srls = vec![
+        fresh_srl(&c.i, "su/srl-i", vec![])?,
+        srl_issued(&c.o, "su/srl-o", 1_799_400_000, NOW + 82_800, vec![])?,
+    ];
+    let got = push(out, "successor-positive", "su27-root-claim-inherited-at-max-depth-1",
+        "SU27. Roots [i], rule `operator` from i, follow_succession, max_depth 1; S signs with A_O and SUC inline. The successor attestation is not refused for depth when the claim issuer is a root (decision 52). Accepted; the chain is A_O then SUC.",
+        env_at(n, &c.s, "su/e27", T_E, None, payload_for("su/e27"), &[&a_o, &suc])?, p, Want::Accept)?;
+    if got["claims"][0]["chain"].as_array().map(|a| a.len()) != Some(2) {
+        return Err(e_("SU27 chain"));
+    }
+    Ok(())
+}
+
 fn e_(m: &str) -> AtepError {
     e(format!("generator bug: {m}"))
 }

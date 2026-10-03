@@ -192,6 +192,8 @@ What was run, on one Linux development machine (Ubuntu 20.04 under WSL) on 3 Oct
 | Bun 1.4.2 | `bun test test/` | 442 tests: 437 pass, 5 skipped by name, 0 fail |
 | Chromium 131 (headless shell, Playwright) | `node scripts/browser-vectors.mjs` (needs `playwright-core`, see the header of the script) | the vector checks run in the page: 432 pass, 5 skipped by name, 0 fail |
 
+These runs were made on the 437 vectors of that date. The suite now has 443; only Node was re-run on it (448 tests: 443 pass, 5 skipped by name).
+
 Notes:
 
 * Node: 18 or later is the intended range, and only Node 25 was run here. `init()` reads the wasm next to `index.js`.
@@ -244,7 +246,7 @@ Node 25 on the development machine (WSL2), average over 50 to 100 calls after wa
 
 `npm test` (node:test) runs, under Node, through the built package:
 
-* `test/vectors.test.mjs`: every vector listed in `../vectors/manifest.json`: **432 passed + 5 skipped = 437**.
+* `test/vectors.test.mjs`: every vector listed in `../vectors/manifest.json`: **438 passed + 5 skipped = 443**.
   The first 200 (identity, signing, encryption, verify-positive/negative, attestation, chain-positive/negative,
   srl, log, atep-r-positive/negative, retired-positive/negative, successor-positive/negative, srl-context,
   log-admission, monitor) and the 236 of Draft 05: checkpoint-hash 9, anchor-record 36, chain-id 30,

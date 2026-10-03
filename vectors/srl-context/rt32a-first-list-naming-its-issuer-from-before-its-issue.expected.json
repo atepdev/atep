@@ -1,0 +1,39 @@
+{
+  "name": "rt32a-first-list-naming-its-issuer-from-before-its-issue",
+  "category": "srl-context",
+  "description": "RT32, first part. A list of X (sequence 1, issued-at 1799985000) that names X from 1799980000 is loaded into an empty cache.",
+  "cbor_file": "rt32a-first-list-naming-its-issuer-from-before-its-issue.cbor",
+  "cbor_sha256": "7e4b390d9f2464ce875953b5b4a24ac4c96aafbdd7943180c4ab7119e9ca609d",
+  "inputs": {
+    "now": 1800000000,
+    "srl_policy": {
+      "on_stale": "fail-closed"
+    },
+    "known_bundles": [],
+    "cached_srl_hex": null,
+    "attestations": [],
+    "revocations": []
+  },
+  "expected": {
+    "ok": true,
+    "issuer": "atep:dgh5omsat3qffddpty7diq6yhi7l4du2py7rqbebtlc7d53eij7a",
+    "sequence": 1,
+    "issued_at": 1799985000,
+    "next_update": 1800082800,
+    "stale": false,
+    "revoked": [
+      {
+        "kind": "attestation",
+        "id_hex": "dbc03a9e5a2af4f6a276589235d192c5",
+        "reason": "withdrawn",
+        "revoked_at": 1799913600
+      },
+      {
+        "kind": "identity",
+        "id": "atep:dgh5omsat3qffddpty7diq6yhi7l4du2py7rqbebtlc7d53eij7a",
+        "reason": "retired",
+        "revoked_at": 1799980000
+      }
+    ]
+  }
+}

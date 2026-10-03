@@ -4,6 +4,10 @@ All notable changes to the packages of this repository are recorded here. The fo
 
 ## [Unreleased]
 
+### Added
+
+* Six test vectors, the last six of the manifest (443 vectors in 28 categories; the 437 earlier ones are unchanged), closing cases of spec section 12 that had none: `srl-context/rt32a-first-list-naming-its-issuer-from-before-its-issue`, `srl-context/rt32b-newer-list-after-reload`, `retired-negative/rt34a-earliest-retirement-decides-after`, `retired-positive/rt34b-earliest-retirement-decides-before`, `retired-negative/rt35-other-store-entries-do-not-stop-the-scan` and `successor-positive/su27-root-claim-inherited-at-max-depth-1`. Rust passes all 443; `@atep/core` and the independent Python implementation pass 438 and skip 5 by name, with no code change and no new finding. The published Drafts 07 and 08 still list RT32, RT34, RT35 and SU27 as gaps; Draft 09 must say they are closed.
+
 ### Tested
 
 * `@atep/core` was run against the vector suite under Deno 2.9.7, Bun 1.4.2 and headless Chromium 131 as well as Node 25 (432 pass and 5 skipped by name in each); `js/README.md` lists exactly what ran and what did not. New: `js/scripts/browser-vectors.mjs`, the browser runner (not part of `npm test` or CI, no new dependency).

@@ -8,7 +8,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 
 * In practice, in plain language: https://atep.dev/in-practice.html (what ATEP changes for robot fleets and AI agents, and what it does not do)
 * Specification: [`spec/ATEP-Specification-Draft-08.md`](spec/ATEP-Specification-Draft-08.md) (Draft 08, the second public draft; Draft 07, the first, stays in `spec/` unchanged)
-* Test vectors: [`vectors/`](vectors/README.md), 437 vectors in 28 categories
+* Test vectors: [`vectors/`](vectors/README.md), 443 vectors in 28 categories
 * Live simulator: https://atep.dev/demo/ (runs in your browser, real cryptography with simulated robots), four simulated units exchanging real encrypted envelopes, one revoked mid-run, with certified members verifying each other directly while the fleet controller is offline. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
 * Site: https://atep.dev (the site sources are in `site/`)
 
@@ -51,7 +51,7 @@ from atep_py.verify import verify_json
 n = '../vectors/verify-positive/signed-trust-doc-inline-bundle'
 v = json.load(open(n + '.expected.json'))
 print(verify_json(open(n + '.cbor', 'rb').read(), v['inputs']['policy']))"
-python3 -m atep_py.vectors check ../vectors     # 432 pass, 5 skipped by name; about 30 seconds
+python3 -m atep_py.vectors check ../vectors     # 438 pass, 5 skipped by name; about 30 seconds
 ```
 
 The first command prints a dictionary starting `{'ok': True, 'signer': 'atep:...'`.
@@ -91,10 +91,10 @@ ATEP is a layer that composes with these, not a replacement for any of them. The
 
 | Part | Where | State |
 | --- | --- | --- |
-| Rust core and CLI | `rust/atep-core`, `rust/atep-cli` | Passes all 437 vectors; 147 tests in the workspace. Keygen, sign, encrypt, verify (ten steps), attestations, revocation, ATEP-R command classes, retirement and succession, anchor and domain-binding checks. |
+| Rust core and CLI | `rust/atep-core`, `rust/atep-cli` | Passes all 443 vectors; 147 tests in the workspace. Keygen, sign, encrypt, verify (ten steps), attestations, revocation, ATEP-R command classes, retirement and succession, anchor and domain-binding checks. |
 | Transparency log and monitor | `rust/atep-log`, `rust/atep-monitor` | Merkle log, checkpoints, proofs, gossip, HTTP API, monitor; acceptance-tested against injected mis-issuance and forked history. |
-| npm package `@atep/core` | `js/` | Rust compiled to WASM with a TypeScript API; 442 tests, passing 432 of 437 vectors (5 need a log or monitor and are skipped by name). |
-| Python implementation | `python/` | Standard library only, written from the spec and vectors without the Rust code; 471 tests, 432 of 437 vectors (5 skipped by name). |
+| npm package `@atep/core` | `js/` | Rust compiled to WASM with a TypeScript API; 448 tests, passing 438 of 443 vectors (5 need a log or monitor and are skipped by name). |
+| Python implementation | `python/` | Standard library only, written from the spec and vectors without the Rust code; 477 tests, 438 of 443 vectors (5 skipped by name). |
 | MCP server | `mcp/` | Read-only tools: verify, inspect, log lookups; 54 tests. |
 | Carrier examples | `examples/` | MCP, A2A, files, HTTP (25 tests), MQTT (5 tests, in-process broker), ROS 2 (not run on a ROS 2 install). |
 | Live simulator | `demo/` | Four simulated units, real envelopes, a controller-offline mode; 80 self-test assertions. |
@@ -112,7 +112,7 @@ Honest limits:
 
 ```
 spec/                       the specification (Draft 08; Draft 07 is kept) and CDDL schemas (spec/schemas/)
-vectors/                    437 test vectors: the executable form of the spec
+vectors/                    443 test vectors: the executable form of the spec
 docs/                       index, and implementation findings (docs/implementation-findings/)
 rust/                       atep-core, atep-cli, atep-log (atep-logd), atep-monitor, atep-wasm
 js/                         @atep/core (WASM + TypeScript)
@@ -126,7 +126,7 @@ scripts/ci/                 repository checks run in CI
 
 ## The specification and the vectors
 
-The specification defines an identity model (Agent IDs), a COSE/CBOR envelope format, an attestation schema for third-party claims, signed revocation lists, a transparency log, a ten-step verification algorithm and a robotics profile (ATEP-R). The CDDL schemas in `spec/schemas/` are validated against all 437 vectors in CI.
+The specification defines an identity model (Agent IDs), a COSE/CBOR envelope format, an attestation schema for third-party claims, signed revocation lists, a transparency log, a ten-step verification algorithm and a robotics profile (ATEP-R). The CDDL schemas in `spec/schemas/` are validated against all 443 vectors in CI.
 
 The test vectors are authoritative: every vector is three files (`<name>.cbor` with the exact bytes, `<name>.json` as a debug view, and `<name>.expected.json` with inputs, policy and the required result including step and error code). An implementation is conformant when it reproduces every byte and every result that applies to it; where the spec text and a vector disagree, the vector wins and the text is amended. Format: [`vectors/README.md`](vectors/README.md). Ambiguities found while implementing, and how the spec resolved them: [`docs/implementation-findings/`](docs/implementation-findings/README.md). Draft numbers below 07 in those files name internal working drafts (Appendix A of the spec).
 

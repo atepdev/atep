@@ -2185,6 +2185,36 @@
       "category": "atep-r-negative",
       "name": "motion-member-peer-motion-stale-srl",
       "cbor_sha256": "cff2cead0cbde6cc3934afbc7bcb657fc48404b15e3bea7864fbf15939d3cbdf"
+    },
+    {
+      "category": "srl-context",
+      "name": "rt32a-first-list-naming-its-issuer-from-before-its-issue",
+      "cbor_sha256": "7e4b390d9f2464ce875953b5b4a24ac4c96aafbdd7943180c4ab7119e9ca609d"
+    },
+    {
+      "category": "srl-context",
+      "name": "rt32b-newer-list-after-reload",
+      "cbor_sha256": "4cd9d5970daa1484e2c5c5b056467b56690ca6851856733661dd3d5cc630a879"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt34a-earliest-retirement-decides-after",
+      "cbor_sha256": "df07ee23c82d76d90e9f75df1abb133b07f15c100b3abf62bd6c577be762a5c7"
+    },
+    {
+      "category": "retired-positive",
+      "name": "rt34b-earliest-retirement-decides-before",
+      "cbor_sha256": "17a52c14d3ccac381541ed90d086bc1f3a5ba2c5a1d19e8e1813e1a46a422cf1"
+    },
+    {
+      "category": "retired-negative",
+      "name": "rt35-other-store-entries-do-not-stop-the-scan",
+      "cbor_sha256": "e0c5ea36ea0c286cf6d1989ac44701d08e6896eec9a3f5b29d3323c3d509edb2"
+    },
+    {
+      "category": "successor-positive",
+      "name": "su27-root-claim-inherited-at-max-depth-1",
+      "cbor_sha256": "7596cb15682b0c73e75a2443dec41dfd53e73c0e2a18ccc1e345b12a78d2e32a"
     }
   ]
 }

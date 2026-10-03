@@ -448,6 +448,8 @@ pub(crate) fn generate(out: &mut Vec<Vector>) -> R<()> {
         let v = out.remove(i);
         out.push(v);
     }
+    // Draft 09: the first batch of known gaps, after everything else.
+    retired::generate_gaps(out, &n)?;
     Ok(())
 }
 
