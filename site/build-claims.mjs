@@ -21,7 +21,7 @@ const check = process.argv.includes("--check");
 
 const data = JSON.parse(fs.readFileSync(path.join(repo, "rust/atep-log/data/claims.json"), "utf8"));
 const NS = data.namespace; // https://atep.dev/claims/
-const SPEC_GH = "https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md";
+const SPEC_GH = "https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md";
 const GH_VECTORS = "https://github.com/atepdev/atep/tree/main/vectors/";
 const OG_IMAGE = "https://atep.dev/assets/og-card.jpg";
 
@@ -246,7 +246,7 @@ ${lifetimeNotes(c)}
 <ul>
 ${c.spec.map((s) => `<li>${esc(specRef(s))}</li>`).join("\n")}
 </ul>
-<p>Read the specification in the <a href="/specification.html">section map</a>, as one Markdown file (<a href="/llms-full.txt">llms-full.txt</a>) or <a href="${SPEC_GH}">on GitHub</a>. Section numbers follow Draft 07.</p>
+<p>Read the specification in the <a href="/specification.html">section map</a>, as one Markdown file (<a href="/llms-full.txt">llms-full.txt</a>) or <a href="${SPEC_GH}">on GitHub</a>. Section numbers follow Draft 08.</p>
 </section>
 <section class="blk" aria-labelledby="vec"><h2 id="vec">Test vectors</h2>
 ${cats.length

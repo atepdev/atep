@@ -1,5 +1,5 @@
-; ATEP Draft 07 CDDL schemas (RFC 8610)
-; Matches the Draft 07 text and the vectors/ directory byte for byte. Draft 06 and
+; ATEP Draft 08 CDDL schemas (RFC 8610)
+; Matches the Draft 08 text and the vectors/ directory byte for byte. Draft 06 and
 ; Draft 05 add no wire change to an envelope, attestation, SRL, checkpoint or
 ; anchor record; Draft 06 adds only comments here (the rules it states in prose
 ; were already in this file). Draft 05 added the document shapes of the monitor
@@ -14,7 +14,7 @@
 ; Header labels -70001 to -70014, alg ids -49, -70010, -70011 and kty 7 are
 ; provisional private-use values. All ATEP CBOR is deterministic (RFC 8949
 ; section 4.2.1); CDDL cannot express that, see spec section 5 "Encoding rules".
-; Validation: this file is machine-checked against all 436 vectors with the Rust
+; Validation: this file is machine-checked against all 437 vectors with the Rust
 ; `cddl` crate (scripts/ci/validate-cddl.mjs, table in scripts/ci/cddl-map.json,
 ; CI job `cddl`); see spec/schemas/NOTES.md for what that covers and what it cannot.
 

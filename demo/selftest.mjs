@@ -142,7 +142,7 @@ check("controller comes back online by the script", e.controllerOffline === fals
 e.setControllerOffline(true);
 const so = e.setStale(true);
 check(`(e) probes run between members while the controller is offline: ${so.map((r) => r.from + ">" + r.to).join(" ")}`, so.length === 3 && so.every((r) => r.from !== "u1" && r.to !== "u1" && r.delivered && r.controllerOffline));
-check(`(e) peer motion fails closed at step 9 with a stale list: ${show(so[0])}`, !so[0].ok && so[0].step === 9 && so[0].error === "claim_missing");
+check(`(e) peer motion fails closed at step 9 with a stale list: ${show(so[0])}`, !so[0].ok && so[0].step === 9 && so[0].error === "srl_stale");
 check("(e) it fails because of the stale list: the same envelope verifies with a fresh list", so[0].staleCaused === true);
 check(`(e) telemetry continues with a warning: ${show(so[1])}`, so[1].ok && so[1].warnings.length > 0 && /past next-update/.test(so[1].warnings[0]));
 check(`(e) e-stop still accepted, with a warning: ${show(so[2])}`, so[2].ok && so[2].warnings.length > 0);

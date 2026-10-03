@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ATEP Test vectors</title>
-<meta name="description" content="How the 436 ATEP test vectors work and how an implementer proves a verifier conformant.">
+<meta name="description" content="How the 437 ATEP test vectors work and how an implementer proves a verifier conformant.">
 <link rel="canonical" href="https://atep.dev/vectors.html">
 <link rel="stylesheet" href="style.css">
 <script src="theme-boot.js"></script>
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ATEP">
 <meta property="og:title" content="ATEP Test vectors">
-<meta property="og:description" content="How the 436 ATEP test vectors work and how an implementer proves a verifier conformant.">
+<meta property="og:description" content="How the 437 ATEP test vectors work and how an implementer proves a verifier conformant.">
 <meta property="og:url" content="https://atep.dev/vectors.html">
 <meta property="og:image" content="https://atep.dev/assets/og-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="ATEP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ATEP Test vectors">
-<meta name="twitter:description" content="How the 436 ATEP test vectors work and how an implementer proves a verifier conformant.">
+<meta name="twitter:description" content="How the 437 ATEP test vectors work and how an implementer proves a verifier conformant.">
 <meta name="twitter:image" content="https://atep.dev/assets/og-card.jpg">
 <script type="application/ld+json">
 {
@@ -69,11 +69,11 @@
 <main id="main">
 
 <h1>Test vectors</h1>
-<p class="lead">The 436 vectors are the executable form of the specification. An independent implementation is conformant when it reproduces every byte of the generation vectors (identity, signing, encryption, attestation) and returns the expected accept or reject, step and error code for all the others. Where the text and a vector disagree, the vector wins and the text is amended.</p>
+<p class="lead">The 437 vectors are the executable form of the specification. An independent implementation is conformant when it reproduces every byte of the generation vectors (identity, signing, encryption, attestation) and returns the expected accept or reject, step and error code for all the others. Where the text and a vector disagree, the vector wins and the text is amended.</p>
 <div class="grid">
 <section class="card"><h2>Format</h2><p>Each vector is three files with one base name: <code>name.cbor</code> (the exact bytes), <code>name.json</code> (a debug view) and <code>name.expected.json</code> (inputs, the verifier policy, and the required result). All keys come from fixed seeds written in plain hex, and the reference time is <code>now = 1800000000</code>.</p></section>
 <section class="card"><h2>Categories</h2><p>28 categories: identity, signing, encryption, verify-positive, verify-negative, attestation, chain-positive, chain-negative, srl, srl-context, log, log-admission, monitor, atep-r-positive, atep-r-negative, retired and successor (positive and negative), and the anchoring and discovery categories (checkpoint-hash, anchor-record, chain-id, anchor-envelope, anchor-media-type, require-anchor, anchor-not-supported, registry-endpoint, domain-binding).</p></section>
-<section class="card"><h2>Who passes</h2><p>The Rust core, the JavaScript package (the same Rust compiled to WebAssembly) and the independent Python implementation pass the vectors that apply to them: the Rust core passes all 436, and the JavaScript and Python implementations pass 431 and skip by name the five for a log (four) and a monitor (one), which the Rust log and monitor pass. The Python implementation was written from the specification and the vectors only and produced 44 reports of ambiguity in the text; all are resolved in the specification (see the implementation findings in the repository).</p></section>
+<section class="card"><h2>Who passes</h2><p>The Rust core, the JavaScript package (the same Rust compiled to WebAssembly) and the independent Python implementation pass the vectors that apply to them: the Rust core passes all 437, and the JavaScript and Python implementations pass 432 and skip by name the five for a log (four) and a monitor (one), which the Rust log and monitor pass. The Python implementation was written from the specification and the vectors only and produced 44 reports of ambiguity in the text; all are resolved in the specification (see the implementation findings in the repository).</p></section>
 <section class="card"><h2>Not covered</h2><p>Hedged ML-DSA signing inputs and some edge cases are in the known gaps table of specification section 12. An implementation outside the project does not exist yet; that is the most useful next contribution.</p></section>
 </div>
 

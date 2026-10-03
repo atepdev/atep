@@ -438,6 +438,16 @@ pub(crate) fn generate(out: &mut Vec<Vector>) -> R<()> {
     // Appended after those: the anchoring and discovery vectors.
     anchor::generate(out, &n)?;
     discovery::generate(out, &n)?;
+    // Draft 08: the vector for rust finding 57 is built with the other ATEP-R
+    // vectors but listed last, so that the manifest order of every earlier
+    // vector stays as it was.
+    if let Some(i) = out
+        .iter()
+        .position(|v| v.name == "motion-member-peer-motion-stale-srl")
+    {
+        let v = out.remove(i);
+        out.push(v);
+    }
     Ok(())
 }
 
@@ -1832,6 +1842,23 @@ fn atep_r_vectors(out: &mut Vec<Vector>, n: &Net) -> R<()> {
             "motion",
             pl("ar-motion-stale"),
             one(&fc),
+        )?,
+        p,
+        Some((9, "srl_stale")),
+    )?;
+    let mut p = strict(&[ctl])?;
+    p.srls.insert(0, stale_srl(&n.root, "ar-stale-root")?);
+    push_verify(
+        out,
+        neg,
+        "motion-member-peer-motion-stale-srl",
+        "motion from a fleet-member whose `peer-motion` delegation lists the receiver, with the root's SRL past next-update. The fleet-controller alternative fails with `claim_missing` and the peer-motion alternative with `srl_stale`: the stale list is the cause that applies to the alternative that matches, so it is the one reported. Expect step 9 `srl_stale` (Draft 08, rust finding 57).",
+        env(
+            &n.alice,
+            "ar-motion-peer-stale",
+            "motion",
+            pl("ar-motion-peer-stale"),
+            member_chain(&[&fm, &peer_ok]),
         )?,
         p,
         Some((9, "srl_stale")),

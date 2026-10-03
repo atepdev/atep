@@ -768,8 +768,12 @@ pub fn evaluate(
     let mut out = Step9Output::default();
     let mut cps: Vec<CheckpointUsed> = Vec::new();
     for req in &input.requirements {
-        // Among alternatives that all fail, report the one that got furthest.
+        // Among alternatives that all fail, report the one that got furthest,
+        // except that a stale or unavailable revocation list in any alternative
+        // is reported first: that cause applies to every alternative that would
+        // otherwise match (Draft 08, section 10 step 9).
         let mut best: Option<(usize, Rejection)> = None;
+        let mut srl_cause: Option<Rejection> = None;
         let mut satisfied = false;
         for group in req {
             let mut got = Vec::new();
@@ -793,6 +797,11 @@ pub fn evaluate(
                     break;
                 }
                 Some(e) => {
+                    if srl_cause.is_none()
+                        && matches!(e.code, ErrorCode::SrlStale | ErrorCode::SrlUnavailable)
+                    {
+                        srl_cause = Some(e.clone());
+                    }
                     if best.as_ref().is_none_or(|(n, _)| got.len() > *n) {
                         best = Some((got.len(), e));
                     }
@@ -800,7 +809,7 @@ pub fn evaluate(
             }
         }
         if !satisfied {
-            return Err(best.map(|b| b.1).unwrap_or_else(|| {
+            return Err(srl_cause.or(best.map(|b| b.1)).unwrap_or_else(|| {
                 r9(ErrorCode::PolicyInvalid, "requirement has no alternatives")
             }));
         }

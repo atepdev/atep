@@ -11,7 +11,7 @@ Workspace with six crates (`atep-core`, `atep-cli` and `atep` are published, as 
 
 The roadmap names Go for M3; it is Rust here so that every verification reuses `atep-core` ([`../docs/implementation-findings/rust-findings.md`](../docs/implementation-findings/rust-findings.md) entry 32).
 
-Spec: [`../spec/ATEP-Specification-Draft-07.md`](../spec/ATEP-Specification-Draft-07.md). Test vectors and their format: [`../vectors/README.md`](../vectors/README.md). Spec ambiguities found while implementing: [`../docs/implementation-findings/rust-findings.md`](../docs/implementation-findings/rust-findings.md).
+Spec: [`../spec/ATEP-Specification-Draft-08.md`](../spec/ATEP-Specification-Draft-08.md). Test vectors and their format: [`../vectors/README.md`](../vectors/README.md). Spec ambiguities found while implementing: [`../docs/implementation-findings/rust-findings.md`](../docs/implementation-findings/rust-findings.md).
 
 ## Build and test
 

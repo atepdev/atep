@@ -292,7 +292,7 @@ for (const f of ["theme-boot.js", "site.js", "style.css"]) if (!exists(path.join
 
 // llms-full.txt must match the spec it claims to contain.
 const full = path.join(sites["atep.dev"], "llms-full.txt");
-const specFile = path.join(here, "..", "spec", "ATEP-Specification-Draft-07.md");
+const specFile = path.join(here, "..", "spec", "ATEP-Specification-Draft-08.md");
 if (!exists(full)) err("atep.dev/llms-full.txt missing (run node site/build-llms-full.mjs)");
 else {
   const spec = read(specFile);

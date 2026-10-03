@@ -4,7 +4,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 
 > **Experimental alpha. Do not rely on this to protect anything of value.** There has been no independent security audit. The wire format may change between releases (the COSE labels are private-use values and the media types are unregistered), and the post-quantum crates underneath are young. "Quantum-safe" means finalized NIST algorithms (FIPS 203 and FIPS 204) in a hybrid construction; it does not mean audited or proven.
 
-`@atep/core` is the ATEP reference core (Draft 07, `ATEP-1` suite, including `retired`, `successor`, anchors and domain binding) for JavaScript: the Rust
+`@atep/core` is the ATEP reference core (Draft 08, `ATEP-1` suite, including `retired`, `successor`, anchors and domain binding) for JavaScript: the Rust
 `atep-core` crate compiled to WebAssembly, with a TypeScript API. One ESM
 package for Node, Bun, Deno and browsers, no framework and no runtime
 dependencies.
@@ -232,7 +232,7 @@ Node 25 on the development machine (WSL2), average over 50 to 100 calls after wa
 
 `npm test` (node:test) runs, under Node, through the built package:
 
-* `test/vectors.test.mjs`: every vector listed in `../vectors/manifest.json`: **431 passed + 5 skipped = 436**.
+* `test/vectors.test.mjs`: every vector listed in `../vectors/manifest.json`: **432 passed + 5 skipped = 437**.
   The first 200 (identity, signing, encryption, verify-positive/negative, attestation, chain-positive/negative,
   srl, log, atep-r-positive/negative, retired-positive/negative, successor-positive/negative, srl-context,
   log-admission, monitor) and the 236 of Draft 05: checkpoint-hash 9, anchor-record 36, chain-id 30,

@@ -7,7 +7,7 @@ repository.workspace = true
 homepage.workspace = true
 authors.workspace = true
 rust-version.workspace = true
-description = "ATEP log monitor (ATEP Draft 07)"
+description = "ATEP log monitor (ATEP Draft 08)"
 publish = false
 
 [lib]

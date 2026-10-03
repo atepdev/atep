@@ -350,6 +350,8 @@ def evaluate(signer_id, outer, inner, ctx, trust_dict, extra_attestations):
         alts, mode, ign = class_requirements(inner.command_class, inner.payload_bytes, ev.receiver)
         best = None
         best_n = -1
+        best_err = None
+        srl_err = None
         for alt in alts:
             got = []
             gw = []
@@ -368,11 +370,14 @@ def evaluate(signer_id, outer, inner, ctx, trust_dict, extra_attestations):
                 best = (got, gw)
                 best_n = None
                 break
+            if srl_err is None and err.error in ("srl_stale", "srl_unavailable"):
+                srl_err = err
             if len(got) > best_n:
                 best_n = len(got)
                 best_err = err
         if best is None:
-            raise best_err
+            # A stale or missing revocation list outranks the furthest alternative.
+            raise srl_err if srl_err is not None else best_err
         claims.extend(best[0])
         merge(best[1])
     cp = None

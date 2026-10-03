@@ -4,6 +4,20 @@ All notable changes to the packages of this repository are recorded here. The fo
 
 ## [Unreleased]
 
+Implements Draft 08 of the specification (`spec/ATEP-Specification-Draft-08.md`, the second public draft; Draft 07 is unchanged). The published `0.1.0-alpha.1` and `0.1.0-alpha.2` implement Draft 07 and do not contain these changes.
+
+### Changed
+
+* Step 9 of the verification algorithm: when every alternative of a requirement fails and any of them failed with `srl_stale` or `srl_unavailable`, that error is reported (from the first such alternative in listed order) instead of the error of the alternative that satisfied the most rules. In practice an ATEP-R `motion` command from a member holding a `peer-motion`, checked against a stale revocation list, is now rejected with `srl_stale` instead of `claim_missing`. What is accepted or rejected does not change, only which error is reported for a rejection (Rust finding 57, decision 83). Rust, `@atep/core` and the Python implementation all follow.
+
+### Added
+
+* One test vector, `atep-r-negative/motion-member-peer-motion-stale-srl`, the last of the manifest: 437 vectors in 28 categories. The 436 earlier vectors are unchanged. `@atep/core` and the Python implementation run 432 of 437 and skip the same 5 by name.
+
+### Fixed
+
+* The demo and its notes expected `claim_missing` for the peer motion probe under a stale list; they now expect `srl_stale`.
+
 ## [0.1.0-alpha.2] - 2026-10-03
 
 The first alpha on npm. The code is identical to 0.1.0-alpha.1; this release exists because the alpha.1 release run could not publish to npm.

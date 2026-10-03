@@ -105,7 +105,7 @@ Then run the vector smoke tests against a checkout of the same tag (`git clone -
 /tmp/atep-check/bin/atep verify -i atep/vectors/verify-positive/signed-trust-doc-inline-bundle.cbor --now 1800000000   # OK
 /tmp/atep-check/bin/atep verify -i atep/vectors/verify-negative/bad-eddsa-signature.cbor --now 1800000000             # REJECTED at step 4
 node atep/scripts/release/smoke-npm.mjs /tmp/npm-check atep/vectors
-/tmp/py-check/bin/python -m atep_py.vectors check atep/vectors                                                        # 431 pass, 5 skipped
+/tmp/py-check/bin/python -m atep_py.vectors check atep/vectors                                                        # 432 pass, 5 skipped
 ```
 
 ## After the first alpha

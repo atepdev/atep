@@ -4,7 +4,7 @@ ATEP has three things that are versioned, and they move independently.
 
 | What | How it is versioned | Where |
 | --- | --- | --- |
-| The specification | numbered public drafts (Draft 07 is the first public draft); a published draft is never edited, a change is a new file | [`../spec/`](../spec/ATEP-Specification-Draft-07.md) |
+| The specification | numbered public drafts (Draft 07 was the first, Draft 08 the second); a published draft is never edited, a change is a new file | [`../spec/`](../spec/ATEP-Specification-Draft-08.md) |
 | The test vectors | with the spec draft: the vectors of a draft are fixed by regeneration from seeds, and a new draft may add or change vectors | [`../vectors/`](../vectors/README.md) |
 | The packages (crates, npm, PyPI) | SemVer for crates.io and npm (`0.1.0-alpha.2`), the PEP 440 spelling for PyPI (`0.1.0a2`); one version number for all of them | `rust/`, `js/`, `mcp/`, `python/` |
 

@@ -17,7 +17,8 @@ Intended handling (a goal, not a service level agreement): acknowledge within 5 
 
 | Component | Version | Supported |
 | --- | --- | --- |
-| Specification | Draft 07, `spec/ATEP-Specification-Draft-07.md` (current, first public draft) | yes |
+| Specification | Draft 08, `spec/ATEP-Specification-Draft-08.md` (current, second public draft) | yes |
+| Specification | Draft 07, `spec/ATEP-Specification-Draft-07.md` (first public draft, superseded) | no, see Draft 08 |
 | Rust crates, `@atep/core`, `@atep/mcp`, `atep` on PyPI (`atep_py`) | this repository's main branch | yes, as pre-release software |
 | The same packages, `0.1.0-alpha.x` (PyPI `0.1.0a2`) | published | yes, as an experimental alpha |
 

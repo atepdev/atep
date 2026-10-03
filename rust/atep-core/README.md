@@ -2,7 +2,7 @@
 
 ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a finalized NIST post-quantum standard (Ed25519 with ML-DSA-65, X25519 with ML-KEM-768), and both halves must hold. A robot or agent can identify and verify another offline, with no internet connection, registry or central server: an identity is a hash of public keys, and everything else is checked against cached keys, revocation lists and log checkpoints.
 
-`atep-core` is the Rust reference library of ATEP (Draft 07): key bundles and Agent IDs, hybrid signing (COSE_Sign) and encryption (COSE_Encrypt), attestations, signed revocation lists, the trust policy engine, Merkle log proofs and the ten-step verification algorithm. It passes all 436 test vectors of the specification.
+`atep-core` is the Rust reference library of ATEP (Draft 08): key bundles and Agent IDs, hybrid signing (COSE_Sign) and encryption (COSE_Encrypt), attestations, signed revocation lists, the trust policy engine, Merkle log proofs and the ten-step verification algorithm. It passes all 437 test vectors of the specification.
 
 > **Experimental alpha. Do not rely on this to protect anything of value.** There has been no independent security audit. The wire format may change between releases (the COSE labels are private-use values and the media types are unregistered), and the post-quantum crates it builds on (`ml-dsa`, `ml-kem`) are young. "Quantum-safe" here means finalized NIST algorithms (FIPS 203 and FIPS 204) in a hybrid construction; it does not mean audited or proven.
 

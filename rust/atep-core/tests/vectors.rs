@@ -184,7 +184,7 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
     let manifest: serde_json::Value =
         serde_json::from_slice(&fs::read(vectors_dir().join("manifest.json")).unwrap()).unwrap();
     let list = manifest["vectors"].as_array().unwrap();
-    assert_eq!(list.len(), 436);
+    assert_eq!(list.len(), 437);
     let digest_of = |r: std::ops::Range<usize>| -> String {
         let s: String = list[r]
             .iter()
@@ -216,7 +216,7 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
     assert!(list[140..200]
         .iter()
         .all(|v| retired_cats.contains(&v["category"].as_str().unwrap())));
-    // Vectors 200 onwards are the anchoring and discovery categories.
+    // Vectors 200 to 435 are the anchoring and discovery categories.
     let new_cats = [
         "checkpoint-hash",
         "anchor-record",
@@ -228,15 +228,19 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
         "registry-endpoint",
         "domain-binding",
     ];
-    assert!(list[200..]
+    assert!(list[200..436]
         .iter()
         .all(|v| new_cats.contains(&v["category"].as_str().unwrap())));
     for c in new_cats {
         assert!(
-            list[200..].iter().any(|v| v["category"] == c),
+            list[200..436].iter().any(|v| v["category"] == c),
             "no vector in {c}"
         );
     }
+    // Draft 08 appends one vector after those: rust finding 57, an ATEP-R
+    // `motion` rejection whose cause is a stale list.
+    assert_eq!(list[436]["category"], "atep-r-negative");
+    assert_eq!(list[436]["name"], "motion-member-peer-motion-stale-srl");
 }
 
 fn digest_hex(data: &[u8]) -> String {

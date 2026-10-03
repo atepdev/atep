@@ -72,7 +72,7 @@
 <p class="lead">This page explains, without protocol jargon, what ATEP changes for the people who run, build, certify, insure or fund robots and AI agents. The technical detail lives in the <a href="specification.html">specification</a>.</p>
 
 <h2 id="problem">The problem</h2>
-<p>Robots and AI agents from different makers have no shared, open way to prove three things: who is sending a command, that it was not changed on the way, and that the sender is certified for that kind of command. In practice, each vendor tends to build its own closed version of this, these rarely work across vendors, and many assume a working internet connection. To our knowledge, no open, vendor-neutral standard combines these today (see the <a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#18-related-work-and-positioning">related-work section of the specification</a>).</p>
+<p>Robots and AI agents from different makers have no shared, open way to prove three things: who is sending a command, that it was not changed on the way, and that the sender is certified for that kind of command. In practice, each vendor tends to build its own closed version of this, these rarely work across vendors, and many assume a working internet connection. To our knowledge, no open, vendor-neutral standard combines these today (see the <a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#18-related-work-and-positioning">related-work section of the specification</a>).</p>
 
 <div class="note words">
 <h2 id="words">Words used here</h2>
@@ -114,19 +114,19 @@
 <div class="grid scenarios">
 <section class="card"><h3>A warehouse with the network down</h3>
 <p>Robots from three vendors share a floor. <strong>Without ATEP</strong>, a check that depends on a cloud service stops working when the network does, and the robots either stall or trust more than they should. <strong>With ATEP</strong>, they verify each other from keys and certificates saved earlier and keep coordinating, even while the fleet controller is unreachable (the <a href="demo/" target="_blank" rel="noopener">demo<span class="sr-only"> (opens in a new tab)</span></a> shows two robots doing exactly that). A motion command from a device the fleet holds no certificate for is refused. This holds while their revocation lists are fresh; once a list is past its update time, motion commands are refused until a new one arrives.</p>
-<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#10-verification-algorithm">Spec: sections 3, 10 and 17</a></p></section>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#10-verification-algorithm">Spec: sections 3, 10 and 17</a></p></section>
 <section class="card"><h3>A hospital robot is offered an update</h3>
 <p>A delivery robot receives a software update from a sender it has never seen. <strong>Without ATEP</strong>, whether it accepts depends on how well that vendor's own update channel is guarded. <strong>With ATEP</strong>, an update is a maintenance command, and that class needs a sender certified as a maintenance authority by a certifier the robot trusts. This sender holds no such certificate, so the robot declines the update and carries on with its last safe behavior.</p>
-<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#17-robotics-profile-atep-r">Spec: section 17</a></p></section>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#17-robotics-profile-atep-r">Spec: section 17</a></p></section>
 <section class="card"><h3>A remote farm with patchy connectivity</h3>
 <p>A field robot is online for a few minutes a day. <strong>Without ATEP</strong>, proving that a machine is safety certified usually means asking someone over the internet. <strong>With ATEP</strong>, the safety certificate travels with the message and is checked on the machine against issuer keys saved earlier. The robot works with the last revocation list it has. If that list is too old, it fails closed: it refuses motion commands and keeps handling telemetry.</p>
-<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#8-revocation">Spec: sections 8 and 17</a></p></section>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#8-revocation">Spec: sections 8 and 17</a></p></section>
 <section class="card"><h3>A compromised unit</h3>
 <p>One robot's keys are stolen. <strong>Without ATEP</strong>, each vendor system has its own way to cut it off, if any. <strong>With ATEP</strong>, the operator publishes one signed revocation list, and units that receive it reject that unit's commands from the revocation time on. Units that have not yet received it do not know. An emergency stop from any certified fleet member still works even if its other certificates have expired, but never from a revoked or retired identity.</p>
-<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#8-revocation">Spec: sections 8 and 17</a></p></section>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#8-revocation">Spec: sections 8 and 17</a></p></section>
 <section class="card"><h3>AI agents handing work to each other</h3>
 <p>An agent passes a result to another agent. <strong>Without ATEP</strong>, the receiver knows little beyond the channel the text arrived on. <strong>With ATEP</strong>, the receiving agent can tell which agent produced the result and that it was not altered on the way. The protocol treats the content as data, never as instructions. ATEP does not make the content true or safe; it makes its origin checkable, so the receiver can handle it accordingly.</p>
-<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-07.md#11-security-considerations">Spec: section 11</a></p></section>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#11-security-considerations">Spec: section 11</a></p></section>
 </div>
 
 <div class="tablewrap"><table class="compare">
@@ -212,7 +212,7 @@
 <li>A compromised sender that still holds valid keys can keep sending valid commands until it is revoked, and a unit learns of the revocation when its list is updated, not before.</li>
 <li>Offline verification needs caches filled earlier. A unit that has been cut off for longer than its revocation list stays fresh will refuse the commands that matter most.</li>
 <li>It is not a product. It is an open protocol with an open specification, reference code and test vectors.</li>
-<li>It is a working draft (Draft 07), not a standard, and the code has not been independently audited.</li>
+<li>It is a working draft (Draft 08), not a standard, and the code has not been independently audited.</li>
 </ul>
 
 <h2 id="who">Who it is for</h2>

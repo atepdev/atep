@@ -400,9 +400,9 @@ export class Engine {
       rec.effect = this._apply(rec);
     } else {
       rec.effect = "ignored, " + receiver.name + " continues its last safe behavior";
-      if (res.step === 9 && res.error === "claim_missing" && this.stale && this._acceptedWithFreshList(r.bytes, r.to)) {
+      if (res.step === 9 && res.error === "srl_stale" && this.stale && this._acceptedWithFreshList(r.bytes, r.to)) {
         rec.staleCaused = true;
-        rec.effect += ". Fails closed because the root revocation list is stale: the same envelope verifies with a fresh list. The verifier names the error of the first alternative (fleet-controller), claim_missing";
+        rec.effect += ". Fails closed because the root revocation list is stale: the same envelope verifies with a fresh list. Both alternatives (fleet-controller, or fleet-member with peer-motion) fail, and the verifier reports the stale list as the cause (srl_stale)";
       }
     }
     this.log.push(rec);

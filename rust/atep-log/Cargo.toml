@@ -7,7 +7,7 @@ repository.workspace = true
 homepage.workspace = true
 authors.workspace = true
 rust-version.workspace = true
-description = "ATEP transparency log and registry service (ATEP Draft 07)"
+description = "ATEP transparency log and registry service (ATEP Draft 08)"
 publish = false
 
 [lib]

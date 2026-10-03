@@ -127,7 +127,7 @@ from atep_py.verify import verify_json
 n = '../vectors/verify-positive/signed-trust-doc-inline-bundle'
 v = json.load(open(n + '.expected.json'))
 print(verify_json(open(n + '.cbor', 'rb').read(), v['inputs']['policy']))"</code></pre>
-<p>Standard library only, Python 3.8 or later. <code>python3 -m atep_py.vectors check ../vectors</code> runs 431 of the 436 vectors (it skips by name the five for a log and a monitor) and takes about 30 seconds.</p></section>
+<p>Standard library only, Python 3.8 or later. <code>python3 -m atep_py.vectors check ../vectors</code> runs 432 of the 437 vectors (it skips by name the five for a log and a monitor) and takes about 30 seconds.</p></section>
 </div>
 <h2>A rejection</h2>
 <pre><code>./target/release/atep verify -i ../vectors/verify-negative/bad-eddsa-signature.cbor --now 1800000000
