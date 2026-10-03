@@ -101,7 +101,19 @@
 <main id="main">
 
 <h1>Quick start</h1>
-<p class="lead">Each snippet verifies the same test vector, <code>vectors/verify-positive/signed-trust-doc-inline-bundle.cbor</code>, at the reference time <code>1800000000</code>. Run from the root of the ATEP repository. Experimental 0.1.0-alpha packages are also on the registries (<code>cargo install atep-cli --version 0.1.0-alpha.3</code>, <code>npm install @atep/core@alpha</code>, <code>pip install --pre atep</code>); there has been no independent audit and the wire format may change. The earlier 0.0.1 versions are placeholders with no code.</p>
+<p class="lead">Two ways to try ATEP: install an experimental alpha from a package registry, or build from the repository. Either way, the examples verify the same test vector, <code>vectors/verify-positive/signed-trust-doc-inline-bundle.cbor</code>, at the reference time <code>1800000000</code>.</p>
+
+<h2 id="install">Install from a registry</h2>
+<p>These are experimental <code>0.1.0-alpha</code> releases: there has been no independent security audit, the wire format may change in any 0.x release, and the post-quantum libraries they build on are young. The npm packages are published under the <code>alpha</code> tag and pip needs <code>--pre</code>, so a plain install does not pick them up by accident. The earlier <code>0.0.1</code> versions are placeholders with no code.</p>
+<pre><code>cargo install atep-cli --version 0.1.0-alpha.3   # the atep command line tool
+cargo add atep-core@0.1.0-alpha.3                # the Rust library
+npm install @atep/core@alpha                     # JavaScript and TypeScript (WebAssembly)
+npx -y @atep/mcp@alpha                           # read-only MCP server
+pip install --pre atep                           # Python, import atep_py (pure Python, slow)</code></pre>
+<p>Registry pages: <a href="https://crates.io/crates/atep-cli">atep-cli</a> and <a href="https://crates.io/crates/atep-core">atep-core</a> on crates.io, <a href="https://www.npmjs.com/package/@atep/core">@atep/core</a> and <a href="https://www.npmjs.com/package/@atep/mcp">@atep/mcp</a> on npm, <a href="https://pypi.org/project/atep/">atep</a> on PyPI. The test vectors are in the repository, not in the packages: clone it (<code>git clone https://github.com/atepdev/atep</code>) and run the verification from its root, for example <code>atep verify -i vectors/verify-positive/signed-trust-doc-inline-bundle.cbor --now 1800000000</code>.</p>
+
+<h2 id="build">Build from the repository</h2>
+<p>Run from the root of the ATEP repository.</p>
 <div class="grid stack">
 <section class="card"><h2>Rust CLI</h2>
 <pre><code>cd rust
