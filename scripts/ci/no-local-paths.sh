@@ -20,10 +20,15 @@ patterns=(
   '.rustup/toolchains'
 )
 
-# Explicit exclusions (keep this list tiny):
-#   this script: it spells out the patterns.
+# Explicit exclusions (keep this list tiny): each file below is itself a path check and so
+# spells out the patterns as text; none of them embeds a real local path.
+#   this script
+#   the release workflow: its step that scans the built wheel for the same patterns
+#   js/scripts/prepublish-check.mjs: refuses to publish a dist that contains the same patterns
 excluded=(
   'scripts/ci/no-local-paths.sh'
+  '.github/workflows/release.yml'
+  'js/scripts/prepublish-check.mjs'
 )
 
 args=()

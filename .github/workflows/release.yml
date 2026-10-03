@@ -500,7 +500,7 @@ jobs:
             fi
             npm publish --provenance --access public --tag "$NPM_TAG" "tarballs/atep-$pkg-$VERSION.tgz"
             # @atep/mcp resolves @atep/core from the registry, so wait for it to be visible
-            for i in $(seq 1 30); do
+            for _ in $(seq 1 30); do
               [ "$(npm view "$name@$VERSION" version 2>/dev/null || true)" = "$VERSION" ] && break
               sleep 10
             done
