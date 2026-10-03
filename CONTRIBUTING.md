@@ -29,12 +29,14 @@ Any Rust build needs a C toolchain (`cc` as linker; on Debian or Ubuntu, `sudo a
 | Rust workspace | `rust/` | `cargo fmt --all -- --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test --workspace` |
 | Vectors, Rust check | `rust/` | `cargo run --release -p atep-core --bin atep-vectors -- check ../vectors` (expects `all 436 vectors pass`) |
 | Vectors, regenerate | `rust/` | `cargo run -p atep-core --bin atep-vectors -- generate ../vectors`, only when the spec changes a vector; the result must be committed and reproducible |
-| npm package | `js/` | needs the `wasm32-unknown-unknown` target and `wasm-bindgen-cli` 0.2.129 (see `js/README.md`); `npm install`, `npm run build`, `npm test` |
+| npm package | `js/` | needs the `wasm32-unknown-unknown` target and `wasm-bindgen-cli` 0.2.129 (see `js/README.md`); `npm ci` in the repository root (npm workspaces), `npm run build -w js`, `npm test -w js` |
 | Python | `python/` | `python3 -m unittest`; `python3 -m atep_py.vectors check ../vectors` (Python 3.8 compatible) |
-| MCP server | `mcp/` | `npm install`, `npm test` (needs `js/dist`) |
-| Examples | `examples/`, `examples/mqtt/` | `npm install`, `npm test` in each (need `js/dist`); ROS 2 example: `python3 -m unittest discover -s tests -v` in `examples/ros2` |
+| MCP server | `mcp/` | `npm test -w mcp` from the root (needs `js/dist`; runs against the local `@atep/core`) |
+| Examples | `examples/`, `examples/mqtt/` | `npm test -w examples` and `npm test -w examples/mqtt` from the root (need `js/dist`); ROS 2 example: `python3 -m unittest discover -s tests -v` in `examples/ros2` |
 | Demo | `demo/` | `node demo/selftest.mjs`; `node demo/serve.mjs`; after any change in `demo/`, `node site/build-demo.mjs` refreshes the hosted copy in `site/atep.dev/demo/` (commit it) |
-| Site and repository checks | root | `node site/build-llms-full.mjs`, `node site/build-demo.mjs --check`, `node site/check.mjs`, `bash scripts/ci/no-em-dashes.sh`, `bash scripts/ci/no-local-paths.sh`, `node scripts/ci/vector-counts.mjs`, `node scripts/ci/check-md-links.mjs` |
+| Site and repository checks | root | `node site/build-llms-full.mjs`, `node site/build-demo.mjs --check`, `node site/check.mjs`, `bash scripts/ci/no-em-dashes.sh`, `bash scripts/ci/no-local-paths.sh`, `node scripts/ci/vector-counts.mjs`, `node scripts/ci/check-md-links.mjs`, `scripts/release/check-versions.sh` |
+
+Releases: [`docs/RELEASING.md`](docs/RELEASING.md) (owner steps, trusted publishing) and [`docs/VERSIONING.md`](docs/VERSIONING.md). Packaging checks: `cargo publish --dry-run -p atep-core --allow-dirty` in `rust/`, `npm pack --dry-run -w js -w mcp` in the root, `python -m build` and `twine check` in `python/` (from a copy, so build directories stay out of the tree).
 
 The workflows in `.github/workflows/` run all of this; see `.github/workflows/README.md`.
 

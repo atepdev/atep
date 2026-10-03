@@ -1,21 +1,21 @@
 # CI workflows
 
-Both workflows run with `permissions: contents: read`, use no secrets, set a timeout on every job, and cancel superseded runs on pull requests. Third-party actions are pinned to full commit SHAs with the version in a comment. Rust is installed with `rustup` on the runner (no third-party toolchain action).
+The CI and security workflows run with `permissions: contents: read`, use no secrets, set a timeout on every job, and cancel superseded runs on pull requests. Third-party actions are pinned to full commit SHAs with the version in a comment. Rust is installed with `rustup` on the runner (no third-party toolchain action).
 
 ## ci.yml (push to main, pull requests)
 
 | Job | What it runs |
 | --- | --- |
 | `rust` | `cargo fmt --check`, `cargo clippy --all-targets -D warnings`, `cargo test --workspace` (includes the no chain or wallet dependency guard and the vector regeneration test), `atep-vectors check ../vectors`, then `scripts/ci/check-vector-regeneration.sh` (regenerate, `git diff --exit-code vectors/`, no new files) |
-| `js` | wasm32 target, wasm-bindgen CLI at the version in `rust/Cargo.lock` (`scripts/ci/wasm-bindgen-version.sh`, installed with `--no-default-features`), `npm ci`, `npm run build`, `npm test` in `js/`, then `mcp/`, `examples/`, `examples/mqtt/` tests and `node demo/selftest.mjs` |
+| `js` | wasm32 target, wasm-bindgen CLI at the version in `rust/Cargo.lock` (`scripts/ci/wasm-bindgen-version.sh`, installed with `--no-default-features`), one `npm ci` at the root (npm workspaces: `js`, `mcp`, `examples`, `examples/mqtt`), `npm run build -w js`, then the tests of each workspace (`mcp` runs against the local `js` build) and `node demo/selftest.mjs` |
 | `python` | Python 3.8 and 3.12: `python -m unittest`, `python -m atep_py.vectors check ../vectors`, and the ROS-free tests of `examples/ros2` |
-| `site-and-docs` | `node site/check.mjs`, `scripts/ci/no-em-dashes.sh`, `node scripts/ci/vector-counts.mjs`, `node scripts/ci/check-md-links.mjs` |
+| `site-and-docs` | `node site/check.mjs`, `scripts/ci/no-em-dashes.sh`, `node scripts/ci/vector-counts.mjs`, `node scripts/ci/check-md-links.mjs`, `scripts/release/check-versions.sh` |
 | `cddl` | installs the Rust `cddl` crate at a pinned version (cached) and runs `node scripts/ci/validate-cddl.mjs`: every vector and the JSON documents against `spec/schemas/atep.cddl` as listed in `scripts/ci/cddl-map.json`, the mutation checks, expected-fail vectors asserted |
 | `workflow-lint` | actionlint 1.7.12 (checksum verified) over the workflow files |
 
 ## security.yml (push to main, lockfile pull requests, weekly)
 
-Informational, non-blocking (`continue-on-error`): `cargo audit` on `rust/Cargo.lock` and `npm audit --omit=dev` in `js`, `mcp`, `examples`, `examples/mqtt`.
+Informational, non-blocking (`continue-on-error`): `cargo audit` on `rust/Cargo.lock` and `npm audit --omit=dev` at the workspace root (covers every workspace).
 
 ## Helper scripts (`scripts/ci/`)
 
@@ -26,4 +26,21 @@ Informational, non-blocking (`continue-on-error`): `cargo audit` on `rust/Cargo.
 * `no-local-paths.sh`: fails if a tracked file or a built artifact embeds an absolute local path.
 * `check-vector-regeneration.sh`, `wasm-bindgen-version.sh`: see above.
 
-`dependabot.yml` opens weekly updates for cargo (`rust/`), npm (`js`, `mcp`, `examples`, `examples/mqtt`) and GitHub Actions.
+`dependabot.yml` opens weekly updates for cargo (`rust/`), npm (the workspace root) and GitHub Actions.
+
+## release.yml (tag `v*`, or manual dry run)
+
+Publishes the crates, the npm packages and the PyPI package with trusted publishing (OIDC, no stored tokens). `permissions: contents: read` at the top, `id-token: write` only in the three publish jobs, which run in the GitHub Environment `release` (the owner adds a required reviewer, so every publish waits for approval). Owner steps: [`../../docs/RELEASING.md`](../../docs/RELEASING.md).
+
+| Job | What it does |
+| --- | --- |
+| `versions` | `scripts/release/check-versions.sh`: the tag equals the versions in `rust/Cargo.toml`, `js/package.json`, `mcp/package.json` and `python/pyproject.toml` (PEP 440 form), and derives the npm dist-tag (`alpha` for `-alpha.N`, `latest` for a stable version) |
+| `verify-rust`, `verify-js`, `verify-python`, `verify-site` | the checks of `ci.yml` again, plus a build on the declared minimum Rust version |
+| `build-crates`, `build-npm`, `build-python` | `.crate` of `atep-core` and the file lists of `atep-cli` and `atep`; the npm tarballs (`npm pack`); sdist and wheel (`twine check --strict`, no local paths); uploaded as artifacts |
+| `smoke-npm`, `smoke-python` | install the packed tarballs into a fresh project and verify a vector and list the MCP tools; install the wheel on Python 3.8, check the vectors, run the sdist's unit tests |
+| `publish-dry-run` | `cargo publish --dry-run`, `npm publish --dry-run`, `twine check` |
+| `publish-crates` | `rust-lang/crates-io-auth-action`, then `atep-core`, wait for the sparse index, `atep-cli`, `atep` |
+| `publish-npm` | `npm publish --provenance --access public --tag <dist-tag>` for `@atep/core`, then `@atep/mcp` |
+| `publish-pypi` | `pypa/gh-action-pypi-publish` |
+
+A manual run (`workflow_dispatch`) has a `dry-run` input, true by default: everything above except the three publish jobs runs. Each publish job skips a package version that already exists on its registry, so a partially failed release can be re-run.

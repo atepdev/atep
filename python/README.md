@@ -1,6 +1,18 @@
-# atep-py
+# atep (Python)
 
-Independent Python implementation of ATEP Draft 07 (suite `ATEP-1`; the first 140 vectors are Draft 02/03, then 60 `retired` and `successor`, then 236 anchoring and discovery vectors; draft numbers are internal, see spec Appendix A), written for the M4
+ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a finalized NIST post-quantum standard (Ed25519 with ML-DSA-65, X25519 with ML-KEM-768), and both halves must hold. A robot or agent can identify and verify another offline, with no internet connection, registry or central server: an identity is a hash of public keys, and everything else is checked against cached keys, revocation lists and log checkpoints.
+
+> **Experimental alpha. Do not rely on this to protect anything of value.** There has been no independent security audit. The wire format may change between releases (the COSE labels are private-use values and the media types are unregistered). "Quantum-safe" means finalized NIST algorithms (FIPS 203 and FIPS 204) in a hybrid construction; it does not mean audited or proven.
+
+```
+pip install --pre atep
+```
+
+The PyPI distribution is named `atep`; the import package is `atep_py` (`import atep_py`). The `--pre` flag is needed because the first releases are pre-releases (`0.1.0a1`). Python 3.8 or later, no dependencies.
+
+**The post-quantum algorithms are pure Python and slow.** ML-DSA-65 and ML-KEM-768 are implemented here in plain Python so that the package has no native code and no third party dependencies; a full run over the 431 test vectors takes about 30 seconds. This package is meant for interoperability checks, tooling and reading the protocol, not for performance. For speed use the Rust crate or the `@atep/core` npm package.
+
+`atep_py` is the independent Python implementation of ATEP Draft 07 (suite `ATEP-1`; the first 140 vectors are Draft 02/03, then 60 `retired` and `successor`, then 236 anchoring and discovery vectors; draft numbers are internal, see spec Appendix A), written for the M4
 interoperability test from the specification and `vectors/` only. Pure Python 3.8, standard
 library only: Ed25519, X25519, AES-256-GCM, HKDF, deterministic CBOR, ML-DSA-65 (FIPS 204) and
 ML-KEM-768 (FIPS 203) are all implemented here. No native extensions, no third party packages.
@@ -23,6 +35,8 @@ ML-KEM-768 (FIPS 203) are all implemented here. No native extensions, no third p
 | `atep_py/vectors.py` | vector runner |
 
 ## Usage
+
+The test vectors are not part of the package; clone https://github.com/atepdev/atep to get the `vectors/` directory, then pass its path.
 
 ```
 python3 -m atep_py.vectors check ../vectors            # all vectors, summary per category
@@ -60,5 +74,5 @@ env = envelope.sign(alice, payload, envelope.CT_ATTESTATION, nonce16, issued_at,
   (the checker takes the fetcher's answers; no HTTPS or DNS code), public suffix refusal of the domain name, the rest of
   log admission (resubmission, SRL and retirement stores, `domain-control` data), claim-type resolution, hedged-signing
   test inputs.
-* Divergences between the spec text and what was needed to reproduce the vectors are in [`../docs/implementation-findings/python-findings.md`](../docs/implementation-findings/python-findings.md) (entries 32 to
+* Divergences between the spec text and what was needed to reproduce the vectors are in [`docs/implementation-findings/python-findings.md`](https://github.com/atepdev/atep/blob/main/docs/implementation-findings/python-findings.md) (entries 32 to
   44 are from the anchoring and discovery vectors); all are resolved in the spec.

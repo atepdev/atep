@@ -1,0 +1,11 @@
+# The sdist carries the code, the unit tests and the license. The test vectors
+# (14 MB, in the repository's vectors/ directory) are not shipped: the unit tests
+# that need them skip when they are absent, and ATEP_VECTORS=/path/to/vectors
+# runs them.
+include LICENSE
+include README.md
+include pyproject.toml
+recursive-include atep_py *.py
+recursive-include tests *.py
+global-exclude __pycache__
+global-exclude *.py[cod]

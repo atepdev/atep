@@ -1,26 +1,38 @@
 # @atep/core
 
-The ATEP reference core (Draft 07, `ATEP-1` suite, including `retired`, `successor`, anchors and domain binding) for JavaScript: the Rust
+ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a finalized NIST post-quantum standard (Ed25519 with ML-DSA-65, X25519 with ML-KEM-768), and both halves must hold. A robot or agent can identify and verify another offline, with no internet connection, registry or central server: an identity is a hash of public keys, and everything else is checked against cached keys, revocation lists and log checkpoints.
+
+> **Experimental alpha. Do not rely on this to protect anything of value.** There has been no independent security audit. The wire format may change between releases (the COSE labels are private-use values and the media types are unregistered), and the post-quantum crates underneath are young. "Quantum-safe" means finalized NIST algorithms (FIPS 203 and FIPS 204) in a hybrid construction; it does not mean audited or proven.
+
+`@atep/core` is the ATEP reference core (Draft 07, `ATEP-1` suite, including `retired`, `successor`, anchors and domain binding) for JavaScript: the Rust
 `atep-core` crate compiled to WebAssembly, with a TypeScript API. One ESM
 package for Node, Bun, Deno and browsers, no framework and no runtime
 dependencies.
+
+```
+npm install @atep/core@alpha
+```
+
+Pre-releases are published under the `alpha` dist-tag, so a plain `npm install @atep/core` does not pick one until a stable release exists. Node 18 or later.
+
+A complete example (generate keys, sign, encrypt, verify) is under "Usage" below.
 
 Everything cryptographic and every protocol rule comes from the Rust crate
 (RustCrypto: `ed25519-dalek`, `ml-dsa`, `x25519-dalek`, `ml-kem`, `aes-gcm`,
 `hkdf`, `sha2`). The wrapper crate `rust/atep-wasm` only converts between JS
 values and the core types.
 
-## Install and build
+## Build from the repository
 
-The package is built from this repository (not yet published to npm).
+The published package ships the built `dist/`. To build from a repository checkout (development, or to audit the build) use the steps below.
 `js/dist/` is gitignored, so a fresh clone always needs `npm run build` before
 the package can be imported.
 
 ```
 rustup target add wasm32-unknown-unknown
 cargo install wasm-bindgen-cli --version 0.2.129 --locked --no-default-features
+npm ci               # in the repository root: npm workspaces (js, mcp, examples), one lockfile
 cd js
-npm install
 npm run build        # cargo (wasm32, release) -> wasm-bindgen -> tsc -> dist/
 npm test             # all vectors plus round trip tests, under Node
 ```

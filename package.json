@@ -1,0 +1,16 @@
+{
+  "name": "atep-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "Workspace root for local development and CI. Not published. site/ and demo/ are deliberately outside it (the site is deployed on its own).",
+  "workspaces": [
+    "js",
+    "mcp",
+    "examples",
+    "examples/mqtt"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

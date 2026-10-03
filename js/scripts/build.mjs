@@ -102,7 +102,11 @@ if (opt.status === 0) {
 }
 
 rmSync(join(root, "dist"), { recursive: true, force: true });
-run(join(root, "node_modules/.bin/tsc"), ["-p", "tsconfig.json"], { cwd: root });
+// With npm workspaces (the root package.json) the dependencies are hoisted to the
+// repository root; a standalone install keeps them in js/node_modules.
+const tsc = [join(root, "node_modules/.bin/tsc"), join(repo, "node_modules/.bin/tsc")].find((p) => existsSync(p));
+if (!tsc) fail("tsc was not found", ["Run `npm ci` (in the repository root or in js/) first."]);
+run(tsc, ["-p", "tsconfig.json"], { cwd: root });
 cpSync(gen, join(root, "dist/wasm"), { recursive: true });
 const size = statSync(join(root, "dist/wasm/atep_wasm_bg.wasm")).size;
 console.log(`wasm binary: ${size} bytes (${(size / 1024).toFixed(0)} KiB)`);

@@ -1,6 +1,17 @@
 [workspace]
 resolver = "2"
-members = ["atep-core", "atep-cli", "atep-log", "atep-monitor", "atep-wasm"]
+members = ["atep-core", "atep", "atep-cli", "atep-log", "atep-monitor", "atep-wasm"]
+
+[workspace.package]
+version = "0.1.0-alpha.1"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/atepdev/atep"
+homepage = "https://atep.dev"
+authors = ["AIRAD LABS"]
+# The highest rust-version among the locked dependencies (aes 0.9); the build
+# is checked on exactly this toolchain.
+rust-version = "1.89"
 
 # Keep the crypto dependencies fast in debug test runs.
 [profile.dev.package."*"]

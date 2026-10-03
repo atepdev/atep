@@ -1,18 +1,25 @@
 [package]
 name = "atep-cli"
-version = "0.1.0"
-edition = "2021"
-license = "Apache-2.0"
-description = "ATEP command line tool: keygen, sign, encrypt, verify (ATEP Draft 07)"
-repository = "https://github.com/atepdev/atep"
-homepage = "https://atep.dev"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+description = "ATEP command line tool (installs the `atep` binary): quantum-safe keygen, sign, encrypt, verify with offline identification (experimental alpha, ATEP Draft 07)"
+readme = "README.md"
+documentation = "https://github.com/atepdev/atep/blob/main/rust/README.md"
+keywords = ["atep", "post-quantum", "cose", "cli", "attestation"]
+categories = ["command-line-utilities", "cryptography", "authentication"]
+include = ["src/**/*.rs", "Cargo.toml", "README.md", "LICENSE"]
 
 [[bin]]
 name = "atep"
 path = "src/main.rs"
 
 [dependencies]
-atep-core = { path = "../atep-core" }
+atep-core = { version = "0.1.0-alpha.1", path = "../atep-core" }
 clap = { version = "4.6.7", features = ["derive"] }
 hex = "0.4.3"
 serde_json = { version = "1", features = ["preserve_order"] }

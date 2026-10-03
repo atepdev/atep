@@ -5,7 +5,9 @@
   "license": "Apache-2.0",
   "description": "ATEP adapter examples: MCP, A2A, files and HTTP carry the same envelope bytes.",
   "type": "module",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "node --test mcp/mcp.test.mjs a2a/a2a.test.mjs files/files.test.mjs http/http.test.mjs transport/same-bytes.test.mjs",
     "demo:mcp": "node mcp/demo.mjs",
@@ -13,7 +15,7 @@
     "demo:transport": "node transport/demo.mjs"
   },
   "dependencies": {
-    "@atep/core": "file:../js",
+    "@atep/core": "^0.1.0-alpha.1",
     "@modelcontextprotocol/sdk": "^1.31.0",
     "zod": "^3.25.0"
   }

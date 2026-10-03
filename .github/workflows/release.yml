@@ -1,0 +1,528 @@
+name: Release
+
+# Publishes crates.io, npm and PyPI packages with trusted publishing (OIDC): no registry
+# token is stored anywhere. See docs/RELEASING.md for the one-time registry setup and the
+# procedure.
+#
+# * Push a tag `v*` (for example v0.1.0-alpha.1): verify, build, then each publish job
+#   waits for manual approval of the `release` environment.
+# * workflow_dispatch with dry-run (the default): verify and build everything and run the
+#   dry-run publish checks; no publish job runs and nothing is uploaded to a registry.
+#
+# Job graph:
+#   versions, verify-rust, verify-js, verify-python, verify-site
+#     -> build-crates, build-npm, build-python
+#     -> smoke-npm, smoke-python
+#     -> publish-dry-run
+#     -> publish-crates (waits for the index between crates), publish-npm, publish-pypi
+#        (each in the `release` environment; publish-npm waits for @atep/core before @atep/mcp)
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Dry run: build and check everything, publish nothing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: "0"
+  NODE_VERSION: "22"
+
+jobs:
+  versions:
+    name: versions match the tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      pypi-version: ${{ steps.v.outputs.pypi }}
+      npm-tag: ${{ steps.v.outputs.npm-tag }}
+      publish: ${{ steps.v.outputs.publish }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check versions (and the tag, when the run is for a tag)
+        id: v
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+          EVENT: ${{ github.event_name }}
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          set -euo pipefail
+          if [ "$REF_TYPE" = tag ]; then
+            scripts/release/check-versions.sh "$REF_NAME"
+          else
+            scripts/release/check-versions.sh
+          fi
+          crate_v=$(node -p 'require("./js/package.json").version')
+          {
+            echo "version=$crate_v"
+            echo "pypi=$(scripts/release/check-versions.sh --pypi-version)"
+            echo "npm-tag=$(scripts/release/check-versions.sh --npm-tag)"
+            # Publishing needs a tag, and either a tag push or a dispatch with dry-run off.
+            if [ "$REF_TYPE" = tag ] && { [ "$EVENT" = push ] || [ "$DRY_RUN" = false ]; }; then
+              echo "publish=true"
+            else
+              echo "publish=false"
+            fi
+          } >> "$GITHUB_OUTPUT"
+
+  verify-rust:
+    name: verify rust (fmt, clippy, test, vectors, minimum Rust version)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --profile minimal --component rustfmt --component clippy --no-self-update
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: rust
+      - name: cargo fmt
+        working-directory: rust
+        run: cargo fmt --all -- --check
+      - name: cargo clippy
+        working-directory: rust
+        run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - name: cargo test
+        working-directory: rust
+        run: cargo test --locked --workspace
+      - name: Check every vector with the Rust reference implementation
+        working-directory: rust
+        run: cargo run --locked --release -p atep-core --bin atep-vectors -- check ../vectors
+      - name: Regenerating vectors must be byte-identical
+        run: scripts/ci/check-vector-regeneration.sh
+      - name: Build on the declared minimum Rust version
+        working-directory: rust
+        run: |
+          msrv=$(sed -n 's/^rust-version *= *"\(.*\)"/\1/p' Cargo.toml | head -n 1)
+          echo "rust-version is $msrv"
+          rustup toolchain install "$msrv" --profile minimal --no-self-update
+          cargo "+$msrv" build --locked --workspace
+
+  verify-js:
+    name: verify js, mcp, examples, demo
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain with the wasm32 target
+        run: rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown --no-self-update
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: rust
+          key: wasm
+      - name: Read the wasm-bindgen version from rust/Cargo.lock
+        id: wbg
+        run: echo "version=$(scripts/ci/wasm-bindgen-version.sh)" >> "$GITHUB_OUTPUT"
+      - name: Cache wasm-bindgen CLI
+        id: wbg-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo-tools/bin
+          key: wasm-bindgen-cli-${{ steps.wbg.outputs.version }}-${{ runner.os }}
+      - name: Install wasm-bindgen CLI (exact version from the lockfile)
+        if: steps.wbg-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --no-default-features --version "${{ steps.wbg.outputs.version }}" --root ~/.cargo-tools wasm-bindgen-cli
+      - name: Put wasm-bindgen on PATH
+        run: echo "$HOME/.cargo-tools/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install with npm workspaces (js, mcp, examples, examples/mqtt)
+        run: npm ci
+      - name: Build @atep/core
+        run: npm run build -w js
+      - name: No local paths in the wasm build, js/dist or the committed demo copy
+        run: scripts/ci/no-local-paths.sh js/dist js/src/wasm demo/vendor/atep-core/wasm/atep_wasm_bg.wasm
+      - name: Test @atep/core
+        run: npm test -w js
+      - name: Test @atep/mcp (against the local @atep/core build)
+        run: npm test -w mcp
+      - name: Test examples
+        run: |
+          npm test -w examples
+          npm test -w examples/mqtt
+      - name: Demo self-test
+        run: node demo/selftest.mjs
+
+  verify-python:
+    name: verify python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.12"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests (include every vector)
+        working-directory: python
+        run: python -m unittest
+      - name: Vector check
+        working-directory: python
+        run: python -m atep_py.vectors check ../vectors
+
+  verify-site:
+    name: verify site and docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: node site/build-claims.mjs --check
+      - run: node site/build-sitemap.mjs --check
+      - run: node site/build-demo.mjs --check
+      - run: node site/check.mjs
+      - run: node --test site/server.test.mjs
+      - run: scripts/ci/no-em-dashes.sh
+      - run: scripts/ci/no-local-paths.sh
+      - run: node scripts/ci/vector-counts.mjs
+      - run: node scripts/ci/check-md-links.mjs
+
+  build-crates:
+    name: build crate packages
+    needs: [versions, verify-rust, verify-js, verify-python, verify-site]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --profile minimal --no-self-update
+      - name: Package atep-core and list what atep-cli and atep will contain
+        working-directory: rust
+        run: |
+          set -euo pipefail
+          mkdir -p ../out/crates
+          cargo package --locked -p atep-core
+          cp target/package/atep-core-*.crate ../out/crates/
+          # atep-cli and atep depend on atep-core at this very version, which is not on the
+          # registry until atep-core is published, so they cannot be packaged (built) yet.
+          # Their file lists are recorded; the publish job packages and verifies them after
+          # atep-core is in the index.
+          for c in atep-cli atep; do
+            cargo package --locked --list -p "$c" | grep -v '^warning' > "../out/crates/$c.package-list.txt"
+          done
+          (cd ../out/crates && sha256sum -- *.crate > SHA256SUMS)
+          ls -l ../out/crates
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: crates
+          path: out/crates
+          if-no-files-found: error
+          retention-days: 30
+
+  build-npm:
+    name: build npm tarballs
+    needs: [versions, verify-rust, verify-js, verify-python, verify-site]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain with the wasm32 target
+        run: rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown --no-self-update
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          workspaces: rust
+          key: wasm
+      - name: Read the wasm-bindgen version from rust/Cargo.lock
+        id: wbg
+        run: echo "version=$(scripts/ci/wasm-bindgen-version.sh)" >> "$GITHUB_OUTPUT"
+      - name: Cache wasm-bindgen CLI
+        id: wbg-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo-tools/bin
+          key: wasm-bindgen-cli-${{ steps.wbg.outputs.version }}-${{ runner.os }}
+      - name: Install wasm-bindgen CLI (exact version from the lockfile)
+        if: steps.wbg-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --no-default-features --version "${{ steps.wbg.outputs.version }}" --root ~/.cargo-tools wasm-bindgen-cli
+      - name: Put wasm-bindgen on PATH
+        run: echo "$HOME/.cargo-tools/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - name: Build @atep/core
+        run: npm run build -w js
+      - name: No local paths in what will be published
+        run: scripts/ci/no-local-paths.sh js/dist
+      - name: Pack @atep/core and @atep/mcp
+        run: |
+          set -euo pipefail
+          mkdir -p out/npm
+          npm pack -w js -w mcp --pack-destination out/npm
+          (cd out/npm && sha256sum -- *.tgz > SHA256SUMS && cat SHA256SUMS)
+          for f in out/npm/*.tgz; do echo "== $f"; tar tzf "$f"; done
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: npm
+          path: out/npm
+          if-no-files-found: error
+          retention-days: 30
+
+  build-python:
+    name: build python sdist and wheel
+    needs: [versions, verify-rust, verify-js, verify-python, verify-site]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Build, check, and look for local paths
+        working-directory: python
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade build twine
+          python -m build --outdir ../out/python
+          python -m twine check --strict ../out/python/*
+          ls -l ../out/python
+          ! grep -a -l -e '/home/' -e '/Users/' -e '/root/' -e '/tmp/claude' ../out/python/*
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: python
+          path: out/python
+          if-no-files-found: error
+          retention-days: 30
+
+  smoke-npm:
+    name: smoke test the packed npm tarballs
+    needs: [build-npm]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm
+          path: tarballs
+      - name: Install the tarballs into a fresh project and run the smoke test
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/smoke"
+          cd "$RUNNER_TEMP/smoke"
+          npm init -y > /dev/null
+          npm install "$GITHUB_WORKSPACE"/tarballs/atep-core-*.tgz "$GITHUB_WORKSPACE"/tarballs/atep-mcp-*.tgz
+          node "$GITHUB_WORKSPACE/scripts/release/smoke-npm.mjs" "$PWD" "$GITHUB_WORKSPACE/vectors"
+
+  smoke-python:
+    name: smoke test the wheel and sdist (python 3.8)
+    needs: [build-python]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.8"
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: python
+          path: dist
+      - name: Install the wheel in a fresh venv and check the vectors
+        run: |
+          set -euo pipefail
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --pre dist/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/venv/bin/python" -c "import atep_py; print('atep_py', atep_py.__version__)"
+          "$RUNNER_TEMP/venv/bin/python" -m atep_py.vectors check "$GITHUB_WORKSPACE/vectors"
+      - name: Unit tests from the unpacked sdist
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/sdist"
+          tar xzf dist/*.tar.gz -C "$RUNNER_TEMP/sdist"
+          cd "$RUNNER_TEMP"/sdist/atep-*
+          ATEP_VECTORS="$GITHUB_WORKSPACE/vectors" "$RUNNER_TEMP/venv/bin/python" -m unittest
+
+  publish-dry-run:
+    name: dry-run publish checks
+    needs: [build-crates, build-npm, build-python, smoke-npm, smoke-python]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          path: artifacts
+      - name: cargo publish --dry-run
+        working-directory: rust
+        run: |
+          set -euo pipefail
+          rustup toolchain install stable --profile minimal --no-self-update
+          version=$(node -p 'require("../js/package.json").version')
+          cargo publish --dry-run --locked -p atep-core
+          # atep-cli and atep can only be checked once atep-core is in the registry index.
+          if ../scripts/release/crate-published.sh atep-core "$version"; then
+            cargo publish --dry-run --locked -p atep-cli
+            cargo publish --dry-run --locked -p atep
+          else
+            echo "atep-core $version is not on crates.io yet: the dry run of atep-cli and atep is skipped (their file lists are in the crates artifact)"
+          fi
+      - name: npm publish --dry-run
+        run: |
+          set -euo pipefail
+          tag=$(scripts/release/check-versions.sh --npm-tag)
+          for f in artifacts/npm/*.tgz; do
+            npm publish --dry-run --access public --tag "$tag" "$f"
+          done
+      - name: twine check
+        run: |
+          python -m pip install --upgrade twine
+          python -m twine check --strict artifacts/python/*
+
+  publish-crates:
+    name: publish crates.io (atep-core, atep-cli, atep)
+    needs: [versions, publish-dry-run]
+    if: needs.versions.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --profile minimal --no-self-update
+      - name: Get a short-lived crates.io token (trusted publishing)
+        id: auth
+        uses: rust-lang/crates-io-auth-action@c6f97d42243bad5fab37ca0427f495c86d5b1a18 # v1.0.5
+      - name: Publish in dependency order, skipping versions that already exist
+        working-directory: rust
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+          VERSION: ${{ needs.versions.outputs.version }}
+        run: |
+          set -euo pipefail
+          for crate in atep-core atep-cli atep; do
+            if ../scripts/release/crate-published.sh "$crate" "$VERSION"; then
+              echo "::notice::$crate $VERSION is already on crates.io, skipping"
+            else
+              # a dependent crate needs the previous one in the index first
+              [ "$crate" = atep-core ] || ../scripts/release/wait-for-crate.sh atep-core "$VERSION"
+              cargo publish --locked -p "$crate"
+            fi
+            ../scripts/release/wait-for-crate.sh "$crate" "$VERSION"
+          done
+
+  publish-npm:
+    name: publish npm (@atep/core, then @atep/mcp)
+    needs: [versions, publish-dry-run]
+    if: needs.versions.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          # Trusted publishing needs npm 11.5.1 or later, which ships with Node 24.
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: npm
+          path: tarballs
+      - name: Publish with provenance, skipping versions that already exist
+        env:
+          VERSION: ${{ needs.versions.outputs.version }}
+          NPM_TAG: ${{ needs.versions.outputs.npm-tag }}
+        run: |
+          set -euo pipefail
+          npm --version
+          (cd tarballs && sha256sum -c SHA256SUMS)
+          for pkg in core mcp; do
+            name="@atep/$pkg"
+            if [ "$(npm view "$name@$VERSION" version 2>/dev/null || true)" = "$VERSION" ]; then
+              echo "::notice::$name@$VERSION is already on npm, skipping"
+              continue
+            fi
+            npm publish --provenance --access public --tag "$NPM_TAG" "tarballs/atep-$pkg-$VERSION.tgz"
+            # @atep/mcp resolves @atep/core from the registry, so wait for it to be visible
+            for i in $(seq 1 30); do
+              [ "$(npm view "$name@$VERSION" version 2>/dev/null || true)" = "$VERSION" ] && break
+              sleep 10
+            done
+          done
+
+  publish-pypi:
+    name: publish PyPI (atep)
+    needs: [versions, publish-dry-run]
+    if: needs.versions.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: python
+          path: dist
+      - name: Publish to PyPI (trusted publishing; files that already exist are skipped)
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          packages-dir: dist
+          skip-existing: true

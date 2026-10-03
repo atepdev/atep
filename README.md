@@ -12,9 +12,21 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 * Live simulator: https://atep.dev/demo/ (runs in your browser, real cryptography with simulated robots), four simulated units exchanging real encrypted envelopes, one revoked mid-run, with certified members verifying each other directly while the fleet controller is offline. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
 * Site: https://atep.dev (the site sources are in `site/`)
 
-## Registry names are placeholders: do not install
+## Packages: the first alpha is prepared, not yet published
 
-The package names crates.io `atep`, `atep-core` and `atep-cli`, npm `@atep/core` and `@atep/mcp`, and PyPI `atep` are reserved 0.0.1 placeholders. They contain no functional code and should not be installed. Nothing functional is published to any package registry. Build from this repository.
+**Current state: nothing functional is published to any package registry.** The names crates.io `atep`, `atep-core` and `atep-cli`, npm `@atep/core` and `@atep/mcp`, and PyPI `atep` are reserved as 0.0.1 placeholders that contain no code. Do not install them. Until the first alpha is published, build from this repository (see "Try it in 60 seconds" below).
+
+**Planned, after the first alpha is published** (`0.1.0-alpha.1` on crates.io and npm, `0.1.0a1` on PyPI; experimental, no independent audit, the wire format may change). These commands do not work yet:
+
+```
+cargo install atep-cli --version 0.1.0-alpha.1    # the atep binary
+cargo add atep-core@0.1.0-alpha.1                 # the library (crate atep re-exports it)
+npm install @atep/core@alpha                      # JavaScript and TypeScript
+npx -y @atep/mcp@alpha                            # read-only MCP server
+pip install --pre atep                            # Python, import atep_py (pure Python, slow)
+```
+
+How releases are made: [`docs/RELEASING.md`](docs/RELEASING.md). Version policy: [`docs/VERSIONING.md`](docs/VERSIONING.md). Changes: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Try it in 60 seconds
 
@@ -60,7 +72,7 @@ The first prints `OK`, the signer, content type and times, exit code 0. The seco
 The JavaScript package is the Rust core compiled to WebAssembly. A fresh clone has no `js/dist`, so it must be built, which needs the `wasm32-unknown-unknown` target and `wasm-bindgen-cli` 0.2.129 (exact commands and the C-compiler note are in [`js/README.md`](js/README.md)):
 
 ```
-cd js && npm install && npm run build && npm test
+npm ci && npm run build -w js && npm test -w js     # npm workspaces: run in the repository root
 ```
 
 ## How it compares

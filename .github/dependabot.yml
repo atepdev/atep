@@ -20,47 +20,9 @@ updates:
     # wasm-bindgen must match the CLI version CI installs from Cargo.lock, so it is
     # always taken from the lockfile; no extra handling needed here.
 
+  # One npm workspace at the root (js, mcp, examples, examples/mqtt) with one lockfile.
   - package-ecosystem: npm
-    directory: /js
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 2
-    groups:
-      npm-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-
-  - package-ecosystem: npm
-    directory: /mcp
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 2
-    groups:
-      npm-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-
-  - package-ecosystem: npm
-    directory: /examples
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 2
-    groups:
-      npm-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-
-  - package-ecosystem: npm
-    directory: /examples/mqtt
+    directory: /
     schedule:
       interval: weekly
     open-pull-requests-limit: 2

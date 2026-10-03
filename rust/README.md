@@ -1,9 +1,10 @@
 # ATEP reference implementation, Rust
 
-Workspace with five crates:
+Workspace with six crates (`atep-core`, `atep-cli` and `atep` are published, as `0.1.0-alpha.1`, once the release workflow has run; the others are `publish = false`):
 
 * `atep-core`: library. Key bundles, Agent IDs, hybrid signing, hybrid encryption, attestations (`attestation`), signed revocation lists and caches (`srl`), Merkle proofs and checkpoints (`log`), the trust policy engine and chain walking (`trust`), ATEP-R enforcement (`atep_r`), verification (spec section 10, all ten steps), JSON debug view, and the test vector generator and checker. Also builds the `atep-vectors` binary.
-* `atep-cli`: the `atep` command line tool.
+* `atep`: a thin crate that re-exports `atep-core` under the shorter name (`pub use atep_core::*;`). The `atep` binary comes from `atep-cli`.
+* `atep-cli`: the `atep` command line tool (the crate is named `atep-cli`, the binary `atep`). Needs Rust 1.89 or later (`rust-version` in `Cargo.toml`, the highest among the dependencies, and verified).
 * `atep-log`: M3 transparency log library and the `atep-logd` server (Merkle log, checkpoints, proofs, submission validation, HTTP API, directories, gossip) and the discoverability layer (claim-type resolver, OpenAPI description, domain binding checker).
 * `atep-monitor`: M3 monitor library and the `atep-monitor` command line tool.
 * `atep-wasm`: the `atep-core` API compiled to WebAssembly for `js/` (not published as a crate).

@@ -1,33 +1,42 @@
 # @atep/mcp
 
-ATEP (Autonomy Trust Envelope Protocol) is a post-quantum trust layer for autonomous agents and robot fleets: hybrid Ed25519 + ML-DSA-65 signed COSE envelopes, attestation chains and signed revocation lists. This package is a **read-only MCP server** that lets any MCP client verify and inspect ATEP envelopes and look up agents, issuers, claim types and revocations. It runs the real reference verifier (the Rust core compiled to WebAssembly, `@atep/core`).
+ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a finalized NIST post-quantum standard (Ed25519 with ML-DSA-65, X25519 with ML-KEM-768), and both halves must hold. A robot or agent can identify and verify another offline, with no internet connection, registry or central server: an identity is a hash of public keys, and everything else is checked against cached keys, revocation lists and log checkpoints.
+
+> **Experimental alpha. Do not rely on this to protect anything of value.** There has been no independent security audit. The wire format may change between releases (the COSE labels are private-use values and the media types are unregistered), and the post-quantum crates underneath are young. "Quantum-safe" means finalized NIST algorithms (FIPS 203 and FIPS 204) in a hybrid construction; it does not mean audited or proven.
+
+`@atep/mcp` is a **read-only MCP server** that lets any MCP client verify and inspect ATEP envelopes and look up agents, issuers, claim types and revocations. It runs the real reference verifier (the Rust core compiled to WebAssembly, `@atep/core`).
+
+```
+npm install -g @atep/mcp@alpha     # binary: atep-mcp
+npx -y @atep/mcp@alpha             # or run it without installing
+```
+
+Pre-releases are published under the `alpha` dist-tag. Node 20 or later.
 
 **Read-only. No signing, no key handling.** The server never signs anything, never generates or stores keys, and refuses any request that carries private keys or seeds. Because it holds no recipient key, it cannot open encrypted envelopes (tag 96); it verifies signed trust documents (attestations, revocation lists, checkpoints) and other plaintext-signed envelopes, and says so clearly when given an encrypted one.
 
-```
-npx @atep/mcp            # once published; see "Install" for the repository workflow
-```
-
 Keywords: autonomy, robot fleet, trust, attestation, post-quantum, COSE, MCP, A2A, ROS 2.
 
-## Install
+## Build from the repository
 
-This package is not published to npm yet. From the repository:
+The repository is an npm workspace, so the server runs against the local `@atep/core` build:
 
 ```
-cd js && npm install && npm run build     # needs wasm-bindgen-cli 0.2.129 and the wasm32 target, see js/README.md
-cd ../mcp && npm install                  # links @atep/core from ../js
-node bin/atep-mcp.mjs                     # speaks MCP over stdio
-npm test                                  # 54 tests, spawns the server over stdio
+npm ci                                    # in the repository root
+npm run build -w js                       # needs wasm-bindgen-cli 0.2.129 and the wasm32 target, see js/README.md
+node mcp/bin/atep-mcp.mjs                 # speaks MCP over stdio
+npm test -w mcp                           # 54 tests, spawns the server over stdio
 ```
 
-Node 20 or newer. Once published: `npm install -g @atep/mcp`, binary `atep-mcp`.
+Node 20 or newer.
 
 ### Claude Code
 
 ```
-claude mcp add atep --env ATEP_LOG_URL=https://log.example.com/ -- node /path/to/atep/mcp/bin/atep-mcp.mjs
+claude mcp add atep --env ATEP_LOG_URL=https://log.example.com/ -- npx -y @atep/mcp@alpha
 ```
+
+(From a repository checkout, use `-- node /path/to/atep/mcp/bin/atep-mcp.mjs` instead.)
 
 ### Claude Desktop (`claude_desktop_config.json`)
 
@@ -43,7 +52,7 @@ claude mcp add atep --env ATEP_LOG_URL=https://log.example.com/ -- node /path/to
 }
 ```
 
-After publishing, replace `command`/`args` with `"command": "npx", "args": ["-y", "@atep/mcp"]`. `ATEP_LOG_URL` is optional; without it `atep_verify`, `atep_inspect`, the built-in claim table and SRL checks with a supplied SRL still work.
+With the published package, use `"command": "npx", "args": ["-y", "@atep/mcp@alpha"]` instead of the repository path. `ATEP_LOG_URL` is optional; without it `atep_verify`, `atep_inspect`, the built-in claim table and SRL checks with a supplied SRL still work.
 
 ## Tools
 

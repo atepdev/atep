@@ -13,7 +13,7 @@
     "demo": "node demo.mjs"
   },
   "dependencies": {
-    "@atep/core": "file:../../js",
+    "@atep/core": "^0.1.0-alpha.1",
     "mqtt": "^5.10.0"
   },
   "devDependencies": {

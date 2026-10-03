@@ -1,0 +1,41 @@
+[build-system]
+# Upper bound: setuptools 77 and later changed how the license is declared (PEP 639),
+# and the last release that runs on Python 3.8 is 75.3. Keep the build reproducible on both.
+requires = ["setuptools>=61,<77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atep"
+version = "0.1.0a1"
+description = "ATEP: quantum-safe trust layer for robots and AI agents (hybrid Ed25519 + ML-DSA-65, X25519 + ML-KEM-768) with offline identification. Pure Python, standard library only. Experimental alpha."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "Apache-2.0" }
+authors = [{ name = "AIRAD LABS" }]
+keywords = ["atep", "quantum-safe", "post-quantum", "ML-DSA", "ML-KEM", "COSE", "robotics", "attestation", "offline"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Security :: Cryptography",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://atep.dev"
+Source = "https://github.com/atepdev/atep"
+Issues = "https://github.com/atepdev/atep/issues"
+"Security policy" = "https://github.com/atepdev/atep/blob/main/SECURITY.md"
+
+[tool.setuptools]
+# The distribution is named "atep"; the import package is "atep_py".
+packages = ["atep_py"]
+license-files = ["LICENSE"]

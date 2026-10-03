@@ -8,6 +8,7 @@
 | Implementation findings (what implementing the spec revealed, and how the spec resolved it) | [`implementation-findings/`](implementation-findings/README.md): [Rust](implementation-findings/rust-findings.md), [Python](implementation-findings/python-findings.md) |
 | Component documentation | [`../rust/README.md`](../rust/README.md), [`../rust/docs/log-api.md`](../rust/docs/log-api.md), [`../js/README.md`](../js/README.md), [`../python/README.md`](../python/README.md), [`../mcp/README.md`](../mcp/README.md), [`../examples/README.md`](../examples/README.md), [`../demo/README.md`](../demo/README.md) |
 | Contributing, conduct, security | [`../CONTRIBUTING.md`](../CONTRIBUTING.md), [`../CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md), [`../SECURITY.md`](../SECURITY.md) |
+| Releases: owner procedure, versioning policy, changelog | [`RELEASING.md`](RELEASING.md), [`VERSIONING.md`](VERSIONING.md), [`../CHANGELOG.md`](../CHANGELOG.md) |
 | Licenses and third-party notices | [`../LICENSE`](../LICENSE), [`../LICENSE-SPEC.md`](../LICENSE-SPEC.md), [`../THIRD-PARTY-NOTICES.md`](../THIRD-PARTY-NOTICES.md) |
 
 ## How it is tested

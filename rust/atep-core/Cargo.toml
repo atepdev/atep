@@ -1,11 +1,18 @@
 [package]
 name = "atep-core"
-version = "0.1.0"
-edition = "2021"
-license = "Apache-2.0"
-repository = "https://github.com/atepdev/atep"
-homepage = "https://atep.dev"
-description = "ATEP (Autonomy Trust Envelope Protocol) core library (ATEP Draft 07)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+description = "ATEP core library: quantum-safe (hybrid Ed25519 + ML-DSA-65, X25519 + ML-KEM-768) signed and encrypted envelopes with offline identification (experimental alpha, ATEP Draft 07)"
+readme = "README.md"
+documentation = "https://docs.rs/atep-core"
+keywords = ["atep", "post-quantum", "cose", "robotics", "attestation"]
+categories = ["cryptography", "authentication", "encoding"]
+include = ["src/**/*.rs", "Cargo.toml", "README.md", "LICENSE"]
 
 [lib]
 name = "atep_core"

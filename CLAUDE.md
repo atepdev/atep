@@ -28,10 +28,10 @@ Any Rust build needs a C toolchain (a working `cc` as linker; on Debian or Ubunt
 | Vectors, Rust check | `rust/` | `cargo run --release -p atep-core --bin atep-vectors -- check ../vectors` (expects `all 436 vectors pass`) |
 | Vectors, regenerate | `rust/` | `cargo run -p atep-core --bin atep-vectors -- generate ../vectors` (must reproduce identical bytes; only when the spec changes a vector) |
 | Vectors, independent cross-check | `vectors/` | `pip install cryptography` then `python3 crosscheck.py` |
-| npm package | `js/` | `npm install`, `npm run build` (cargo wasm32, wasm-bindgen 0.2.129, tsc), `npm test` (441 tests: 436 pass, 5 skipped by name) |
+| npm package | `js/` | `npm ci` in the repository root (npm workspaces: `js`, `mcp`, `examples`, `examples/mqtt`, one `package-lock.json`), `npm run build -w js` (cargo wasm32, wasm-bindgen 0.2.129, tsc), `npm test -w js` (441 tests: 436 pass, 5 skipped by name) |
 | Python | `python/` | `python3 -m unittest` (470 tests including every vector, 5 skipped by name; about 30 to 45 s); `python3 -m atep_py.vectors check ../vectors` |
-| Examples | `examples/` | `npm install`, `npm test` (25 tests; needs `js/dist`) |
-| MQTT example | `examples/mqtt/` | `npm install`, `npm test` (5 tests; own package.json; not part of `examples` `npm test`) |
+| Examples | `examples/` | `npm test -w examples` (25 tests; needs `js/dist`) |
+| MQTT example | `examples/mqtt/` | `npm test -w examples/mqtt` (5 tests; own package.json; not part of the `examples` tests) |
 | ROS 2 example | `examples/ros2/` | `python3 -m unittest discover -s tests -v`; `python3 -m py_compile atep_ros2_example/*.py`. ROS 2 itself is not installed and the nodes are unrun. |
 | Demo | `demo/` | `node demo/selftest.mjs` (80 checks); `node demo/serve.mjs` then open http://127.0.0.1:8088/. `demo/vendor/atep-core` is a copy of `js/dist`; refresh it when the package is rebuilt. The hosted copy at https://atep.dev/demo/ is generated: run `node site/build-demo.mjs` after any change in `demo/` and commit `site/atep.dev/demo/`. |
 | MCP server | `mcp/` | see `mcp/README.md` (54 tests) |
@@ -60,3 +60,7 @@ After touching `rust/atep-core`, rebuild `js` and re-run all three: Rust vectors
 ## Licensing
 
 Code is Apache-2.0 (`LICENSE`), the specification is CC BY 4.0 (`LICENSE-SPEC.md`); third-party notices are in `THIRD-PARTY-NOTICES.md`. Vulnerabilities go through `SECURITY.md`, not public issues. Contribution rules are in `CONTRIBUTING.md`.
+
+## Releases
+
+Never publish to a registry from an agent session. Releases go through `.github/workflows/release.yml` with trusted publishing and a manual approval; the steps are in `docs/RELEASING.md`, the version policy in `docs/VERSIONING.md`, and `scripts/release/check-versions.sh` checks that crates, npm and PyPI versions agree. The repository is an npm workspace at the root (`js`, `mcp`, `examples`, `examples/mqtt`; `site/` and `demo/` stay outside it). After changing a version, update `rust/Cargo.lock` and `package-lock.json` and `CHANGELOG.md`.

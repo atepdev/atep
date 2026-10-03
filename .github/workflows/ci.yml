@@ -81,37 +81,23 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
-          cache-dependency-path: |
-            js/package-lock.json
-            mcp/package-lock.json
-            examples/package-lock.json
-            examples/mqtt/package-lock.json
+          cache-dependency-path: package-lock.json
+      - name: Install with npm workspaces (js, mcp, examples, examples/mqtt), one lockfile at the root
+        run: npm ci
       - name: Build @atep/core
-        working-directory: js
         run: |
-          npm ci
           wasm-bindgen --version
-          npm run build
+          npm run build -w js
       - name: No local paths in the wasm build, js/dist or the committed demo copy
         run: scripts/ci/no-local-paths.sh js/dist js/src/wasm demo/vendor/atep-core/wasm/atep_wasm_bg.wasm
       - name: Test @atep/core
-        working-directory: js
-        run: npm test
-      - name: Test @atep/mcp
-        working-directory: mcp
-        run: |
-          npm ci
-          npm test
+        run: npm test -w js
+      - name: Test @atep/mcp (workspaces link the local @atep/core build)
+        run: npm test -w mcp
       - name: Test examples
-        working-directory: examples
-        run: |
-          npm ci
-          npm test
+        run: npm test -w examples
       - name: Test MQTT example
-        working-directory: examples/mqtt
-        run: |
-          npm ci
-          npm test
+        run: npm test -w examples/mqtt
       - name: Demo self-test
         run: node demo/selftest.mjs
 
@@ -170,6 +156,8 @@ jobs:
         run: node scripts/ci/vector-counts.mjs
       - name: Relative links and anchors in Markdown files
         run: node scripts/ci/check-md-links.mjs
+      - name: Release versions agree (crates, npm, PyPI)
+        run: scripts/release/check-versions.sh
 
   cddl:
     name: cddl (spec/schemas/atep.cddl against the vectors)
