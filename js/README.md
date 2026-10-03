@@ -183,9 +183,21 @@ Types are in `dist/index.d.ts`.
 
 ### Runtimes
 
-* Node 18+: tested (Node 25). `init()` reads the wasm next to `index.js`.
-* Browsers: `init()` fetches `new URL("./wasm/atep_wasm_bg.wasm", import.meta.url)`; serve `.wasm` as `application/wasm`. Or pass your own source: `await init(fetch("/path/atep.wasm"))`, a `URL`, or bytes. Smoke page: `examples/smoke.html` (plain JS). Run `npm run smoke` and open http://127.0.0.1:8099/examples/smoke.html. The fetch + streaming instantiate path was exercised from Node against the local server; the page itself has not been opened in a real browser here.
-* Bun and Deno: the package uses only standard ESM, `WebAssembly`, `fetch`, `crypto.getRandomValues` (through wasm-bindgen) and `node:fs/promises` (supported by both); not tested here (neither runtime is installed).
+What was run, on one Linux development machine (Ubuntu 20.04 under WSL) on 3 October 2026, against the built `dist/` with the same vector checks and the roundtrip tests:
+
+| Runtime | How | Result |
+| --- | --- | --- |
+| Node 25 | `npm test` | 442 tests: 437 pass, 5 skipped by name (the 4 `log-admission` and 1 `monitor` vectors) |
+| Deno 2.9.7 | `deno test -A test/` | all vector checks (432 pass, 5 skipped by name) and the 5 roundtrip tests pass |
+| Bun 1.4.2 | `bun test test/` | 442 tests: 437 pass, 5 skipped by name, 0 fail |
+| Chromium 131 (headless shell, Playwright) | `node scripts/browser-vectors.mjs` (needs `playwright-core`, see the header of the script) | the vector checks run in the page: 432 pass, 5 skipped by name, 0 fail |
+
+Notes:
+
+* Node: 18 or later is the intended range, and only Node 25 was run here. `init()` reads the wasm next to `index.js`.
+* Browsers: `init()` fetches `new URL("./wasm/atep_wasm_bg.wasm", import.meta.url)`; serve `.wasm` as `application/wasm`. Or pass your own source: `await init(fetch("/path/atep.wasm"))`, a `URL`, or bytes. The fetch and streaming-instantiate path ran in the Chromium run above and in the hosted demo. Not run: Firefox, Safari, mobile browsers, or any other version of the runtimes above. The plain-JS page `examples/smoke.html` (`npm run smoke`) was not opened by hand; the Chromium run uses the same `init()` path.
+* Bun and Deno: the package uses only standard ESM, `WebAssembly`, `fetch`, `crypto.getRandomValues` (through wasm-bindgen) and `node:fs/promises`.
+* Not run anywhere: constrained devices, or any embedded or flight hardware.
 * Bundlers: the wasm is referenced via `new URL(..., import.meta.url)`; the export `@atep/core/atep_core_bg.wasm` points at the binary.
 
 ## Secrets and their limits
@@ -255,6 +267,7 @@ js/
   scripts/build.mjs      cargo -> wasm-bindgen -> tsc
   scripts/bench.mjs      timings
   scripts/serve.mjs      static server for the smoke page
+  scripts/browser-vectors.mjs  the vector checks in headless Chromium (needs playwright-core; not part of CI)
   examples/smoke.html    browser smoke page, plain JS
   test/                  node:test suites
 rust/atep-wasm/          the wasm-bindgen wrapper crate (workspace member)

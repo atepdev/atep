@@ -130,7 +130,7 @@ node -e 'import("./dist/index.js").then(async m =&gt; { await m.init();
   const b = require("fs").readFileSync(
     "../vectors/verify-positive/signed-trust-doc-inline-bundle.cbor");
   console.log(m.verify(new Uint8Array(b), {}, { now: 1800000000 })); })'</code></pre>
-<p>Prints <code>{ ok: true, signer: 'atep:...' }</code>. The package is the Rust core compiled to WebAssembly. Node 18 or later; other runtimes are untested.</p></section>
+<p>Prints <code>{ ok: true, signer: 'atep:...' }</code>. The package is the Rust core compiled to WebAssembly. The vector suite also passes under Deno, Bun and headless Chromium (details in the package README); Firefox, Safari and constrained devices have not been tested.</p></section>
 <section class="card"><h2>Python</h2>
 <pre><code>cd python
 python3 -c "

@@ -116,7 +116,7 @@
 <tbody>
 <tr><th scope="row">Rust reference core and CLI</th><td>Passes all 437 vectors</td><td>No external audit; needs a C linker to build</td></tr>
 <tr><th scope="row">Transparency log and monitor</th><td>Implemented in Rust, acceptance tested</td><td>Plain HTTP, keys in files; not run by anyone outside the project</td></tr>
-<tr><th scope="row">JavaScript (<code>@atep/core</code>, WebAssembly)</th><td>Passes 432 of 437 vectors under Node (five for a log and a monitor are skipped)</td><td>Experimental alpha on npm (<code>npm install @atep/core@alpha</code>); not tested in a real browser, Bun or Deno</td></tr>
+<tr><th scope="row">JavaScript (<code>@atep/core</code>, WebAssembly)</th><td>Passes 432 of 437 vectors under Node, Deno, Bun and headless Chromium (five for a log and a monitor are skipped)</td><td>Experimental alpha on npm (<code>npm install @atep/core@alpha</code>); Firefox, Safari and constrained devices not tested</td></tr>
 <tr><th scope="row">Python (<code>atep_py</code>)</th><td>Independent, standard library only, passes 432 of 437 vectors (five for a log and a monitor are skipped)</td><td>Slow; experimental alpha on PyPI (<code>pip install --pre atep</code>); written by the project, not by an outside party</td></tr>
 <tr><th scope="row">Carrier examples</th><td>MCP, A2A, HTTP, file and MQTT run and tested</td><td>ROS 2 example has not been run on ROS 2</td></tr>
 </tbody></table></div>
