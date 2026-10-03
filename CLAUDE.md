@@ -55,7 +55,7 @@ After touching `rust/atep-core`, rebuild `js` and re-run all three: Rust vectors
 * Spec section 12 table: known gaps no vector covers. Section 13: milestone status. Section 20: decisions taken during drafting, with the code follow-ups that remain (the Python code for an encrypted anchor, and the places where implementations differ and no vector decides).
 * `docs/implementation-findings/python-findings.md`: places the spec text and the vectors differ, found by the independent Python implementation (entries 1 to 44).
 * `spec/schemas/NOTES.md`: CDDL notes.
-* Package names (`atep`, `@atep/core`, `@atep/mcp` and the crates) are reserved 0.0.1 placeholders with no code; nothing functional is published.
+* Packages: `0.1.0-alpha.2` (PyPI `0.1.0a2`) of `atep-core`, `atep-cli`, `atep` (crates.io), `@atep/core`, `@atep/mcp` (npm, dist-tag `alpha`) and `atep` (PyPI) are published as experimental alpha software; the `0.0.1` versions are code-free placeholders. Log and monitor crates are not published.
 
 ## Licensing
 

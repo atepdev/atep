@@ -12,19 +12,19 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 * Live simulator: https://atep.dev/demo/ (runs in your browser, real cryptography with simulated robots), four simulated units exchanging real encrypted envelopes, one revoked mid-run, with certified members verifying each other directly while the fleet controller is offline. Source and notes: [`demo/`](demo/README.md). To run it on your own machine instead: `node demo/serve.mjs` (Node 18 or later, no install, then open http://127.0.0.1:8088/)
 * Site: https://atep.dev (the site sources are in `site/`)
 
-## Packages: the first alpha is prepared, not yet published
+## Install (experimental alpha)
 
-**Current state: nothing functional is published to any package registry.** The names crates.io `atep`, `atep-core` and `atep-cli`, npm `@atep/core` and `@atep/mcp`, and PyPI `atep` are reserved as 0.0.1 placeholders that contain no code. Do not install them. Until the first alpha is published, build from this repository (see "Try it in 60 seconds" below).
+ATEP is quantum-safe (hybrid Ed25519 + ML-DSA-65 and X25519 + ML-KEM-768) and lets a robot or agent identify and verify another offline. The 0.1 releases are experimental: no independent audit, the wire format may change, and the post-quantum crates are young.
 
-**Planned, after the first alpha is published** (`0.1.0-alpha.2` on crates.io and npm, `0.1.0a2` on PyPI; experimental, no independent audit, the wire format may change). These commands do not work yet:
+| Ecosystem | Install |
+| --- | --- |
+| Rust command line (`atep` binary) | `cargo install atep-cli --version 0.1.0-alpha.2` |
+| Rust library | `cargo add atep-core@0.1.0-alpha.2` (or `atep`, the same library under a shorter name) |
+| JavaScript and TypeScript | `npm install @atep/core@alpha` |
+| MCP server (read-only) | `npx -y @atep/mcp@alpha` |
+| Python | `pip install --pre atep` (import `atep_py`; the post-quantum code is pure Python and slow) |
 
-```
-cargo install atep-cli --version 0.1.0-alpha.2    # the atep binary
-cargo add atep-core@0.1.0-alpha.2                 # the library (crate atep re-exports it)
-npm install @atep/core@alpha                      # JavaScript and TypeScript
-npx -y @atep/mcp@alpha                            # read-only MCP server
-pip install --pre atep                            # Python, import atep_py (pure Python, slow)
-```
+The earlier 0.0.1 placeholders contain no code; use the versions above. The log and monitor crates are not published; build them from this repository (see "Try it in 60 seconds" below).
 
 How releases are made: [`docs/RELEASING.md`](docs/RELEASING.md). Version policy: [`docs/VERSIONING.md`](docs/VERSIONING.md). Changes: [`CHANGELOG.md`](CHANGELOG.md).
 

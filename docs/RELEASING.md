@@ -8,7 +8,7 @@ How the packages of this repository are published, and exactly what the owner ha
 | npm | `@atep/core`, `@atep/mcp` | `0.1.0-alpha.2`, dist-tag `alpha` | `js/`, `mcp/` |
 | PyPI | `atep` (import package `atep_py`) | `0.1.0a2` | `python/` |
 
-`atep-log`, `atep-monitor` and `atep-wasm` are `publish = false` and are not released yet. The unscoped npm name `atep` was refused by npm and is not used. All six names are reserved today with `0.0.1` placeholders that contain no code.
+`atep-log`, `atep-monitor` and `atep-wasm` are `publish = false` and are not released yet. The unscoped npm name `atep` was refused by npm and is not used. The three crates, two npm packages and the PyPI project carry `0.0.1` placeholders that contain no code, and the `0.1.0-alpha` releases are published next to them.
 
 Nothing here is published by hand. The workflow [`.github/workflows/release.yml`](../.github/workflows/release.yml) publishes with trusted publishing (OIDC): no registry token exists in the repository, in the Environment or in a secret.
 
@@ -76,25 +76,7 @@ The npm dist-tag comes from the version: `0.1.0-alpha.2` is published under `alp
 
 ## Ready-to-paste README text after the first publish
 
-Replace the section "The first alpha is prepared, not yet published" in the root [`README.md`](../README.md) with:
-
-```markdown
-## Install (experimental alpha)
-
-ATEP is quantum-safe (hybrid Ed25519 + ML-DSA-65 and X25519 + ML-KEM-768) and lets a robot or agent identify and verify another offline. The 0.1 releases are experimental: no independent audit, the wire format may change, and the post-quantum crates are young.
-
-| Ecosystem | Install |
-| --- | --- |
-| Rust command line (`atep` binary) | `cargo install atep-cli --version 0.1.0-alpha.2` |
-| Rust library | `cargo add atep-core@0.1.0-alpha.2` (or `atep`, the same library under a shorter name) |
-| JavaScript and TypeScript | `npm install @atep/core@alpha` |
-| MCP server (read-only) | `npx -y @atep/mcp@alpha` |
-| Python | `pip install --pre atep` (import `atep_py`; the post-quantum code is pure Python and slow) |
-
-The earlier 0.0.1 placeholders contain no code; use the versions above. The log and monitor crates are not published; build them from this repository.
-```
-
-In [`../SECURITY.md`](../SECURITY.md) change `planned` to `yes, as an experimental alpha` in the supported-versions row for the 0.1.0-alpha releases, and drop the sentences saying no functional package has been published. The package READMEs (`js/`, `mcp/`, `python/`, and the crate READMEs) already describe the published state, because they ship inside the packages. The spec's section 13 ("Publication status") is not edited here: it changes only in a new draft.
+The root [`README.md`](../README.md) "Install (experimental alpha)" section and the supported-versions row in [`../SECURITY.md`](../SECURITY.md) were updated when the first alpha went out. For a later release, change the version strings in that README table. The package READMEs (`js/`, `mcp/`, `python/`, and the crate READMEs) ship inside the packages. The spec's section 13 ("Publication status") still says nothing functional is published: it is not edited, because Draft 07 is a published draft, and changes only in a new draft.
 
 ## Verify a release
 

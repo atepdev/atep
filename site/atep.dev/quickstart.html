@@ -47,8 +47,8 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
-  "name": "@atep/core (JavaScript, planned npm name)",
-  "description": "The ATEP Rust core compiled to WebAssembly with a TypeScript API, for Node.js and browsers. Not yet published.",
+  "name": "@atep/core (JavaScript)",
+  "description": "The ATEP Rust core compiled to WebAssembly with a TypeScript API, for Node.js. Experimental alpha on npm (dist-tag alpha).",
   "programmingLanguage": "JavaScript",
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "codeSampleType": "full solution",
@@ -101,7 +101,7 @@
 <main id="main">
 
 <h1>Quick start</h1>
-<p class="lead">Each snippet verifies the same test vector, <code>vectors/verify-positive/signed-trust-doc-inline-bundle.cbor</code>, at the reference time <code>1800000000</code>. Run from the root of the ATEP repository. Build from the repository. Do not install from a package registry: the names crates.io <code>atep</code>, <code>atep-core</code> and <code>atep-cli</code>, npm <code>@atep/core</code> and <code>@atep/mcp</code>, and PyPI <code>atep</code> are reserved 0.0.1 placeholders that contain no functional code.</p>
+<p class="lead">Each snippet verifies the same test vector, <code>vectors/verify-positive/signed-trust-doc-inline-bundle.cbor</code>, at the reference time <code>1800000000</code>. Run from the root of the ATEP repository. Experimental 0.1.0-alpha packages are also on the registries (<code>cargo install atep-cli --version 0.1.0-alpha.2</code>, <code>npm install @atep/core@alpha</code>, <code>pip install --pre atep</code>); there has been no independent audit and the wire format may change. The earlier 0.0.1 versions are placeholders with no code.</p>
 <div class="grid">
 <section class="card"><h2>Rust CLI</h2>
 <pre><code>cd rust
