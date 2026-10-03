@@ -20,7 +20,7 @@ Intended handling (a goal, not a service level agreement): acknowledge within 5 
 | Specification | Draft 08, `spec/ATEP-Specification-Draft-08.md` (current, second public draft) | yes |
 | Specification | Draft 07, `spec/ATEP-Specification-Draft-07.md` (first public draft, superseded) | no, see Draft 08 |
 | Rust crates, `@atep/core`, `@atep/mcp`, `atep` on PyPI (`atep_py`) | this repository's main branch | yes, as pre-release software |
-| The same packages, `0.1.0-alpha.x` (PyPI `0.1.0a2`) | published | yes, as an experimental alpha |
+| The same packages, `0.1.0-alpha.x` (PyPI `0.1.0a3`) | published | yes, as an experimental alpha |
 
 The earlier `0.0.1` versions on the registries are placeholders with no code and are not supported; use the `0.1.0-alpha` releases. There is no stable 1.0 release and no formal long term support.
 

@@ -18,8 +18,8 @@ ATEP is quantum-safe (hybrid Ed25519 + ML-DSA-65 and X25519 + ML-KEM-768) and le
 
 | Ecosystem | Install |
 | --- | --- |
-| Rust command line (`atep` binary) | `cargo install atep-cli --version 0.1.0-alpha.2` |
-| Rust library | `cargo add atep-core@0.1.0-alpha.2` (or `atep`, the same library under a shorter name) |
+| Rust command line (`atep` binary) | `cargo install atep-cli --version 0.1.0-alpha.3` |
+| Rust library | `cargo add atep-core@0.1.0-alpha.3` (or `atep`, the same library under a shorter name) |
 | JavaScript and TypeScript | `npm install @atep/core@alpha` |
 | MCP server (read-only) | `npx -y @atep/mcp@alpha` |
 | Python | `pip install --pre atep` (import `atep_py`; the post-quantum code is pure Python and slow) |
