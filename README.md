@@ -16,11 +16,11 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 
 **Current state: nothing functional is published to any package registry.** The names crates.io `atep`, `atep-core` and `atep-cli`, npm `@atep/core` and `@atep/mcp`, and PyPI `atep` are reserved as 0.0.1 placeholders that contain no code. Do not install them. Until the first alpha is published, build from this repository (see "Try it in 60 seconds" below).
 
-**Planned, after the first alpha is published** (`0.1.0-alpha.1` on crates.io and npm, `0.1.0a1` on PyPI; experimental, no independent audit, the wire format may change). These commands do not work yet:
+**Planned, after the first alpha is published** (`0.1.0-alpha.2` on crates.io and npm, `0.1.0a2` on PyPI; experimental, no independent audit, the wire format may change). These commands do not work yet:
 
 ```
-cargo install atep-cli --version 0.1.0-alpha.1    # the atep binary
-cargo add atep-core@0.1.0-alpha.1                 # the library (crate atep re-exports it)
+cargo install atep-cli --version 0.1.0-alpha.2    # the atep binary
+cargo add atep-core@0.1.0-alpha.2                 # the library (crate atep re-exports it)
 npm install @atep/core@alpha                      # JavaScript and TypeScript
 npx -y @atep/mcp@alpha                            # read-only MCP server
 pip install --pre atep                            # Python, import atep_py (pure Python, slow)

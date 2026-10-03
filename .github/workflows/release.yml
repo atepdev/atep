@@ -4,7 +4,7 @@ name: Release
 # token is stored anywhere. See docs/RELEASING.md for the one-time registry setup and the
 # procedure.
 #
-# * Push a tag `v*` (for example v0.1.0-alpha.1): verify, build, then each publish job
+# * Push a tag `v*` (for example v0.1.0-alpha.2): verify, build, then each publish job
 #   waits for manual approval of the `release` environment.
 # * workflow_dispatch with dry-run (the default): verify and build everything and run the
 #   dry-run publish checks; no publish job runs and nothing is uploaded to a registry.
@@ -416,9 +416,8 @@ jobs:
         run: |
           set -euo pipefail
           tag=$(scripts/release/check-versions.sh --npm-tag)
-          for f in artifacts/npm/*.tgz; do
-            npm publish --dry-run --access public --tag "$tag" "$f"
-          done
+          version=$(node -p 'require("./js/package.json").version')
+          scripts/release/npm-publish.sh artifacts/npm "$version" "$tag" --dry-run
       - name: twine check
         run: |
           python -m pip install --upgrade twine
@@ -491,20 +490,7 @@ jobs:
         run: |
           set -euo pipefail
           npm --version
-          (cd tarballs && sha256sum -c SHA256SUMS)
-          for pkg in core mcp; do
-            name="@atep/$pkg"
-            if [ "$(npm view "$name@$VERSION" version 2>/dev/null || true)" = "$VERSION" ]; then
-              echo "::notice::$name@$VERSION is already on npm, skipping"
-              continue
-            fi
-            npm publish --provenance --access public --tag "$NPM_TAG" "tarballs/atep-$pkg-$VERSION.tgz"
-            # @atep/mcp resolves @atep/core from the registry, so wait for it to be visible
-            for _ in $(seq 1 30); do
-              [ "$(npm view "$name@$VERSION" version 2>/dev/null || true)" = "$VERSION" ] && break
-              sleep 10
-            done
-          done
+          scripts/release/npm-publish.sh tarballs "$VERSION" "$NPM_TAG"
 
   publish-pypi:
     name: publish PyPI (atep)

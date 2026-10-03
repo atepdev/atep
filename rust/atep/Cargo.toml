@@ -19,4 +19,4 @@ name = "atep"
 path = "src/lib.rs"
 
 [dependencies]
-atep-core = { version = "0.1.0-alpha.1", path = "../atep-core" }
+atep-core = { version = "0.1.0-alpha.2", path = "../atep-core" }

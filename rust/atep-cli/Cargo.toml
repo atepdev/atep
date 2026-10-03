@@ -19,7 +19,7 @@ name = "atep"
 path = "src/main.rs"
 
 [dependencies]
-atep-core = { version = "0.1.0-alpha.1", path = "../atep-core" }
+atep-core = { version = "0.1.0-alpha.2", path = "../atep-core" }
 clap = { version = "4.6.7", features = ["derive"] }
 hex = "0.4.3"
 serde_json = { version = "1", features = ["preserve_order"] }

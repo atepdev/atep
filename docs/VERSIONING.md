@@ -6,7 +6,7 @@ ATEP has three things that are versioned, and they move independently.
 | --- | --- | --- |
 | The specification | numbered public drafts (Draft 07 is the first public draft); a published draft is never edited, a change is a new file | [`../spec/`](../spec/ATEP-Specification-Draft-07.md) |
 | The test vectors | with the spec draft: the vectors of a draft are fixed by regeneration from seeds, and a new draft may add or change vectors | [`../vectors/`](../vectors/README.md) |
-| The packages (crates, npm, PyPI) | SemVer for crates.io and npm (`0.1.0-alpha.1`), the PEP 440 spelling for PyPI (`0.1.0a1`); one version number for all of them | `rust/`, `js/`, `mcp/`, `python/` |
+| The packages (crates, npm, PyPI) | SemVer for crates.io and npm (`0.1.0-alpha.2`), the PEP 440 spelling for PyPI (`0.1.0a2`); one version number for all of them | `rust/`, `js/`, `mcp/`, `python/` |
 
 ## The 0.x policy
 
@@ -21,7 +21,7 @@ A change is breaking if a conforming implementation of the previous release woul
 
 ## What the alpha label means
 
-`0.1.0-alpha.N` says: usable to try, to build interoperability tests against and to read, not to rely on. No independent audit has been done, the post-quantum libraries are young, the wire format may change. Alphas are published under the npm dist-tag `alpha` (never `latest`), and on PyPI and crates.io as pre-releases that installers skip unless asked (`pip install --pre atep`, `cargo add atep-core@0.1.0-alpha.1`, `npm install @atep/core@alpha`). A later beta would mean the wire format is frozen for that draft and the remaining work is review and fixes; a release candidate would mean nothing else is planned before 1.0.
+`0.1.0-alpha.N` says: usable to try, to build interoperability tests against and to read, not to rely on. No independent audit has been done, the post-quantum libraries are young, the wire format may change. Alphas are published under the npm dist-tag `alpha` (never `latest`), and on PyPI and crates.io as pre-releases that installers skip unless asked (`pip install --pre atep`, `cargo add atep-core@0.1.0-alpha.2`, `npm install @atep/core@alpha`). A later beta would mean the wire format is frozen for that draft and the remaining work is review and fixes; a release candidate would mean nothing else is planned before 1.0.
 
 ## Conditions for 1.0
 

@@ -9,7 +9,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 ## Install
 
 ```
-cargo add atep-core@0.1.0-alpha.1
+cargo add atep-core@0.1.0-alpha.2
 ```
 
 (Cargo does not select pre-releases on its own, so the version is spelled out.) Needs Rust 1.89 or later. The command line tool is the separate crate [`atep-cli`](https://crates.io/crates/atep-cli), which installs a binary named `atep`. The crate `atep` re-exports this library under the shorter name.

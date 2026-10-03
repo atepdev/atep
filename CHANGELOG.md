@@ -4,7 +4,19 @@ All notable changes to the packages of this repository are recorded here. The fo
 
 ## [Unreleased]
 
-## [0.1.0-alpha.1] - 2026-10-02
+## [0.1.0-alpha.2] - 2026-10-03
+
+The first alpha on npm. The code is identical to 0.1.0-alpha.1; this release exists because the alpha.1 release run could not publish to npm.
+
+### Fixed
+
+* Release workflow: the npm publish step passed the tarball as `tarballs/atep-core-<version>.tgz`. A relative path of that two-segment shape is read by npm as GitHub shorthand (`owner/repo`), so npm tried to reach `ssh://git@github.com/tarballs/...` and failed with exit code 128 before uploading anything. Both the dry run and the publish job now call one script, `scripts/release/npm-publish.sh`, which passes absolute paths, so the two cannot differ again.
+
+### Notes
+
+* `0.1.0-alpha.1` was published to crates.io (`atep-core`, `atep-cli`, `atep`) and PyPI (`atep`) only. It was never published to npm. It stays installable on those two registries and is functionally the same as alpha.2. npm users start at `0.1.0-alpha.2`.
+
+## [0.1.0-alpha.1] - 2026-10-02 (crates.io and PyPI only)
 
 First alpha. Experimental: no independent security audit, the wire format may change in any 0.x release (private-use COSE labels, unregistered media types) and the post-quantum crates it builds on (`ml-dsa`, `ml-kem`) are young. Versions: crates.io and npm `0.1.0-alpha.1`, PyPI `0.1.0a1`.
 
@@ -36,5 +48,6 @@ First alpha. Experimental: no independent security audit, the wire format may ch
 * `@atep/core` is tested under Node only; Bun, Deno and browser use are not verified. The ROS 2 example has not been run on a ROS 2 install.
 * See section 13 of the specification for the open items.
 
-[Unreleased]: https://github.com/atepdev/atep/compare/v0.1.0-alpha.1...HEAD
+[Unreleased]: https://github.com/atepdev/atep/compare/v0.1.0-alpha.2...HEAD
+[0.1.0-alpha.2]: https://github.com/atepdev/atep/releases/tag/v0.1.0-alpha.2
 [0.1.0-alpha.1]: https://github.com/atepdev/atep/releases/tag/v0.1.0-alpha.1

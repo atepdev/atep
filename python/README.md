@@ -8,7 +8,7 @@ ATEP is a quantum-safe trust layer for robots and AI agents. Every signature and
 pip install --pre atep
 ```
 
-The PyPI distribution is named `atep`; the import package is `atep_py` (`import atep_py`). The `--pre` flag is needed because the first releases are pre-releases (`0.1.0a1`). Python 3.8 or later, no dependencies.
+The PyPI distribution is named `atep`; the import package is `atep_py` (`import atep_py`). The `--pre` flag is needed because the first releases are pre-releases (`0.1.0a2`). Python 3.8 or later, no dependencies.
 
 **The post-quantum algorithms are pure Python and slow.** ML-DSA-65 and ML-KEM-768 are implemented here in plain Python so that the package has no native code and no third party dependencies; a full run over the 431 test vectors takes about 30 seconds. This package is meant for interoperability checks, tooling and reading the protocol, not for performance. For speed use the Rust crate or the `@atep/core` npm package.
 

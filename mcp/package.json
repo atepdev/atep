@@ -1,6 +1,6 @@
 {
   "name": "@atep/mcp",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Read-only MCP server for ATEP (Autonomy Trust Envelope Protocol): verify and inspect envelopes, look up agents, issuers, claim types and revocations. No signing, no key handling.",
   "license": "Apache-2.0",
   "type": "module",
@@ -40,7 +40,7 @@
     "test": "node --test \"test/*.test.mjs\""
   },
   "dependencies": {
-    "@atep/core": "^0.1.0-alpha.1",
+    "@atep/core": "^0.1.0-alpha.2",
     "@modelcontextprotocol/sdk": "^1.31.0",
     "zod": "^3.25.0"
   },

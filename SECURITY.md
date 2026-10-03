@@ -19,7 +19,7 @@ Intended handling (a goal, not a service level agreement): acknowledge within 5 
 | --- | --- | --- |
 | Specification | Draft 07, `spec/ATEP-Specification-Draft-07.md` (current, first public draft) | yes |
 | Rust crates, `@atep/core`, `@atep/mcp`, `atep` on PyPI (`atep_py`) | this repository's main branch | yes, as pre-release software |
-| The same packages, `0.1.0-alpha.x` (PyPI `0.1.0a1`) | planned: becomes supported, as experimental alpha software, once the first alpha is published | planned |
+| The same packages, `0.1.0-alpha.x` (PyPI `0.1.0a2`) | planned: becomes supported, as experimental alpha software, once the first alpha is published | planned |
 
 The package names are reserved at version 0.0.1 as placeholders with no code: `atep`, `atep-core` and `atep-cli` on crates.io, `@atep/core` and `@atep/mcp` on npm (the unscoped npm name `atep` was refused by npm and is not needed) and `atep` on PyPI. Do not install them. No functional package has been published to npm, crates.io or PyPI. There is no stable 1.0 release and no formal long term support.
 

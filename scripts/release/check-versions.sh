@@ -4,12 +4,12 @@
 #
 # Usage:
 #   scripts/release/check-versions.sh                 consistency only
-#   scripts/release/check-versions.sh v0.1.0-alpha.1  also require the tag to match
+#   scripts/release/check-versions.sh v0.1.0-alpha.2  also require the tag to match
 #   scripts/release/check-versions.sh --npm-tag       print the npm dist-tag for this version
 #   scripts/release/check-versions.sh --pypi-version  print the PEP 440 version
 #
-# The version scheme is SemVer for crates.io and npm (0.1.0-alpha.1) and its PEP 440
-# spelling for PyPI (0.1.0a1). Mapping: -alpha.N -> aN, -beta.N -> bN, -rc.N -> rcN.
+# The version scheme is SemVer for crates.io and npm (0.1.0-alpha.2) and its PEP 440
+# spelling for PyPI (0.1.0a2). Mapping: -alpha.N -> aN, -beta.N -> bN, -rc.N -> rcN.
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 

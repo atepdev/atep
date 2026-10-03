@@ -15,7 +15,7 @@
     "demo:transport": "node transport/demo.mjs"
   },
   "dependencies": {
-    "@atep/core": "^0.1.0-alpha.1",
+    "@atep/core": "^0.1.0-alpha.2",
     "@modelcontextprotocol/sdk": "^1.31.0",
     "zod": "^3.25.0"
   }
