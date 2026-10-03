@@ -4,7 +4,7 @@ name: Release
 # token is stored anywhere. See docs/RELEASING.md for the one-time registry setup and the
 # procedure.
 #
-# * Push a tag `v*` (for example v0.1.0-alpha.2): verify, build, then each publish job
+# * Push a tag `v*` (for example v0.1.0-alpha.3): verify, build, then each publish job
 #   waits for manual approval of the `release` environment.
 # * workflow_dispatch with dry-run (the default): verify and build everything and run the
 #   dry-run publish checks; no publish job runs and nothing is uploaded to a registry.

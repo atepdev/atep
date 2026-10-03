@@ -24,7 +24,7 @@ path = "src/bin/atep-logd.rs"
 net-fetch = []
 
 [dependencies]
-atep-core = { version = "0.1.0-alpha.2", path = "../atep-core" }
+atep-core = { version = "0.1.0-alpha.3", path = "../atep-core" }
 clap = { version = "4.6.7", features = ["derive"] }
 hex = "0.4.3"
 base64 = "0.23.1"

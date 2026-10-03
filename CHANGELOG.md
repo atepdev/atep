@@ -4,7 +4,9 @@ All notable changes to the packages of this repository are recorded here. The fo
 
 ## [Unreleased]
 
-Implements Draft 08 of the specification (`spec/ATEP-Specification-Draft-08.md`, the second public draft; Draft 07 is unchanged). The published `0.1.0-alpha.1` and `0.1.0-alpha.2` implement Draft 07 and do not contain these changes.
+## [0.1.0-alpha.3] - 2026-10-03
+
+Implements Draft 08 of the specification (`spec/ATEP-Specification-Draft-08.md`, the second public draft; Draft 07 is unchanged). `0.1.0-alpha.1` and `0.1.0-alpha.2` implement Draft 07 and do not contain these changes. Section 13 of Draft 08 was written before this release and still says that no release has the Draft 08 rule; a published draft is not edited, so the next draft corrects it.
 
 ### Changed
 

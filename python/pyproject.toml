@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "atep"
-version = "0.1.0a2"
+version = "0.1.0a3"
 description = "ATEP: quantum-safe trust layer for robots and AI agents (hybrid Ed25519 + ML-DSA-65, X25519 + ML-KEM-768) with offline identification. Pure Python, standard library only. Experimental alpha."
 readme = "README.md"
 requires-python = ">=3.8"

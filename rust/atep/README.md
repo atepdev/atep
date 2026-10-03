@@ -9,8 +9,8 @@ This crate is a thin alias: `pub use atep_core::*;`. Depend on `atep` if you wan
 ## Install
 
 ```
-cargo add atep@0.1.0-alpha.2       # the library
-cargo install atep-cli --version 0.1.0-alpha.2   # the `atep` binary
+cargo add atep@0.1.0-alpha.3       # the library
+cargo install atep-cli --version 0.1.0-alpha.3   # the `atep` binary
 ```
 
 Needs Rust 1.89 or later.

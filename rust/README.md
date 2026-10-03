@@ -1,6 +1,6 @@
 # ATEP reference implementation, Rust
 
-Workspace with six crates (`atep-core`, `atep-cli` and `atep` are published, as `0.1.0-alpha.2`, once the release workflow has run; the others are `publish = false`):
+Workspace with six crates (`atep-core`, `atep-cli` and `atep` are published, as `0.1.0-alpha.3`, once the release workflow has run; the others are `publish = false`):
 
 * `atep-core`: library. Key bundles, Agent IDs, hybrid signing, hybrid encryption, attestations (`attestation`), signed revocation lists and caches (`srl`), Merkle proofs and checkpoints (`log`), the trust policy engine and chain walking (`trust`), ATEP-R enforcement (`atep_r`), verification (spec section 10, all ten steps), JSON debug view, and the test vector generator and checker. Also builds the `atep-vectors` binary.
 * `atep`: a thin crate that re-exports `atep-core` under the shorter name (`pub use atep_core::*;`). The `atep` binary comes from `atep-cli`.
