@@ -72,7 +72,7 @@ function checkInPractice(html, rel) {
   if (!/#18-related-work-and-positioning/.test(html)) err(`${rel}: no link to the related-work section`);
   for (const w of ["Envelope", "Attestation", "Certifier", "Revocation list", "Offline verification"]) if (!new RegExp(`<dt>${w}</dt>`).test(html)) err(`${rel}: Words box lacks ${w}`);
   if ((html.match(/<section class="card"><h3>/g) || []).length < 11) err(`${rel}: expected 6 point cards and 5 scenario cards`);
-  if ((html.match(/class="spec"/g) || []).length !== 5) err(`${rel}: each of the five scenarios needs a Spec link`);
+  if ((html.match(/class="spec"/g) || []).length !== 6) err(`${rel}: each of the six scenarios needs a Spec link`);
   const svgs = [...html.matchAll(/<svg\b[\s\S]*?<\/svg>/g)].map((m) => m[0]);
   if (svgs.length < 1) err(`${rel}: no diagram`);
   for (const v of svgs) if (!/role="img"/.test(v) || !/<title\b/.test(v) || !/<desc\b/.test(v)) err(`${rel}: an svg lacks role=img, title or desc`);

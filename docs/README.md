@@ -6,6 +6,7 @@
 | CDDL schemas for the wire formats and the notes on them | [`../spec/schemas/atep.cddl`](../spec/schemas/atep.cddl), [`../spec/schemas/NOTES.md`](../spec/schemas/NOTES.md) |
 | Test vectors and their format | [`../vectors/README.md`](../vectors/README.md); reasoning for the newer categories in [`ANCHOR-DISCOVERY-NOTES.md`](../vectors/ANCHOR-DISCOVERY-NOTES.md) and [`RETIRED-SUCCESSOR-NOTES.md`](../vectors/RETIRED-SUCCESSOR-NOTES.md) |
 | Implementation findings (what implementing the spec revealed, and how the spec resolved it) | [`implementation-findings/`](implementation-findings/README.md): [Rust](implementation-findings/rust-findings.md), [Python](implementation-findings/python-findings.md) |
+| Design note (not part of the spec): ATEP on relayed space links, with its limits | [`space-links.md`](space-links.md) |
 | Component documentation | [`../rust/README.md`](../rust/README.md), [`../rust/docs/log-api.md`](../rust/docs/log-api.md), [`../js/README.md`](../js/README.md), [`../python/README.md`](../python/README.md), [`../mcp/README.md`](../mcp/README.md), [`../examples/README.md`](../examples/README.md), [`../demo/README.md`](../demo/README.md) |
 | Contributing, conduct, security | [`../CONTRIBUTING.md`](../CONTRIBUTING.md), [`../CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md), [`../SECURITY.md`](../SECURITY.md) |
 | Releases: owner procedure, versioning policy, changelog | [`RELEASING.md`](RELEASING.md), [`VERSIONING.md`](VERSIONING.md), [`../CHANGELOG.md`](../CHANGELOG.md) |

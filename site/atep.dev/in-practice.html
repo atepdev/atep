@@ -30,7 +30,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "ATEP in practice",
-  "description": "What the Autonomy Trust Envelope Protocol changes for robot fleets and AI agents, explained in plain language with five illustrated scenarios.",
+  "description": "What the Autonomy Trust Envelope Protocol changes for robot fleets and AI agents, explained in plain language with six illustrated scenarios.",
   "url": "https://atep.dev/in-practice.html",
   "inLanguage": "en",
   "datePublished": "2026-10-02",
@@ -109,7 +109,7 @@
 <tr><th scope="row">maintenance</th><td>firmware, configuration, key rotation</td><td>maintenance authority</td></tr>
 </tbody></table></div>
 
-<h2 id="scenarios">Five scenarios</h2>
+<h2 id="scenarios">Six scenarios</h2>
 <p class="fine"><strong>Illustrations of how the protocol behaves, not case studies: no deployment is described.</strong> Each has a link to the section of the specification that defines the behavior.</p>
 <div class="grid scenarios">
 <section class="card"><h3>A warehouse with the network down</h3>
@@ -127,6 +127,9 @@
 <section class="card"><h3>AI agents handing work to each other</h3>
 <p>An agent passes a result to another agent. <strong>Without ATEP</strong>, the receiver knows little beyond the channel the text arrived on. <strong>With ATEP</strong>, the receiving agent can tell which agent produced the result and that it was not altered on the way. The protocol treats the content as data, never as instructions. ATEP does not make the content true or safe; it makes its origin checkable, so the receiver can handle it accordingly.</p>
 <p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#11-security-considerations">Spec: section 11</a></p></section>
+<section class="card"><h3>Satellites from different operators sharing a relay network</h3>
+<p>Operators of different satellites want to relay each other's traffic. <strong>Without ATEP</strong>, each pair of operators arranges its own trust, and a relay has little to check beyond the link a command arrived on. <strong>With ATEP</strong>, commands are signed and encrypted end to end: a relay carries them but cannot read or change them, and the receiving satellite checks, from keys it holds already, who sent one and whether a certifier it trusts allows that sender to give it. A compromised operator is cut off by a revocation list once satellites receive it. ATEP does not stop jamming or delay. This is a sketch, not a deployed system, and no space engineer has reviewed it (see the <a href="https://github.com/atepdev/atep/blob/main/docs/space-links.md">design note</a>).</p>
+<p class="spec"><a href="https://github.com/atepdev/atep/blob/main/spec/ATEP-Specification-Draft-08.md#7-attestations">Spec: sections 7, 8 and 10</a></p></section>
 </div>
 
 <div class="tablewrap"><table class="compare">
@@ -137,6 +140,7 @@
 <tr><th scope="row">Unknown sender offers an update</th><td>Depends on the vendor's own update channel</td><td>Declined unless the sender is a certified maintenance authority</td></tr>
 <tr><th scope="row">Patchy connectivity</th><td>Proving a certification needs a connection</td><td>Certificates are checked on the machine; motion stops when the revocation list is too old</td></tr>
 <tr><th scope="row">A unit is compromised</th><td>Vendor-specific, often manual</td><td>One signed revocation list; units that receive it reject that unit</td></tr>
+<tr><th scope="row">Operators share a relay network</th><td>Each pairing arranges its own trust; a relay has little to check</td><td>Commands are signed and encrypted end to end, and the receiver checks sender and authority from keys it holds; jamming and delay are not addressed</td></tr>
 <tr><th scope="row">Agents hand off work</th><td>Origin and integrity are not checkable</td><td>Producer and integrity are checkable; the content is still treated as data</td></tr>
 </tbody></table></div>
 
