@@ -42,7 +42,7 @@ env:
 jobs:
   versions:
     name: versions match the tag
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     outputs:
       version: ${{ steps.v.outputs.version }}
@@ -82,7 +82,7 @@ jobs:
 
   verify-rust:
     name: verify rust (fmt, clippy, test, vectors, minimum Rust version)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -117,7 +117,7 @@ jobs:
 
   verify-js:
     name: verify js, mcp, examples, demo
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -167,7 +167,7 @@ jobs:
 
   verify-python:
     name: verify python ${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -189,7 +189,7 @@ jobs:
 
   verify-site:
     name: verify site and docs
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -211,7 +211,7 @@ jobs:
   build-crates:
     name: build crate packages
     needs: [versions, verify-rust, verify-js, verify-python, verify-site]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -245,7 +245,7 @@ jobs:
   build-npm:
     name: build npm tarballs
     needs: [versions, verify-rust, verify-js, verify-python, verify-site]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -298,7 +298,7 @@ jobs:
   build-python:
     name: build python sdist and wheel
     needs: [versions, verify-rust, verify-js, verify-python, verify-site]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -326,7 +326,7 @@ jobs:
   smoke-npm:
     name: smoke test the packed npm tarballs
     needs: [build-npm]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -351,7 +351,7 @@ jobs:
   smoke-python:
     name: smoke test the wheel and sdist (python 3.8)
     needs: [build-python]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -383,7 +383,7 @@ jobs:
   publish-dry-run:
     name: dry-run publish checks
     needs: [build-crates, build-npm, build-python, smoke-npm, smoke-python]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -428,7 +428,7 @@ jobs:
     name: publish crates.io (atep-core, atep-cli, atep)
     needs: [versions, publish-dry-run]
     if: needs.versions.outputs.publish == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     environment: release
     permissions:
@@ -465,7 +465,7 @@ jobs:
     name: publish npm (@atep/core, then @atep/mcp)
     needs: [versions, publish-dry-run]
     if: needs.versions.outputs.publish == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: release
     permissions:
@@ -510,7 +510,7 @@ jobs:
     name: publish PyPI (atep)
     needs: [versions, publish-dry-run]
     if: needs.versions.outputs.publish == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: release
     permissions:

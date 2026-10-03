@@ -1,6 +1,6 @@
 # CI workflows
 
-The CI and security workflows run with `permissions: contents: read`, use no secrets, set a timeout on every job, and cancel superseded runs on pull requests. Third-party actions are pinned to full commit SHAs with the version in a comment. Rust is installed with `rustup` on the runner (no third-party toolchain action).
+The CI and security workflows run with `permissions: contents: read`, use no secrets, set a timeout on every job, and cancel superseded runs on pull requests. Third-party actions are pinned to full commit SHAs with the version in a comment. Rust is installed with `rustup` on the runner (no third-party toolchain action). Jobs run on the pinned image `ubuntu-24.04`, not `ubuntu-latest`, so a runner upgrade (GitHub announced `ubuntu-latest` moving to Ubuntu 26 from 19 October 2026) never changes CI or a release by surprise; move to a newer image deliberately and run the Release workflow in dry-run mode first. Dependabot does not update runner labels.
 
 ## ci.yml (push to main, pull requests)
 
