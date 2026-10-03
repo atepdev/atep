@@ -4,7 +4,7 @@ All notable changes to the packages of this repository are recorded here. The fo
 
 ## [Unreleased]
 
-## [0.1.0-alpha.1] - not yet released
+## [0.1.0-alpha.1] - 2026-10-02
 
 First alpha. Experimental: no independent security audit, the wire format may change in any 0.x release (private-use COSE labels, unregistered media types) and the post-quantum crates it builds on (`ml-dsa`, `ml-kem`) are young. Versions: crates.io and npm `0.1.0-alpha.1`, PyPI `0.1.0a1`.
 
