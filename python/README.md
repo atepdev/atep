@@ -10,7 +10,7 @@ pip install --pre atep
 
 The PyPI distribution is named `atep`; the import package is `atep_py` (`import atep_py`). The `--pre` flag is needed because the first releases are pre-releases (`0.1.0a3`). Python 3.8 or later, no dependencies.
 
-**The post-quantum algorithms are pure Python and slow.** ML-DSA-65 and ML-KEM-768 are implemented here in plain Python so that the package has no native code and no third party dependencies; a full run over the 438 test vectors takes about 30 seconds. This package is meant for interoperability checks, tooling and reading the protocol, not for performance. For speed use the Rust crate or the `@atep/core` npm package.
+**The post-quantum algorithms are pure Python and slow.** ML-DSA-65 and ML-KEM-768 are implemented here in plain Python so that the package has no native code and no third party dependencies; a full run over the 441 test vectors takes about 30 seconds. This package is meant for interoperability checks, tooling and reading the protocol, not for performance. For speed use the Rust crate or the `@atep/core` npm package.
 
 `atep_py` is the independent Python implementation of ATEP Draft 08 (suite `ATEP-1`; the first 140 vectors are Draft 02/03, then 60 `retired` and `successor`, then 236 anchoring and discovery vectors; draft numbers are internal, see spec Appendix A), written for the M4
 interoperability test from the specification and `vectors/` only. Pure Python 3.8, standard
@@ -66,7 +66,7 @@ env = envelope.sign(alice, payload, envelope.CT_ATTESTATION, nonce16, issued_at,
   anchor check with its four step 9 codes, the `registry-endpoint` data and admission check, and the domain binding check.
 * Implemented from Draft 08: among the alternatives of a requirement, a failed alternative with `srl_stale` or `srl_unavailable`
   decides the error (first such alternative in listed order); otherwise the furthest alternative, ties to the first.
-* `python3 -m atep_py.vectors check ../vectors` reports 438 passed + 5 skipped = 443. Per new category: `anchor-envelope`
+* `python3 -m atep_py.vectors check ../vectors` reports 441 passed + 5 skipped = 446. Per new category: `anchor-envelope`
   13, `anchor-media-type` 3, `anchor-not-supported` 9, `anchor-record` 36, `chain-id` 30, `checkpoint-hash` 9,
   `domain-binding` 83, `registry-endpoint` 26, `require-anchor` 27 (all passed). The 5 skipped are named and counted:
   `log-admission` (4) and `monitor` (1), because Python has no log and no monitor. `registry-endpoint` runs through

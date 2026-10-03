@@ -2215,6 +2215,21 @@
       "category": "successor-positive",
       "name": "su27-root-claim-inherited-at-max-depth-1",
       "cbor_sha256": "7596cb15682b0c73e75a2443dec41dfd53e73c0e2a18ccc1e345b12a78d2e32a"
+    },
+    {
+      "category": "chain-positive",
+      "name": "depth-exactly-at-max-depth",
+      "cbor_sha256": "248dfaa34f5b3cb7780b1ed1770ab5fe4f4e40cb57432933fec8c1bd7e4a8e29"
+    },
+    {
+      "category": "chain-positive",
+      "name": "direct-claim-at-max-depth-1",
+      "cbor_sha256": "09dbbe0a22d43c9a30dfd0e4cc3ad9e09fb7817a6d31845e9b5b836f8819f815"
+    },
+    {
+      "category": "chain-positive",
+      "name": "attestation-nonce-in-seen-nonces",
+      "cbor_sha256": "b43d0b49fbc5e5210a2ac00727690fdad65beb7d2c4c545c5705a7fdec92a2b0"
     }
   ]
 }

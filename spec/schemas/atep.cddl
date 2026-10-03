@@ -14,7 +14,7 @@
 ; Header labels -70001 to -70014, alg ids -49, -70010, -70011 and kty 7 are
 ; provisional private-use values. All ATEP CBOR is deterministic (RFC 8949
 ; section 4.2.1); CDDL cannot express that, see spec section 5 "Encoding rules".
-; Validation: this file is machine-checked against all 443 vectors with the Rust
+; Validation: this file is machine-checked against all 446 vectors with the Rust
 ; `cddl` crate (scripts/ci/validate-cddl.mjs, table in scripts/ci/cddl-map.json,
 ; CI job `cddl`); see spec/schemas/NOTES.md for what that covers and what it cannot.
 

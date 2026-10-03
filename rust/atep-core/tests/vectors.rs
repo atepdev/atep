@@ -184,7 +184,7 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
     let manifest: serde_json::Value =
         serde_json::from_slice(&fs::read(vectors_dir().join("manifest.json")).unwrap()).unwrap();
     let list = manifest["vectors"].as_array().unwrap();
-    assert_eq!(list.len(), 443);
+    assert_eq!(list.len(), 446);
     let digest_of = |r: std::ops::Range<usize>| -> String {
         let s: String = list[r]
             .iter()
@@ -241,7 +241,7 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
     // `motion` rejection whose cause is a stale list.
     assert_eq!(list[436]["category"], "atep-r-negative");
     assert_eq!(list[436]["name"], "motion-member-peer-motion-stale-srl");
-    // The first batch of known gaps follows: RT32 (two), RT34 (two), RT35, SU27.
+    // The first batch of known gaps follows: RT32 (two), RT34 (two), RT35, SU27, then gaps 9 and 15 (three `chain-positive`).
     let tail: Vec<&str> = list[437..]
         .iter()
         .map(|v| v["name"].as_str().unwrap())
@@ -255,6 +255,9 @@ fn the_first_200_vectors_are_unchanged_and_the_new_ones_are_appended() {
             "rt34b-earliest-retirement-decides-before",
             "rt35-other-store-entries-do-not-stop-the-scan",
             "su27-root-claim-inherited-at-max-depth-1",
+            "depth-exactly-at-max-depth",
+            "direct-claim-at-max-depth-1",
+            "attestation-nonce-in-seen-nonces",
         ]
     );
 }

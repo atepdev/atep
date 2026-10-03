@@ -79,14 +79,14 @@
 <p class="cta"><a class="btn primary" href="in-practice.html">In practice</a> <a class="btn" href="demo/" target="_blank" rel="noopener">Try the live simulator<span class="sr-only"> (opens in a new tab)</span></a> <a class="btn" href="specification.html">Specification</a> <a class="btn" href="quickstart.html">Quick start</a> <a class="btn" href="vectors.html">Test vectors</a> <a class="btn" href="claims/">Claim types</a></p>
 <dl class="facts" aria-label="Status">
 <div><dt>Draft</dt><dd>08</dd></div>
-<div><dt>Rust passes</dt><dd>443 of 443 vectors</dd></div>
-<div><dt>JavaScript and Python pass</dt><dd>438 of 443 vectors</dd></div>
+<div><dt>Rust passes</dt><dd>446 of 446 vectors</dd></div>
+<div><dt>JavaScript and Python pass</dt><dd>441 of 446 vectors</dd></div>
 <div><dt>Independent audit</dt><dd>none yet</dd></div>
 </dl>
 </section>
 <p class="plain">New to this? <a href="in-practice.html">ATEP in practice</a> explains in plain language what it changes for robot fleets and AI agents, with six scenarios that illustrate how the protocol behaves.</p>
 <p class="lead">ATEP is an open, quantum-safe trust layer for robots and AI agents. Every signature and key exchange pairs a classical algorithm with a NIST post-quantum standard (Ed25519 with ML-DSA-65 from FIPS 204, X25519 with ML-KEM-768 from FIPS 203) and both halves must hold, so protection is designed to hold against future quantum computers and against a flaw in either half. A signed and encrypted envelope lets one robot or AI agent prove to another who produced a piece of data, that it was not altered, and which third-party certifications the producer holds. It also works offline: a robot or agent can identify and verify another with no internet connection, registry or central server, because an identity is a hash of the sender's public keys and the receiver checks everything against keys, revocation lists and log checkpoints it has already cached, in milliseconds on a desktop CPU. It rides on any carrier (MCP, A2A, MQTT, ROS 2, HTTP, files) and replaces none of them. Quantum-safe here means finalized NIST standards in a hybrid construction; the reference code has not had an independent security audit.</p>
-<div class="note"><p><strong>Status.</strong> Working draft (Draft 08, the second public draft, 3 October 2026; Draft 07, the first, was 2 October 2026). It is not an Internet-Draft, not a standard, and its media types and some labels are provisional. Reference implementations exist: Rust passes all 443 shared test vectors, JavaScript and Python pass the 438 they can run (five need a log or a monitor); experimental 0.1.0-alpha packages are on crates.io, npm and PyPI (the earlier 0.0.1 versions are code-free placeholders) the latest alpha (0.1.0-alpha.3) implements Draft 08, while 0.1.0-alpha.1 and 0.1.0-alpha.2 implement Draft 07; there has been no external security audit.</p></div>
+<div class="note"><p><strong>Status.</strong> Working draft (Draft 08, the second public draft, 3 October 2026; Draft 07, the first, was 2 October 2026). It is not an Internet-Draft, not a standard, and its media types and some labels are provisional. Reference implementations exist: Rust passes all 446 shared test vectors, JavaScript and Python pass the 441 they can run (five need a log or a monitor); experimental 0.1.0-alpha packages are on crates.io, npm and PyPI (the earlier 0.0.1 versions are code-free placeholders) the latest alpha (0.1.0-alpha.3) implements Draft 08, while 0.1.0-alpha.1 and 0.1.0-alpha.2 implement Draft 07; there has been no external security audit.</p></div>
 <div class="grid home">
 <section class="card"><h2>What it defines</h2>
 <ul>
@@ -114,10 +114,10 @@
 <caption>What is built, as of 3 October 2026</caption>
 <thead><tr><th scope="col">Part</th><th scope="col">State</th><th scope="col">Limit</th></tr></thead>
 <tbody>
-<tr><th scope="row">Rust reference core and CLI</th><td>Passes all 443 vectors</td><td>No external audit; needs a C linker to build</td></tr>
+<tr><th scope="row">Rust reference core and CLI</th><td>Passes all 446 vectors</td><td>No external audit; needs a C linker to build</td></tr>
 <tr><th scope="row">Transparency log and monitor</th><td>Implemented in Rust, acceptance tested</td><td>Plain HTTP, keys in files; not run by anyone outside the project</td></tr>
-<tr><th scope="row">JavaScript (<code>@atep/core</code>, WebAssembly)</th><td>Passes 438 of 443 vectors under Node, Deno, Bun and headless Chromium (five for a log and a monitor are skipped)</td><td>Experimental alpha on npm (<code>npm install @atep/core@alpha</code>); Firefox, Safari and constrained devices not tested</td></tr>
-<tr><th scope="row">Python (<code>atep_py</code>)</th><td>Independent, standard library only, passes 438 of 443 vectors (five for a log and a monitor are skipped)</td><td>Slow; experimental alpha on PyPI (<code>pip install --pre atep</code>); written by the project, not by an outside party</td></tr>
+<tr><th scope="row">JavaScript (<code>@atep/core</code>, WebAssembly)</th><td>Passes 441 of 446 vectors under Node, Deno, Bun and headless Chromium (five for a log and a monitor are skipped)</td><td>Experimental alpha on npm (<code>npm install @atep/core@alpha</code>); Firefox, Safari and constrained devices not tested</td></tr>
+<tr><th scope="row">Python (<code>atep_py</code>)</th><td>Independent, standard library only, passes 441 of 446 vectors (five for a log and a monitor are skipped)</td><td>Slow; experimental alpha on PyPI (<code>pip install --pre atep</code>); written by the project, not by an outside party</td></tr>
 <tr><th scope="row">Carrier examples</th><td>MCP, A2A, HTTP, file and MQTT run and tested</td><td>ROS 2 example has not been run on ROS 2</td></tr>
 </tbody></table></div>
 

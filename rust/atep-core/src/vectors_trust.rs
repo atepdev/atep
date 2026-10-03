@@ -450,6 +450,59 @@ pub(crate) fn generate(out: &mut Vec<Vector>) -> R<()> {
     }
     // Draft 09: the first batch of known gaps, after everything else.
     retired::generate_gaps(out, &n)?;
+    chain_gap_vectors(out, &n)?;
+    Ok(())
+}
+
+/// Draft 09 batch, known gaps 9 and 15: the chain depth boundary and replay
+/// checking across attestations. Appended last like the other gap vectors.
+fn chain_gap_vectors(out: &mut Vec<Vector>, n: &Net) -> R<()> {
+    let c = standard_chain(n)?;
+    let all: [&[u8]; 3] = [&c.ca2_alice, &c.ca1_ca2, &c.root_ca1];
+    let op = || vec![rule(claims::OPERATOR)];
+    push_verify(
+        out,
+        "chain-positive",
+        "depth-exactly-at-max-depth",
+        "The three attestation chain of `three-level-chain` with max_depth 3: a chain of exactly max_depth attestations is within the bound. Accepted.",
+        alice_env(n, "c-depth-at-max", &all)?,
+        policy_with(n, trust_json(&[&n.root], op(), json!({"max_depth": 3}))),
+        None,
+    )?;
+    push_verify(
+        out,
+        "chain-positive",
+        "direct-claim-at-max-depth-1",
+        "The root issues `operator` to alice directly (a chain of one) and the policy sets max_depth 1. Accepted.",
+        alice_env(
+            n,
+            "c-direct-max1",
+            &[&issue_att(
+                &A::std(&n.root, n.alice.agent_id(), claims::OPERATOR, "root-alice-max1")
+                    .data(text_map(vec![("name", Value::text("Acme Robotics Ltd"))])),
+            )?],
+        )?,
+        policy_with(
+            n,
+            trust_json(
+                &[&n.root],
+                vec![json!({"claim": claims::OPERATOR, "root": n.root.agent_id().to_text()})],
+                json!({"max_depth": 1}),
+            ),
+        ),
+        None,
+    )?;
+    let mut p = policy_with(n, trust_json(&[&n.root], op(), json!({})));
+    p.seen_nonces = vec![nonce("att/ca2-alice")];
+    push_verify(
+        out,
+        "chain-positive",
+        "attestation-nonce-in-seen-nonces",
+        "The nonce of the inline `operator` attestation is in `seen_nonces`. Replay checking (step 6) applies to the outer envelope only: candidates are verified with it off. Accepted.",
+        alice_env(n, "c-att-nonce-seen", &all)?,
+        p,
+        None,
+    )?;
     Ok(())
 }
 

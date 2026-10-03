@@ -26,7 +26,7 @@ site/build-llms-full.mjs; do not edit it by hand.
 
 Status: working draft. Not an Internet-Draft or a standard. Media types, CBOR tags and
 COSE labels marked provisional are not registered with IANA. Where the text and the
-443 test vectors disagree, the vectors win. Licence of the text: CC BY 4.0,
+446 test vectors disagree, the vectors win. Licence of the text: CC BY 4.0,
 https://creativecommons.org/licenses/by/4.0/ . Code is Apache-2.0.
 Map of the site: https://atep.dev/llms.txt
 -->

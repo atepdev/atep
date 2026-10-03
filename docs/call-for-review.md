@@ -6,7 +6,7 @@ It is a working draft with experimental alpha code, and **it has had no independ
 
 ## The short version, for posting
 
-> ATEP is an open protocol draft (Draft 08) and experimental alpha code (Rust, JavaScript/WebAssembly, an independent Python implementation) for authenticating robots and AI agents offline, using hybrid classical and post-quantum signatures and key exchange. It has not been independently audited and the post-quantum libraries it uses are young. We are looking for reviewers of the specification and the reference code, and for a second implementer outside the project: 443 shared test vectors define the behavior. Start at https://atep.dev, read the draft at https://github.com/atepdev/atep, report ambiguities as public issues and vulnerabilities privately (SECURITY.md).
+> ATEP is an open protocol draft (Draft 08) and experimental alpha code (Rust, JavaScript/WebAssembly, an independent Python implementation) for authenticating robots and AI agents offline, using hybrid classical and post-quantum signatures and key exchange. It has not been independently audited and the post-quantum libraries it uses are young. We are looking for reviewers of the specification and the reference code, and for a second implementer outside the project: 446 shared test vectors define the behavior. Start at https://atep.dev, read the draft at https://github.com/atepdev/atep, report ambiguities as public issues and vulnerabilities privately (SECURITY.md).
 
 ## What we most want reviewed
 
@@ -32,7 +32,7 @@ Section numbers are those of [Draft 08](../spec/ATEP-Specification-Draft-08.md).
 
 ## A second implementation
 
-The most useful single contribution is a second implementation by someone who does not share our assumptions. The 443 vectors in [`vectors/`](../vectors/README.md) are the contract: identical bytes for identity, signing, encryption and attestation vectors, and an identical accept or reject, step and error code for the rest. A verifier that passes the required set (265 of the 443, listed in section 12) is conformant to Draft 08. Where the text and a vector disagree, the vector wins, and we want to hear about every such place; the independent Python implementation produced 44 such reports, all resolved in the specification.
+The most useful single contribution is a second implementation by someone who does not share our assumptions. The 446 vectors in [`vectors/`](../vectors/README.md) are the contract: identical bytes for identity, signing, encryption and attestation vectors, and an identical accept or reject, step and error code for the rest. A verifier that passes the required set (265 of the 446, listed in section 12) is conformant to Draft 08. Where the text and a vector disagree, the vector wins, and we want to hear about every such place; the independent Python implementation produced 44 such reports, all resolved in the specification.
 
 ## How to tell us
 
