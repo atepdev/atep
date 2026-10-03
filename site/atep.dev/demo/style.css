@@ -177,3 +177,17 @@ tbody tr.nd td:first-child { box-shadow: inset 3px 0 0 #8aa0b3; }
 @media (max-width: 760px) { .toolbar { position: static; } }
 @media (max-width: 760px) { .who { white-space: normal; } }
 @media (min-width: 761px) { td:nth-child(2), td:nth-child(7) { white-space: nowrap; } }
+
+/* Wide screens: the envelope log beside the fleet map (button "Log beside map", remembered). */
+.layout-btn { display: none; }
+@media (min-width: 1400px) {
+  .layout-btn { display: inline-block; }
+  .layout-btn[aria-pressed="true"] { background: #0f4a63; border-color: var(--accent); }
+  body.log-side .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); grid-template-areas: "map log" "inspect policy"; }
+  body.log-side #log-panel { display: flex; flex-direction: column; height: var(--map-h, 70vh); overflow: hidden; }
+  body.log-side #log-panel .tablewrap { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  body.log-side #log thead th { position: sticky; top: 0; z-index: 1; background: var(--panel); box-shadow: 0 1px 0 var(--line); }
+}
+@media (min-width: 1900px) {
+  body.log-side .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.9fr); grid-template-areas: "map log inspect" "policy policy policy"; }
+}

@@ -259,15 +259,30 @@ function appendLog(rec) {
     cell("Outcome", rec.effect + (rec.replayOf ? ` (replay of ${rec.replayOf})` : "") + (rec.tamperedAt != null ? ` (byte ${rec.tamperedAt} flipped)` : "")),
   );
   tr.addEventListener("click", () => select(rec));
+  // Newest first: stay pinned to the newest row unless the reader has scrolled down.
+  const wrap = logBody.closest(".tablewrap");
+  const pinned = wrap.scrollTop < 8;
   logBody.prepend(tr);
+  if (pinned) wrap.scrollTop = 0;
   rowEls.set(rec.id, tr);
   $("#log-count").textContent = String(engine.log.length);
 }
 
 // ---------------------------------------------------------------- inspector
+function revealRow(rec) {
+  const tr = rowEls.get(rec.id);
+  const wrap = logBody.closest(".tablewrap");
+  if (!tr || !wrap) return;
+  const r = tr.getBoundingClientRect();
+  const w = wrap.getBoundingClientRect();
+  if (r.top < w.top) wrap.scrollTop -= w.top - r.top;
+  else if (r.bottom > w.bottom) wrap.scrollTop += r.bottom - w.bottom;
+}
+
 function select(rec, quiet) {
   selected = rec;
   for (const [id, tr] of rowEls) tr.classList.toggle("sel", id === rec.id);
+  if (!quiet && document.body.classList.contains("log-side")) revealRow(rec);
   const box = $("#inspect-sel");
   box.replaceChildren(
     h("div", {}, h("strong", {}, rec.id), ` | ${rec.cls} | `, whoLabel(rec.from), " to ", whoLabel(rec.to), ` | ${rec.size.toLocaleString("en-US")} bytes`),
@@ -508,6 +523,28 @@ $("#chk-stale").addEventListener("change", (e) => {
   refreshPolicy();
 });
 $("#btn-restart").addEventListener("click", () => start());
+
+// ------------------------------------------------------------------- layout
+// On wide screens the envelope log can sit beside the fleet map at the map's height and scroll
+// inside its own panel. The choice is remembered; with no saved choice it is on for very wide,
+// ultrawide-shaped windows. The CSS only applies the layout from 1400 px up.
+const LAYOUT_KEY = "atep-demo-log-side";
+const layoutBtn = $("#btn-layout");
+function savedLayout() { try { return localStorage.getItem(LAYOUT_KEY); } catch { return null; } }
+function saveLayout(on) { try { localStorage.setItem(LAYOUT_KEY, on ? "1" : "0"); } catch { /* storage may be blocked */ } }
+function syncMapHeight() {
+  document.body.style.setProperty("--map-h", Math.round($("#map-panel").getBoundingClientRect().height) + "px");
+}
+function setLogSide(on, remember) {
+  document.body.classList.toggle("log-side", on);
+  layoutBtn.setAttribute("aria-pressed", String(on));
+  if (remember) saveLayout(on);
+  syncMapHeight();
+}
+if (typeof ResizeObserver !== "undefined") new ResizeObserver(syncMapHeight).observe($("#map-panel"));
+const savedChoice = savedLayout();
+setLogSide(savedChoice === null ? innerWidth >= 2200 && innerWidth / innerHeight >= 2 : savedChoice === "1", false);
+layoutBtn.addEventListener("click", () => setLogSide(layoutBtn.getAttribute("aria-pressed") !== "true", true));
 
 // -------------------------------------------------------------------- start
 async function start() {
